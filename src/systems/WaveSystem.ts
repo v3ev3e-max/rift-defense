@@ -1,17 +1,20 @@
-import { waves } from "../data/waves";
+import { getWave, type Wave } from "../data/waves";
 export class WaveSystem {
+  provider = getWave;
   number = 0;
   queue: string[] = [];
   spawnTimer = 0;
   elapsed = 0;
+  private current?: Wave;
   start(n: number) {
-    this.number = n;
+    this.number = Math.max(1, Math.floor(n));
     this.elapsed = 0;
     this.spawnTimer = 0;
-    const w = waves[n - 1];
-    this.queue = [...(w.boss ? [w.boss] : []), ...w.enemies];
+    this.current = this.provider(this.number);
+    const objective=this.current.objective??this.current.boss;
+    this.queue = [...(objective ? [objective] : []), ...this.current.enemies];
   }
   get data() {
-    return waves[this.number - 1];
+    return this.current ?? this.provider(Math.max(1, this.number));
   }
 }

@@ -1,0 +1,17 @@
+import { chromium } from '@playwright/test';
+const browser=await chromium.launch();
+const page=await browser.newPage({viewport:{width:430,height:932}});
+const errors=[];page.on('pageerror',e=>errors.push(e.message));
+const target = process.argv[2] ?? 'file:///D:/3V_TD/local-test/index.html';
+await page.goto(target);
+await page.locator('[data-action="deck"]').first().click();
+await page.locator('[data-action="deck-sr"]').click();
+await page.locator('[data-action="stage"]').first().click();
+await page.locator('[data-action="start-battle"]').click();
+await page.locator('canvas').waitFor();
+await page.waitForTimeout(4000);
+const broken=await page.locator('img').evaluateAll(imgs=>imgs.filter(i=>!i.complete||!i.naturalWidth).map(i=>i.alt));
+await page.screenshot({path:'artifacts/phase16-direct-html.png'});
+console.log(JSON.stringify({target,finalUrl:page.url(),errors,broken,canvas:await page.locator('canvas').count()}));
+await browser.close();
+if(errors.length||broken.length)process.exitCode=1;

@@ -1,5 +1,13 @@
-export type Build = "burn" | "shock" | "bleed" | "crit" | "blast" | "drone";
-export type Rarity = "common" | "rare" | "epic" | "legend";
+export type Build = "burn" | "water" | "shock" | "bleed" | "crit" | "blast" | "drone";
+export type Element = "water" | "fire" | "electric" | "dark";
+export type HeroGrade = "B" | "A" | "S" | "SR";
+export type ElementReaction =
+  | "conduct"
+  | "overload"
+  | "vaporize"
+  | "blackflame"
+  | "corrosion"
+  | "voidshock";
 export type Tier = "NORMAL" | "RARE" | "EPIC" | "LEGENDARY" | "JACKPOT";
 export interface Evolution {
   text: string;
@@ -24,7 +32,9 @@ export interface Hero {
   role: string;
   faction: "ballistic" | "arcane" | "machine";
   rangeType: "melee" | "ranged";
-  rarity: Rarity;
+  grade: HeroGrade;
+  element: Element;
+  secondaryElement?: Element;
   color: string;
   hair: string;
   atk: number;
@@ -38,15 +48,19 @@ export interface Hero {
   asset: { key: string; url?: string; frame?: string; atlas?: string };
 }
 export interface PermanentHero {
+  owned: boolean;
   level: number;
   breakthrough: number;
   skillLevel: number;
   equipment: string[];
   affection: number;
+  stars: number;
 }
 export interface SaveData {
+  campaign?: {selected:string; doctrine?:string; autoAdvance:boolean; autoSkills:boolean; squad:string[]; lastDeployment:Record<string,number>; deploymentPresets:Array<{squad:string[];layout:Record<string,number>}|null>; records:Record<string,{stars:number;time:number;kills:number}>; research:Record<string,number>; fragments:Record<string,number>};
   saveVersion: 1;
   credits: number;
+  equipmentGold:number;
   shards: number;
   heroes: Record<string, PermanentHero>;
   deck: string[];
@@ -54,7 +68,13 @@ export interface SaveData {
   bestWave: number;
   runs: number;
   tutorial: boolean;
-  settings: { sound: boolean; shake: boolean; lowEffects: boolean };
+  settings: { sound: boolean; bgm: boolean; sfx: boolean; bgmVolume:number; sfxVolume:number; shake: boolean; lowEffects: boolean; battleSpeed:number };
+  equipmentInventory: import('./equipment').EquipmentItem[];
+  equipmentMaterials:number;
+  autoSalvageB:boolean;
+  equipmentPity:number;
+  recruitPity:number;
+  recruitCount:number;
 }
 export interface EnemyDef {
   id: string;
@@ -66,7 +86,12 @@ export interface EnemyDef {
   color: number;
   coreDamage: number;
   disrupt?: boolean;
-  boss?: "rage" | "frost";
+  ranged?: {range:number; cooldown:number; damage:number; projectileSpeed:number};
+  boss?: "rage" | "frost" | "storm" | "void";
+  bossTier?: "mid" | "final";
+  namedRegion?: number;
+  namedSkill?: "rush"|"mend"|"root"|"frostbite"|"barrage"|"jam"|"drain"|"collapse";
+  visualId?: string;
 }
 export interface Choice {
   id: string;

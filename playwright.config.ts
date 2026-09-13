@@ -24,14 +24,14 @@ export default defineConfig({
       },
     },
     {
-      name: "android-landscape",
-      use: { ...devices["Pixel 7"], viewport: { width: 915, height: 412 } },
+      name: "android-portrait",
+      use: { ...devices["Pixel 7"], viewport: { width: 412, height: 915 } },
     },
     {
       name: "iphone-webkit",
       use: {
         ...devices["iPhone 13"],
-        viewport: { width: 844, height: 390 },
+        viewport: { width: 390, height: 844 },
         defaultBrowserType: "webkit",
       },
     },

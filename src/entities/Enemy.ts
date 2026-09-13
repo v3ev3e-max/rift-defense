@@ -1,5 +1,14 @@
 export interface Enemy {
+  route?:number;
+  strikeAt?:number;
+  strikeX?:number;
+  strikeY?:number;
+  controlOwner?:number;
+  shieldHits?:number;
+  doomOwner?:number;
+  doomPower?:number;
   index: number;
+  generation?:number;
   active: boolean;
   kind: string;
   hp: number;
@@ -18,6 +27,27 @@ export interface Enemy {
   slow: number;
   slowTime: number;
   attackTimer: number;
+  namedSkillTimer:number;
+  skillCasts:number;
+  rangedTimer: number;
+  rangedHitAt?: number;
+  rangedTargetUid?: number;
+  rangedDamage?: number;
+  rangedFiredAt?: number;
+  waterMark: number;
+  waterTime: number;
+  fireMark: number;
+  fireTime: number;
+  electricMark: number;
+  electricTime: number;
+  darkMark: number;
+  darkTime: number;
+  armorBreak: number;
+  armorBreakTime: number;
+  vulnerability: number;
+  vulnerabilityTime: number;
+  reactionKind: string;
+  reactionTime: number;
 }
 export const createEnemy = (index: number): Enemy => ({
   index,
@@ -39,4 +69,21 @@ export const createEnemy = (index: number): Enemy => ({
   slow: 0,
   slowTime: 0,
   attackTimer: 0,
+  namedSkillTimer:0,
+  skillCasts:0,
+  rangedTimer: 0,
+  waterMark: 0,
+  waterTime: 0,
+  fireMark: 0,
+  fireTime: 0,
+  electricMark: 0,
+  electricTime: 0,
+  darkMark: 0,
+  darkTime: 0,
+  armorBreak: 0,
+  armorBreakTime: 0,
+  vulnerability: 0,
+  vulnerabilityTime: 0,
+  reactionKind: "",
+  reactionTime: 0,
 });

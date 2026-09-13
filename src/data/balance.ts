@@ -1,9 +1,12 @@
+import {CELL} from './map';
 export const BALANCE = {
-  summonCost: 10,
-  focusCost: 25,
+  summonCost: 30,
+  focusCost: 45,
   maxStars: 5,
   maxUnits: 22,
-  maxEnemies: 120,
+  maxEnemies: 48,
+  // Hard cap for endless mode: keeps combat/render cost bounded even at very high waves.
+  maxEffects: 64,
   waveDuration: 21,
   fixedStep: 1 / 60,
   initialGold: 90,
@@ -11,7 +14,7 @@ export const BALANCE = {
   researchBase: 25,
   maxResearch: 15,
 };
-export const summonWeights = { common: 58, rare: 28, epic: 12, legend: 2 };
+export const summonWeights = { B: 86, A: 10, S: 3, SR: 1 };
 export const traitWeights = {
   NORMAL: 50,
   RARE: 30,
@@ -19,3 +22,17 @@ export const traitWeights = {
   LEGENDARY: 4,
   JACKPOT: 1,
 };
+
+/** Shared attack/support radius in the portrait battlefield's world units. */
+export function combatRange(base: number, bonus = 0) {
+  const native=Math.max(90,base*0.65);
+  return native+Math.min(CELL,native*Math.max(0,bonus));
+}
+/** Non-tank melee units can reach across the nearest lane edge, but remain shorter than every ranged operator. */
+export const MELEE_STRIKE_RANGE = 120;
+/** Ranged dealers can fire on an enemy held by the frontline tank from either dealer pad. */
+export const DEALER_BASE_RANGE = 310;
+/** Every sniper can cover the first FRONT interception point from any rear formation pad. */
+export const SNIPER_BASE_RANGE = 400;
+// Equal unimpeded travel time across maps; turns and placement still matter.
+export const REFERENCE_PATH_LENGTH = 1820;

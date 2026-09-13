@@ -1,7 +1,11 @@
 node_modules/
+node_modules.pre-phase16/
+node_modules.pre-visual/
+artifacts/visual-backup/
 dist/
 .vercel/
 .env*
 test-results/
 playwright-report/
 artifacts/
+local-test/

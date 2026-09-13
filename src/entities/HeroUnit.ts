@@ -1,5 +1,27 @@
 import type { Evolution, Hero } from "../data/types";
 export interface Unit {
+  guardHp?:number;
+  damageReductionUntil?:number;
+  tauntUntil?:number;
+  projectileGuardUntil?:number;
+  projectileGuardHits?:number;
+  tankBlockUntil?:number;
+  damageTaken?:number;
+  healingDone?:number;
+  readyNotified?:boolean;
+  investment?: number;
+  moveReadyAt?: number;
+  skillCharge?: number;
+  skillHeldAt?: number;
+  priority?: 'auto'|'boss'|'core'|'cluster'|'fast'|'hold';
+  branch?: string;
+  ultimate?: string;
+  linkReadyAt?: number;
+  lastAttackAt?: number;
+  lockTarget?:number;
+  lockAt?:number;
+  heat?:number;
+  skillReadyAt?:number;
   uid: number;
   heroId: string;
   star: number;
@@ -12,6 +34,9 @@ export interface Unit {
   droneShots: number;
   damage: number;
   stunned: number;
+  /** Last actual attack direction; preserved between shots. */
+  facingLeft?: boolean;
+  facingUp?: boolean;
   x: number;
   y: number;
 }
