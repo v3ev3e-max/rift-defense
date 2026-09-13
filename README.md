@@ -2,6 +2,14 @@
 
 Phaser 3 + TypeScript + Vite 기반 **PC/모바일 무한 랜덤 디펜스 RPG**입니다.
 
+## 웹 테스트
+
+**[GitHub Pages에서 RIFT DEFENSE 실행](https://v3ev3e-max.github.io/rift-defense/)**
+
+- PC와 모바일 브라우저에서 같은 링크를 사용할 수 있습니다.
+- 모바일에서는 브라우저 메뉴의 `홈 화면에 추가`를 사용하면 앱처럼 실행할 수 있습니다.
+- `main` 브랜치가 갱신되면 GitHub Actions가 최신 빌드를 자동 배포합니다.
+
 > 랜덤 소환 → 3합성 → 속성 반응/시너지 빌드 → 무한웨이브 최고 기록 도전
 
 ## 실행
@@ -20,7 +28,7 @@ npm run build
 npm test
 ```
 
-Vercel 정적 배포 대상이며 환경 변수/백엔드는 필수가 아닙니다.
+GitHub Pages 정적 배포 대상이며 환경 변수와 백엔드는 필수가 아닙니다.
 
 ## 최신 핵심 규칙
 
