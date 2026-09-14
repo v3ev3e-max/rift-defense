@@ -4634,3 +4634,21 @@ html,body,#app{height:100%;overflow:hidden}
 /* Campaign split-route guidance and compact mobile combat hierarchy. */
 .dual-lane-guide{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:5px;margin:7px 0;padding:8px;background:linear-gradient(90deg,#203b4b,#172c3b);border:1px solid #e8b969;color:#efffff}.dual-lane-guide>b{grid-column:1/-1;color:#ffd98f}.dual-lane-guide span{display:flex;align-items:center;gap:4px;font-size:10px;white-space:nowrap}.dual-lane-guide i{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#ffca70;color:#17222a;font-style:normal;font-weight:900}.dual-lane-guide small{color:#bed5dc;line-height:1.35}.dual-lane-field-badge{position:absolute;z-index:710;top:28px;left:7px;display:flex;align-items:center;gap:6px;padding:4px 7px;background:#102432dc;border:1px solid #ffc875;color:#dff6fa;pointer-events:none}.dual-lane-field-badge b{color:#ffcf79;font:800 10px monospace}.dual-lane-field-badge span{font-size:9px}
 @media(max-width:700px){.campaign-battle{width:100%;max-width:100%;overflow-x:hidden}.campaign-battle .compact-top{position:sticky;top:0;z-index:900;min-height:42px;background:#102c3b}.campaign-battle .compact-field{width:100%!important;max-width:560px}.campaign-battle #campaign-skill-host .campaign-skill-bar>div{display:flex;overflow-x:auto;scrollbar-width:none}.campaign-battle #campaign-skill-host .campaign-skill-card{flex:1 0 52px;max-width:68px;min-width:52px}.campaign-battle #campaign-skill-host .campaign-skill-card img{width:42px;height:42px}.dual-lane-guide{grid-template-columns:auto auto;gap:4px;padding:6px}.dual-lane-guide small{grid-column:1/-1}.campaign-battle .campaign-extra{max-height:38px;overflow:hidden}.campaign-battle .battle-notice{font-size:10px!important}.campaign-battle .growth-host:empty{display:none}}
+
+/* Mobile battle final pass: keep the canvas visible and controls unmistakable. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.campaign-battle .battle-selection-hint{margin:0;color:#b9d7df;font-size:11px;line-height:1.35}
+.campaign-battle #campaign-start-btn.battle-running:disabled{opacity:1;color:#cafff2;border-color:#58d9bc;background:#16483f;box-shadow:inset 0 0 0 1px #75e8cf55}
+@media(max-width:700px){
+ .campaign-battle .compact-field{flex:none!important;align-self:stretch!important}
+ .campaign-battle .field-wrap{width:100%!important;height:auto!important;aspect-ratio:auto!important;padding:20px 0!important;background:#101d29}
+ .campaign-battle #phaser-container{position:relative!important;inset:auto!important;display:block!important;width:100%!important;height:auto!important;aspect-ratio:1!important;min-height:0!important;background:#172331}
+ .campaign-battle #phaser-container canvas{display:block!important;width:100%!important;height:100%!important;visibility:visible!important;opacity:1!important;object-fit:contain}
+ .campaign-battle #campaign-skill-host{left:4px;right:4px;bottom:20px}
+ .campaign-battle .growth-host{min-height:0!important;padding:4px 7px!important}
+ .campaign-battle .selected-growth{min-height:0!important;padding:7px 8px!important}
+ .campaign-battle .compact-actions{display:grid!important;grid-template-columns:1.35fr 1.35fr .7fr!important;gap:5px!important;padding:5px!important}
+ .campaign-battle .compact-actions .btn{min-height:46px!important;font-size:11px!important}
+ .campaign-battle .campaign-tutorial-hint{font-size:10px!important;line-height:1.35!important;padding:7px 8px!important}
+ .campaign-battle .campaign-tutorial-hint p{font-size:10px!important;line-height:1.35!important;margin:3px 0!important}
+}

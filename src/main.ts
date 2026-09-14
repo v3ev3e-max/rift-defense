@@ -801,6 +801,7 @@ class App {
       const skillHost=document.getElementById('campaign-skill-host');if(skillHost){const html=campaignSkillBar(m);if(skillHost.dataset.key!==html){updatePanel(skillHost,html);skillHost.dataset.key=html;}}
       const placed=m.units.filter(u=>u.slot>=0).length,waiting=m.units.length-placed;
       setBtn('campaign-start-btn',m.started?'방어 중':waiting?`배치 ${placed}/${m.units.length}`:formationComplete(m.units.map(u=>u.heroId))?'방어 시작':'요원 선택 필요',m.started||waiting>0||!formationComplete(m.units.map(u=>u.heroId)));
+      document.getElementById('campaign-start-btn')?.classList.toggle('battle-running',m.started);
       const prep=document.getElementById('campaign-prep');if(prep)prep.hidden=m.started;
       const growthHost=this.root.querySelector<HTMLElement>('.campaign-battle .growth-host');if(growthHost)growthHost.hidden=false;
       const extra=this.root.querySelector<HTMLElement>('.campaign-battle .campaign-extra');if(extra)extra.hidden=!m.started;

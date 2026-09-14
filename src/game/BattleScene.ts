@@ -84,7 +84,11 @@ export class BattleScene extends Phaser.Scene {
     const campaignArea=this.model.campaign?campaignRegion(this.model.campaign):0;
     this.campaignArea=campaignArea;
     const campaignObjective=this.model.campaign?this.model.wave.provider(this.model.campaign.waves).objective:'';
-    for (const def of Object.values(enemies)){
+    const activeEnemyDefs=Object.values(enemies).filter(def=>
+      !this.model.campaign||this.model.campaign.enemies.includes(def.id)||campaignObjective===def.id
+    );
+    const animatedRangedEnemies=new Set(['armored','jammer','phantom']);
+    for (const def of activeEnemyDefs){
       const visualId=def.visualId??def.id;
       const regional=campaignArea>0&&(this.model.campaign!.enemies.includes(def.id)||campaignObjective===def.id)&&regionalEnemyArt[campaignArea]?.has(visualId);
       if(regional)this.regionalEnemyVisuals.add(def.id);
@@ -94,7 +98,7 @@ export class BattleScene extends Phaser.Scene {
       this.enemyMoveFrames[def.id]=moveCount;
       for(let frame=1;frame<=moveCount;frame++)this.load.image(`enemy-${def.id}-move-${frame}`,assetUrl(regional&&visualId!=="elite"?`${folder}/${visualId}/move/move_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemy-motion/${visualId}/move_${String(frame).padStart(2,'0')}.webp`));
       if(regional)for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-death-${frame}`,assetUrl(visualId!=="elite"?`${folder}/${visualId}/death/frame_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemies/${visualId}.webp`));
-      if(def.ranged)for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-fire-${frame}`,assetUrl(regional?`${folder}/${def.id}/fire/frame_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemy-fire/${def.id}/frame_${String(frame).padStart(2,'0')}.webp`));
+      if(def.ranged&&animatedRangedEnemies.has(def.id))for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-fire-${frame}`,assetUrl(regional?`${folder}/${def.id}/fire/frame_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemy-fire/${def.id}/frame_${String(frame).padStart(2,'0')}.webp`));
     }
     for(const element of ['water','fire','electric','dark'])for(let frame=1;frame<=4;frame++)
       this.load.image(`transfer-${element}-${frame}`,assetUrl(`/assets/generated/element-transfers/${element}_${String(frame).padStart(2,'0')}.webp`));

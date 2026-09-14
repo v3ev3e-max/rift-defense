@@ -6,7 +6,11 @@ export function createGame(model: BattleModel, callback: () => void) {
   // The battlefield uses painted backgrounds and detailed anime sprites. Use
   // smooth sampling when the fixed 800x800 backing canvas is fitted to the UI.
   return new Phaser.Game({
-    type: Phaser.AUTO,
+    // Android browsers can discard a WebGL context while the battle scene is
+    // decoding its large sprite set, leaving the HTML HUD alive over a blank
+    // battlefield. The 800px scene is small enough for Canvas 2D and Canvas is
+    // considerably more predictable across mobile Chrome/WebView devices.
+    type: Phaser.CANVAS,
     parent: "phaser-container",
     width: 800,
     height: 800,
