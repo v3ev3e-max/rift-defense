@@ -68,9 +68,15 @@ export class BattleScene extends Phaser.Scene {
   campaignArea = 0;
   regionalEnemyVisuals = new Set<string>();
   enemyMoveFrames:Record<string,number>={};
+  initialEnemyKey='enemy-crawler';
   perfElapsed = 0;
   perfFrames = 0;
   perfRecovery = 0;
+  textureReady(key:string){
+    if(!this.textures.exists(key))return false;
+    const texture=this.textures.get(key);
+    return texture.key!=='__MISSING'&&!!texture.source?.[0]?.image;
+  }
   constructor(model: BattleModel, callback: () => void, onLoadProgress: (progress:number,file:string) => void=()=>{}, onReady:()=>void=()=>{}) {
     super("Battle");
     this.model = model;
@@ -93,6 +99,7 @@ export class BattleScene extends Phaser.Scene {
     const activeEnemyDefs=Object.values(enemies).filter(def=>
       !this.model.campaign||this.model.campaign.enemies.includes(def.id)||campaignObjective===def.id
     );
+    this.initialEnemyKey=`enemy-${activeEnemyDefs[0]?.id??'crawler'}`;
     const animatedRangedEnemies=new Set(['armored','jammer','phantom']);
     for (const def of activeEnemyDefs){
       const visualId=def.visualId??def.id;
@@ -220,7 +227,7 @@ export class BattleScene extends Phaser.Scene {
     this.actionSprites=this.model.actions.map(()=>this.add.image(0,0,'drone-body').setVisible(false).setDepth(645));
     this.damageLabels=this.model.damageNumbers.map(()=>this.add.text(0,0,'',{fontSize:'20px',fontFamily:'sans-serif',fontStyle:'bold',color:'#fff3b0',stroke:'#15232f',strokeThickness:3}).setOrigin(.5).setDepth(750).setVisible(false));
     this.enemySprites = this.model.enemies.map(() =>
-      this.add.image(-50, -50, "enemy-crawler").setOrigin(.5,.72).setVisible(false),
+      this.add.image(-50, -50, this.initialEnemyKey).setOrigin(.5,.72).setVisible(false),
     );
     this.enemyShadowSprites=this.model.enemies.map(()=>this.add.ellipse(-50,-50,42,13,0x07131c,.55).setVisible(false));
     this.enemyStepSprites=this.model.enemies.map(()=>this.add.image(-50,-50,'enemy-step-1').setVisible(false).setBlendMode(Phaser.BlendModes.ADD));
@@ -652,7 +659,8 @@ export class BattleScene extends Phaser.Scene {
       const firing=!!enemies[e.kind].ranged&&e.rangedFiredAt!==undefined&&m.time-e.rangedFiredAt<.32;
       const fireFrame=firing?Math.min(3,Math.floor((m.time-e.rangedFiredAt!)/.32*3)+1):0;
       const requestedTexture=firing?`enemy-${e.kind}-fire-${fireFrame}`:`enemy-${e.kind}-move-${bodyFrame}`;
-      const enemyTexture=this.textures.exists(requestedTexture)?requestedTexture:`enemy-${e.kind}`;
+      const staticTexture=`enemy-${e.kind}`;
+      const enemyTexture=this.textureReady(requestedTexture)?requestedTexture:this.textureReady(staticTexture)?staticTexture:this.initialEnemyKey;
       if(sp.texture.key!==enemyTexture)sp.setTexture(enemyTexture);
       const generation=e.generation??e.index;
       if(this.enemyVisualGeneration[e.index]!==generation){
@@ -668,7 +676,9 @@ export class BattleScene extends Phaser.Scene {
       const renderY=e.y-(ahead.y-e.y)/dirLength*recoil-motion.lift;
       if(boss&&this.campaignArea){const regionColors=[0x80e570,0x5fe2e7,0xe99a55,0x8edcff,0x60e2d0,0x78c8ff,0xb06cff,0xf05a8c],a=.34+Math.sin(this.visualTime*3+e.index)*.1,r=48+Math.sin(this.visualTime*2.2+e.index)*3;g.lineStyle(3,regionColors[this.campaignArea-1]??0xa8f7e7,a);g.strokeCircle(e.x,e.y+4,r);g.lineStyle(1,0xe8ffff,a*.65);g.strokeCircle(e.x,e.y+4,r+7);}
       shadow.setVisible(true).setPosition(e.x,e.y+enemySize*.22).setDisplaySize(enemySize*.58*motion.shadowScale,enemySize*(boss?.13:.16)).setDepth(18+e.y).setAlpha(boss?.62:.5);
-      step.setVisible(motion.stepAlpha>0).setTexture(`enemy-step-${motion.frame}`).setPosition(e.x,e.y+enemySize*.23).setDisplaySize(boss?70:46,boss?35:23).setDepth(19+e.y).setAlpha(motion.stepAlpha);
+      const stepKey=`enemy-step-${motion.frame}`,stepReady=this.textureReady(stepKey);
+      step.setVisible(stepReady&&motion.stepAlpha>0).setPosition(e.x,e.y+enemySize*.23).setDisplaySize(boss?70:46,boss?35:23).setDepth(19+e.y).setAlpha(motion.stepAlpha);
+      if(stepReady&&step.texture.key!==stepKey)step.setTexture(stepKey);
       sp.clearTint().setFlipX(motion.flipX).setAngle(motion.angle).setDisplaySize(enemySize*motion.scaleX,enemySize*motion.scaleY).setPosition(renderX,renderY).setDepth(20+e.y);
       if(hit)sp.setTintFill(0xffe3d4);
       const pulseEvery = enemies[e.kind].boss==='storm'?3:enemies[e.kind].boss==='void'?3.5:4;
