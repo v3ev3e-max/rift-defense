@@ -57,6 +57,8 @@ export class BattleScene extends Phaser.Scene {
   hudElapsed = 0;
   lastHudRevision = -1;
   callback: () => void;
+  onLoadProgress: (progress:number,file:string) => void;
+  onReady: () => void;
   dragUid = 0;
   lastUnitTapUid = 0;
   lastUnitTapAt = 0;
@@ -69,12 +71,16 @@ export class BattleScene extends Phaser.Scene {
   perfElapsed = 0;
   perfFrames = 0;
   perfRecovery = 0;
-  constructor(model: BattleModel, callback: () => void) {
+  constructor(model: BattleModel, callback: () => void, onLoadProgress: (progress:number,file:string) => void=()=>{}, onReady:()=>void=()=>{}) {
     super("Battle");
     this.model = model;
     this.callback = callback;
+    this.onLoadProgress=onLoadProgress;
+    this.onReady=onReady;
   }
   preload() {
+    this.load.on('progress',(value:number)=>this.onLoadProgress(value,''));
+    this.load.on('fileprogress',(file:Phaser.Loader.File)=>this.onLoadProgress(this.load.progress,file.key));
     for(const name of generatedVfxNames)this.load.image(`vfx-${name}`,assetUrl(`/assets/generated/vfx/${name}.webp`));
     this.load.image('map-rift-courtyard', assetUrl(this.model.campaign?`/assets/campaign/${this.model.campaign.background}`:'/assets/maps/teal-laboratory.png'));
     for(const name of ['pad','selected','entry','core'])this.load.image(`lab-${name}`,assetUrl(`/assets/lab/${name}.png`));
@@ -360,6 +366,7 @@ export class BattleScene extends Phaser.Scene {
           .setBlendMode(Phaser.BlendModes.ADD),
       );
     }
+    this.onReady();
     this.events.once("shutdown", () => {
       this.input.removeAllListeners();
       this.heroSprites = [];

@@ -299,7 +299,18 @@ class App {
     try {
       const { createGame } = await import("./game/GameConfig");
       if (token !== this.renderToken) return;
-      this.game = createGame(model, () => this.updateHud());
+      let lastLoadPercent=-1,lastLoadGroup='';
+      const loadProgress=(progress:number,file:string)=>{
+        const loader=document.getElementById('battle-loader');if(!loader)return;
+        const percent=Math.max(0,Math.min(100,Math.round(progress*100)));
+        const group=file.startsWith('map-')?'map':file.startsWith('hero-')?'hero':file.startsWith('enemy-')?'enemy':'effect';
+        if(percent===lastLoadPercent&&group===lastLoadGroup)return;lastLoadPercent=percent;lastLoadGroup=group;
+        const bar=document.getElementById('battle-loader-bar');if(bar)bar.style.width=`${percent}%`;
+        const value=document.getElementById('battle-loader-percent');if(value)value.textContent=`${percent}%`;
+        const label=document.getElementById('battle-loader-label');if(label)label.textContent=group==='map'?'전장 배경 구성 중':group==='hero'?'요원 애니메이션 배치 중':group==='enemy'?'적 데이터 탐색 중':'전투 효과 동기화 중';
+      };
+      const ready=()=>{const loader=document.getElementById('battle-loader');if(loader){loader.classList.add('complete');setTimeout(()=>loader.remove(),320);}};
+      this.game = createGame(model, () => this.updateHud(),loadProgress,ready);
       this.updateHud(true);
     } catch (err) {
       this.toast(`전장 로딩 실패: ${String(err)}`);
