@@ -4640,6 +4640,10 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .campaign-battle .battle-selection-hint{margin:0;color:#b9d7df;font-size:11px;line-height:1.35}
 .campaign-battle #campaign-start-btn.battle-running:disabled{opacity:1;color:#cafff2;border-color:#58d9bc;background:#16483f;box-shadow:inset 0 0 0 1px #75e8cf55}
 @media(max-width:700px){
+ .home-screen .home-copy{display:flex;flex-direction:column;justify-content:flex-end;align-self:stretch!important;padding-bottom:10px!important}
+ .home-screen .home-copy h1{font-size:clamp(32px,11vw,44px);line-height:.9;letter-spacing:-2px;margin:5px 0 10px}
+ .home-screen .home-actions{position:static;inset:auto;display:grid;grid-template-columns:1fr 1fr;gap:5px}
+ .home-screen .home-actions .btn{min-height:46px;font-size:11px;padding:7px}
  .campaign-battle .compact-field{flex:none!important;align-self:stretch!important}
  .campaign-battle .field-wrap{width:100%!important;height:auto!important;aspect-ratio:auto!important;padding:20px 0!important;background:#101d29}
  .campaign-battle #phaser-container{position:relative!important;inset:auto!important;display:block!important;width:100%!important;height:auto!important;aspect-ratio:1!important;min-height:0!important;background:#172331}
