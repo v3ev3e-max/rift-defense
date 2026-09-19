@@ -22,18 +22,18 @@ it('normalizes every late-added operator across idle, side, north and defeat pos
  expect(poseSize(id,false,true),`${id} idle`).toBe(id==='celestia'?94:86);
  expect(poseSize(id,false,false),`${id} side`).toBe(id==='celestia'?94:id==='astra'?84:80);
  expect(poseSize(id,true,false),`${id} north`).toBe(id==='celestia'?94:id==='solara'?96:id==='vera'?80:118);
-  expect(defeatPoseSize(id),`${id} defeat`).toBe(108);
+  expect(defeatPoseSize(id),`${id} defeat`).toBeCloseTo(108/.925);
  }
  expect(poseSize('reina',false,true)).toBe(132);
  expect(poseSize('reina',false,false)).toBe(94);
  expect(poseSize('reina',true,false)).toBe(132);
  expect(defeatPoseSize('reina')).toBe(132);
 });
-it('normalizes Hana pose heights to the established cast without changing her source frames',()=>{
+it('keeps Hana the same visible size after adding safe source-frame gutters',()=>{
  expect(poseSize('hana',false,true)).toBe(90);
- expect(poseSize('hana',false,false)).toBe(90);
- expect(poseSize('hana',true,false)).toBe(120);
- expect(defeatPoseSize('hana')).toBe(112);
+ expect(poseSize('hana',false,false)).toBeCloseTo(90/.925);
+ expect(poseSize('hana',true,false)).toBeCloseTo(120/.925);
+ expect(defeatPoseSize('hana')).toBeCloseTo(112/.925);
 });
 it('effect reuse clears operator source metadata for chain and other effects',()=>{
  const m=new BattleModel(defaultSave());m.emit('shot',0,0,10,10,0,{sourceUid:1,sourceHero:'sera',sourceNorth:true});const f=m.effects[0];f.originResolved=true;f.life=0;

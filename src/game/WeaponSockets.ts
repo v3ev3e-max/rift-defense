@@ -6,11 +6,13 @@ export const HERO_RENDER = {
  sourceSize:160, originX:80, originY:142, offsetY:16,
 };
 const oversizedAddedHeroes=new Set(['gaia','astra','solara','zion','vera','elise','celestia']);
+const normalizedDefeatHeroes=new Set(['astra','celestia','echo','elise','gaia','hana','meriel','ophilia','rhea','selene','solara','vera','zion']);
+const NORMALIZED_ASSET_SCALE=.925;
 /** The six late-added SD sets fill almost the entire 160px source canvas while the
  * established cast occupies roughly 94px idle / 126px attack. Pose-specific
  * display sizes normalize their visible bodies without resampling the artwork. */
 export function poseSize(id:string,north:boolean,idle=false){
- if(id==='hana')return idle?90:north?120:90;
+ if(id==='hana')return idle?90:north?120/NORMALIZED_ASSET_SCALE:90/NORMALIZED_ASSET_SCALE;
  if(id==='celestia')return 94;
  if(id==='solara')return idle?86:north?96:80;
  if(id==='vera')return idle?86:80;
@@ -18,7 +20,10 @@ export function poseSize(id:string,north:boolean,idle=false){
  if(oversizedAddedHeroes.has(id))return idle?86:north?118:80;
  return idle?HERO_RENDER.size:north?(['leon','kairon'].includes(id)?96:HERO_RENDER.size):HERO_RENDER.sideSize;
 }
-export function defeatPoseSize(id:string){return id==='hana'?112:oversizedAddedHeroes.has(id)?108:HERO_RENDER.size;}
+export function defeatPoseSize(id:string){
+ const base=id==='hana'?112:oversizedAddedHeroes.has(id)?108:HERO_RENDER.size;
+ return normalizedDefeatHeroes.has(id)?base/NORMALIZED_ASSET_SCALE:base;
+}
 type Pixel = readonly [number,number];
 type Poses = readonly [Pixel,Pixel,Pixel];
 /** Pixel coordinates inspected on the actual 160x160 combat textures.
@@ -66,10 +71,11 @@ const ranged=[[0,0],[0,1],[-2,0],[-4,0],[-5,1],[-3,1],[-1,0],[0,0]];
 const melee=[[0,0],[1,1],[3,0],[6,-1],[8,0],[5,1],[2,0],[0,0]];
 export function muzzlePixel(id:string,north:boolean,frame:number):Pixel{
  const def=muzzlePixels[id];if(!def)throw Error(`Missing muzzle coordinates: ${id}`);
- if(north)return def.up[Math.max(0,Math.min(2,frame-1))];
+ if(north){const p=def.up[Math.max(0,Math.min(2,frame-1))];return id==='hana'?[80+(p[0]-80)*NORMALIZED_ASSET_SCALE,142+(p[1]-142)*NORMALIZED_ASSET_SCALE]:p;}
  const i=Math.max(0,Math.min(7,frame-1)),pose=sequence[i],sampleIndex=[0,2,4][pose];
  const offsets=def.melee?melee:ranged,p=def.side[pose];
- return [p[0]+offsets[i][0]-offsets[sampleIndex][0],p[1]+offsets[i][1]-offsets[sampleIndex][1]];
+ const point:[number,number]=[p[0]+offsets[i][0]-offsets[sampleIndex][0],p[1]+offsets[i][1]-offsets[sampleIndex][1]];
+ return id==='hana'?[80+(point[0]-80)*NORMALIZED_ASSET_SCALE,142+(point[1]-142)*NORMALIZED_ASSET_SCALE]:point;
 }
 export function weaponPoint(id:string,position:Point,north:boolean,left:boolean,frame:number):Point{
  const [x,y]=muzzlePixel(id,north,frame),size=poseSize(id,north),

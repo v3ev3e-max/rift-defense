@@ -28,7 +28,9 @@ for hero_id in heroes:
             rows.append({'hero':hero_id,'path':str(path.relative_to(ROOT)),'size':list(im.size),'bounds':bounds})
             if size and im.size!=size: failures.append(f'{hero_id}: wrong canvas {path.name} {im.size}, expected {size}')
             if not bounds: failures.append(f'{hero_id}: empty transparent image {path.name}')
-            elif min(bounds[0],bounds[1],im.width-bounds[2],im.height-bounds[3])<2: warnings.append(f'{hero_id}: tight transparent margin {path.name}')
+            elif min(bounds[0],bounds[1],im.width-bounds[2],im.height-bounds[3])<2:
+                runtime_motion=('assets/combat' in path.as_posix() or 'hero-defeat' in path.as_posix() or ('assets/heroes' in path.as_posix() and path.name.startswith('frame_')))
+                (failures if runtime_motion else warnings).append(f'{hero_id}: tight transparent margin {path.name}')
         except Exception as exc: failures.append(f'{hero_id}: unreadable {path.name}: {exc}')
 
 for n in (1,2):
