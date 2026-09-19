@@ -78,6 +78,18 @@ export function campaignWave(stage:CampaignStage,n:number):Wave{
  const objective=n===stage.waves?(boss??regionalNamed[region-1]):undefined;
  return {number:n,enemies:list,interval:Math.max(.62,.98-(region-1)*.015-sub*.002-(dense?.16:0)),reward:20+n*3+region*2,elite:n===stage.waves&&!boss,boss,objective,objectiveName:boss?undefined:enemies[regionalNamed[region-1]].name,phase:stage.name};
 }
+/** Every enemy that the wave generator can spawn for a stage, including
+ * injected vanguards and final-wave objectives that are not in stage.enemies. */
+export function campaignEnemyIds(stage:CampaignStage){
+ const ids=new Set<string>();
+ for(let n=1;n<=stage.waves;n++){
+  const wave=campaignWave(stage,n);
+  wave.enemies.forEach(id=>ids.add(id));
+  if(wave.objective)ids.add(wave.objective);
+  if(wave.boss)ids.add(wave.boss);
+ }
+ return ids;
+}
 export function stageUnlocked(id:string,records:Record<string,unknown>){const i=campaignStages.findIndex(s=>s.id===id);return i===0||i>0&&!!records[campaignStages[i-1].id];}
 const tacticalPads:Slot[]=[{x:375,y:300,type:'any'},{x:495,y:300,type:'any'},{x:375,y:500,type:'any'},{x:495,y:500,type:'any'},{x:560,y:400,type:'any'},{x:400,y:400,type:'any'}];
 campaignStages.forEach(stage=>{stage.map.slots=tacticalPads.map(p=>({...p}));});

@@ -11,7 +11,7 @@ import { baseEffectCap } from "../utils/performance";
 import { reactionColors,reactionNames } from "../systems/ElementSystem";
 import { ATTACK_SECONDS, visualFrame, heroVisuals, fitVisual } from './VisualRules';
 import { enemyMotion, enemyMoveFrameCount } from './EnemyMotion';
-import {campaignRegion} from '../data/campaign';
+import {campaignEnemyIds,campaignRegion} from '../data/campaign';
 import {formationRole} from '../data/combatRoles';
 const regionalEnemyArt:Record<number,Set<string>>={
   1:new Set(['crawler']),
@@ -95,15 +95,15 @@ export class BattleScene extends Phaser.Scene {
     this.load.image('reaction-generated',assetUrl('/assets/effects/common/reaction_generated.png'));
     const campaignArea=this.model.campaign?campaignRegion(this.model.campaign):0;
     this.campaignArea=campaignArea;
-    const campaignObjective=this.model.campaign?this.model.wave.provider(this.model.campaign.waves).objective:'';
+    const campaignIds=this.model.campaign?campaignEnemyIds(this.model.campaign):new Set<string>();
     const activeEnemyDefs=Object.values(enemies).filter(def=>
-      !this.model.campaign||this.model.campaign.enemies.includes(def.id)||campaignObjective===def.id
+      !this.model.campaign||campaignIds.has(def.id)
     );
     this.initialEnemyKey=`enemy-${activeEnemyDefs[0]?.id??'crawler'}`;
     const animatedRangedEnemies=new Set(['armored','jammer','phantom']);
     for (const def of activeEnemyDefs){
       const visualId=def.visualId??def.id;
-      const regional=campaignArea>0&&(this.model.campaign!.enemies.includes(def.id)||campaignObjective===def.id)&&regionalEnemyArt[campaignArea]?.has(visualId);
+      const regional=campaignArea>0&&campaignIds.has(def.id)&&regionalEnemyArt[campaignArea]?.has(visualId);
       if(regional)this.regionalEnemyVisuals.add(def.id);
       const folder=`/assets/generated/campaign-enemies/map-${String(campaignArea).padStart(2,'0')}`;
       this.load.image(`enemy-${def.id}`, assetUrl(regional&&visualId!=="elite"?`${folder}/${visualId}.webp`:`/assets/generated/enemies/${visualId}.webp`));
@@ -822,14 +822,16 @@ export class BattleScene extends Phaser.Scene {
       }
       if(f.visual==='enemy-rift-bolt'){
         if(fxSpriteIndex<this.fxSprites.length){
-          const sp=this.fxSprites[fxSpriteIndex++],dx=f.tx-f.x,dy=f.ty-f.y,angle=Math.atan2(dy,dx),travel=Phaser.Math.Easing.Quadratic.InOut(progress),boltFrame=Math.min(3,Math.floor(progress*9)%3+1);
-          sp.setTexture(`enemy-rift-bolt-${boltFrame}`).clearTint().setPosition(Phaser.Math.Linear(f.x,f.tx,travel),Phaser.Math.Linear(f.y,f.ty,travel))
+          const boltFrame=Math.min(3,Math.floor(progress*9)%3+1),key=`enemy-rift-bolt-${boltFrame}`;
+          if(!this.textureReady(key))continue;
+          const sp=this.fxSprites[fxSpriteIndex++],dx=f.tx-f.x,dy=f.ty-f.y,angle=Math.atan2(dy,dx),travel=Phaser.Math.Easing.Quadratic.InOut(progress);
+          sp.setTexture(key).clearTint().setPosition(Phaser.Math.Linear(f.x,f.tx,travel),Phaser.Math.Linear(f.y,f.ty,travel))
             .setDisplaySize(58,25).setRotation(angle+Math.PI).setAlpha(1-progress*.12).setDepth(674).setVisible(true);
         }
         continue;
       }
       if(f.visual==='enemy-ranged-impact'){
-        if(fxSpriteIndex<this.fxSprites.length){const sp=this.fxSprites[fxSpriteIndex++],impactFrame=Math.min(3,Math.floor(progress*3)+1),size=(f.radius??38)*2.2;sp.setTexture(`enemy-ranged-impact-${impactFrame}`).clearTint().setPosition(f.tx,f.ty).setDisplaySize(size,size).setRotation(0).setAlpha(impactFrame===3?1-progress:.95).setDepth(676).setVisible(true);}
+        if(fxSpriteIndex<this.fxSprites.length){const impactFrame=Math.min(3,Math.floor(progress*3)+1),key=`enemy-ranged-impact-${impactFrame}`;if(!this.textureReady(key))continue;const sp=this.fxSprites[fxSpriteIndex++],size=(f.radius??38)*2.2;sp.setTexture(key).clearTint().setPosition(f.tx,f.ty).setDisplaySize(size,size).setRotation(0).setAlpha(impactFrame===3?1-progress:.95).setDepth(676).setVisible(true);}
         continue;
       }
       if(f.visual?.startsWith('slash-')){
@@ -863,6 +865,7 @@ export class BattleScene extends Phaser.Scene {
       }
       if (f.visual?.startsWith('enemy-')&&!f.visual.startsWith('enemy-death-')&&!f.visual.startsWith('enemy-core-') && fxSpriteIndex < this.fxSprites.length) {
         const sp=this.fxSprites[fxSpriteIndex++], key=`enemy-fx-${f.visual.slice(6)}`;
+        if(!this.textureReady(key)){fxSpriteIndex--;continue;}
         if(sp.texture.key!==key)sp.setTexture(key);
         const size=(f.visual==='enemy-disrupt'?92:168)*(.65+progress*.45),rect=fitVisual(f.tx,f.ty,size,size,progress*.35,MAP);
         sp.setVisible(true).setPosition(rect.x,rect.y).setDisplaySize(rect.width,rect.height).setAngle(progress*55).setAlpha(.9-progress*.65).setDepth(655);
@@ -870,10 +873,11 @@ export class BattleScene extends Phaser.Scene {
       }
       if(f.visual?.startsWith('enemy-death-')&&fxSpriteIndex<this.fxSprites.length){
         const sp=this.fxSprites[fxSpriteIndex++],kind=f.visual.slice('enemy-death-'.length),size=enemies[kind]?.boss?126:enemies[kind]?.armor?76:68,frame=Math.min(3,Math.floor(progress*3)+1);
-        const deathKey=this.regionalEnemyVisuals.has(kind)?`enemy-${kind}-death-${frame}`:`enemy-${kind}`;
+        const requested=this.regionalEnemyVisuals.has(kind)?`enemy-${kind}-death-${frame}`:`enemy-${kind}`;
+        const deathKey=this.textureReady(requested)?requested:this.textureReady(`enemy-${kind}`)?`enemy-${kind}`:this.initialEnemyKey;
         sp.setTexture(deathKey).clearTint().setPosition(f.tx,f.ty-progress*7).setDisplaySize(size,size).setAngle(0).setAlpha(frame===3?Math.max(0,1-progress):1).setDepth(675).setVisible(true);continue;
       }
-      if(f.visual?.startsWith('enemy-core-')&&fxSpriteIndex<this.fxSprites.length){const sp=this.fxSprites[fxSpriteIndex++],kind=f.visual.slice('enemy-core-'.length),size=enemies[kind]?.boss?126:enemies[kind]?.armor?76:68;sp.setTexture(`enemy-${kind}`).setTint(0xffc6b5).setPosition(f.tx-progress*18,f.ty).setDisplaySize(size*(1+progress*.25),size*(1-progress*.18)).setAlpha(1-progress).setDepth(676).setVisible(true);continue;}
+      if(f.visual?.startsWith('enemy-core-')&&fxSpriteIndex<this.fxSprites.length){const sp=this.fxSprites[fxSpriteIndex++],kind=f.visual.slice('enemy-core-'.length),size=enemies[kind]?.boss?126:enemies[kind]?.armor?76:68,key=this.textureReady(`enemy-${kind}`)?`enemy-${kind}`:this.initialEnemyKey;sp.setTexture(key).setTint(0xffc6b5).setPosition(f.tx-progress*18,f.ty).setDisplaySize(size*(1+progress*.25),size*(1-progress*.18)).setAlpha(1-progress).setDepth(676).setVisible(true);continue;}
       if (f.visual?.startsWith('common-') && fxSpriteIndex < this.fxSprites.length) {
         const sp=this.fxSprites[fxSpriteIndex++];
         if(sp.texture.key!==f.visual)sp.setTexture(f.visual);
