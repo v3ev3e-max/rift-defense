@@ -4676,6 +4676,21 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 /* Skill cycle: cast -> cooldown -> energy charge -> ready. */
 .campaign-skill-card.cooldown:before{content:'';position:absolute;z-index:1;left:0;right:0;bottom:0;height:var(--cooldown);background:#02080dcc;pointer-events:none;transition:height .15s linear}.campaign-skill-card.cooldown img{filter:grayscale(.72) brightness(.56)!important}.campaign-skill-card.charging>i{box-shadow:0 0 7px #65f4d1aa}.campaign-skill-card.cooldown>i{width:0!important}
 
+/* Keep deployment controls inside the scrollable battle surface. The previous
+ * low-height fixed bar lost its reserved padding later in the cascade and was
+ * clipped by the app shell on both narrow desktop windows and phones. */
+.app-shell:has(.campaign-battle)>#screen{overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain}
+.campaign-battle{padding-bottom:max(8px,env(safe-area-inset-bottom))}
+@media(max-width:849px){
+ .campaign-battle{min-height:min-content;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+ .campaign-battle .compact-actions{position:sticky!important;left:auto!important;bottom:0!important;transform:none!important;box-sizing:border-box;width:100%!important;flex:none;z-index:740;background:#102936f7;padding-bottom:calc(5px + env(safe-area-inset-bottom))!important;box-shadow:0 -8px 18px #06131c99}
+}
+@media(max-width:700px){
+ .campaign-battle .compact-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .campaign-battle #campaign-prep-exit{order:0}
+ .campaign-battle .compact-actions .btn{min-width:0!important;min-height:48px!important;font-size:11px!important}
+}
+
 
 
 /* Pointer-stable image cursors and animated command menus. */
