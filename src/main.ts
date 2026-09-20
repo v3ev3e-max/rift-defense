@@ -844,6 +844,7 @@ class App {
       setBtn('campaign-start-btn',m.started?'방어 중':waiting?`배치 ${placed}/${m.units.length}`:formationComplete(m.units.map(u=>u.heroId))?'방어 시작':'요원 선택 필요',m.started||waiting>0||!formationComplete(m.units.map(u=>u.heroId)));
       document.getElementById('campaign-start-btn')?.classList.toggle('battle-running',m.started);
       const prep=document.getElementById('campaign-prep');if(prep)prep.hidden=m.started;
+      const prepExit=document.getElementById('campaign-prep-exit');if(prepExit)prepExit.hidden=m.started;
       const growthHost=this.root.querySelector<HTMLElement>('.campaign-battle .growth-host');if(growthHost)growthHost.hidden=false;
       const extra=this.root.querySelector<HTMLElement>('.campaign-battle .campaign-extra');if(extra)extra.hidden=!m.started;
       const count=document.getElementById('prep-count');if(count)count.textContent=`${placed} / ${m.units.length}`;

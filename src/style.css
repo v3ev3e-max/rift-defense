@@ -4648,6 +4648,9 @@ html,body,#app{height:100%;overflow:hidden}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .campaign-battle .battle-selection-hint{margin:0;color:#b9d7df;font-size:11px;line-height:1.35}
 .campaign-battle #campaign-start-btn.battle-running:disabled{opacity:1;color:#cafff2;border-color:#58d9bc;background:#16483f;box-shadow:inset 0 0 0 1px #75e8cf55}
+.campaign-battle #campaign-prep-exit{border-color:#6b91a0;color:#d8f5ff;background:#102638}
+.campaign-battle #campaign-prep-exit:hover,.campaign-battle #campaign-prep-exit:focus-visible{border-color:#8ce7dc;color:#fff;background:#174052}
+@media(max-width:700px){.campaign-battle .compact-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important}.campaign-battle #campaign-prep-exit{order:4}}
 @media(max-width:700px){
  .home-screen .home-copy{display:flex;flex-direction:column;justify-content:flex-end;align-self:stretch!important;padding-bottom:10px!important}
  .home-screen .home-copy h1{font-size:clamp(32px,11vw,44px);line-height:.9;letter-spacing:-2px;margin:5px 0 10px}
