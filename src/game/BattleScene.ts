@@ -11,7 +11,7 @@ import { baseEffectCap } from "../utils/performance";
 import { reactionColors,reactionNames } from "../systems/ElementSystem";
 import { ATTACK_SECONDS, visualFrame, heroVisuals, fitVisual } from './VisualRules';
 import { enemyMotion, enemyMoveFrameCount } from './EnemyMotion';
-import {campaignEnemyIds,campaignRegion} from '../data/campaign';
+import {campaignEnemyIds,campaignLaneAsset,campaignRegion} from '../data/campaign';
 import {formationRole} from '../data/combatRoles';
 const regionalEnemyArt:Record<number,Set<string>>={
   1:new Set(['crawler']),
@@ -53,6 +53,7 @@ export class BattleScene extends Phaser.Scene {
   actionSprites: Phaser.GameObjects.Image[] = [];
   droneSprites: Phaser.GameObjects.Image[] = [];
   labels: Phaser.GameObjects.Text[] = [];
+  skillCalloutLabels: Phaser.GameObjects.Text[] = [];
   defeatCooldownLabels: Phaser.GameObjects.Text[] = [];
   reactionLabels: Phaser.GameObjects.Text[] = [];
   damageLabels: Phaser.GameObjects.Text[] = [];
@@ -105,6 +106,7 @@ export class BattleScene extends Phaser.Scene {
     this.load.image('reaction-generated',assetUrl('/assets/effects/common/reaction_generated.png'));
     const campaignArea=this.model.campaign?campaignRegion(this.model.campaign):0;
     this.campaignArea=campaignArea;
+    if(campaignArea)this.load.image('campaign-lane',assetUrl(campaignLaneAsset(campaignArea)));
     const campaignIds=this.model.campaign?campaignEnemyIds(this.model.campaign):new Set<string>();
     const activeEnemyDefs=Object.values(enemies).filter(def=>
       !this.model.campaign||campaignIds.has(def.id)
@@ -292,6 +294,10 @@ export class BattleScene extends Phaser.Scene {
           .setOrigin(0.5)
           .setVisible(false),
       );
+      this.skillCalloutLabels.push(this.add.text(0,0,'',{
+        fontFamily:'sans-serif',fontSize:'17px',fontStyle:'bold',color:'#ffffff',
+        backgroundColor:'#10233ddd',padding:{x:9,y:4},stroke:'#09131f',strokeThickness:4,align:'center',
+      }).setOrigin(.5,1).setDepth(755).setVisible(false));
       this.defeatCooldownLabels.push(this.add.text(0,0,'',{fontFamily:'monospace',fontSize:'23px',fontStyle:'bold',color:'#ffcfdf',stroke:'#351526',strokeThickness:5,align:'center'}).setOrigin(.5).setDepth(690).setVisible(false));
       this.heroShotCounts[i] = 0;
       this.heroDroneShotCounts[i] = 0;
@@ -406,6 +412,7 @@ export class BattleScene extends Phaser.Scene {
       this.enemyMarkSprites = [];
       this.droneSprites = [];
       this.labels = [];
+      this.skillCalloutLabels = [];
       this.defeatCooldownLabels = [];
       this.fxSprites = [];
       this.heroShotCounts = [];
@@ -438,12 +445,22 @@ export class BattleScene extends Phaser.Scene {
       {edge:0x241738,border:0x8a65ba,lane:0x49385e,mark:0xe19cff},
     ];
     const routeTheme=routeThemes[Math.max(0,this.campaignArea-1)]??routeThemes[4];
+    if(this.campaignArea&&this.textureReady('campaign-lane')){
+      for(const route of [this.model.map,this.model.campaign?.alternate].filter(Boolean)){
+        const routePath=route!.path;
+        for(let i=1;i<routePath.length;i++){
+          const a=routePath[i-1],b=routePath[i],dx=b.x-a.x,dy=b.y-a.y,length=Math.hypot(dx,dy);
+          this.add.tileSprite((a.x+b.x)/2,(a.y+b.y)/2,length+12,76,'campaign-lane')
+            .setRotation(Math.atan2(dy,dx)).setDepth(-1).setAlpha(this.campaignArea>=9?.9:.96);
+        }
+      }
+    }
     // The path remains a gameplay overlay, but its material follows each region.
     for(const route of [this.model.map,this.model.campaign?.alternate].filter(Boolean))for (let i = 1; i < route!.path.length; i++) {
       const path=route!.path;
       const a = path[i - 1],
         b = path[i];
-      const integrated=this.campaignArea>=9,alpha=integrated?.55:1;
+      const integrated=!!this.campaignArea,alpha=integrated?.34:1;
       g.lineStyle(integrated?68:76, routeTheme.edge,alpha*.7);
       g.lineBetween(a.x, a.y, b.x, b.y);
       g.lineStyle(integrated?62:68, routeTheme.border,alpha*.82);
@@ -598,12 +615,14 @@ export class BattleScene extends Phaser.Scene {
         sp = this.heroSprites[i],
         healthFrame=this.heroHealthFrames[i],
         label = this.labels[i],
+        skillCallout=this.skillCalloutLabels[i],
         defeatCooldown = this.defeatCooldownLabels[i];
       if (!u || u.slot < 0) {
         sp.setVisible(false);
         healthFrame.setVisible(false);
         this.droneSprites[i].setVisible(false);
         label.setVisible(false);
+        skillCallout.setVisible(false);
         defeatCooldown.setVisible(false);
         continue;
       }
@@ -669,6 +688,13 @@ export class BattleScene extends Phaser.Scene {
         .setPosition(u.x, u.y + 25)
         .setText("★".repeat(u.star))
         .setDepth(650);
+      const calloutAge=m.time-(u.skillCalloutAt??-99),showCallout=u.hp>0&&!!u.skillCallout&&calloutAge>=0&&calloutAge<1.4;
+      skillCallout.setVisible(showCallout);
+      if(showCallout){
+        const appear=Math.min(1,calloutAge/.12),fade=Math.min(1,(1.4-calloutAge)/.32);
+        skillCallout.setText(`${u.skillCallout}!`).setPosition(u.x,Math.max(28,u.y-91-calloutAge*12))
+          .setAlpha(Math.min(appear,fade)).setScale(.9+.1*appear);
+      }
       if ((heroById[u.heroId].build === "drone" || m.builds.drone) && !m.actions.some(a=>a.active&&a.kind==="drone"&&a.owner===u.uid)) {
         const {x:dx,y:dy} = dronePoint(u,m.time);
         this.droneSprites[i].setVisible(true).setPosition(dx,dy).setDisplaySize(34,34)

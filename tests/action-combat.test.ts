@@ -51,8 +51,8 @@ it('drone deals damage on arrival and remains active during return',()=>{
 it('a recycled enemy cannot inherit a projectile aimed at the former occupant',()=>{
  const {m,u,e}=fixture();attack(m,u,e);e.active=false;m.spawn('brute');e.hp=e.maxHp=10000;advance(m,1);expect(e.hp).toBe(10000);
 });
-it('meteor lands at the selected point and skill cost/cooldown apply exactly once',()=>{
- const {m,u,e}=fixture('luna');const sounds:string[]=[];m.onSound=s=>sounds.push(s);u.skillCharge=100;expect(castAutoSkill(m,u,e)).toBe(true);expect(m.notice).toContain('루나');expect(sounds).toContain('skill-impact');expect(u.skillCharge).toBe(0);expect(u.skillReadyAt).toBe(11);expect(castAutoSkill(m,u,e)).toBe(false);expect(u.skillCharge).toBe(0);e.x+=200;advance(m,1.1);expect(e.hp).toBe(10000);
+it('meteor announces its skill above the caster and applies cost/cooldown exactly once',()=>{
+ const {m,u,e}=fixture('luna');const sounds:string[]=[];m.onSound=s=>sounds.push(s);u.skillCharge=100;expect(castAutoSkill(m,u,e)).toBe(true);expect(m.notice).toContain('루나');expect(u.skillCallout).toBe('SUPERNOVA');expect(u.skillCalloutAt).toBe(m.time);expect(sounds).toContain('skill-impact');expect(u.skillCharge).toBe(0);expect(u.skillReadyAt).toBe(11);expect(castAutoSkill(m,u,e)).toBe(false);expect(u.skillCharge).toBe(0);e.x+=200;advance(m,1.1);expect(e.hp).toBe(10000);
 });
 it.each([
  ['yuria','guardHp'],['mia','guardHp'],['leon','damageReductionUntil'],['neris','projectileGuardHits'],['livia','damageReductionUntil'],

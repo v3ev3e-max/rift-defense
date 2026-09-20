@@ -26,6 +26,7 @@ const signatureQuotes:Record<string,string>={
 };
 function announceSkill(m:BattleModel,u:Unit){
  const h=heroById[u.heroId],quote=signatureQuotes[u.heroId]??`${h.code} 전개. 목표를 제압합니다!`;
+ u.skillCallout=h.skill.split('·')[0].trim();u.skillCalloutAt=m.time;
  m.say(`${h.name} · “${quote}”`);
  const role=formationRole(u.heroId),kind=combatRoles[u.heroId].kind;
  m.onSound?.(role==='tank'?'skill-guard':kind==='support'?'skill-support':kind==='sniper'?'skill-sniper':'skill-impact');

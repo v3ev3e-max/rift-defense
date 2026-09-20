@@ -1,5 +1,5 @@
 import {expect,it} from 'vitest';
-import {campaignLocalRegion,campaignStageLabel,campaignStages,campaignWorldline,campaignWorldlines,regionalStories,stageUnlocked,worldlineUnlocked} from '../src/data/campaign';
+import {campaignLaneAsset,campaignLocalRegion,campaignStageLabel,campaignStages,campaignWorldline,campaignWorldlines,regionalStories,stageUnlocked,worldlineUnlocked} from '../src/data/campaign';
 import {campaignSelect} from '../src/ui/CampaignUI';
 import {defaultSave} from '../src/systems/SaveSystem';
 
@@ -15,6 +15,12 @@ it('splits the existing eighty operations into two four-area worldlines',()=>{
  for(const region of campaignWorldlines.flatMap(v=>v.regions)){
   expect(new Set(campaignStages.filter(v=>v.id.startsWith(`${region}-`)).map(v=>v.background))).toEqual(new Set([`map-${region}-1.webp`]));
  }
+});
+
+it('provides a generated lane texture for every campaign region',()=>{
+ expect(campaignWorldlines.flatMap(v=>v.regions).map(campaignLaneAsset)).toEqual(
+  Array.from({length:12},(_,i)=>`/assets/campaign/lanes/region-${String(i+1).padStart(2,'0')}.webp`),
+ );
 });
 
 it('opens the research worldline after the first finale while preserving sequential stage locks',()=>{
