@@ -19,6 +19,7 @@ it('ships compact looping menu music and keeps shared menu routing on one track'
  expect(main).toContain("this.audio.setMusic('formation')");
  expect(main).toContain("this.audio.setMusic('recruit')");
  expect(main).toContain("region%2===1?'battle1':'battle2'");
+ expect(main).toContain("playingBattle?(region%2===1?'battle1':'battle2'):'formation'");
 });
 
 it('ships distinct event and role skill effects instead of reusing generic samples',()=>{

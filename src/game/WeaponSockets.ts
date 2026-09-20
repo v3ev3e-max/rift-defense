@@ -12,6 +12,7 @@ const NORMALIZED_ASSET_SCALE=.925;
  * established cast occupies roughly 94px idle / 126px attack. Pose-specific
  * display sizes normalize their visible bodies without resampling the artwork. */
 export function poseSize(id:string,north:boolean,idle=false){
+ if(id==='ophilia')return 86;
  if(id==='hana')return idle?90:north?120/NORMALIZED_ASSET_SCALE:90/NORMALIZED_ASSET_SCALE;
  if(id==='celestia')return 94;
  if(id==='solara')return idle?86:north?96:80;

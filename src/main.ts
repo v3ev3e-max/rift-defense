@@ -231,7 +231,12 @@ class App {
   syncMusic(){
     if(this.screen==='home'||this.screen==='hero'||this.screen==='inventory')this.audio.setMusic('maint');
     else if(this.screen==='recruit')this.audio.setMusic('recruit');
-    else if(this.screen==='deck'||(this.screen==='battle'&&!!this.model?.campaign&&!this.model.started))this.audio.setMusic('formation');
+    else if(this.screen==='deck')this.audio.setMusic('formation');
+    else if(this.screen==='battle'&&this.model?.campaign&&!this.model.started){
+      const playingBattle=this.audio.desiredMusic==='battle1'||this.audio.desiredMusic==='battle2';
+      const region=Math.max(1,Number(this.model.campaign.id.split('-')[0])||1);
+      this.audio.setMusic(playingBattle?(region%2===1?'battle1':'battle2'):'formation');
+    }
     else if(this.screen==='battle'&&this.model?.campaign&&this.model.started&&!this.model.ended){
       const region=Math.max(1,Number(this.model.campaign.id.split('-')[0])||1);
       this.audio.setMusic(region%2===1?'battle1':'battle2');
@@ -774,7 +779,6 @@ class App {
     if (m.ended && m.result) {
       if(this.resultHandled)return;
       this.resultHandled=true;
-      this.syncMusic();
       const tutorial=document.getElementById('tutorial-hint');
       if(tutorial){tutorial.innerHTML='';tutorial.removeAttribute('data-step');}
       const s = this.save.data;

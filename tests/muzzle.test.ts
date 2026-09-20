@@ -35,6 +35,11 @@ it('keeps Hana the same visible size after adding safe source-frame gutters',()=
  expect(poseSize('hana',true,false)).toBeCloseTo(120/.925);
  expect(defeatPoseSize('hana')).toBeCloseTo(112/.925);
 });
+it('keeps Ophilia at one stable scale throughout idle and attack animation',()=>{
+ expect(poseSize('ophilia',false,true)).toBe(86);
+ expect(poseSize('ophilia',false,false)).toBe(86);
+ expect(poseSize('ophilia',true,false)).toBe(86);
+});
 it('effect reuse clears operator source metadata for chain and other effects',()=>{
  const m=new BattleModel(defaultSave());m.emit('shot',0,0,10,10,0,{sourceUid:1,sourceHero:'sera',sourceNorth:true});const f=m.effects[0];f.originResolved=true;f.life=0;
  m.emit('shot',123,234,50,50,0);expect(f.sourceUid).toBeUndefined();expect(f.sourceHero).toBeUndefined();expect(f.originResolved).toBe(false);expect(f.x).toBe(123);expect(f.y).toBe(234);
