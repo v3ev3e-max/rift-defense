@@ -3,13 +3,13 @@ import { heroById } from "../data/heroes";
 import { enemies } from "../data/enemies";
 
 import {stepAutoSkills,charge} from "./AutoSkills";
-import { attack } from "./ActionCombat";
+import { attack, supportBasic } from "./ActionCombat";
 export { attack } from "./ActionCombat";
 import { distance } from "../utils/random";
 import type { Enemy } from "../entities/Enemy";
 import type { Unit } from "../entities/HeroUnit";
 import { applyElementHit, tickElementState } from "./ElementSystem";
-import {formationRole} from '../data/combatRoles';
+import {combatRoles,formationRole} from '../data/combatRoles';
 import {isFrontlineSlot} from '../data/campaign';
 function adjacent(
   m: BattleModel,
@@ -196,6 +196,10 @@ export function stepCombat(m: BattleModel, dt: number) {
     u.cooldown -= dt;
     u.droneCooldown -= dt;
     if (u.cooldown > 0 && u.droneCooldown > 0) continue;
+    if(combatRoles[u.heroId].kind==='support'){
+      if(u.cooldown<=0&&supportBasic(m,u))u.cooldown+=1/m.stats(u).speed;
+      continue;
+    }
     let target: Enemy | undefined;
     let targetScore = -Infinity;
     for (const e of m.enemies) {

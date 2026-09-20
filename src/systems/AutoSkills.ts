@@ -14,10 +14,15 @@ export function stepAutoSkills(m:BattleModel,dt:number){
  for(const u of m.units){if(u.hp<=0||u.slot<0)continue;
   const kind=combatRoles[u.heroId].kind;
   const targets=m.enemies.filter(e=>e.active&&distance(e,u)<=m.stats(u).range);
-  if(targets.length)charge(u,dt*(kind==='melee'?7:kind==='drone'?4:2),m.time);
+  if(kind==='support')charge(u,dt*3,m.time);else if(targets.length)charge(u,dt*(kind==='melee'?7:kind==='drone'?4:2),m.time);
   if((u.skillCharge??0)<100){u.skillHeldAt=undefined;continue;}
   u.skillHeldAt??=m.time;
-  if(!m.autoSkills||u.priority==='hold'||m.time<(u.skillReadyAt??0)||!targets.length)continue;
+  if(!m.autoSkills||u.priority==='hold'||m.time<(u.skillReadyAt??0)||(kind!=='support'&&!targets.length))continue;
+  if(kind==='support'){
+   const allies=m.units.filter(v=>v!==u&&v.slot>=0&&v.hp>0&&distance(v,u)<=m.stats(u).range),needsHelp=allies.some(v=>v.hp<v.maxHp*.88||v.stunned>0||v.cooldown>.3);
+   if(needsHelp||m.time-u.skillHeldAt>=3)castAutoSkill(m,u);
+   continue;
+  }
   const preference=u.priority??'auto';
   const crowd=(e:typeof targets[number])=>targets.filter(v=>distance(e,v)<100).length;
   const score=(e:typeof targets[number])=>{
@@ -34,7 +39,7 @@ export function stepAutoSkills(m:BattleModel,dt:number){
   };
   const target=targets.sort((a,b)=>score(b)-score(a))[0];
   const urgent=target.progress>m.map.pathLength*.75||!!enemies[target.kind].boss||!!enemies[target.kind].namedRegion;
-  const support=kind==='support'||u.heroId==='mia';
+  const support=u.heroId==='mia';
   const good=support?m.units.some(v=>v!==u&&distance(v,u)<m.stats(u).range&&(v.hp<v.maxHp*.8||v.stunned>0||v.cooldown>.3)):kind==='sniper'||kind==='drone'||crowd(target)>=3;
   if(good||urgent||m.time-u.skillHeldAt>=3)castAutoSkill(m,u,target);
  }
@@ -44,6 +49,7 @@ export function stepAutoSkills(m:BattleModel,dt:number){
 export function castManualSkill(m:BattleModel,u:Unit){
  if(!m.started||m.paused||m.ended||u.hp<=0||u.slot<0||(u.skillCharge??0)<100||m.time<(u.skillReadyAt??0))return false;
  const targets=m.enemies.filter(e=>e.active&&distance(e,u)<=m.stats(u).range);
+ if(combatRoles[u.heroId].kind==='support')return castAutoSkill(m,u);
  if(!targets.length)return false;
  const target=targets.sort((a,b)=>Number(!!enemies[b.kind].boss)-Number(!!enemies[a.kind].boss)||b.progress-a.progress)[0];
  return castAutoSkill(m,u,target);

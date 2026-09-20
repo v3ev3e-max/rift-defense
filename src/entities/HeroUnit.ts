@@ -25,6 +25,12 @@ export interface Unit {
   skillCooldownDuration?:number;
   skillCallout?:string;
   skillCalloutAt?:number;
+  skillEffectUntil?:number;
+  skillEffectDuration?:number;
+  supportAttackUntil?:number;
+  supportAttackBonus?:number;
+  supportSpeedUntil?:number;
+  supportSpeedBonus?:number;
   uid: number;
   heroId: string;
   star: number;

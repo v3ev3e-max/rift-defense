@@ -506,7 +506,8 @@ export class BattleModel {
           leonAtk +
           (h.element==='fire'?elementLevel*.07:h.element==='water'?elementLevel*.05:h.element==='dark'?elementLevel*.06:elementLevel*.03)) *
         (h.faction === "arcane" && this.synergy.arcane >= 3 ? 1.15 : 1) *
-        (1 + elementAttackBonus(Math.max(this.synergy[h.element], h.secondaryElement ? this.synergy[h.secondaryElement] : 0))),
+        (1 + elementAttackBonus(Math.max(this.synergy[h.element], h.secondaryElement ? this.synergy[h.secondaryElement] : 0))) *
+        (1+((u.supportAttackUntil??0)>this.time?(u.supportAttackBonus??0):0)),
       speed:
         h.speed *
         (this.campaign&&this.doctrine==='rapid'?1+this.doctrineLevel*.06:1) *
@@ -520,7 +521,8 @@ export class BattleModel {
           (h.element==='electric'?elementLevel*.04:0) +
           (this.synergy.ballistic >= 3 ? 0.1 : 0) +
           (u.hp < u.maxHp * 0.5 ? (this.bonuses.berserk ?? 0) : 0)) *
-        (u.stunned > 0 ? 0.55 : 1),
+        (u.stunned > 0 ? 0.55 : 1) *
+        (1+((u.supportSpeedUntil??0)>this.time?(u.supportSpeedBonus??0):0)),
       range: operatorCombatRange(u.heroId,(this.bonuses.range??0)+(this.bonuses.ascend?0.15:0),!!this.campaign),
       crit: Math.min(
         0.85,
