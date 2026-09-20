@@ -1,5 +1,5 @@
 import { preserveScroll, replacePanel, updatePanel } from './ui/stablePanel';
-import {campaignSelect,campaignFormation,campaignBattle,campaignSkillBar,campaignUnit,campaignResult,squadSummary,formationFilter,filterRoster,formationHelp,campaignResearch,campaignPrep,campaignPrepEquipment,campaignPrepSelection,heroCollectionFilter} from './ui/CampaignUI';
+import {campaignSelect,campaignFormation,campaignBattle,campaignSkillBar,campaignUnit,campaignResult,squadSummary,formationFilter,filterRoster,formationHelp,campaignResearch,campaignPrep,campaignPrepEquipment,campaignPrepSelection,heroCollectionFilter,campaignPrepFilter} from './ui/CampaignUI';
 import {campaignStages,stageUnlocked,doctrines,campaignWorldlines} from './data/campaign';
 import {priorities} from './data/strategy';
 import {waveBrief} from './data/waves';
@@ -385,6 +385,7 @@ class App {
         if(first){this.save.data.campaign!.selected=first.id;this.persist();this.render();}break;
       }
       case 'campaign-prep-step':if(m?.campaign&&!m.started&&['squad','placement','equipment'].includes(id??'')){this.prepStep=id as 'squad'|'placement'|'equipment';const panel=this.root.querySelector('#campaign-prep');if(panel)replacePanel(panel,campaignPrep(m,this.prepStep));this.updateHud(true);}break;
+      case 'campaign-prep-role':if(m?.campaign&&!m.started&&['tank','support','dealer','sniper'].includes(id??'')){campaignPrepFilter.role=id as typeof campaignPrepFilter.role;const panel=this.root.querySelector('#campaign-prep');if(panel)replacePanel(panel,campaignPrep(m,this.prepStep));}break;
       case 'campaign-doctrine':{
         const d=doctrines.find(d=>d.id===id);if(!d)break;
         this.save.data.campaign!.doctrine=d.id;this.persist();
