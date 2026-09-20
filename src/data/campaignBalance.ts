@@ -6,15 +6,17 @@ export const campaignHeroOutput:Record<string,number>={arden:.62,solara:.66,auro
 export const campaignVanguardHealth=[1,1.08,1.18,1.28,1.4,1.75,2.0,2.25,2.0,2.2,2.45,2.7] as const;
 export const campaignRegionBalance=[
  {hp:5.0,attack:.45,speed:.85,stars:1},
- {hp:5.5,attack:.53,speed:.85,stars:1},
- {hp:6.2,attack:.63,speed:.85,stars:2},
- {hp:5.2,attack:.64,speed:.85,stars:2},
- {hp:5.5,attack:.72,speed:.85,stars:3},
- {hp:14.0,attack:1.25,speed:.85,stars:3},
- {hp:18.0,attack:1.55,speed:.85,stars:4},
- {hp:23.0,attack:1.90,speed:.85,stars:5},
- {hp:7.0,attack:1.40,speed:.86,stars:5},
- {hp:8.5,attack:1.70,speed:.87,stars:5},
- {hp:10.0,attack:2.05,speed:.88,stars:5},
- {hp:12.0,attack:2.50,speed:.90,stars:5},
+ {hp:6.3,attack:.55,speed:.86,stars:1},
+ {hp:7.0,attack:.68,speed:.87,stars:2},
+ {hp:7.2,attack:.72,speed:.88,stars:2},
+ {hp:8.4,attack:.86,speed:.89,stars:3},
+ {hp:10.5,attack:1.05,speed:.90,stars:3},
+ {hp:13.0,attack:1.30,speed:.91,stars:4},
+ {hp:16.0,attack:1.55,speed:.92,stars:5},
+ // The third worldline uses tougher base archetypes, so these multipliers are
+ // normalized against effective enemy HP to keep every region boundary rising.
+ {hp:22.0,attack:1.95,speed:.93,stars:5},
+ {hp:22.0,attack:2.00,speed:.94,stars:5},
+ {hp:22.0,attack:2.20,speed:.95,stars:5},
+ {hp:22.5,attack:2.55,speed:.96,stars:5},
 ] as const;

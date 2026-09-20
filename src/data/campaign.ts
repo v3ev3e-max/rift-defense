@@ -15,7 +15,10 @@ export const campaignWorldlines:CampaignWorldline[]=[
 ];
 export const campaignWorldline=(stage:CampaignStage|string)=>campaignWorldlines[Math.min(2,Math.floor((campaignRegion(stage)-1)/4))];
 export const campaignLocalRegion=(stage:CampaignStage|string)=>((campaignRegion(stage)-1)%4)+1;
-export const campaignStageLabel=(stage:CampaignStage|string)=>{const id=typeof stage==='string'?stage:stage.id,[,operation='1']=id.split('-');return `${campaignWorldline(stage).id}-${campaignLocalRegion(stage)}-${operation}`;};
+/** Player-facing stage labels match the stable save ID. Worldline context is
+ * rendered separately so a stage never becomes an ambiguous 1-1-1. */
+export const campaignStageLabel=(stage:CampaignStage|string)=>typeof stage==='string'?stage:stage.id;
+export const campaignWorldlineLabel=(stage:CampaignStage|string)=>{const worldline=campaignWorldline(stage);return `${worldline.code} · ${worldline.name}`;};
 export const worldlineUnlocked=(id:number,records:Record<string,unknown>)=>id===1||(id===2?!!records['4-10']:!!records['8-10']);
 export const regionalStories=[
  {title:'바람에 열린 문',text:'초원의 생태가 균열 파동에 뒤틀린다. 다섯 요원은 처음으로 한 팀이 되어 주민의 퇴로를 확보한다.'},
@@ -64,7 +67,7 @@ const dualLaneStageIds=new Set([
  '8-2','8-3','8-7',
  '9-2','9-6','9-8','10-3','10-7','11-2','11-6','11-9','12-2','12-4','12-7','12-9',
 ]);
-export const campaignStages:CampaignStage[]=regions.flatMap((region,ri)=>region.names.map((name,si)=>{const number=si+1,id=`${ri+1}-${number}`,mid=number===5,final=number===CAMPAIGN_STAGES_PER_REGION,dualLane=dualLaneStageIds.has(id),lateRoute=ri>=8,upper=lateRoute?[[750,360],[650,320],[520,360],[360,340],[210,390],[50,400]]:[[750,400],[50,400]],lower=lateRoute?[[750,440],[650,480],[520,440],[360,460],[210,410],[50,400]]:[[750,460],[200,460],[50,400]];return {id,name,waves:final?8:mid?6:4,power:region.power+si*Math.round(region.power*.05),reward:region.reward+si*Math.round(region.reward*.07),enemies:[...region.enemies],recommendation:dualLane?'탱커 2명 + 양 라인 화력 분산':region.recommendation,mechanic:`${region.theme}${dualLane?' 두 갈래 균열에서 적이 교대로 진입합니다. 각 라인에 전방 요원을 배치하세요.':''}${final?' 지역 최종보스가 마지막 웨이브에 출현합니다.':mid?' 지역 중간보스가 마지막 웨이브에 출현합니다.':' 마지막 웨이브의 네임드를 처치하면 완료됩니다.'}`,map:map(id,name,dualLane?upper:lateRoute?(si%2?upper:[[750,400],[610,450],[460,380],[300,430],[160,370],[50,400]]):[[750,400],[50,400]],[]),alternate:dualLane?map(`${id}-lower`,`${name} 하단 균열`,lower,[]):undefined,background:`map-${ri+1}-1.webp`,enemyHp:+(campaignRegionBalance[ri].hp*(1+si*.004)).toFixed(3),enemyAttack:+(campaignRegionBalance[ri].attack*(1+si*.004)).toFixed(3),enemySpeed:+(campaignRegionBalance[ri].speed+si*.001).toFixed(3)};}));
+export const campaignStages:CampaignStage[]=regions.flatMap((region,ri)=>region.names.map((name,si)=>{const number=si+1,id=`${ri+1}-${number}`,mid=number===5,final=number===CAMPAIGN_STAGES_PER_REGION,dualLane=dualLaneStageIds.has(id),lateRoute=ri>=8,upper=lateRoute?[[750,360],[650,320],[520,360],[360,340],[210,390],[50,400]]:[[750,400],[50,400]],lower=lateRoute?[[750,440],[650,480],[520,440],[360,460],[210,410],[50,400]]:[[750,460],[200,460],[50,400]];const operationHp=Math.pow(ri===0?1.05:1.015,si),operationAttack=Math.pow(ri===0?1.035:1.015,si),operationSpeed=si*(ri===0?.003:.002);return {id,name,waves:final?8:mid?6:4,power:region.power+si*Math.round(region.power*.05),reward:region.reward+si*Math.round(region.reward*.07),enemies:[...region.enemies],recommendation:dualLane||mid||final?'탱커 2명 + 전방 유지 · 화력 분산':region.recommendation,mechanic:`${region.theme}${dualLane?' 두 갈래 균열에서 적이 교대로 진입합니다. 각 라인에 전방 요원을 배치하세요.':''}${final?' 지역 최종보스가 마지막 웨이브에 출현합니다.':mid?' 지역 중간보스가 마지막 웨이브에 출현합니다.':' 마지막 웨이브의 네임드를 처치하면 완료됩니다.'}`,map:map(id,name,dualLane?upper:lateRoute?(si%2?upper:[[750,400],[610,450],[460,380],[300,430],[160,370],[50,400]]):[[750,400],[50,400]],[]),alternate:dualLane?map(`${id}-lower`,`${name} 하단 균열`,lower,[]):undefined,background:`map-${ri+1}-1.webp`,enemyHp:+(campaignRegionBalance[ri].hp*operationHp).toFixed(3),enemyAttack:+(campaignRegionBalance[ri].attack*operationAttack).toFixed(3),enemySpeed:+(campaignRegionBalance[ri].speed+operationSpeed).toFixed(3)};}));
 export function campaignRegion(stage:CampaignStage|string){return Math.max(1,Math.min(12,Number((typeof stage==='string'?stage:stage.id).split('-')[0])||1));}
 export const campaignLaneAsset=(region:number)=>`/assets/campaign/lanes/region-${String(Math.max(1,Math.min(12,region))).padStart(2,'0')}.webp`;
 const regionalNamed=['named_meadow','named_coast','named_autumn','named_snow','named_lab','named_cold','named_abyss','named_rift','named_sky','named_dune','named_machine','named_time'] as const;
@@ -78,8 +81,10 @@ export function campaignWave(stage:CampaignStage,n:number):Wave{
  // steadily; mid/final bosses trade raw lane density for extra waves and the
  // objective encounter instead of creating saw-tooth difficulty spikes.
  const operationPressure=[0,1,2,3,2,3,4,5,6,4][sub-1];
- const count=7+n+(region-1)+operationPressure-(stage.waves>4?2:0)-(stage.id==='4-10'?2:0);
+ const count=7+n+(region-1)+operationPressure-(stage.waves>4?2:0)-(stage.waves===8?(region===1?7:6):0)-(stage.id==='4-10'?2:0);
  const list=Array.from({length:count},(_,i)=>{
+  if(region===1&&sub>=4&&i%(stage.waves>4?12:7)===5)return 'armored';
+  if(region===1&&sub>=3&&i%(stage.waves>4?10:6)===4)return 'brute';
   if(fast&&pool.includes('sprinter')&&i%3===2)return 'sprinter';
   if(fast&&pool.includes('runner')&&i%2===1)return 'runner';
   const available=mixed||n>=3?pool.length:Math.min(pool.length,2);

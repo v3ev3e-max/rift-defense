@@ -26,10 +26,24 @@ it('named skills are not reset by their normal melee attack',()=>{
  for(let i=0;i<420;i++){m.time+=1/60;u.hp=u.maxHp;stepCombat(m,1/60);}expect(e.skillCasts).toBeGreaterThanOrEqual(1);
 });
 it('uses regional boss health and gives each boss a visible ranged second attack',()=>{
- for(const stage of campaignStages.filter(s=>s.waves>4)){const m=new BattleModel(defaultSave());m.configureCampaign(stage,['yuria']);m.start();m.wave.start(stage.waves);const id=campaignWave(stage,stage.waves).boss!;m.spawn(id);const e=m.enemies.find(e=>e.active)!;expect(e.maxHp).toBeCloseTo(enemies[id].hp*stage.enemyHp*(stage.waves===6?1.1:stage.id.startsWith('8-')?.95:stage.id.startsWith('7-')?.75:.66));expect(enemies[id].ranged).toBeTruthy();}
+ for(const stage of campaignStages.filter(s=>s.waves>4)){const m=new BattleModel(defaultSave());m.configureCampaign(stage,['yuria']);m.start();m.wave.start(stage.waves);const id=campaignWave(stage,stage.waves).boss!;m.spawn(id);const e=m.enemies.find(e=>e.active)!,region=Number(stage.id.split('-')[0]);expect(e.maxHp).toBeCloseTo(enemies[id].hp*stage.enemyHp*(stage.waves===6?.9:region===1?.36:region===2?.5:region===8?.95:region===7?.75:region>=9?.55:.66));expect(enemies[id].ranged).toBeTruthy();}
 });
 it('late ordinary operations actually spawn their regional special enemies',()=>{
  for(const stage of campaignStages.filter(s=>s.id.endsWith('-4'))){const pool=new Set([1,2,3,4].flatMap(n=>campaignWave(stage,n).enemies));for(const enemy of stage.enemies)expect(pool.has(enemy),stage.id+' '+enemy).toBe(true);}
+});
+it('raises area 1 health and attack every operation while introducing tactical enemy roles',()=>{
+ const area=campaignStages.slice(0,10);
+ for(let i=1;i<area.length;i++){
+  expect(area[i].enemyHp/area[i-1].enemyHp).toBeCloseTo(1.05,2);
+  expect(area[i].enemyAttack/area[i-1].enemyAttack).toBeCloseTo(1.035,2);
+ }
+ expect(campaignWave(area[2],1).enemies).toContain('brute');
+ expect(campaignWave(area[3],1).enemies).toContain('armored');
+});
+it('keeps effective enemy health rising at every region boundary',()=>{
+ const openings=campaignStages.filter(stage=>stage.id.endsWith('-1'));
+ const effective=(stage:typeof campaignStages[number])=>stage.enemies.reduce((sum,id)=>sum+enemies[id].hp,0)/stage.enemies.length*stage.enemyHp;
+ for(let i=1;i<openings.length;i++)expect(effective(openings[i]),`${openings[i-1].id} -> ${openings[i].id}`).toBeGreaterThan(effective(openings[i-1]));
 });
 it.each(heroes)('$id casts through its own combat effect key',hero=>{
  const m=new BattleModel(defaultSave(),()=>.5);m.configureCampaign(campaignStages[0],[hero.id],true);m.autoDeployCampaign();m.start();m.wave.queue=[];m.spawn('crawler');

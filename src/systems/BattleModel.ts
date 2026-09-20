@@ -557,7 +557,7 @@ export class BattleModel {
       e.hp*=this.campaign.enemyHp;e.maxHp=e.hp;e.speed=def.speed*this.campaign.enemySpeed;
       if(def.namedRegion)e.speed*=.55;
       if(kind==='sprinter'){e.hp*=campaignVanguardHealth[campaignRegion(this.campaign)-1];e.maxHp=e.hp;}
-      if(def.boss){e.hp=def.hp*this.campaign.enemyHp*(def.bossTier==='mid'?1.1:campaignRegion(this.campaign)===8?.95:campaignRegion(this.campaign)===7?.75:.66);e.maxHp=e.hp;e.speed*=def.bossTier==='mid'?.25:.21;}
+      if(def.boss){const region=campaignRegion(this.campaign),bossScale=def.bossTier==='mid'?.9:region===1?.36:region===2?.5:region===8?.95:region===7?.75:region>=9?.55:.66;e.hp=def.hp*this.campaign.enemyHp*bossScale;e.maxHp=e.hp;e.speed*=def.bossTier==='mid'?.25:.21;}
       e.route=this.campaign.alternate?this.spawnGeneration%2:0;
       const route=e.route?this.campaign.alternate!:this.map;Object.assign(e,route.path[0]);
       if(this.wave.data.objective===kind&&!this.objectiveGeneration){this.objectiveGeneration=e.generation??0;this.say(`${this.wave.data.boss?'BOSS':'NAMED'} · ${this.wave.data.objectiveName??def.name} 출현 · 집중 공격`);}
