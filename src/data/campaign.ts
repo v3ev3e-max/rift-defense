@@ -38,7 +38,7 @@ function map(id:string,name:string,points:number[][],pads:number[][]):BattleMap 
   pathPoint(distance,out){for(let i=0;i<segments.length;i++){if(distance<=segments[i]){const t=Math.max(0,distance)/segments[i];out.x=path[i].x+(path[i+1].x-path[i].x)*t;out.y=path[i].y+(path[i+1].y-path[i].y)*t;return out;}distance-=segments[i];}Object.assign(out,path[path.length-1]);return out;}};
 }
 const regions=[
- {names:['바람 초원 입구','고대 수로','꽃바람 언덕','초원 순찰로','바람개비 평원','고대 정원','폭풍 전야','수호자의 길','초원 심장부','초원 수호전'],background:'map-01-meadow.webp',enemies:['crawler','runner'],hp:1.10,attack:.45,speed:.46,power:420,reward:260,recommendation:'유리아 + 레이나',theme:'기본 배치와 전방 저지를 익히세요.'},
+ {names:['바람 초원 입구','고대 수로','꽃바람 언덕','초원 순찰로','바람개비 평원','고대 정원','폭풍 전야','수호자의 길','초원 심장부','초원 수호전'],background:'map-01-meadow.webp',enemies:['crawler','runner','sprinter'],hp:1.10,attack:.45,speed:.46,power:420,reward:260,recommendation:'유리아 + 레이나',theme:'기본 배치와 전방 저지를 익히세요.'},
  {names:['푸른 해안길','산호 협곡','폭풍 부두','해풍 관문','침수 산책로','파도 절벽','난파선 해역','등대 방어선','해안 심층부','해안 요새전'],background:'map-02-coast.webp',enemies:['crawler','runner','sprinter'],hp:1.17,attack:.50,speed:.48,power:620,reward:360,recommendation:'아린 + 레이나',theme:'고속 적을 후방 저격과 분산 화력으로 끊으세요.'},
  {names:['단풍 숲길','정령의 샘','붉은 수림','낙엽 회랑','고목 뿌리길','정령 안식처','안개 숲','수호목 외곽','수림 심장부','고목 수호전'],background:'map-03-autumn.webp',enemies:['crawler','runner','sprinter','brute'],hp:1.24,attack:.56,speed:.50,power:850,reward:480,recommendation:'카린 + 세라',theme:'속도가 다른 적의 진입 순서를 읽고 대응하세요.'},
  {names:['설원 초소','빙결 계곡','성문 외곽','눈보라 협로','얼음 호수','백야 관문','동결 회랑','설산 방벽','성문 접근로','설원 성문전'],background:'map-04-snow.webp',enemies:['runner','sprinter','brute','armored'],hp:1.31,attack:.62,speed:.52,power:1100,reward:620,recommendation:'유리아 + 아린',theme:'중장 적을 붙잡고 관통 화력을 집중하세요.'},
@@ -74,7 +74,11 @@ export function campaignWave(stage:CampaignStage,n:number):Wave{
  const region=campaignRegion(stage),sub=Number(stage.id.split('-')[1])||1;
  const pool=stage.enemies;
  const dense=[3,8].includes(sub),fast=sub===2,mixed=[4,6,7,9].includes(sub);
- const count=7+n+(region-1)+Math.floor((sub-1)/3)+(dense?3:0)-(stage.waves>4?2:0)-(stage.id==='4-10'?2:0);
+ // The first four operations must teach an unmistakable pressure curve instead
+ // of changing by fractions of a percent: baseline, runners, density, then a
+ // dense mixed rush. Later operations keep their existing regional cadence.
+ const openingPressure=region===1&&sub<=4?[0,1,3,4][sub-1]:Math.floor((sub-1)/3)+(dense?3:0);
+ const count=7+n+(region-1)+openingPressure-(stage.waves>4?2:0)-(stage.id==='4-10'?2:0);
  const list=Array.from({length:count},(_,i)=>{
   if(fast&&pool.includes('sprinter')&&i%3===2)return 'sprinter';
   if(fast&&pool.includes('runner')&&i%2===1)return 'runner';
@@ -87,7 +91,8 @@ export function campaignWave(stage:CampaignStage,n:number):Wave{
  list.unshift(...Array<string>(vanguard).fill('sprinter'));
  const boss=n===stage.waves?(sub===5?regionalMidBoss[region-1]:sub===CAMPAIGN_STAGES_PER_REGION?regionalFinalBoss[region-1]:undefined):undefined;
  const objective=n===stage.waves?(boss??regionalNamed[region-1]):undefined;
- return {number:n,enemies:list,interval:Math.max(.62,.98-(region-1)*.015-sub*.002-(dense?.16:0)),reward:20+n*3+region*2,elite:n===stage.waves&&!boss,boss,objective,objectiveName:boss?undefined:enemies[regionalNamed[region-1]].name,phase:stage.name};
+ const openingInterval=region===1&&sub<=4?[.98,.91,.83,.77][sub-1]:undefined;
+ return {number:n,enemies:list,interval:openingInterval??Math.max(.62,.98-(region-1)*.015-sub*.002-(dense?.16:0)),reward:20+n*3+region*2,elite:n===stage.waves&&!boss,boss,objective,objectiveName:boss?undefined:enemies[regionalNamed[region-1]].name,phase:stage.name};
 }
 /** Every enemy that the wave generator can spawn for a stage, including
  * injected vanguards and final-wave objectives that are not in stage.enemies. */

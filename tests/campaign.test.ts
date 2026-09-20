@@ -50,6 +50,14 @@ describe('campaign foundations',()=>{
   expect(campaignStages.filter(s=>s.id.endsWith('-5')||s.id.endsWith('-10')).every(s=>!s.alternate)).toBe(true);
   for(const s of campaignStages){expect(s.map.slots).toHaveLength(6);expect(new Set(s.map.slots.map(p=>`${p.x},${p.y}`)).size).toBe(6);expect(s.map.path[0].x).toBe(750);expect(s.map.path.at(-1)).toEqual({x:50,y:400});expect(s.map.pathPoint(s.map.pathLength+100,{x:0,y:0})).toEqual(s.map.path.at(-1));if(s.alternate){expect(s.alternate.path[0]).toEqual({x:750,y:Number(s.id.split('-')[0])>=9?440:460});expect(s.alternate.path.at(-1)).toEqual({x:50,y:400});expect(frontlineSlots(s)).toEqual([1,3,4]);}else expect(frontlineSlots(s)).toEqual([4]);}
  });
+ it('raises pressure through operations 1-1 to 1-4 and introduces the sprinter in the mixed rush',()=>{
+  const opening=campaignStages.slice(0,4).map(stage=>campaignWave(stage,1));
+  expect(opening.map(w=>w.enemies.length)).toEqual([11,12,14,15]);
+  expect(opening.map(w=>w.interval)).toEqual([.98,.91,.83,.77]);
+  expect(opening.every((wave,i)=>i===0||wave.enemies.length>opening[i-1].enemies.length)).toBe(true);
+  expect(opening.every((wave,i)=>i===0||wave.interval<opening[i-1].interval)).toBe(true);
+  expect(opening[3].enemies).toContain('sprinter');
+ });
  it('alternates enemies across both area-8 lanes and auto-deploys two tanks to separate fronts',()=>{const stage=campaignStages.find(s=>s.id==='8-3')!,m=new BattleModel(defaultSave(),()=>.5);m.configureCampaign(stage,['yuria','mia','arin','sera','reina'],true);expect(m.autoDeployCampaign()).toBe(true);expect(m.units.filter(u=>formationRole(u.heroId)==='tank').map(u=>u.slot).sort()).toEqual([1,3]);m.start();m.wave.queue=[];expect(m.spawn('crawler')).toBe(true);expect(m.spawn('runner')).toBe(true);const active=m.enemies.filter(e=>e.active);expect(active.map(e=>e.route).sort()).toEqual([0,1]);expect(new Set(active.map(e=>e.y)).size).toBe(2);});
  it('allows preparation moves and requires ten seconds for both swapped units',()=>{
   const stage=campaignStages[0],m=new BattleModel(defaultSave(),()=>.5,stage.map);m.campaign=stage;
