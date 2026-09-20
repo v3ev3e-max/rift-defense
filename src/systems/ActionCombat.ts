@@ -24,9 +24,18 @@ export const blankAction=():CombatAction=>({reactionOnly:false,sniperImpact:fals
 const signatureQuotes:Record<string,string>={
  yuria:'모두 제 뒤로. 방벽을 전개합니다!',reina:'시야 확보. 탄막을 개시한다!',sera:'트리거 해제. 전부 쓸어버릴게요!',noel:'사선 고정. 한 발이면 충분해.',arin:'레일 출력 최대. 관통합니다!',karin:'도망쳐도 소용없어. 베어낸다!',
 };
+/** Short Korean names rendered above the SD character during a skill cast. */
+export const skillCalloutNames:Record<string,string>={
+ yuria:'수호의 파도',reina:'진홍 탄막',arin:'황금 창',karin:'진홍 칼날',sera:'한계 돌파',noel:'지평선 파괴',
+ luna:'초신성',mia:'나노 연결',ian:'다이달로스 편대',leon:'공명 섬광',adela:'전격 연쇄',neris:'수류장',
+ belka:'점화 폭발',serin:'야상곡 저주',kyle:'과충전 연결',livia:'절대 해일',kairon:'지옥불 폭발',theria:'폭풍 왕관',
+ noxia:'사건의 지평선',aurora:'이온 오로라',arden:'검은 태양',hana:'해일 방벽',zion:'적색 조준',gaia:'전격 방패',
+ elise:'백색 궤적',vera:'밤의 화살',astra:'암흑 성채',solara:'태양 배열',celestia:'종말의 창',rhea:'생명 개화',
+ echo:'박자 연결',meriel:'잿불 성가',selene:'월식 찬가',ophilia:'천공 성역',
+};
 function announceSkill(m:BattleModel,u:Unit){
- const h=heroById[u.heroId],quote=signatureQuotes[u.heroId]??`${h.code} 전개. 목표를 제압합니다!`;
- u.skillCallout=h.skill.split('·')[0].trim();u.skillCalloutAt=m.time;
+ const h=heroById[u.heroId],callout=skillCalloutNames[u.heroId]??'필살기',quote=signatureQuotes[u.heroId]??`${callout} 전개. 목표를 제압합니다!`;
+ u.skillCallout=callout;u.skillCalloutAt=m.time;
  m.say(`${h.name} · “${quote}”`);
  const role=formationRole(u.heroId),kind=combatRoles[u.heroId].kind;
  m.onSound?.(role==='tank'?'skill-guard':kind==='support'?'skill-support':kind==='sniper'?'skill-sniper':'skill-impact');

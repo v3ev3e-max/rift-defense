@@ -1,12 +1,15 @@
 import {it,expect} from 'vitest';
 import {BattleModel} from '../src/systems/BattleModel';
 import {defaultSave} from '../src/systems/SaveSystem';
-import {attack,stepActions,castAutoSkill,SNIPER_ROUND_SPEED} from '../src/systems/ActionCombat';
+import {attack,stepActions,castAutoSkill,SNIPER_ROUND_SPEED,skillCalloutNames} from '../src/systems/ActionCombat';
 import {combatRoles} from '../src/data/combatRoles';
 import {heroes} from '../src/data/heroes';
 import {poseSize,weaponPoint} from '../src/game/WeaponSockets';
 const fixture=(id='sera',star=1)=>{const m=new BattleModel(defaultSave(),()=>.99),u=m.addUnit(id,star);m.spawn('brute');const e=m.enemies[0];e.x=u.x+55;e.y=u.y;e.hp=e.maxHp=10000;e.armor=0;return {m,u,e};};
 const advance=(m:BattleModel,seconds:number)=>{for(let i=0;i<Math.ceil(seconds*60);i++){m.time+=1/60;stepActions(m,1/60);}};
+it('gives every hero a Korean SD skill callout',()=>{
+ for(const hero of heroes){expect(skillCalloutNames[hero.id],hero.id).toBeTruthy();expect(skillCalloutNames[hero.id]).toMatch(/[가-힣]/);}
+});
 it('burst damage arrives as three distinct timed hits and preserves launch position after moving',()=>{
  const {m,u,e}=fixture();attack(m,u,e);const a=m.actions.find(a=>a.active)!,x=a.x,y=a.y;expect(e.hp).toBe(10000);u.x+=110;advance(m,.15);const first=e.hp;expect(first).toBeLessThan(10000);expect(a.x).toBe(x);expect(a.y).toBe(y);advance(m,.2);expect(e.hp).toBeLessThan(first);expect(m.records[0].parts.basic).toBeGreaterThan(0);
 });
@@ -52,7 +55,7 @@ it('a recycled enemy cannot inherit a projectile aimed at the former occupant',(
  const {m,u,e}=fixture();attack(m,u,e);e.active=false;m.spawn('brute');e.hp=e.maxHp=10000;advance(m,1);expect(e.hp).toBe(10000);
 });
 it('meteor announces its skill above the caster and applies cost/cooldown exactly once',()=>{
- const {m,u,e}=fixture('luna');const sounds:string[]=[];m.onSound=s=>sounds.push(s);u.skillCharge=100;expect(castAutoSkill(m,u,e)).toBe(true);expect(m.notice).toContain('루나');expect(u.skillCallout).toBe('SUPERNOVA');expect(u.skillCalloutAt).toBe(m.time);expect(sounds).toContain('skill-impact');expect(u.skillCharge).toBe(0);expect(u.skillReadyAt).toBe(11);expect(castAutoSkill(m,u,e)).toBe(false);expect(u.skillCharge).toBe(0);e.x+=200;advance(m,1.1);expect(e.hp).toBe(10000);
+ const {m,u,e}=fixture('luna');const sounds:string[]=[];m.onSound=s=>sounds.push(s);u.skillCharge=100;expect(castAutoSkill(m,u,e)).toBe(true);expect(m.notice).toContain('루나');expect(u.skillCallout).toBe('초신성');expect(u.skillCalloutAt).toBe(m.time);expect(sounds).toContain('skill-impact');expect(u.skillCharge).toBe(0);expect(u.skillReadyAt).toBe(11);expect(castAutoSkill(m,u,e)).toBe(false);expect(u.skillCharge).toBe(0);e.x+=200;advance(m,1.1);expect(e.hp).toBe(10000);
 });
 it.each([
  ['yuria','guardHp'],['mia','guardHp'],['leon','damageReductionUntil'],['neris','projectileGuardHits'],['livia','damageReductionUntil'],
