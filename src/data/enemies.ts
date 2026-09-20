@@ -166,6 +166,38 @@ export const enemies: Record<string, EnemyDef> = {
   rift_executioner: {id:"rift_executioner",name:"균열 처형자",hp:2600,speed:50,armor:19,reward:155,color:0xf05a7e,coreDamage:33,boss:"rage",bossTier:"mid"},
   rift_sovereign: {id:"rift_sovereign",name:"종말의 균열군주",hp:3900,speed:33,armor:26,reward:260,color:0xe64cff,coreDamage:55,boss:"void",bossTier:"final"},
 
+  sky_guard:{id:'sky_guard',name:'천공 방위체',hp:420,speed:59,armor:22,reward:13,color:0xbfefff,coreDamage:9,archetype:'bruiser'},
+  sky_lancer:{id:'sky_lancer',name:'천공 창기수',hp:235,speed:172,armor:8,reward:11,color:0x72dcff,coreDamage:8,archetype:'charger',charge:{interval:5.8,distance:55}},
+  cloud_gunner:{id:'cloud_gunner',name:'운해 포격기',hp:210,speed:72,armor:6,reward:12,color:0x84e7ff,coreDamage:8,archetype:'ranged',ranged:{range:165,cooldown:3,damage:9,projectileSpeed:470}},
+  aether_mender:{id:'aether_mender',name:'에테르 치유익',hp:250,speed:70,armor:7,reward:14,color:0xc8fff5,coreDamage:7,archetype:'support',support:{interval:5.5,heal:.08,radius:145}},
+  named_sky:{id:'named_sky',name:'폭풍의 백인대장',hp:820,speed:61,armor:22,reward:46,color:0x9eefff,coreDamage:20,namedRegion:9,namedSkill:'gale'},
+  storm_wyvern:{id:'storm_wyvern',name:'뇌운 와이번',hp:3000,speed:48,armor:22,reward:180,color:0x7adfff,coreDamage:36,boss:'storm',bossTier:'mid'},
+  sky_dominion:{id:'sky_dominion',name:'천공의 지배자',hp:4400,speed:31,armor:29,reward:290,color:0xd2f6ff,coreDamage:58,boss:'storm',bossTier:'final'},
+
+  relic_golem:{id:'relic_golem',name:'태양 유적 골렘',hp:500,speed:54,armor:25,reward:15,color:0xf3bd5c,coreDamage:10,archetype:'bruiser'},
+  dune_ripper:{id:'dune_ripper',name:'사구 갈퀴수',hp:270,speed:180,armor:9,reward:13,color:0xe7a94d,coreDamage:9,archetype:'charger',charge:{interval:5.4,distance:60}},
+  sun_archer:{id:'sun_archer',name:'태양궁 사수',hp:235,speed:69,armor:8,reward:14,color:0xffc95b,coreDamage:9,archetype:'ranged',ranged:{range:170,cooldown:2.9,damage:10,projectileSpeed:500}},
+  mirage_oracle:{id:'mirage_oracle',name:'신기루 예언자',hp:280,speed:66,armor:9,reward:16,color:0xce8cff,coreDamage:8,archetype:'support',support:{interval:5.2,heal:.09,radius:150}},
+  named_dune:{id:'named_dune',name:'황혼의 전쟁사제',hp:900,speed:58,armor:25,reward:50,color:0xffb84f,coreDamage:22,namedRegion:10,namedSkill:'mirage'},
+  sand_colossus:{id:'sand_colossus',name:'사막의 거신',hp:3400,speed:39,armor:28,reward:205,color:0xdfa94e,coreDamage:39,boss:'rage',bossTier:'mid'},
+  solar_sphinx:{id:'solar_sphinx',name:'태양의 스핑크스',hp:4900,speed:34,armor:31,reward:325,color:0xffcb55,coreDamage:62,boss:'rage',bossTier:'final'},
+
+  alloy_guard:{id:'alloy_guard',name:'합금 수호체',hp:590,speed:50,armor:29,reward:17,color:0x74dcd9,coreDamage:11,archetype:'bruiser'},
+  gear_hound:{id:'gear_hound',name:'기어 사냥개',hp:305,speed:188,armor:11,reward:15,color:0xff8c42,coreDamage:10,archetype:'charger',charge:{interval:5,distance:65}},
+  pulse_turret:{id:'pulse_turret',name:'맥동 포탑',hp:270,speed:63,armor:12,reward:16,color:0x64e6ef,coreDamage:10,archetype:'ranged',ranged:{range:175,cooldown:2.7,damage:11,projectileSpeed:530}},
+  repair_weaver:{id:'repair_weaver',name:'수복 직조기',hp:320,speed:64,armor:12,reward:18,color:0x72f3e2,coreDamage:9,archetype:'support',support:{interval:4.8,heal:.1,radius:155}},
+  named_machine:{id:'named_machine',name:'제철소 백인대장',hp:1000,speed:55,armor:29,reward:56,color:0xff8f45,coreDamage:24,namedRegion:11,namedSkill:'repair'},
+  forge_overseer:{id:'forge_overseer',name:'용광로 감독관',hp:3850,speed:37,armor:32,reward:235,color:0xff7640,coreDamage:42,boss:'rage',bossTier:'mid'},
+  machine_god:{id:'machine_god',name:'기계도시의 신핵',hp:5600,speed:28,armor:35,reward:370,color:0x5ce6e1,coreDamage:67,boss:'storm',bossTier:'final'},
+
+  paradox_shell:{id:'paradox_shell',name:'역설 방각체',hp:680,speed:47,armor:34,reward:20,color:0xc58cff,coreDamage:12,archetype:'bruiser'},
+  chrono_stalker:{id:'chrono_stalker',name:'시간 추적자',hp:340,speed:196,armor:13,reward:18,color:0x9b76ff,coreDamage:11,archetype:'charger',charge:{interval:4.8,distance:70}},
+  epoch_caster:{id:'epoch_caster',name:'시대 투사체',hp:300,speed:61,armor:14,reward:19,color:0xb078ff,coreDamage:11,archetype:'ranged',ranged:{range:180,cooldown:2.6,damage:12,projectileSpeed:560}},
+  time_mender:{id:'time_mender',name:'시간 복원자',hp:355,speed:62,armor:14,reward:21,color:0x78dfff,coreDamage:10,archetype:'support',support:{interval:4.6,heal:.11,radius:160}},
+  named_time:{id:'named_time',name:'시간선 처형자',hp:1120,speed:52,armor:33,reward:64,color:0xd674ff,coreDamage:27,namedRegion:12,namedSkill:'rewind'},
+  chrono_reaper:{id:'chrono_reaper',name:'시간 수확자',hp:4400,speed:43,armor:35,reward:270,color:0xca65ff,coreDamage:46,boss:'void',bossTier:'mid'},
+  aeon_sovereign:{id:'aeon_sovereign',name:'영겁의 군주',hp:6500,speed:27,armor:39,reward:430,color:0xc281ff,coreDamage:72,boss:'void',bossTier:'final'},
+
 };
 
 // Regional bosses retain their signature ability and also threaten the front line

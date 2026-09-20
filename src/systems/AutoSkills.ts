@@ -4,13 +4,17 @@ import {combatRoles} from '../data/combatRoles';
 import {enemies} from '../data/enemies';
 import {castAutoSkill} from './ActionCombat';
 const distance=(a:{x:number;y:number},b:{x:number;y:number})=>Math.hypot(a.x-b.x,a.y-b.y);
-export function charge(u:Unit,value:number){u.skillCharge=Math.min(100,(u.skillCharge??0)+value*(1+(u.branch==="tempo"?.25:0)+(u.ultimate==="tempo"?.4:0)));}
+/** Skill energy cannot accumulate during the post-cast cooldown. */
+export function charge(u:Unit,value:number,now=Infinity){
+ if(now<(u.skillReadyAt??0))return;
+ u.skillCharge=Math.min(100,(u.skillCharge??0)+value*(1+(u.branch==="tempo"?.25:0)+(u.ultimate==="tempo"?.4:0)));
+}
 export function stepAutoSkills(m:BattleModel,dt:number){
  if(m.paused||m.ended)return;
  for(const u of m.units){if(u.hp<=0||u.slot<0)continue;
   const kind=combatRoles[u.heroId].kind;
   const targets=m.enemies.filter(e=>e.active&&distance(e,u)<=m.stats(u).range);
-  if(targets.length)charge(u,dt*(kind==='melee'?7:kind==='drone'?4:2));
+  if(targets.length)charge(u,dt*(kind==='melee'?7:kind==='drone'?4:2),m.time);
   if((u.skillCharge??0)<100){u.skillHeldAt=undefined;continue;}
   u.skillHeldAt??=m.time;
   if(!m.autoSkills||u.priority==='hold'||m.time<(u.skillReadyAt??0)||!targets.length)continue;

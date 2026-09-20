@@ -38,17 +38,17 @@ describe('campaign foundations',()=>{
     console.log(stage.id,{won:m.result?.won,core:m.core,time:Math.round(m.time),wave:m.wave.number,kills:m.kills});expect(m.ended).toBe(true);if(Number(stage.id.split('-')[0])<=5)expect(m.result?.won,`${stage.id} must be clearable by the unequipped starter squad`).toBe(true);
    }await new Promise(resolve=>setTimeout(resolve,0));
  },60000);
- it('defines eight regions of ten stages with split routes that grow more frequent after area 1',()=>{
-  expect(campaignStages).toHaveLength(80);expect(campaignStages[0].id).toBe('1-1');expect(campaignStages.at(-1)?.id).toBe('8-10');
-  expect(campaignStages.map(s=>s.waves)).toEqual(Array.from({length:8},()=>[4,4,4,4,6,4,4,4,4,8]).flat());
+ it('defines twelve regions of ten stages with split routes that grow more frequent after area 1',()=>{
+  expect(campaignStages).toHaveLength(120);expect(campaignStages[0].id).toBe('1-1');expect(campaignStages.at(-1)?.id).toBe('12-10');
+  expect(campaignStages.map(s=>s.waves)).toEqual(Array.from({length:12},()=>[4,4,4,4,6,4,4,4,4,8]).flat());
   expect(campaignStages[0].enemyHp).toBeLessThan(campaignStages.at(-1)!.enemyHp);
   expect(campaignStages[0].enemyAttack).toBeLessThan(campaignStages.at(-1)!.enemyAttack);
   expect(campaignStages.every((s,i)=>i===0||s.enemyHp>campaignStages[i-1].enemyHp)).toBe(true);
-  expect(campaignStages.map(s=>s.background)).toEqual(Array.from({length:8},(_,region)=>Array.from({length:10},()=>`map-${region+1}-1.webp`)).flat());
-  const dual=campaignStages.filter(s=>s.alternate);expect(dual.map(s=>s.id)).toEqual(['2-7','3-4','3-8','4-3','4-7','5-4','5-8','6-3','6-7','7-2','7-6','7-9','8-2','8-3','8-7']);
+  expect(campaignStages.map(s=>s.background)).toEqual(Array.from({length:12},(_,region)=>Array.from({length:10},()=>`map-${region+1}-1.webp`)).flat());
+  const dual=campaignStages.filter(s=>s.alternate);expect(dual.map(s=>s.id)).toEqual(['2-7','3-4','3-8','4-3','4-7','5-4','5-8','6-3','6-7','7-2','7-6','7-9','8-2','8-3','8-7','9-2','9-6','9-8','10-3','10-7','11-2','11-6','11-9','12-2','12-4','12-7','12-9']);
   expect(campaignStages.filter(s=>s.id.startsWith('1-')&&s.alternate)).toHaveLength(0);
   expect(campaignStages.filter(s=>s.id.endsWith('-5')||s.id.endsWith('-10')).every(s=>!s.alternate)).toBe(true);
-  for(const s of campaignStages){expect(s.map.slots).toHaveLength(6);expect(new Set(s.map.slots.map(p=>`${p.x},${p.y}`)).size).toBe(6);expect(s.map.path[0].x).toBe(750);expect(s.map.path.at(-1)).toEqual({x:50,y:400});expect(s.map.pathPoint(s.map.pathLength+100,{x:0,y:0})).toEqual(s.map.path.at(-1));if(s.alternate){expect(s.alternate.path[0]).toEqual({x:750,y:460});expect(s.alternate.path.at(-1)).toEqual({x:50,y:400});expect(frontlineSlots(s)).toEqual([1,3,4]);}else expect(frontlineSlots(s)).toEqual([4]);}
+  for(const s of campaignStages){expect(s.map.slots).toHaveLength(6);expect(new Set(s.map.slots.map(p=>`${p.x},${p.y}`)).size).toBe(6);expect(s.map.path[0].x).toBe(750);expect(s.map.path.at(-1)).toEqual({x:50,y:400});expect(s.map.pathPoint(s.map.pathLength+100,{x:0,y:0})).toEqual(s.map.path.at(-1));if(s.alternate){expect(s.alternate.path[0]).toEqual({x:750,y:Number(s.id.split('-')[0])>=9?440:460});expect(s.alternate.path.at(-1)).toEqual({x:50,y:400});expect(frontlineSlots(s)).toEqual([1,3,4]);}else expect(frontlineSlots(s)).toEqual([4]);}
  });
  it('alternates enemies across both area-8 lanes and auto-deploys two tanks to separate fronts',()=>{const stage=campaignStages.find(s=>s.id==='8-3')!,m=new BattleModel(defaultSave(),()=>.5);m.configureCampaign(stage,['yuria','mia','arin','sera','reina'],true);expect(m.autoDeployCampaign()).toBe(true);expect(m.units.filter(u=>formationRole(u.heroId)==='tank').map(u=>u.slot).sort()).toEqual([1,3]);m.start();m.wave.queue=[];expect(m.spawn('crawler')).toBe(true);expect(m.spawn('runner')).toBe(true);const active=m.enemies.filter(e=>e.active);expect(active.map(e=>e.route).sort()).toEqual([0,1]);expect(new Set(active.map(e=>e.y)).size).toBe(2);});
  it('allows preparation moves and requires ten seconds for both swapped units',()=>{
@@ -78,7 +78,7 @@ describe('campaign foundations',()=>{
    expect(m.result?.won).toBe(true);expect(m.ended).toBe(true);expect(m.alive).toBe(0);
   }
  });
- it('marks every final campaign wave with one regional named, mid-boss or final-boss objective',()=>{for(const stage of campaignStages){const final=campaignWave(stage,stage.waves),region=Number(stage.id.split('-')[0]);expect(final.objective).toBe(stage.waves===8?regionalFinalBoss[region-1]:stage.waves===6?regionalMidBoss[region-1]:`named_${['meadow','coast','autumn','snow','lab','cold','abyss','rift'][region-1]}`);expect(final.objective).toBeTruthy();}});
+ it('marks every final campaign wave with one regional named, mid-boss or final-boss objective',()=>{for(const stage of campaignStages){const final=campaignWave(stage,stage.waves),region=Number(stage.id.split('-')[0]);expect(final.objective).toBe(stage.waves===8?regionalFinalBoss[region-1]:stage.waves===6?regionalMidBoss[region-1]:`named_${['meadow','coast','autumn','snow','lab','cold','abyss','rift','sky','dune','machine','time'][region-1]}`);expect(final.objective).toBeTruthy();}});
  it('activates regional named and boss-specific skills during campaign combat',()=>{const named=new BattleModel(defaultSave(),()=>.5);named.configureCampaign(campaignStages[0],['yuria']);named.start();named.wave.queue=[];named.spawn('named_meadow');const elite=named.enemies.find(e=>e.active)!;elite.namedSkillTimer=6.5;const before=elite.progress;named.step(1/60);expect(elite.progress).toBeGreaterThan(before+25);const boss=new BattleModel(defaultSave(),()=>.5);boss.configureCampaign(campaignStages[4],['yuria']);boss.start();boss.wave.queue=[];boss.spawn('frost_howler');const frost=boss.enemies.find(e=>e.active)!;const unit=boss.units[0];frost.x=unit.x;frost.y=unit.y;frost.attackTimer=10;const hp=unit.hp;boss.step(1/60);expect(unit.hp).toBeLessThan(hp);expect(boss.effects.some(f=>f.life>0&&f.visual==='enemy-frost')).toBe(true);});
 });
 

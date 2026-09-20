@@ -90,7 +90,10 @@ export interface EnemyDef {
   boss?: "rage" | "frost" | "storm" | "void";
   bossTier?: "mid" | "final";
   namedRegion?: number;
-  namedSkill?: "rush"|"mend"|"root"|"frostbite"|"barrage"|"jam"|"drain"|"collapse";
+  namedSkill?: "rush"|"mend"|"root"|"frostbite"|"barrage"|"jam"|"drain"|"collapse"|"gale"|"mirage"|"repair"|"rewind";
+  archetype?: "bruiser"|"charger"|"ranged"|"support";
+  support?: {interval:number;heal:number;radius:number};
+  charge?: {interval:number;distance:number};
   visualId?: string;
 }
 export interface Choice {

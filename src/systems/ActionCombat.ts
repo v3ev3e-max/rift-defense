@@ -21,6 +21,15 @@ function rayToMapEdge(x:number,y:number,dx:number,dy:number){
 export interface CombatAction {reactionOnly?:boolean;sniperImpact?:boolean;active:boolean;chainHop:boolean;visited:number[];source:Unit|null;element:Element;kind:AttackKind;owner:number;target:number;generation:number;x:number;y:number;tx:number;ty:number;dirX:number;dirY:number;age:number;delay:number;duration:number;power:number;radius:number;count:number;skill:boolean;crit:boolean;hit:boolean}
 export interface CombatZone {active:boolean;kind:'water'|'ice'|'corrosion'|'barrier'|'blackflame'|'storm'|'plasma'|'abyss';owner:number;x:number;y:number;radius:number;life:number;tick:number;power:number}
 export const blankAction=():CombatAction=>({reactionOnly:false,sniperImpact:false,active:false,chainHop:false,visited:[],source:null,element:'fire',kind:'burst',owner:0,target:-1,generation:0,x:0,y:0,tx:0,ty:0,dirX:0,dirY:0,age:0,delay:0,duration:.3,power:0,radius:0,count:1,skill:false,crit:false,hit:false});
+const signatureQuotes:Record<string,string>={
+ yuria:'모두 제 뒤로. 방벽을 전개합니다!',reina:'시야 확보. 탄막을 개시한다!',sera:'트리거 해제. 전부 쓸어버릴게요!',noel:'사선 고정. 한 발이면 충분해.',arin:'레일 출력 최대. 관통합니다!',karin:'도망쳐도 소용없어. 베어낸다!',
+};
+function announceSkill(m:BattleModel,u:Unit){
+ const h=heroById[u.heroId],quote=signatureQuotes[u.heroId]??`${h.code} 전개. 목표를 제압합니다!`;
+ m.say(`${h.name} · “${quote}”`);
+ const role=formationRole(u.heroId),kind=combatRoles[u.heroId].kind;
+ m.onSound?.(role==='tank'?'skill-guard':kind==='support'?'skill-support':kind==='sniper'?'skill-sniper':'skill-impact');
+}
 export const blankZone=():CombatZone=>({active:false,kind:'water',owner:0,x:0,y:0,radius:0,life:0,tick:0,power:0});
 export function addZone(m:BattleModel,u:Unit,x:number,y:number,radius:number,kind:CombatZone['kind'],power=0){
  const z=m.zones.find(z=>z.active&&z.owner===u.uid&&dist(z,{x,y})<radius*.5)??m.zones.find(z=>!z.active);
@@ -59,7 +68,7 @@ export function attack(m:BattleModel,u:Unit,e:Enemy){
  if(u.branch==='spread'&&kind==='burst'){const others=m.enemies.filter(v=>v.active&&v!==e&&dist(v,u)<s.range*.75).slice(0,u.star>=5?4:2);for(const v of others)queue(m,u,v,s.atk*.3,kind,.12);}
  if(u.ultimate==='spread'){const other=m.enemies.find(v=>v.active&&v!==e&&dist(v,u)<=s.range);if(other)queue(m,u,other,s.atk*.6,kind,.3);}
  if(u.ultimate==='focus')queue(m,u,e,s.atk*.45,kind,.24);
- for(const ally of m.units)if(ally!==u&&combatRoles[ally.heroId].kind==='support'&&dist(ally,u)<m.stats(ally).range)charge(ally,3);
+ for(const ally of m.units)if(ally!==u&&combatRoles[ally.heroId].kind==='support'&&dist(ally,u)<m.stats(ally).range)charge(ally,3,m.time);
  triggerLink(m,u,e,'attack');
  if(m.builds.drone&&kind!=='drone')queue(m,u,e,s.atk*.18*m.builds.drone,'drone');
  if(kind!=='sniper'&&kind!=='meteor'&&kind!=='burst')m.onSound?.(kind==='melee'?'melee':kind==='drone'?'drone':kind==='shell'?'explosion':kind==='chain'||kind==='water'||kind==='curse'||kind==='support'?'laser':'attack');
@@ -85,7 +94,7 @@ function hit(m:BattleModel,u:Unit,e:Enemy,power:number,kind:DamageKind,crit=fals
  const previous=m.damageKind;m.damageKind=kind;
  m.damage(e,value,u,true,crit);
  if(crit&&m.bonuses.bullet){const old=m.damageKind;m.damageKind='chain';m.damage(e,value*.7,u,true);m.damageKind=old;}
- if(kind==='basic'||kind==='drone'||kind==='chain')charge(u,combatRoles[u.heroId].kind==='sniper'?(enemies[e.kind].boss?20:14):kind==='drone'?10:4);
+ if(kind==='basic'||kind==='drone'||kind==='chain')charge(u,combatRoles[u.heroId].kind==='sniper'?(enemies[e.kind].boss?20:14):kind==='drone'?10:4,m.time);
  if(heroById[u.heroId].element==='water'||u.heroId==='yuria')e.controlOwner=u.uid;
  if(u.branch==='element'){const element=heroById[u.heroId].element;e.dotOwner=u.uid;e.dotPower=Math.max(e.dotPower,value*.6);if(element==='fire'){e.burn=Math.max(e.burn,u.star>=4?3:2);e.burnTime=3;}else if(element==='water'){e.slow=Math.max(e.slow,.45);e.slowTime=3;e.controlOwner=u.uid;}else if(element==='dark'){e.bleed=Math.max(e.bleed,u.star>=4?3:2);e.bleedTime=3;}else e.electricMark=Math.max(e.electricMark,2);}
  if(u.ultimate==='element'&&kind!=='dot'&&kind!=='skill')addZone(m,u,e.x,e.y,80,heroById[u.heroId].element==='water'?'ice':heroById[u.heroId].element==='dark'?'corrosion':heroById[u.heroId].element==='electric'?'storm':'blackflame',value*.12);
@@ -211,18 +220,20 @@ export function castAutoSkill(m:BattleModel,u:Unit,target:Enemy){
  if(m.paused||m.ended||(u.skillCharge??0)<100||m.time<(u.skillReadyAt??0))return false;
  const kind=combatRoles[u.heroId].kind;face(m,u,target);
  if(kind==='support'){
+  announceSkill(m,u);
   const allies=m.units.filter(v=>v.slot>=0&&v.hp>0&&(u.heroId==='ophilia'||dist(v,u)<=m.stats(u).range));
   const healRate=u.heroId==='rhea'?.16+u.star*.025:u.heroId==='echo'?.06+u.star*.01:u.heroId==='meriel'?.11+u.star*.018:u.heroId==='selene'?.13+u.star*.02:.2+u.star*.03;
   for(const ally of allies){const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*healRate);ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;ally.stunned=0;
    if(['rhea','meriel','ophilia'].includes(u.heroId))ally.guardHp=(ally.guardHp??0)+ally.maxHp*(u.heroId==='ophilia'?.14:.08);
-   if(u.heroId==='echo'){ally.cooldown=Math.min(ally.cooldown,.02);charge(ally,12+u.star*2);}
+   if(u.heroId==='echo'){ally.cooldown=Math.min(ally.cooldown,.02);charge(ally,12+u.star*2,m.time);}
    if(u.heroId==='meriel'||u.heroId==='ophilia')ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+2.5+u.star*.25);
   }
   if(u.heroId==='selene')for(const e of m.enemies)if(e.active&&dist(e,target)<145+u.star*8){e.vulnerability=Math.max(e.vulnerability,.16+u.star*.02);e.vulnerabilityTime=4;e.armorBreak=Math.max(e.armorBreak,.18);e.armorBreakTime=4;}
-  const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;u.skillCharge=0;u.skillHeldAt=undefined;u.skillReadyAt=m.time+(u.heroId==='ophilia'?9:7);
-  m.emit('blast',u.x,u.y,u.x,u.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-skill-${u.heroId}`,duration:.9,radius:u.heroId==='ophilia'?170:135});m.onSound?.('level');return true;
+  const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;const cooldown=u.heroId==='ophilia'?14:12;u.skillCharge=0;u.skillHeldAt=undefined;u.skillCooldownDuration=cooldown;u.skillReadyAt=m.time+cooldown;
+  m.emit('blast',u.x,u.y,u.x,u.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-skill-${u.heroId}`,duration:.9,radius:u.heroId==='ophilia'?170:135});return true;
  }
  if(formationRole(u.heroId)==='tank'){
+  announceSkill(m,u);
   const nearby=m.units.filter(v=>v.slot>=0&&v.hp>0&&dist(v,u)<=m.stats(u).range);
   if(u.heroId==='yuria'){
    u.guardHp=(u.guardHp??0)+u.maxHp*(.28+u.star*.05);u.tauntUntil=m.time+5+u.star*.35;u.tankBlockUntil=m.time+5+u.star*.35;addZone(m,u,u.x,u.y,95,'barrier');
@@ -245,15 +256,16 @@ export function castAutoSkill(m:BattleModel,u:Unit,target:Enemy){
    u.tauntUntil=m.time+6+u.star*.4;u.tankBlockUntil=m.time+6;u.guardHp=(u.guardHp??0)+u.maxHp*(.3+u.star*.05);for(const ally of m.units)if(ally.slot>=0&&ally.hp>0)ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+5+u.star*.35);addZone(m,u,u.x,u.y,145,'abyss');
   }
   const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;
-  u.skillCharge=0;u.skillHeldAt=undefined;u.skillReadyAt=m.time+9;
-  m.emit('blast',u.x,u.y,u.x,u.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-skill-${u.heroId}`,duration:.9,radius:135});m.onSound?.('level');return true;
+  u.skillCharge=0;u.skillHeldAt=undefined;u.skillCooldownDuration=14;u.skillReadyAt=m.time+14;
+  m.emit('blast',u.x,u.y,u.x,u.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-skill-${u.heroId}`,duration:.9,radius:135});return true;
  }
  if(!queue(m,u,target,m.stats(u).atk*(u.star===5?4.5:3),kind,0,true))return false;
+ announceSkill(m,u);
  if(u.heroId==='yuria')addZone(m,u,target.x,target.y,90,'barrier');
  if(u.heroId==='mia')for(const ally of m.units)if(dist(ally,u)<m.stats(u).range){ally.stunned=0;ally.cooldown=0;}
  if(kind==='drone')for(let i=1;i<3;i++)queue(m,u,target,m.stats(u).atk,kind,i*.12,true);
  const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;
- u.skillCharge=0;u.skillHeldAt=undefined;u.skillReadyAt=m.time+(kind==='sniper'?8:kind==='burst'?5:6);
+ const cooldown=kind==='sniper'?13:kind==='burst'?10:11;u.skillCharge=0;u.skillHeldAt=undefined;u.skillCooldownDuration=cooldown;u.skillReadyAt=m.time+cooldown;
  m.emit('blast',u.x,u.y,target.x,target.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:u.heroId+'-skill',duration:.82,radius:110});return true;
 }
 function triggerLink(m:BattleModel,u:Unit,e:Enemy,event:string,point:{x:number;y:number}=e){
@@ -264,7 +276,7 @@ function triggerLink(m:BattleModel,u:Unit,e:Enemy,event:string,point:{x:number;y
  let triggered=false;
  if(event==='attack'&&link.ids[0]==='sera'&&(u.heat??0)>=4){face(m,partner,e);for(let i=0;i<3;i++)queue(m,partner,e,m.stats(partner).atk*.2,'burst',i*.1);triggered=true;}
  if(event==='attack'&&u.heroId==='noel'&&link.ids[0]==='noel'&&dist(partner,e)<=m.stats(partner).range){face(m,partner,e);queue(m,partner,e,m.stats(partner).atk*.6,'sniper');triggered=true;}
- if(event==='attack'&&u.heroId==='mia'&&link.ids[0]==='yuria'){partner.stunned=0;charge(partner,20);addZone(m,partner,partner.x,partner.y,m.stats(partner).range,'barrier');triggered=true;}
+ if(event==='attack'&&u.heroId==='mia'&&link.ids[0]==='yuria'){partner.stunned=0;charge(partner,20,m.time);addZone(m,partner,partner.x,partner.y,m.stats(partner).range,'barrier');triggered=true;}
  if(event==='meteor'&&u.heroId==='luna'&&link.ids[0]==='luna'){addZone(m,u,point.x,point.y,110,'blackflame',m.stats(u).atk*.15);triggered=true;}
  if(event==='drone'&&link.ids[0]==='ian'&&e.active){chainStrike(m,u,e,m.stats(u).atk*.25,3);triggered=true;}
  if(triggered){u.linkReadyAt=m.time+4;m.linkCounts[link.name]=(m.linkCounts[link.name]??0)+1;const r=m.records.find(r=>r.uid===u.uid);if(r)r.linkCasts++;return;}

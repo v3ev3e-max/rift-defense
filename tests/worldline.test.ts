@@ -4,13 +4,14 @@ import {campaignSelect} from '../src/ui/CampaignUI';
 import {defaultSave} from '../src/systems/SaveSystem';
 
 it('splits the existing eighty operations into two four-area worldlines',()=>{
- expect(campaignWorldlines.map(v=>v.regions)).toEqual([[1,2,3,4],[5,6,7,8]]);
+ expect(campaignWorldlines.map(v=>v.regions)).toEqual([[1,2,3,4],[5,6,7,8],[9,10,11,12]]);
  expect(campaignStages.filter(v=>campaignWorldline(v).id===1)).toHaveLength(40);
  expect(campaignStages.filter(v=>campaignWorldline(v).id===2)).toHaveLength(40);
+ expect(campaignStages.filter(v=>campaignWorldline(v).id===3)).toHaveLength(40);
  expect(campaignLocalRegion('5-1')).toBe(1);
  expect(campaignStageLabel('5-1')).toBe('2-1-1');
- expect(regionalStories).toHaveLength(8);
- expect(new Set(campaignStages.map(v=>v.background))).toHaveLength(8);
+ expect(regionalStories).toHaveLength(12);
+ expect(new Set(campaignStages.map(v=>v.background))).toHaveLength(12);
  for(const region of campaignWorldlines.flatMap(v=>v.regions)){
   expect(new Set(campaignStages.filter(v=>v.id.startsWith(`${region}-`)).map(v=>v.background))).toEqual(new Set([`map-${region}-1.webp`]));
  }

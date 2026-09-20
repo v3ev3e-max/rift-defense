@@ -68,6 +68,7 @@ export interface BattleResult {
   strategy?: {spent:number;remaining:number;triples:Record<string,number>;links:Record<string,number>;investments:{heroId:string;gold:number}[];support:{heroId:string;block:number;slow:number;damage:number}[]};
   ranking?: {heroId:string;star:number;kills:number;damage:number;dps:number}[];
   equipmentDrop?:string;
+  materials?:number;
   equipmentGold:number;
 }
 export const BATTLE_SPEEDS=[.75,1,1.5,2] as const;

@@ -22,6 +22,10 @@ const regionalEnemyArt:Record<number,Set<string>>={
   6:new Set(['armored','brute','jammer','runner']),
   7:new Set(['bulwark','jammer','phantom','sprinter']),
   8:new Set(['abyssal','armored','bulwark','elite','jammer','phantom']),
+  9:new Set(['sky_guard','sky_lancer','cloud_gunner','aether_mender','named_sky','storm_wyvern','sky_dominion']),
+  10:new Set(['relic_golem','dune_ripper','sun_archer','mirage_oracle','named_dune','sand_colossus','solar_sphinx']),
+  11:new Set(['alloy_guard','gear_hound','pulse_turret','repair_weaver','named_machine','forge_overseer','machine_god']),
+  12:new Set(['paradox_shell','chrono_stalker','epoch_caster','time_mender','named_time','chrono_reaper','aeon_sovereign']),
 };
 export class BattleScene extends Phaser.Scene {
   model: BattleModel;
@@ -31,12 +35,17 @@ export class BattleScene extends Phaser.Scene {
   campaignWarnings: Phaser.GameObjects.Image[]=[];
   ink!: Phaser.GameObjects.Graphics;
   heroSprites: Phaser.GameObjects.Image[] = [];
+  heroHealthFrames: Phaser.GameObjects.Image[] = [];
+  heroVisualHp: number[] = [];
+  heroLastHp: number[] = [];
+  heroHealthHitUntil: number[] = [];
   enemySprites: Phaser.GameObjects.Image[] = [];
   enemyShadowSprites: Phaser.GameObjects.Ellipse[] = [];
   enemyStepSprites: Phaser.GameObjects.Image[] = [];
   enemyVisualHp: number[] = [];
   enemyVisualGeneration: number[] = [];
   enemyHitUntil: number[] = [];
+  enemyNextHitFlash: number[] = [];
   enemyStatusSprites: Phaser.GameObjects.Image[] = [];
   enemyMarkSprites: Phaser.GameObjects.Image[] = [];
   aimSprites: Phaser.GameObjects.Image[] = [];
@@ -92,6 +101,7 @@ export class BattleScene extends Phaser.Scene {
     for(const name of ['pad','selected','entry','core'])this.load.image(`lab-${name}`,assetUrl(`/assets/lab/${name}.png`));
     if(this.model.campaign)for(const name of ['pad','ring'])this.load.image(`campaign-${name}`,assetUrl(`/assets/campaign/${name}.png`));
     this.load.image('campaign-warning',assetUrl('/assets/campaign/warning.png'));
+    this.load.image('hero-health-frame',assetUrl('/assets/ui/generated/hero-health-frame.webp'));
     this.load.image('reaction-generated',assetUrl('/assets/effects/common/reaction_generated.png'));
     const campaignArea=this.model.campaign?campaignRegion(this.model.campaign):0;
     this.campaignArea=campaignArea;
@@ -100,7 +110,6 @@ export class BattleScene extends Phaser.Scene {
       !this.model.campaign||campaignIds.has(def.id)
     );
     this.initialEnemyKey=`enemy-${activeEnemyDefs[0]?.id??'crawler'}`;
-    const animatedRangedEnemies=new Set(['armored','jammer','phantom']);
     for (const def of activeEnemyDefs){
       const visualId=def.visualId??def.id;
       const regional=campaignArea>0&&campaignIds.has(def.id)&&regionalEnemyArt[campaignArea]?.has(visualId);
@@ -111,7 +120,7 @@ export class BattleScene extends Phaser.Scene {
       this.enemyMoveFrames[def.id]=moveCount;
       for(let frame=1;frame<=moveCount;frame++)this.load.image(`enemy-${def.id}-move-${frame}`,assetUrl(regional&&visualId!=="elite"?`${folder}/${visualId}/move/move_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemy-motion/${visualId}/move_${String(frame).padStart(2,'0')}.webp`));
       if(regional)for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-death-${frame}`,assetUrl(visualId!=="elite"?`${folder}/${visualId}/death/frame_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemies/${visualId}.webp`));
-      if(def.ranged&&animatedRangedEnemies.has(def.id))for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-fire-${frame}`,assetUrl(regional?`${folder}/${def.id}/fire/frame_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemy-fire/${def.id}/frame_${String(frame).padStart(2,'0')}.webp`));
+      if(def.ranged&&regional)for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-fire-${frame}`,assetUrl(`${folder}/${def.id}/fire/frame_${String(frame).padStart(2,'0')}.webp`));
     }
     for(const element of ['water','fire','electric','dark'])for(let frame=1;frame<=4;frame++)
       this.load.image(`transfer-${element}-${frame}`,assetUrl(`/assets/generated/element-transfers/${element}_${String(frame).padStart(2,'0')}.webp`));
@@ -234,6 +243,7 @@ export class BattleScene extends Phaser.Scene {
     this.enemyVisualHp=this.model.enemies.map(()=>0);
     this.enemyVisualGeneration=this.model.enemies.map(()=>-1);
     this.enemyHitUntil=this.model.enemies.map(()=>0);
+    this.enemyNextHitFlash=this.model.enemies.map(()=>0);
     this.enemyStatusSprites = Array.from({length:this.model.enemies.length*4},() =>
       this.add.image(-50, -50, "status-burn").setVisible(false).setDepth(640),
     );
@@ -266,6 +276,7 @@ export class BattleScene extends Phaser.Scene {
         else{this.lastUnitTapUid=u.uid;this.lastUnitTapAt=now;}
       });
       this.heroSprites.push(sp);
+      this.heroHealthFrames.push(this.add.image(-50,-50,'hero-health-frame').setVisible(false).setDepth(654));
       this.droneSprites.push(
         this.add.image(-50,-50,'drone-body').setVisible(false).setDepth(630),
       );
@@ -285,6 +296,9 @@ export class BattleScene extends Phaser.Scene {
       this.heroShotCounts[i] = 0;
       this.heroDroneShotCounts[i] = 0;
       this.heroAttackStarted[i] = -999;
+      this.heroVisualHp[i] = 0;
+      this.heroLastHp[i] = 0;
+      this.heroHealthHitUntil[i] = 0;
     }
     this.input.on(
       "dragstart",
@@ -377,12 +391,17 @@ export class BattleScene extends Phaser.Scene {
     this.events.once("shutdown", () => {
       this.input.removeAllListeners();
       this.heroSprites = [];
+      this.heroHealthFrames = [];
+      this.heroVisualHp = [];
+      this.heroLastHp = [];
+      this.heroHealthHitUntil = [];
       this.enemySprites = [];
       this.enemyShadowSprites = [];
       this.enemyStepSprites = [];
       this.enemyVisualHp = [];
       this.enemyVisualGeneration = [];
       this.enemyHitUntil = [];
+      this.enemyNextHitFlash = [];
       this.enemyStatusSprites = [];
       this.enemyMarkSprites = [];
       this.droneSprites = [];
@@ -413,6 +432,10 @@ export class BattleScene extends Phaser.Scene {
       {edge:0x213d58,border:0x9ec7d5,lane:0x526f84,mark:0xd9fbff},
       {edge:0x292b4c,border:0x7f76a8,lane:0x494664,mark:0xd0c2ff},
       {edge:0x401d36,border:0x9e536f,lane:0x60344d,mark:0xffb2ca},
+      {edge:0xd7e9df,border:0xf4d68a,lane:0xeaf4ef,mark:0x59dfff},
+      {edge:0x55321f,border:0xd89a4d,lane:0x8e6848,mark:0xffdd7b},
+      {edge:0x172c31,border:0x54a9a7,lane:0x33484a,mark:0x76fff2},
+      {edge:0x241738,border:0x8a65ba,lane:0x49385e,mark:0xe19cff},
     ];
     const routeTheme=routeThemes[Math.max(0,this.campaignArea-1)]??routeThemes[4];
     // The path remains a gameplay overlay, but its material follows each region.
@@ -420,11 +443,12 @@ export class BattleScene extends Phaser.Scene {
       const path=route!.path;
       const a = path[i - 1],
         b = path[i];
-      g.lineStyle(76, routeTheme.edge);
+      const integrated=this.campaignArea>=9,alpha=integrated?.55:1;
+      g.lineStyle(integrated?68:76, routeTheme.edge,alpha*.7);
       g.lineBetween(a.x, a.y, b.x, b.y);
-      g.lineStyle(68, routeTheme.border);
+      g.lineStyle(integrated?62:68, routeTheme.border,alpha*.82);
       g.lineBetween(a.x, a.y, b.x, b.y);
-      g.lineStyle(58, routeTheme.lane);
+      g.lineStyle(integrated?54:58, routeTheme.lane,alpha);
       g.lineBetween(a.x, a.y, b.x, b.y);
       const len = Phaser.Math.Distance.Between(a.x, a.y, b.x, b.y);
       for (let t = 22; t < len; t += 46) {
@@ -531,7 +555,7 @@ export class BattleScene extends Phaser.Scene {
     const selected = m.selectedUnit;
     this.campaignWarnings.forEach((sp,i)=>{const e=m.enemies[i],active=e.active&&!!e.strikeAt;sp.setVisible(active);if(active)sp.setPosition(e.strikeX!,e.strikeY!).setDisplaySize(170+Math.sin(m.time*9)*18,170+Math.sin(m.time*9)*18).setAlpha(.72+Math.sin(m.time*9)*.18);});
     if(m.campaign){
-      for(const u of m.units){if(u.slot<0)continue;const left=Math.max(0,(u.moveReadyAt??0)-m.time);if(left){g.lineStyle(5,0x72dacb,.8);g.beginPath();g.arc(u.x,u.y,48,-Math.PI/2,-Math.PI/2+Math.PI*2*(left/10),false);g.strokePath();}if(u.hp<u.maxHp*.4){g.fillStyle(0x142332);g.fillRect(u.x-28,u.y-78,56,5);g.fillStyle(0xfa8f8f);g.fillRect(u.x-28,u.y-78,56*u.hp/u.maxHp,5);}}
+      for(const u of m.units){if(u.slot<0)continue;const left=Math.max(0,(u.moveReadyAt??0)-m.time);if(left){g.lineStyle(5,0x72dacb,.8);g.beginPath();g.arc(u.x,u.y,48,-Math.PI/2,-Math.PI/2+Math.PI*2*(left/10),false);g.strokePath();}}
       if(selected&&selected.hp>0&&m.time>=(selected.moveReadyAt??0))for(const p of m.map.slots){if(!m.units.some(u=>u.slot===m.map.slots.indexOf(p))){g.lineStyle(3,0x9affe2,.8);g.strokeRoundedRect(p.x-44,p.y-44,88,88,10);}}
     }
     this.selectedPad.setVisible(!!selected && selected.slot>=0);
@@ -572,10 +596,12 @@ export class BattleScene extends Phaser.Scene {
     for (let i = 0; i < this.heroSprites.length; i++) {
       const u = m.units[i],
         sp = this.heroSprites[i],
+        healthFrame=this.heroHealthFrames[i],
         label = this.labels[i],
         defeatCooldown = this.defeatCooldownLabels[i];
       if (!u || u.slot < 0) {
         sp.setVisible(false);
+        healthFrame.setVisible(false);
         this.droneSprites[i].setVisible(false);
         label.setVisible(false);
         defeatCooldown.setVisible(false);
@@ -593,7 +619,24 @@ export class BattleScene extends Phaser.Scene {
         this.heroShotCounts[i] = u.shots;
         this.heroDroneShotCounts[i] = u.droneShots;
         this.heroAttackStarted[i] = -999;
+        this.heroVisualHp[i]=u.hp;
+        this.heroLastHp[i]=u.hp;
+        this.heroHealthHitUntil[i]=0;
       }
+      if(u.hp<this.heroLastHp[i])this.heroHealthHitUntil[i]=this.visualTime+.42;
+      this.heroLastHp[i]=u.hp;
+      this.heroVisualHp[i]=Phaser.Math.Linear(this.heroVisualHp[i]??u.hp,u.hp,.13);
+      if(Math.abs(this.heroVisualHp[i]-u.hp)<.15)this.heroVisualHp[i]=u.hp;
+      const hpRatio=Phaser.Math.Clamp(u.hp/Math.max(1,u.maxHp),0,1),trailRatio=Phaser.Math.Clamp(this.heroVisualHp[i]/Math.max(1,u.maxHp),0,1),barX=u.x-31,barY=u.y-75;
+      if(u.hp>0){
+        const low=hpRatio<=.3,pulse=low ? .72+Math.sin(this.visualTime*9)*.28 : 1,fill=hpRatio>.6?0x64f2be:hpRatio>.3?0xffd86b:0xff617a;
+        g.fillStyle(0x06131c,.94);g.fillRoundedRect(barX,barY,62,8,3);
+        if(trailRatio>hpRatio){g.fillStyle(0xffcf72,.86);g.fillRoundedRect(barX+2,barY+2,58*trailRatio,4,2);}
+        g.fillStyle(fill,pulse);g.fillRoundedRect(barX+2,barY+2,58*hpRatio,4,2);
+        g.fillStyle(0xeaffff,.36);g.fillRect(barX+3,barY+2,Math.max(0,56*hpRatio),1);
+        if(this.heroHealthHitUntil[i]>this.visualTime){const hit=(this.heroHealthHitUntil[i]-this.visualTime)/.42;g.lineStyle(2,0xffffff,.75*hit);g.strokeRoundedRect(barX-1,barY-1,64,10,4);}
+        healthFrame.setVisible(true).setPosition(u.x,barY+4).setDisplaySize(84,21).setAlpha(low ? .82+Math.sin(this.visualTime*9)*.18 : 1).setTint(low?0xff8193:0xffffff);
+      }else healthFrame.setVisible(false);
       if ((u.shots !== this.heroShotCounts[i] || u.droneShots !== this.heroDroneShotCounts[i]) &&
           this.visualTime - this.heroAttackStarted[i] >= ATTACK_SECONDS) {
         this.heroShotCounts[i] = u.shots;
@@ -667,7 +710,11 @@ export class BattleScene extends Phaser.Scene {
         this.enemyVisualGeneration[e.index]=generation;
         this.enemyVisualHp[e.index]=e.hp;
         this.enemyHitUntil[e.index]=0;
-      }else if(e.hp<this.enemyVisualHp[e.index])this.enemyHitUntil[e.index]=this.visualTime+.09;
+        this.enemyNextHitFlash[e.index]=0;
+      }else if(e.hp<this.enemyVisualHp[e.index]&&this.visualTime>=(this.enemyNextHitFlash[e.index]??0)){
+        this.enemyHitUntil[e.index]=this.visualTime+.055;
+        this.enemyNextHitFlash[e.index]=this.visualTime+.28;
+      }
       this.enemyVisualHp[e.index]=e.hp;
       const hit=this.visualTime<this.enemyHitUntil[e.index];
       const dirLength=Math.max(1,Math.hypot(ahead.x-e.x,ahead.y-e.y));
@@ -680,7 +727,9 @@ export class BattleScene extends Phaser.Scene {
       step.setVisible(stepReady&&motion.stepAlpha>0).setPosition(e.x,e.y+enemySize*.23).setDisplaySize(boss?70:46,boss?35:23).setDepth(19+e.y).setAlpha(motion.stepAlpha);
       if(stepReady&&step.texture.key!==stepKey)step.setTexture(stepKey);
       sp.clearTint().setFlipX(motion.flipX).setAngle(motion.angle).setDisplaySize(enemySize*motion.scaleX,enemySize*motion.scaleY).setPosition(renderX,renderY).setDepth(20+e.y);
-      if(hit)sp.setTintFill(0xffe3d4);
+      // A short warm multiply tint preserves the authored silhouette. A full
+      // white fill made damage-over-time targets disappear under continuous hits.
+      if(hit)sp.setTint(0xffc7aa);
       const pulseEvery = enemies[e.kind].boss==='storm'?3:enemies[e.kind].boss==='void'?3.5:4;
       if(!m.campaign&&(enemies[e.kind].disrupt||['frost','storm','void'].includes(enemies[e.kind].boss??''))&&e.attackTimer>pulseEvery-.8){const warning=(e.attackTimer-(pulseEvery-.8))/.8,radius=enemies[e.kind].boss==='storm'?430:enemies[e.kind].boss==='void'?300:enemies[e.kind].boss?350:210;g.fillStyle(enemies[e.kind].boss==='void'?0x9a5cff:enemies[e.kind].boss==='storm'?0x55cfff:0xff7d73,.05+warning*.08);g.fillCircle(e.x,e.y,radius);g.lineStyle(3,enemies[e.kind].boss==='void'?0xb97aff:enemies[e.kind].boss==='storm'?0x75eaff:0xff9388,.35+warning*.55);g.strokeCircle(e.x,e.y,radius*(.92+warning*.08));}
       const width = boss ? 74 : 38;
@@ -848,7 +897,7 @@ export class BattleScene extends Phaser.Scene {
         }continue;
       }
       if(f.visual?.startsWith('reaction-')){
-        if(fxSpriteIndex<this.fxSprites.length){const sp=this.fxSprites[fxSpriteIndex++];sp.setTexture('reaction-generated').setTint(f.color).setPosition(f.tx,f.ty).setDisplaySize(90+progress*80,90+progress*80).setRotation(progress*.32).setAlpha(1-progress).setVisible(true);}continue;
+        if(fxSpriteIndex<this.fxSprites.length){const sp=this.fxSprites[fxSpriteIndex++];sp.setTexture('reaction-generated').setTint(f.color).setPosition(f.tx,f.ty).setDisplaySize(62+progress*46,62+progress*46).setRotation(progress*.32).setAlpha((1-progress)*.46).setDepth(649).setVisible(true);}continue;
       }
       if (f.visual?.startsWith('drone-') && fxSpriteIndex < this.fxSprites.length) {
         const sp=this.fxSprites[fxSpriteIndex++], key=f.visual;
@@ -882,7 +931,7 @@ export class BattleScene extends Phaser.Scene {
         const sp=this.fxSprites[fxSpriteIndex++];
         if(sp.texture.key!==f.visual)sp.setTexture(f.visual);
         const size=74*(.7+progress*.4),rect=fitVisual(f.tx,f.ty,size,size,progress*.25,MAP);
-        sp.setVisible(true).setPosition(rect.x,rect.y).setDisplaySize(rect.width,rect.height).setAngle(progress*35).setAlpha(.85-progress*.7).setDepth(652);
+        sp.setVisible(true).setPosition(rect.x,rect.y).setDisplaySize(rect.width,rect.height).setAngle(progress*35).setAlpha(.55-progress*.42).setDepth(648);
         continue;
       }
       const visualHero = f.visual?.split("-")[0] ?? "";
@@ -923,12 +972,12 @@ export class BattleScene extends Phaser.Scene {
             .setPosition(rect.x, rect.y)
             .setAngle(Phaser.Math.RadToDeg(angle))
             .setDisplaySize(rect.width, rect.height)
-            .setAlpha((barrier ? 0.5 : skill ? 0.96 : 0.78) * (skill?Math.sin(Math.PI*Math.min(1,progress*1.08)):1-progress*0.8))
+            .setAlpha((barrier ? 0.42 : skill ? 0.7 : 0.5) * (skill?Math.sin(Math.PI*Math.min(1,progress*1.08)):1-progress*0.8))
             .setDepth(barrier ? 625 : skill ? 677 : 650);
           if(skill&&fxSpriteIndex<this.fxSprites.length){
             const impact=this.fxSprites[fxSpriteIndex++],impactFrame=Math.min(3,Math.floor(progress*3)+1),pulse=(f.radius??110)*(1.05+progress*.65);
             impact.setTexture(`fx-${visualHero}-impact-${impactFrame}`).clearTint().setPosition(f.tx,f.ty)
-              .setDisplaySize(pulse,pulse).setRotation(-progress*.22).setAlpha(impactFrame===3?1-progress:.94).setDepth(678).setVisible(true);
+              .setDisplaySize(pulse*.78,pulse*.78).setRotation(-progress*.22).setAlpha(impactFrame===3?(1-progress)*.5:.56).setDepth(678).setVisible(true);
           }
           if(skill&&progress<.58&&fxSpriteIndex<this.fxSprites.length){
             const cast=this.fxSprites[fxSpriteIndex++],castProgress=progress/.58,castSize=46+castProgress*54;

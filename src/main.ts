@@ -1,11 +1,12 @@
 import { preserveScroll, replacePanel, updatePanel } from './ui/stablePanel';
 import {campaignSelect,campaignFormation,campaignBattle,campaignSkillBar,campaignUnit,campaignResult,squadSummary,formationFilter,filterRoster,formationHelp,campaignResearch,campaignPrep,campaignPrepEquipment,campaignPrepSelection,heroCollectionFilter} from './ui/CampaignUI';
-import {campaignStages,stageUnlocked,doctrines,campaignWorldline} from './data/campaign';
+import {campaignStages,stageUnlocked,doctrines,campaignWorldlines} from './data/campaign';
 import {priorities} from './data/strategy';
 import {waveBrief} from './data/waves';
 import "./style.css";
 import { SaveSystem,defaultSave,STARTER_HERO_IDS } from "./systems/SaveSystem";
 import { GameAudio } from "./utils/Audio";
+import {assetUrl} from './utils/assets';
 import { BATTLE_SPEEDS, BattleModel } from "./systems/BattleModel";
 import { mergeGroup } from "./systems/MergeSystem";
 import { heroes, heroById } from "./data/heroes";
@@ -223,8 +224,19 @@ class App {
         : ""
     }${testPanel}<div id="modal-layer"></div></div>`;};
     if(keepScroll)preserveScroll(draw);else draw();this.renderedScreen=this.screen;
+    this.syncMusic();
     if(this.screen==='deck')filterRoster();
     if(this.screen==='hero')this.filterHeroCollection();
+  }
+  syncMusic(){
+    if(this.screen==='home'||this.screen==='hero'||this.screen==='inventory')this.audio.setMusic('maint');
+    else if(this.screen==='recruit')this.audio.setMusic('recruit');
+    else if(this.screen==='deck'||(this.screen==='battle'&&!!this.model?.campaign&&!this.model.started))this.audio.setMusic('formation');
+    else if(this.screen==='battle'&&this.model?.campaign&&this.model.started&&!this.model.ended){
+      const region=Math.max(1,Number(this.model.campaign.id.split('-')[0])||1);
+      this.audio.setMusic(region%2===1?'battle1':'battle2');
+    }
+    else this.audio.setMusic();
   }
   filterHeroCollection(){this.root.querySelectorAll<HTMLElement>('[data-hero-card]').forEach(el=>{el.hidden=!(heroCollectionFilter.grade==='all'||el.dataset.grade===heroCollectionFilter.grade)||!(heroCollectionFilter.role==='all'||el.dataset.role===heroCollectionFilter.role);});}
   beginPrepDrag(e:PointerEvent){
@@ -238,14 +250,14 @@ class App {
     if(!d.active&&Math.hypot(e.clientX-d.startX,e.clientY-d.startY)<10)return;
     if(!d.active){
       d.active=true;d.source.classList.add('drag-source');
-      const ghost=document.createElement('div');ghost.className='prep-drag-ghost';ghost.innerHTML=`${combatPortrait(d.heroId)}<b>${heroById[d.heroId].name}</b>`;document.body.append(ghost);d.ghost=ghost;
+      const ghost=document.createElement('div');ghost.className='prep-drag-ghost';ghost.setAttribute('aria-label',`${heroById[d.heroId].name} 배치 중`);ghost.innerHTML=`<img src="${assetUrl(`/assets/heroes/${d.heroId}/frame_01.png`)}" alt=""><i></i>`;document.body.append(ghost);d.ghost=ghost;document.body.classList.add('is-prep-dragging');
       this.root.querySelector('#phaser-container')?.classList.add('prep-drop-active');
     }
-    e.preventDefault();if(d.ghost){d.ghost.style.left=`${e.clientX}px`;d.ghost.style.top=`${e.clientY}px`;}
+    e.preventDefault();if(d.ghost){d.ghost.style.left=`${e.clientX}px`;d.ghost.style.top=`${e.clientY}px`;const canvas=this.root.querySelector<HTMLCanvasElement>('#phaser-container canvas'),rect=canvas?.getBoundingClientRect();let valid=false;if(canvas&&rect&&e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom){const x=(e.clientX-rect.left)/rect.width*800,y=(e.clientY-rect.top)/rect.height*800;valid=this.model!.map.slots.some((p,i)=>Math.hypot(p.x-x,p.y-y)<72&&!this.model!.units.some(u=>u.heroId!==d.heroId&&u.slot===i));}d.ghost.classList.toggle('valid',valid);d.ghost.classList.toggle('invalid',!valid);this.root.querySelector('#phaser-container')?.classList.toggle('prep-drop-valid',valid);document.body.classList.toggle('prep-drop-valid',valid);}
   }
   endPrepDrag(e:PointerEvent){
     const d=this.prepDrag;if(!d||d.pointerId!==e.pointerId)return;this.prepDrag=undefined;this.prepDragScroll=0;clearInterval(this.prepDragScrollTimer);this.prepDragScrollTimer=0;
-    d.source.classList.remove('drag-source');d.ghost?.remove();this.root.querySelector('#phaser-container')?.classList.remove('prep-drop-active','prep-drop-valid');
+    d.source.classList.remove('drag-source');d.ghost?.remove();document.body.classList.remove('is-prep-dragging','prep-drop-valid');this.root.querySelector('#phaser-container')?.classList.remove('prep-drop-active','prep-drop-valid');
     if(!d.active)return;
     this.suppressPrepClickUntil=performance.now()+350;e.preventDefault();
     const canvas=this.root.querySelector<HTMLCanvasElement>('#phaser-container canvas');if(!canvas)return;
@@ -296,11 +308,13 @@ class App {
     this.render();
     const token = this.renderToken;
     const model = this.model;
+    const loaderStartedAt=performance.now();
     try {
       const { createGame } = await import("./game/GameConfig");
       if (token !== this.renderToken) return;
       let lastLoadPercent=-1,lastLoadGroup='';
       const loadProgress=(progress:number,file:string)=>{
+        if(token!==this.renderToken||model!==this.model)return;
         const loader=document.getElementById('battle-loader');if(!loader)return;
         const percent=Math.max(0,Math.min(100,Math.round(progress*100)));
         const group=file.startsWith('map-')?'map':file.startsWith('hero-')?'hero':file.startsWith('enemy-')?'enemy':'effect';
@@ -309,7 +323,17 @@ class App {
         const value=document.getElementById('battle-loader-percent');if(value)value.textContent=`${percent}%`;
         const label=document.getElementById('battle-loader-label');if(label)label.textContent=group==='map'?'전장 배경 구성 중':group==='hero'?'요원 애니메이션 배치 중':group==='enemy'?'적 데이터 탐색 중':'전투 효과 동기화 중';
       };
-      const ready=()=>{const loader=document.getElementById('battle-loader');if(loader){loader.classList.add('complete');setTimeout(()=>loader.remove(),320);}};
+      const ready=()=>{
+        if(token!==this.renderToken||model!==this.model)return;
+        const loader=document.getElementById('battle-loader');
+        if(loader){
+          const bar=loader.querySelector<HTMLElement>('#battle-loader-bar');if(bar)bar.style.width='100%';
+          const value=loader.querySelector<HTMLElement>('#battle-loader-percent');if(value)value.textContent='100%';
+          const label=loader.querySelector<HTMLElement>('#battle-loader-label');if(label)label.textContent='전장 준비 완료';
+          const finish=()=>{if(token!==this.renderToken||model!==this.model||!loader.isConnected)return;loader.classList.add('complete');setTimeout(()=>loader.isConnected&&loader.remove(),360);};
+          setTimeout(finish,Math.max(0,650-(performance.now()-loaderStartedAt)));
+        }
+      };
       this.game = createGame(model, () => this.updateHud(),loadProgress,ready);
       this.updateHud(true);
     } catch (err) {
@@ -352,7 +376,7 @@ class App {
         if(first){this.save.data.campaign!.selected=first.id;this.persist();this.render();}break;
       }
       case 'campaign-worldline':{
-        const worldline=Number(id),region=worldline===2?5:1,first=campaignStages.find(s=>s.id===`${region}-1`);
+        const worldline=Number(id),region=campaignWorldlines.find(w=>w.id===worldline)?.regions[0]??1,first=campaignStages.find(s=>s.id===`${region}-1`);
         if(first){this.save.data.campaign!.selected=first.id;this.persist();this.render();}break;
       }
       case 'campaign-prep-step':if(m?.campaign&&!m.started&&['squad','placement','equipment'].includes(id??'')){this.prepStep=id as 'squad'|'placement'|'equipment';const panel=this.root.querySelector('#campaign-prep');if(panel)replacePanel(panel,campaignPrep(m,this.prepStep));this.updateHud(true);}break;
@@ -434,7 +458,7 @@ class App {
         const panel=this.root.querySelector('#campaign-prep');if(panel&&m)replacePanel(panel,campaignPrep(m,this.prepStep));this.toast(`배치 프리셋 ${index+1} 삭제 완료`);break;
       }
       case 'campaign-deploy':void this.begin(this.save.data.campaign!.selected);break;
-      case 'campaign-start':if(m?.campaign){if(!formationComplete(m.units.map(u=>u.heroId)))this.toast(`출전 요원을 1~${CAMPAIGN_SQUAD_CAP}명 선택해주세요.`);else {const placed=m.units.filter(u=>u.slot>=0);if(placed.length===m.units.length&&this.save.data.campaign){this.save.data.campaign.lastDeployment=Object.fromEntries(placed.map(u=>[u.heroId,u.slot]));this.persist();}m.start();}}break;
+      case 'campaign-start':if(m?.campaign){if(!formationComplete(m.units.map(u=>u.heroId)))this.toast(`출전 요원을 1~${CAMPAIGN_SQUAD_CAP}명 선택해주세요.`);else {const placed=m.units.filter(u=>u.slot>=0);if(placed.length===m.units.length&&this.save.data.campaign){this.save.data.campaign.lastDeployment=Object.fromEntries(placed.map(u=>[u.heroId,u.slot]));this.persist();}m.start();this.syncMusic();}}break;
       case 'campaign-research':{
         const c=this.save.data.campaign!;if(!id||!['water','fire','electric','dark','burst','sniper','melee','chain','meteor','drone','support'].includes(id))break;
         const lv=c.research[id]??0,cost=100*(lv+1);if(lv<10&&this.save.data.credits>=cost){this.save.data.credits-=cost;c.research[id]=lv+1;this.persist();this.action('campaign-lab');}break;
@@ -454,7 +478,7 @@ class App {
       case 'campaign-cast-skill':{
         if(!m?.campaign||!id)break;const unit=m.units.find(u=>u.uid===Number(id));
         if(m.manualSkill(Number(id))){if(!this.save.data.tutorial&&m.campaign.id==='1-1')this.tutorialStep=Math.max(this.tutorialStep,2);this.updateHud(true);}
-        else if(unit)this.toast((unit.skillCharge??0)<100?`${heroById[unit.heroId].name} 스킬 충전 ${Math.floor(unit.skillCharge??0)}%`:'현재 사거리 안에 대상이 없습니다.');
+        else if(unit){const cool=Math.max(0,(unit.skillReadyAt??0)-m.time);this.toast(cool>0?`${heroById[unit.heroId].name} 스킬 쿨타임 ${cool.toFixed(1)}초`:(unit.skillCharge??0)<100?`${heroById[unit.heroId].name} 게이지 충전 ${Math.floor(unit.skillCharge??0)}%`:'현재 사거리 안에 대상이 없습니다.');}
         break;
       }
       case "hero":
@@ -750,12 +774,14 @@ class App {
     if (m.ended && m.result) {
       if(this.resultHandled)return;
       this.resultHandled=true;
+      this.syncMusic();
       const tutorial=document.getElementById('tutorial-hint');
       if(tutorial){tutorial.innerHTML='';tutorial.removeAttribute('data-step');}
       const s = this.save.data;
       if(m.campaign){const c=s.campaign!,id=m.campaign.id,previous=c.records[id];
         if(m.result.won){if(!previous)m.result.credits+=m.campaign.reward;c.records[id]={stars:Math.max(previous?.stars??0,m.result.stars??1),time:Math.min(previous?.time??Infinity,m.result.time),kills:Math.max(previous?.kills??0,m.result.kills)};for(const u of m.units)c.fragments[u.heroId]=Math.min(999,(c.fragments[u.heroId]??0)+1);if(id==='1-3'&&!s.tutorial){s.tutorial=true;this.toast('기초 작전 훈련 완료 · 자유롭게 편성과 장비를 조정할 수 있습니다.');}
           const stageIndex=Math.max(0,campaignStages.findIndex(stage=>stage.id===id)),regionIndex=Math.max(0,Number(id.split('-')[0])-1),boss=(campaignStages[stageIndex]?.waves??0)>=6;
+          const materialReward=Math.max(1,Math.floor((regionIndex+1)/2))*(boss?2:1);s.equipmentMaterials+=materialReward;m.result.materials=materialReward;
           if(Math.random()<campaignEquipmentDropChance(boss)){const roll=Math.random(),rarity=campaignEquipmentRarity(regionIndex,boss,roll,s.equipmentPity),pool=[...weaponCatalog,...armorCatalog,...necklaceCatalog],template=pool[Math.floor(Math.random()*pool.length)],drop=makeEquipment(template.id,rarity);s.equipmentPity=rarity==='SR'?0:s.equipmentPity+1;if(s.equipmentPity>=20&&regionIndex>=6){Object.assign(drop,makeEquipment(template.id,'SR',drop.order,drop.id));s.equipmentPity=0;}
             if(drop.rarity==='B'&&s.autoSalvageB){s.equipmentMaterials+=3;m.result.equipmentDrop=`${drop.name} · B 자동 분해 → 재료 3`;}else if(s.equipmentInventory.length<100){s.equipmentInventory.push(drop);m.result.equipmentDrop=`${drop.name} · ${drop.rarity}`;}else{s.equipmentMaterials+=({B:3,A:7,S:15,SR:35}[drop.rarity]);m.result.equipmentDrop='인벤토리 가득 참 · 장비를 강화 재료로 전환';}}
         }
@@ -770,7 +796,7 @@ class App {
       this.showModal(m.campaign?campaignResult(m.result):resultScreen(m.result),'battle-result');
       if(m.campaign&&m.result.won&&s.campaign?.autoAdvance){
         const next=campaignStages[campaignStages.findIndex(stage=>stage.id===m.campaign!.id)+1];
-        if(next&&campaignWorldline(next).id===campaignWorldline(m.campaign).id){const completedLayout=Object.fromEntries(m.units.map(u=>[u.heroId,u.slot]).filter(([,slot])=>(slot as number)>=0));s.campaign.lastDeployment=completedLayout;s.campaign.selected=next.id;this.persist();setTimeout(async()=>{if(this.screen!=="battle"||this.modalType!=="battle-result"||!this.save.data.campaign?.autoAdvance)return;await this.begin(next.id,true);const nextBattle=this.model;if(nextBattle?.campaign){const restored=nextBattle.deployCampaignLayout(this.save.data.campaign.lastDeployment);if((restored||nextBattle.autoDeployCampaign())){nextBattle.start();this.updateHud(true);this.toast(`${next.id} 이전 배치로 자동 출격`);}}},1800);}
+        if(next){const completedLayout=Object.fromEntries(m.units.map(u=>[u.heroId,u.slot]).filter(([,slot])=>(slot as number)>=0));s.campaign.lastDeployment=completedLayout;s.campaign.selected=next.id;this.persist();setTimeout(async()=>{if(this.screen!=="battle"||this.modalType!=="battle-result"||!this.save.data.campaign?.autoAdvance)return;await this.begin(next.id,true);const nextBattle=this.model;if(nextBattle?.campaign){const restored=nextBattle.deployCampaignLayout(this.save.data.campaign.lastDeployment);if((restored||nextBattle.autoDeployCampaign())){nextBattle.start();this.syncMusic();this.updateHud(true);this.toast(`${next.id} 이전 배치로 자동 출격`);}}},1800);}
       }
       return;
     }
@@ -876,7 +902,7 @@ class App {
       else if(stage==='1-1'&&this.tutorialStep<2){
         const ready=m.units.some(u=>u.hp>0&&(u.skillCharge??0)>=100&&m.time>=(u.skillReadyAt??0));
         title=ready?'수동 스킬 사용':'첫 교전';body=ready?'아래 요원 스킬에서 빛나는 얼굴 일러스트를 누르세요. 충전된 요원의 스킬이 즉시 발동합니다.':'오른쪽에서 오는 적을 유리아가 먼저 막고, 후방의 레이나·세라·노엘·아린이 공격합니다. 스킬 게이지가 100%가 될 때까지 전투 흐름을 확인하세요.';step=ready?'1-1-skill':'1-1-fight';
-      }else if(stage==='1-1'){title='AUTO 스킬';body='AUTO 스킬 버튼을 켜면 충전될 때마다 스킬을 자동 사용합니다. 직접 타이밍을 정하려면 OFF로 두세요. 1-1은 현재 기본 배치 그대로 무난하게 진행할 수 있습니다.';step='1-1-auto';}
+      }else if(stage==='1-1'){title='AUTO 스킬';body='스킬 사용 후 쿨타임이 끝나면 게이지 충전이 시작됩니다. 100%가 되면 AUTO가 자동 사용하며, 직접 타이밍을 정하려면 OFF로 두세요.';step='1-1-auto';}
       else if(stage==='1-2'&&!m.started){title='전열과 후열';body='가운데 FRONT에는 유리아를 두고, 저격수 노엘·아린은 뒤쪽 위·아래에 배치하세요. 레이나와 세라는 남은 후방 칸에 두면 한 명에게 공격이 몰려도 화력을 유지할 수 있습니다.';step='1-2-place';}
       else if(stage==='1-2'){title='위험한 적 우선 대응';body='유리아의 체력이 빠르게 줄면 준비된 방어 스킬을 먼저 사용하세요. 이어서 노엘이나 아린의 스킬로 강한 적을 빠르게 제거하면 전열이 오래 버팁니다.';step='1-2-fight';}
       else if(!m.started){title='배치 확인과 출격';body='1-3에서는 이전 배치를 그대로 쓰거나 직접 드래그해 조정할 수 있습니다. 다섯 명이 모두 칸에 있는지 확인한 뒤 방어 시작을 누르세요.';step='1-3-place';}

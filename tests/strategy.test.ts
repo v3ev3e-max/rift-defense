@@ -4,7 +4,7 @@ import {defaultSave} from '../src/systems/SaveSystem';
 import {heroes} from '../src/data/heroes';
 import {purchasePrice,growthOptions,links} from '../src/data/strategy';
 import {attack,stepActions,castAutoSkill} from '../src/systems/ActionCombat';
-import {stepAutoSkills} from '../src/systems/AutoSkills';
+import {stepAutoSkills,charge} from '../src/systems/AutoSkills';
 import {advanceTriple} from '../src/systems/TripleReactions';
 import {seeded} from '../src/utils/random';
 const make=()=>new BattleModel(defaultSave(),seeded(934));
@@ -14,6 +14,7 @@ it('two-unit merge transfers pending attacks, zones, DOT and ten-second ledger',
 it('3 and 5 stars choose distinct random candidates, pause and escalating reroll spend',()=>{for(const star of [2,4]){const m=make();m.gold=1000;const a=m.addUnit('sera',star),b=m.addUnit('sera',star);expect(m.merge(b.uid,a.uid)).toBe(true);expect(m.choices).toHaveLength(3);m.start();m.update(.2);expect(m.time).toBe(0);m.reroll();expect(m.gold).toBe(980);m.reroll();expect(m.gold).toBe(940);const choice=m.choices[0].id;expect(m.choose(choice)).toBe(true);expect(star===2?b.branch:b.ultimate).toBe(choice);expect(m.choose(choice)).toBe(false);}});
 it.each(heroes)('$id auto casts independently and honors hold',h=>{const m=make(),u=m.addUnit(h.id),e=target(m);u.skillCharge=100;u.priority='hold';stepAutoSkills(m,1);expect(u.skillCharge).toBe(100);u.priority='auto';u.skillHeldAt=-10;stepAutoSkills(m,1);expect(m.records[0].autoCasts).toBe(1);expect(u.skillCharge).toBe(0);expect(castAutoSkill(m,u,e)).toBe(false);});
 it('AUTO toggle stops automatic casts while portrait input uses the same skill path',()=>{const m=make(),u=m.addUnit('sera');target(m);m.start();m.autoSkills=false;u.skillCharge=100;u.skillHeldAt=-10;stepAutoSkills(m,1);expect(u.skillCharge).toBe(100);expect(m.records[0].autoCasts).toBe(0);expect(m.manualSkill(u.uid)).toBe(true);expect(u.skillCharge).toBe(0);expect(m.records[0].autoCasts).toBe(1);});
+it('starts energy charging only after the post-cast cooldown ends',()=>{const m=make(),u=m.addUnit('sera'),e=target(m);m.start();u.skillCharge=100;expect(castAutoSkill(m,u,e)).toBe(true);const readyAt=u.skillReadyAt!;expect(u.skillCharge).toBe(0);charge(u,40,readyAt-.01);expect(u.skillCharge).toBe(0);m.time=readyAt-.01;stepAutoSkills(m,.5);expect(u.skillCharge).toBe(0);m.time=readyAt;charge(u,40,m.time);expect(u.skillCharge).toBe(40);});
 it('every operator exposes a named skill for the battle portrait bar',()=>{expect(heroes).toHaveLength(34);for(const h of heroes)expect(h.skill.trim(),h.id).not.toBe('');});
 it.each([['water','electric','dark','공허 폭풍'],['fire','electric','dark','재앙 과부하'],['water','fire','electric','플라즈마 증기'],['water','fire','dark','심연 온천']] as const)('%s/%s/%s activates after six local reactions',(a,b,c,name)=>{const m=make(),u=m.addUnit('sera'),e=target(m);for(let i=0;i<5;i++)advanceTriple(m,u,e,a,b,100);expect(m.tripleCounts[name]).toBeUndefined();advanceTriple(m,u,e,b,c,100);expect(m.tripleCounts[name]).toBe(1);expect(m.records[0].tripleReactions).toBe(1);});
 it('fixed ten-unit cap leaves meaningful merge pressure',()=>{const m=make();expect(m.capacity).toBe(10);for(let i=0;i<10;i++)m.addUnit('sera');expect(m.units).toHaveLength(10);expect(m.merge()).toBe(true);expect(m.units.length).toBeLessThan(10);});

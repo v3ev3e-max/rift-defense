@@ -22,6 +22,7 @@ export interface Unit {
   lockAt?:number;
   heat?:number;
   skillReadyAt?:number;
+  skillCooldownDuration?:number;
   uid: number;
   heroId: string;
   star: number;

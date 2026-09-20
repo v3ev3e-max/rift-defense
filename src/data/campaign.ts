@@ -7,15 +7,16 @@ export interface CampaignStage {
  enemies:string[]; recommendation:string; mechanic:string; map:BattleMap; alternate?:BattleMap; background:string;
  enemyHp:number; enemyAttack:number; enemySpeed:number;
 }
-export interface CampaignWorldline {id:1|2; code:string; name:string; subtitle:string; regions:number[]; prologue:string; objective:string;}
+export interface CampaignWorldline {id:1|2|3; code:string; name:string; subtitle:string; regions:number[]; prologue:string; objective:string;}
 export const campaignWorldlines:CampaignWorldline[]=[
  {id:1,code:'WL-01',name:'낙원 붕괴',subtitle:'지상 균열 원정',regions:[1,2,3,4],prologue:'평온했던 바람 초원에 최초의 균열이 열린다. 유리아, 레이나, 세라, 노엘, 아린은 침공의 흔적을 따라 해안과 고대 수림을 지나 설원 성문으로 향한다.',objective:'설원 성문 너머의 균열을 봉쇄하고 지상 침공의 근원을 확인한다.'},
  {id:2,code:'WL-02',name:'폐쇄 연구구역',subtitle:'인공 세계선 추적',regions:[5,6,7,8],prologue:'봉쇄된 균열에서 세라의 장비가 다른 세계의 구조 신호를 수신한다. 다섯 요원은 버려진 연구구역으로 진입해 인공 균열 실험의 진실을 추적한다.',objective:'연구소 심층부와 공허 관측소를 돌파하고 세계선을 연결하는 균열 핵을 파괴한다.'},
+ {id:3,code:'WL-03',name:'시간 파편 전선',subtitle:'붕괴 세계 추격전',regions:[9,10,11,12],prologue:'균열 핵이 파괴되며 흩어진 시간 파편이 네 개의 붕괴 세계를 연결한다. 다섯 요원은 천공 유적과 황혼 사막, 기계 도시를 거쳐 모든 시간을 삼키는 영겁의 성채를 추격한다.',objective:'각 세계의 지배자를 격파하고 영겁의 군주가 완성하려는 시간 고리를 끊는다.'},
 ];
-export const campaignWorldline=(stage:CampaignStage|string)=>campaignRegion(stage)<=4?campaignWorldlines[0]:campaignWorldlines[1];
+export const campaignWorldline=(stage:CampaignStage|string)=>campaignWorldlines[Math.min(2,Math.floor((campaignRegion(stage)-1)/4))];
 export const campaignLocalRegion=(stage:CampaignStage|string)=>((campaignRegion(stage)-1)%4)+1;
 export const campaignStageLabel=(stage:CampaignStage|string)=>{const id=typeof stage==='string'?stage:stage.id,[,operation='1']=id.split('-');return `${campaignWorldline(stage).id}-${campaignLocalRegion(stage)}-${operation}`;};
-export const worldlineUnlocked=(id:number,records:Record<string,unknown>)=>id===1||!!records['4-10'];
+export const worldlineUnlocked=(id:number,records:Record<string,unknown>)=>id===1||(id===2?!!records['4-10']:!!records['8-10']);
 export const regionalStories=[
  {title:'바람에 열린 문',text:'초원의 생태가 균열 파동에 뒤틀린다. 다섯 요원은 처음으로 한 팀이 되어 주민의 퇴로를 확보한다.'},
  {title:'해안의 잔향',text:'바다 아래에서도 같은 신호가 반복된다. 노엘은 균열이 자연 발생이 아니라 좌표를 따라 이동한다는 사실을 발견한다.'},
@@ -25,6 +26,10 @@ export const regionalStories=[
  {title:'얼어붙은 증거',text:'냉각 구획의 기록에서 여러 세계선을 겹치는 실험이 확인된다. 유리아의 방벽과 동일한 에너지 흔적도 발견된다.'},
  {title:'관측자의 진실',text:'공허 관측소는 다른 세계의 붕괴를 에너지원으로 사용했다. 노엘은 자신의 기록 일부가 이 시설에서 만들어졌음을 깨닫는다.'},
  {title:'세계선의 심장',text:'다섯 요원은 모든 좌표가 만나는 균열 핵으로 향한다. 핵을 파괴해야 두 세계의 연쇄 붕괴를 멈출 수 있다.'},
+ {title:'구름 위의 잔해',text:'핵의 파편이 하늘 유적을 떠받치고 있다. 돌풍에 밀려나는 전선을 지키며 첫 시간 좌표를 회수한다.'},
+ {title:'태양이 멈춘 사막',text:'멈춘 태양 아래 신기루 군단이 되살아난다. 치유 적을 먼저 끊어 황혼의 고리를 파괴한다.'},
+ {title:'스스로 고치는 도시',text:'기계 도시는 침입자를 재료로 삼아 군단을 수복한다. 수복망을 차단하고 도시의 신핵으로 향한다.'},
+ {title:'영겁의 마지막',text:'서로 다른 시간이 한 성채에 겹친다. 반복되는 돌진과 되감기를 버티고 세계선의 고리를 끝낸다.'},
 ] as const;
 function map(id:string,name:string,points:number[][],pads:number[][]):BattleMap {
  const path=points.map(([x,y])=>({x,y}));
@@ -41,6 +46,10 @@ const regions=[
  {names:['냉각 통로','빙결 저장고','극저온 구획','냉매 수송로','동결 실험동','냉각 제어실','백색 격리실','심층 저장고','냉각로 외곽','냉각로 방어전'],background:'region-2.webp',enemies:['runner','armored','brute','jammer'],hp:1.65,attack:1.00,speed:.56,power:1800,reward:1050,recommendation:'리비아 + 노엘',theme:'장비와 속성 조합으로 복합 공세를 돌파하세요.'},
  {names:['심연 관측로','위상 격리실','공허 관측소','잔향 회랑','위상 접속부','심연 표본실','공허 억제실','관측 제어실','심연 연결부','심연 연구동'],background:'region-3.webp',enemies:['sprinter','bulwark','phantom','jammer'],hp:2.05,attack:1.18,speed:.58,power:2300,reward:1350,recommendation:'레온 + 세린',theme:'위상 적과 방벽 적을 도발과 집중 화력으로 분리하세요.'},
  {names:['균열 접근로','붕괴 회랑','공허 핵실','왜곡 교차로','균열 전초지','붕괴 관측실','심층 공허로','핵심 방벽','최종 접근로','최종 균열전'],background:'map-08-rift.webp',enemies:['armored','jammer','phantom','bulwark','elite'],hp:2.45,attack:1.38,speed:.60,power:3000,reward:1750,recommendation:'오로라 + 레온',theme:'완성된 장비와 조합으로 최종 균열을 봉쇄하세요.'},
+ {names:['부유섬 진입로','구름 회랑','천공 외곽','부서진 다리','폭풍 제단','비행선 잔해','상층 정원','낙뢰 관문','왕좌 접근로','천공 지배전'],background:'map-09-1.webp',enemies:['sky_guard','sky_lancer','cloud_gunner','aether_mender'],hp:3.0,attack:1.55,speed:.62,power:3800,reward:2200,recommendation:'2탱커 + 원거리 우선 사격',theme:'주기적인 돌풍과 돌진을 버티고 치유익을 먼저 처치하세요.'},
+ {names:['황혼 협곡','사구 관문','태양 수로','유적 외곽','신기루 제단','매몰 회랑','황금 채굴장','일몰 성벽','신전 접근로','태양 심판전'],background:'map-10-1.webp',enemies:['relic_golem','dune_ripper','sun_archer','mirage_oracle'],hp:3.45,attack:1.72,speed:.63,power:4800,reward:2800,recommendation:'돌진 저지 + 지원 적 점사',theme:'신기루가 적을 회복합니다. 지원 적을 끊고 중장 적에 화력을 모으세요.'},
+ {names:['강철 하역장','기어 회랑','용광로 외곽','맥동 배관','수복 관제실','합금 조립소','증기 교차로','중앙 제철소','신핵 접근로','기계신 격전'],background:'map-11-1.webp',enemies:['alloy_guard','gear_hound','pulse_turret','repair_weaver'],hp:3.9,attack:1.9,speed:.64,power:6100,reward:3500,recommendation:'방벽 파괴 + 수복기 우선',theme:'수복망이 주변 적의 체력을 회복합니다. 포탑과 수복기를 빠르게 제거하세요.'},
+ {names:['시간 균열 입구','역행 회랑','파편 정원','초침 교차로','되감기 제단','멈춘 전망대','역설 감옥','영겁 방벽','최후 시간선','영겁 종결전'],background:'map-12-1.webp',enemies:['paradox_shell','chrono_stalker','epoch_caster','time_mender'],hp:4.4,attack:2.08,speed:.66,power:7800,reward:4500,recommendation:'이중 전선 + 네임드 집중',theme:'시간 도약과 되감기가 반복됩니다. 두 전선의 저지선을 유지하세요.'},
 ] as const;
 export const CAMPAIGN_STAGES_PER_REGION=10;
 // Introduce split routes gradually: the opening area teaches one lane, then
@@ -53,12 +62,13 @@ const dualLaneStageIds=new Set([
  '6-3','6-7',
  '7-2','7-6','7-9',
  '8-2','8-3','8-7',
+ '9-2','9-6','9-8','10-3','10-7','11-2','11-6','11-9','12-2','12-4','12-7','12-9',
 ]);
-export const campaignStages:CampaignStage[]=regions.flatMap((region,ri)=>region.names.map((name,si)=>{const number=si+1,id=`${ri+1}-${number}`,mid=number===5,final=number===CAMPAIGN_STAGES_PER_REGION,early=ri<5,dualLane=dualLaneStageIds.has(id);return {id,name,waves:final?8:mid?6:4,power:region.power+si*Math.round(region.power*.05),reward:region.reward+si*Math.round(region.reward*.07),enemies:[...region.enemies],recommendation:dualLane?'탱커 2명 + 양 라인 화력 분산':region.recommendation,mechanic:`${region.theme}${dualLane?' 두 갈래 균열에서 적이 교대로 진입합니다. 각 라인에 전방 요원을 배치하세요.':''}${final?' 지역 최종보스가 마지막 웨이브에 출현합니다.':mid?' 지역 중간보스가 마지막 웨이브에 출현합니다.':' 마지막 웨이브의 네임드를 처치하면 완료됩니다.'}`,map:map(id,name,dualLane?[[750,340],[200,340],[50,400]]:[[750,400],[50,400]],[]),alternate:dualLane?map(`${id}-lower`,`${name} 하단 균열`,[[750,460],[200,460],[50,400]],[]):undefined,background:`map-${ri+1}-1.webp`,enemyHp:+(campaignRegionBalance[ri].hp*(1+si*.004)).toFixed(3),enemyAttack:+(campaignRegionBalance[ri].attack*(1+si*.004)).toFixed(3),enemySpeed:+(campaignRegionBalance[ri].speed+si*.001).toFixed(3)};}));
-export function campaignRegion(stage:CampaignStage|string){return Math.max(1,Math.min(8,Number((typeof stage==='string'?stage:stage.id).split('-')[0])||1));}
-const regionalNamed=['named_meadow','named_coast','named_autumn','named_snow','named_lab','named_cold','named_abyss','named_rift'] as const;
-export const regionalMidBoss=['verdant_stalker','coral_mauler','thorn_matriarch','frost_howler','security_exarch','cryo_hunter','phase_reaper','rift_executioner'] as const;
-export const regionalFinalBoss=['gale_colossus','leviathan','ancient_treant','glacial_tyrant','reactor_behemoth','absolute_zero','void_observer','rift_sovereign'] as const;
+export const campaignStages:CampaignStage[]=regions.flatMap((region,ri)=>region.names.map((name,si)=>{const number=si+1,id=`${ri+1}-${number}`,mid=number===5,final=number===CAMPAIGN_STAGES_PER_REGION,dualLane=dualLaneStageIds.has(id),lateRoute=ri>=8,upper=lateRoute?[[750,360],[650,320],[520,360],[360,340],[210,390],[50,400]]:[[750,400],[50,400]],lower=lateRoute?[[750,440],[650,480],[520,440],[360,460],[210,410],[50,400]]:[[750,460],[200,460],[50,400]];return {id,name,waves:final?8:mid?6:4,power:region.power+si*Math.round(region.power*.05),reward:region.reward+si*Math.round(region.reward*.07),enemies:[...region.enemies],recommendation:dualLane?'탱커 2명 + 양 라인 화력 분산':region.recommendation,mechanic:`${region.theme}${dualLane?' 두 갈래 균열에서 적이 교대로 진입합니다. 각 라인에 전방 요원을 배치하세요.':''}${final?' 지역 최종보스가 마지막 웨이브에 출현합니다.':mid?' 지역 중간보스가 마지막 웨이브에 출현합니다.':' 마지막 웨이브의 네임드를 처치하면 완료됩니다.'}`,map:map(id,name,dualLane?upper:lateRoute?(si%2?upper:[[750,400],[610,450],[460,380],[300,430],[160,370],[50,400]]):[[750,400],[50,400]],[]),alternate:dualLane?map(`${id}-lower`,`${name} 하단 균열`,lower,[]):undefined,background:`map-${ri+1}-1.webp`,enemyHp:+(campaignRegionBalance[ri].hp*(1+si*.004)).toFixed(3),enemyAttack:+(campaignRegionBalance[ri].attack*(1+si*.004)).toFixed(3),enemySpeed:+(campaignRegionBalance[ri].speed+si*.001).toFixed(3)};}));
+export function campaignRegion(stage:CampaignStage|string){return Math.max(1,Math.min(12,Number((typeof stage==='string'?stage:stage.id).split('-')[0])||1));}
+const regionalNamed=['named_meadow','named_coast','named_autumn','named_snow','named_lab','named_cold','named_abyss','named_rift','named_sky','named_dune','named_machine','named_time'] as const;
+export const regionalMidBoss=['verdant_stalker','coral_mauler','thorn_matriarch','frost_howler','security_exarch','cryo_hunter','phase_reaper','rift_executioner','storm_wyvern','sand_colossus','forge_overseer','chrono_reaper'] as const;
+export const regionalFinalBoss=['gale_colossus','leviathan','ancient_treant','glacial_tyrant','reactor_behemoth','absolute_zero','void_observer','rift_sovereign','sky_dominion','solar_sphinx','machine_god','aeon_sovereign'] as const;
 export function campaignWave(stage:CampaignStage,n:number):Wave{
  const region=campaignRegion(stage),sub=Number(stage.id.split('-')[1])||1;
  const pool=stage.enemies;

@@ -158,7 +158,7 @@ export function applyElementHit(
   // The incoming element remains as the next link starter. This creates a
   // readable alternating-combo rhythm without allowing one mark to react forever.
   setMark(target, incoming, 1, duration);
-  recordReaction(m, target, reaction);m.lastReaction=reactionNames[reaction];charge(unit,8);
+  recordReaction(m, target, reaction);m.lastReaction=reactionNames[reaction];charge(unit,8,m.time);
   advanceTriple(m,unit,target,incoming,existing,baseDamage);
   const record=m.records.find(r=>r.uid===unit.uid);if(record)record.reactions++;
   const previousKind=m.damageKind;m.damageKind="reaction";

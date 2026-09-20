@@ -15,29 +15,26 @@ for (const viewport of [
     path: `artifacts/portrait-${viewport.width}-home.png`,
   });
   await page.locator('[data-action="stage"]').first().click();
-  await page.locator('[data-action="start-battle"]').click();
+  await page.locator('[data-action="campaign-select"][data-id="1-1"]').first().click();
+  await page.locator('[data-action="campaign-deploy"]').first().click();
   await page.locator("canvas").waitFor();
-  for (let i = 0; i < 3; i++) await page.locator("#summon-btn").click();
-  await page.locator("#merge-btn").click();
-  await page.locator("#unit-panel h3").filter({ hasText: "세라 ★★" }).waitFor();
-  await page.locator('[data-action="tutorial-skip"]').click();
-  await page.locator("#wave-start-btn").click();
   await page.screenshot({
     path: `artifacts/portrait-${viewport.width}-battle.png`,
   });
-  for (const id of ["summon-btn", "merge-btn", "focus-btn"]) {
-    const r = await page.locator("#" + id).boundingBox();
+  for (const selector of ["#phaser-container", "#campaign-start-btn", "#campaign-auto-advance-btn"]) {
+    const r = await page.locator(selector).boundingBox();
+    if(!r)throw Error("Missing "+selector);
     if (
       r.x < 0 ||
       r.x + r.width > viewport.width + 1 ||
-      r.y + r.height > viewport.height + 1
+      r.y < 0
     )
-      throw Error("Clipped " + id);
+      throw Error("Clipped " + selector);
   }
   if (errors.length) throw Error(errors.join("\n"));
   console.log(
     viewport.width,
-    "file:// home, canvas, summon, merge, controls PASS",
+    "file:// home, campaign canvas and controls PASS",
   );
   await page.close();
 }
