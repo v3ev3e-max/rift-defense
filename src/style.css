@@ -4753,3 +4753,24 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
  .campaign-battle #campaign-prep-exit{order:-1}
  .campaign-battle .growth-host:has(.prep-bag){max-height:calc(100svh - 170px)}
 }
+
+/* Mobile deployment workspace: keep the full-width battlefield and put the
+ * selectable roster before optional presets. The former fixed-height layout
+ * compressed .prep-roster to zero pixels on real phone browser viewports. */
+@media(max-width:700px){
+ .app-shell:has(.campaign-prep:not([hidden]))>#screen{overflow-x:hidden!important;overflow-y:auto!important}
+ .campaign-battle:has(.campaign-prep:not([hidden])){height:auto!important;min-height:100%;overflow:visible!important}
+ .campaign-battle:has(.campaign-prep:not([hidden])) .compact-field{width:100%!important;height:auto!important;min-height:0!important;overflow:visible!important}
+ .campaign-battle:has(.campaign-prep:not([hidden])) .field-wrap{width:100%!important;height:auto!important;padding:20px 0!important}
+ .campaign-battle:has(.campaign-prep:not([hidden])) .battle-stage-shell{width:100%!important;height:auto!important;aspect-ratio:1!important}
+ .campaign-battle:has(.campaign-prep:not([hidden])) .campaign-prep{flex:none!important;max-height:none!important;overflow:visible!important}
+ .campaign-battle .campaign-prep>header{order:0}
+ .campaign-battle .campaign-prep>.dual-lane-guide{order:1}
+ .campaign-battle .campaign-prep>.prep-doctrines{order:2}
+ .campaign-battle .campaign-prep>.prep-step-message{order:3}
+ .campaign-battle .campaign-prep>.prep-role-tabs{order:4}
+ .campaign-battle .campaign-prep>.prep-roster{order:5;display:grid!important;flex:none!important;min-height:88px!important;max-height:none!important;grid-auto-rows:44px!important;overflow:visible!important}
+ .campaign-battle .campaign-prep>.deployment-preset-panel{order:6;margin-top:3px}
+ .campaign-battle .prep-card{min-height:44px}
+ .campaign-battle .prep-card-main{min-height:42px}
+}
