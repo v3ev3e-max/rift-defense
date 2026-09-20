@@ -4,7 +4,7 @@ import {campaignStages,stageUnlocked,doctrines,campaignWorldlines} from './data/
 import {priorities} from './data/strategy';
 import {waveBrief} from './data/waves';
 import "./style.css";
-import { SaveSystem,defaultSave,STARTER_HERO_IDS } from "./systems/SaveSystem";
+import { SaveSystem,defaultSave,localTestResetSave,STARTER_HERO_IDS } from "./systems/SaveSystem";
 import { GameAudio } from "./utils/Audio";
 import {assetUrl} from './utils/assets';
 import { BATTLE_SPEEDS, BattleModel } from "./systems/BattleModel";
@@ -643,7 +643,7 @@ class App {
       }
       case 'dev-recruit':{const grade=(['B','A','S','SR'].includes(id??'')?id:'B') as HeroGrade,results=recruit(this.save.data,1,Math.random,grade);this.persist();this.render();this.audio.play(grade==='SR'?'boss':grade==='S'?'level':'summon');this.showModal(recruitResult(results),'recruit-result');break;}
       case 'dev-reset':
-        this.game?.destroy(true);this.game=undefined;this.model=undefined;this.save.data=defaultSave();this.audio.configure(this.save.data.settings);this.persist();this.screen='home';this.render();break;
+        this.game?.destroy(true);this.game=undefined;this.model=undefined;this.save.data=localTestResetSave();this.audio.configure(this.save.data.settings);this.persist();this.screen='home';this.render();break;
       case "tutorial-skip":
         this.save.data.tutorial = true;
         this.persist();

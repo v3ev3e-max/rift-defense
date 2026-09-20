@@ -12,8 +12,10 @@ import { pathLength } from "../src/data/map";
 import { traits } from "../src/data/traits";
 import { BALANCE } from "../src/data/balance";
 import type { Build } from "../src/data/types";
+import {campaignStages} from '../src/data/campaign';
 const make = (seed = 12) => new BattleModel(defaultSave(), seeded(seed));
 describe("battle economy and progression", () => {
+  it('ends the operation immediately when every deployed hero is defeated',()=>{const m=make();m.configureCampaign(campaignStages[0],['yuria','reina'],true);m.autoDeployCampaign();m.start();for(const u of m.units)u.hp=0;m.step(1/60);expect(m.ended).toBe(true);expect(m.result?.won).toBe(false);});
   it("buys exact heroes and rejects insufficient gold",()=>{const m=make();m.selectHero("sera");expect(m.summonAt(0)).toBe(true);expect(m.summonAt(1)).toBe(true);expect(m.gold).toBe(25);expect(m.summonAt(2)).toBe(false);expect(m.units.every(u=>u.heroId==="sera")).toBe(true);});
   it("manual two-way merge conserves material, evolves attack structure and caps at five", () => {
     const m = make();

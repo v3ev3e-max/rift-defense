@@ -44,6 +44,16 @@ export function defaultSave(): SaveData {
   grantTestCollection(data);
   return data;
 }
+/** Local QA reset intentionally starts with an empty item economy. */
+export function localTestResetSave():SaveData{
+  const data=defaultSave();
+  data.equipmentInventory=[];
+  data.equipmentMaterials=0;
+  data.equipmentGold=0;
+  data.shards=0;
+  for(const hero of Object.values(data.heroes))hero.equipment=[];
+  return data;
+}
 function grantTestCollection(data:SaveData){
   for(const h of heroes)data.heroes[h.id].owned=true;
   const catalog=[...weaponCatalog,...armorCatalog,...necklaceCatalog];
@@ -113,7 +123,6 @@ export function parseSave(raw: string | null): SaveData {
       for(const raw of s.equipmentInventory){if(typeof raw?.equippedBy==='string'){const item=d.equipmentInventory.find(v=>v.id===raw.id);if(item&&d.heroes[raw.equippedBy])equipItem(d,raw.equippedBy,item.id);}}
     }
     if(!hadEquipmentInventory)for(const [index,h] of heroes.entries())if(d.heroes[h.id].owned&&!d.heroes[h.id].equipment.some(id=>d.equipmentInventory.find(v=>v.id===id)?.slot==='weapon')){const existing=d.equipmentInventory.find(v=>v.equippedBy===h.id&&v.slot==='weapon');if(existing)equipItem(d,h.id,existing.id);else{const template=weaponCatalog.find(v=>v.weaponGroup===heroWeaponGroup[h.id])!;const item=makeEquipment(template.id,'B',Date.now()+index,`basic-${h.id}-${Date.now()}`);d.equipmentInventory.push(item);equipItem(d,h.id,item.id);}}
-    grantTestCollection(d);
     const owned=new Set(heroes.filter(h=>d.heroes[h.id].owned).map(h=>h.id));
     if(Array.isArray(s.campaign?.squad)){
       const savedSquad=s.campaign.squad.map((id:string)=>LEGACY_HERO_IDS[id]??id);

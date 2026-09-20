@@ -810,6 +810,11 @@ export class BattleModel {
     }
     stepCombat(this, dt);
     if(this.ended)return;
+    if(this.started&&this.units.some(u=>u.slot>=0)&&this.units.filter(u=>u.slot>=0).every(u=>u.hp<=0)){
+      this.say('출전 요원 전원 전투 불능 · 작전 실패');
+      this.finish(false);
+      return;
+    }
     if (this.core <= 0 && !this.invincible) {
       this.finish(false);
       return;

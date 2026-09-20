@@ -1,10 +1,11 @@
 import {describe,it,expect} from 'vitest';
-import {defaultSave,parseSave} from '../src/systems/SaveSystem';
+import {defaultSave,localTestResetSave,parseSave} from '../src/systems/SaveSystem';
 import {armorCatalog,campaignEquipmentDropChance,campaignEquipmentRarity,equipItem,equipmentBonus,equipmentCraftCost,equipmentSalvageValue,equipmentShopPrice,heroWeaponGroup,makeEquipment,necklaceCatalog,rarityMax,weaponCatalog} from '../src/data/equipment';
 import {heroes} from '../src/data/heroes';
 import {BattleModel} from '../src/systems/BattleModel';
 
 describe('permanent stars and equipment',()=>{
+ it('clears every item and equipped reference for a local test reset and keeps it empty after parsing',()=>{const reset=localTestResetSave();expect(reset.equipmentInventory).toEqual([]);expect(reset.equipmentMaterials).toBe(0);expect(Object.values(reset.heroes).every(h=>h.equipment.length===0)).toBe(true);const loaded=parseSave(JSON.stringify(reset));expect(loaded.equipmentInventory).toEqual([]);expect(Object.values(loaded.heroes).every(h=>h.equipment.length===0)).toBe(true);});
  it('owns every operator and every equipment template in the test build',()=>{const s=defaultSave(),catalog=[...weaponCatalog,...armorCatalog,...necklaceCatalog];expect(heroes.every(h=>s.heroes[h.id].owned)).toBe(true);for(const template of catalog)expect(s.equipmentInventory.some(v=>v.templateId===template.id),template.id).toBe(true);expect(s.equipmentInventory.length).toBeLessThanOrEqual(100);});
  it('assigns all 21 heroes a supported weapon group and gives every starter a compatible B weapon',()=>{const s=defaultSave();expect(Object.keys(heroWeaponGroup)).toHaveLength(heroes.length);for(const h of heroes)expect(heroWeaponGroup[h.id]).toBeTruthy();for(const id of s.deck){const item=s.equipmentInventory.find(v=>v.equippedBy===id);expect(item?.rarity).toBe('B');expect(item?.weaponGroup).toBe(heroWeaponGroup[id]);}});
  it('keeps duplicate item templates as independent instances and rejects incompatible weapons',()=>{const s=defaultSave(),template=weaponCatalog.find(v=>v.weaponGroup==='sniper')!;const a=makeEquipment(template.id,'A',100,'a'),b=makeEquipment(template.id,'A',101,'b');s.equipmentInventory.push(a,b);expect(a.id).not.toBe(b.id);expect(equipItem(s,'arin',a.id)).toBe(true);expect(equipItem(s,'sera',b.id)).toBe(false);});
