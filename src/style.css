@@ -4742,3 +4742,14 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .operator-star-effects{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}.operator-star-effects span{min-width:0;padding:4px 3px;border:1px solid #365765;background:#0c202c;color:#8da9b1;font-size:8px;line-height:1.25}.operator-star-effects span b{display:block;color:#ffda75}.operator-star-effects span.unlocked{border-color:#67b9a7;background:#163b3d;color:#e8fffa}.operator-star-effects span.locked{opacity:.55}
 .mobile-unit-sheet-body .operator-intel{margin:7px 0}.mobile-unit-sheet-body{max-height:min(440px,55vh);overflow:auto;overscroll-behavior:contain}
 @media(max-width:700px){.operator-intel{padding:6px}.operator-intel-row{grid-template-columns:58px minmax(0,1fr)}.operator-star-effects{grid-template-columns:repeat(5,minmax(52px,1fr));overflow-x:auto}.operator-intel>header small{display:block}}
+
+/* Mobile battle actions must never be pushed below the deployment workspace. */
+@media(max-width:700px){
+ .app-shell:has(.campaign-battle)>#screen{padding-bottom:0!important}
+ .campaign-battle{padding-bottom:calc(112px + env(safe-area-inset-bottom))!important}
+ .campaign-battle .compact-actions{position:fixed!important;left:50%!important;right:auto!important;bottom:0!important;transform:translateX(-50%)!important;width:min(560px,100vw)!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important;padding:6px 7px calc(6px + env(safe-area-inset-bottom))!important;background:#0b2231fa!important;border-top:1px solid #5a9a9f;box-shadow:0 -10px 24px #02090dcc;z-index:1200!important}
+ .campaign-battle .compact-actions .btn{min-height:46px!important}
+ .campaign-battle #campaign-start-btn{order:-2;border-color:#76ead2;box-shadow:inset 0 0 14px #55dcc033,0 0 12px #4bd8bd2e}
+ .campaign-battle #campaign-prep-exit{order:-1}
+ .campaign-battle .growth-host:has(.prep-bag){max-height:calc(100svh - 170px)}
+}
