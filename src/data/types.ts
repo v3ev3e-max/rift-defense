@@ -57,7 +57,7 @@ export interface PermanentHero {
   stars: number;
 }
 export interface SaveData {
-  campaign?: {selected:string; doctrine?:string; autoAdvance:boolean; autoSkills:boolean; squad:string[]; lastDeployment:Record<string,number>; deploymentPresets:Array<{squad:string[];layout:Record<string,number>}|null>; records:Record<string,{stars:number;time:number;kills:number}>; research:Record<string,number>; fragments:Record<string,number>};
+  campaign?: {selected:string; doctrine?:string; autoAdvance:boolean; autoSkills:boolean; squad:string[]; lastDeployment:Record<string,number>; deploymentPresetNames:string[]; deploymentPresets:Array<{squad:string[];layout:Record<string,number>}|null>; records:Record<string,{stars:number;time:number;kills:number}>; research:Record<string,number>; fragments:Record<string,number>};
   saveVersion: 1;
   credits: number;
   equipmentGold:number;

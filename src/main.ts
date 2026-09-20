@@ -116,6 +116,7 @@ class App {
         this.filterHeroCollection();
       }
       if(el.id==='prep-equipment-filter'&&this.model?.campaign&&!this.model.started){this.prepEquipmentFilter=el.value as typeof this.prepEquipmentFilter;this.updateHud(true);}
+      if(el.dataset.presetName!==undefined&&this.save.data.campaign){const index=Number(el.dataset.presetName),fallback=`프리셋 ${index+1}`,name=el.value.trim().slice(0,16)||fallback;if(index>=0&&index<3){this.save.data.campaign.deploymentPresetNames[index]=name;if(this.model?.save.campaign)this.model.save.campaign.deploymentPresetNames[index]=name;el.value=name;this.persist();this.toast(`${name} 이름 저장 완료`);}}
       if (el.id === "research-select") this.updateHud(true);
       if (el.id === "save-file" && el.files?.[0]) {
         void el.files[0].text().then((raw) => {
@@ -447,7 +448,7 @@ class App {
         if(!formationComplete(m.units.map(u=>u.heroId))||placed.length!==m.units.length){this.toast('요원을 모두 배치한 뒤 프리셋을 저장해주세요.');break;}
         const preset={squad:m.units.map(u=>u.heroId),layout:Object.fromEntries(placed.map(u=>[u.heroId,u.slot]))};
         c.deploymentPresets[index]=preset;m.save.campaign!.deploymentPresets[index]=structuredClone(preset);this.persist();
-        const panel=this.root.querySelector('#campaign-prep');if(panel)replacePanel(panel,campaignPrep(m,this.prepStep));this.audio.play('summon');this.toast(`배치 프리셋 ${index+1} 저장 완료`);break;
+        const panel=this.root.querySelector('#campaign-prep');if(panel)replacePanel(panel,campaignPrep(m,this.prepStep));this.audio.play('summon');this.toast(`${c.deploymentPresetNames[index]} 저장 완료`);break;
       }
       case 'campaign-preset-load':{
         const index=Number(id),c=this.save.data.campaign;if(!m?.campaign||m.started||!c||!Number.isInteger(index)||index<0||index>2)break;
@@ -456,7 +457,7 @@ class App {
         if(!formationComplete(squad)){this.toast('현재 사용할 수 없는 요원이 포함된 프리셋입니다.');break;}
         c.squad=[...squad];m.save.campaign!.squad=[...squad];m.syncCampaignSquad(squad);
         if(!m.deployCampaignLayout(preset.layout)){this.toast('이 맵에 프리셋 배치를 적용할 수 없습니다.');break;}
-        this.persist();const panel=this.root.querySelector('#campaign-prep');if(panel)replacePanel(panel,campaignPrep(m,this.prepStep));this.audio.play('summon');this.updateHud(true);this.toast(`배치 프리셋 ${index+1} 적용 완료`);break;
+        this.persist();const panel=this.root.querySelector('#campaign-prep');if(panel)replacePanel(panel,campaignPrep(m,this.prepStep));this.audio.play('summon');this.updateHud(true);this.toast(`${c.deploymentPresetNames[index]} 적용 완료`);break;
       }
       case 'campaign-preset-clear':{
         const index=Number(id),c=this.save.data.campaign;if(!c||!Number.isInteger(index)||index<0||index>2)break;

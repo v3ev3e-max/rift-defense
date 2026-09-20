@@ -36,7 +36,7 @@ export function defaultSave(): SaveData {
     runs: 0,
     tutorial: false,
     settings: { sound: true, bgm:true, sfx:true, bgmVolume:.65, sfxVolume:.8, shake: false, lowEffects: false, battleSpeed:1 },
-    campaign:{selected:'1-1',doctrine:'rapid',autoAdvance:false,autoSkills:true,squad:[...STARTER_HERO_IDS],lastDeployment:{},deploymentPresets:[null,null,null],records:{},research:{},fragments:{}},
+    campaign:{selected:'1-1',doctrine:'rapid',autoAdvance:false,autoSkills:true,squad:[...STARTER_HERO_IDS],lastDeployment:{},deploymentPresetNames:['프리셋 1','프리셋 2','프리셋 3'],deploymentPresets:[null,null,null],records:{},research:{},fragments:{}},
     equipmentInventory:[],equipmentMaterials:30,autoSalvageB:false,equipmentPity:0,recruitPity:0,recruitCount:0,
   };
   for(const [i,id] of STARTER_HERO_IDS.entries()){const template=weaponCatalog.find(v=>v.weaponGroup===heroWeaponGroup[id])!;const item=makeEquipment(template.id,'B',i+1,`starter-${id}`);data.equipmentInventory.push(item);equipItem(data,id,item.id);}
@@ -81,6 +81,7 @@ export function parseSave(raw: string | null): SaveData {
       c.doctrine=['rapid','focus','guard'].includes(s.campaign.doctrine??'')?s.campaign.doctrine:'rapid';
       c.autoAdvance=s.campaign.autoAdvance===true;
       c.autoSkills=s.campaign.autoSkills!==false;
+      if(Array.isArray(s.campaign.deploymentPresetNames))for(let i=0;i<3;i++){const name=s.campaign.deploymentPresetNames[i];if(typeof name==='string'&&name.trim())c.deploymentPresetNames[i]=name.trim().slice(0,16);}
       if(s.campaign.lastDeployment&&typeof s.campaign.lastDeployment==='object')for(const [heroId,slot] of Object.entries(s.campaign.lastDeployment))if(heroes.some(h=>h.id===heroId)&&integer(slot,-1,5)>=0)c.lastDeployment[heroId]=integer(slot,0,5);
       if(Array.isArray(s.campaign.deploymentPresets))for(let i=0;i<3;i++){
         const raw=s.campaign.deploymentPresets[i];if(!raw||!Array.isArray(raw.squad)||!raw.layout||typeof raw.layout!=='object')continue;
