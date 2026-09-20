@@ -24,5 +24,5 @@ report+='\n## 첫 등장 적 체력과 등급 예산 요약\n\n';
 report+=table(['적','이전 실제 HP','현재 실제 HP'],['crawler','runner','named_meadow'].map(id=>[id,fmt(oldOpening.enemies.find(e=>e.kind===id)?.hp),fmt(opening.enemies.find(e=>e.kind===id)?.hp)]));
 report+='\n현재 이동 속도 배율은 0.85이며 네임드는 별도 0.55 이동 보정이 적용된다. 고속 선봉 sprinter는 지역 전용 이미지가 없는 지역에서 기존 공용 이미지·애니메이션을 사용한다.\n\n';
 report+=table(['등급','이전 단일 DPS 평균','현재 단일 DPS 평균','현재 3대상 DPS 평균'],['B','A','S','SR'].map(g=>[g,fmt(mean(before.filter(r=>r.grade===g&&r.auto&&r.targets===1).map(r=>r.dps))),fmt(mean(after.filter(r=>r.grade===g&&r.auto&&r.targets===1).map(r=>r.dps))),fmt(mean(after.filter(r=>r.grade===g&&r.auto&&r.targets===3).map(r=>r.dps)))]));
-writeFileSync('CAMPAIGN_BALANCE_REPORT_20260913.md',report);
+writeFileSync('artifacts/campaign-balance-report.md',report);
 console.log('Wrote verified 1360 rows and campaign report');

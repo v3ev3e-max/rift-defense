@@ -50,5 +50,5 @@ for r in rows:
     md.append(f'|{r["id"]}|{r["kind"]}/{r["frame"]}|{r["size"]}|{r["content"]}|{r["bounds"]}|{r["center"]}|{r["foot"] or "—"}|')
 md+=['','## 최종 생성 시트 목록','', '| 영웅 | 종류 | 프로젝트 원본 |','|---|---|---|']
 for p in sorted(prepared,key=lambda p:(p['id'],p['kind'])):md.append(f'|{p["id"]}|{p["kind"]}|{p["source"]}|')
-(ROOT/'VISUAL_VERIFICATION.md').write_text('\n'.join(md)+'\n',encoding='utf8')
-print('VISUAL_VERIFICATION.md written')
+(ROOT/'artifacts/visual-verification.md').write_text('\n'.join(md)+'\n',encoding='utf8')
+print('artifacts/visual-verification.md written')
