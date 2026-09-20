@@ -1,11 +1,12 @@
 import {assetUrl} from './assets';
 
-const soundFiles={attack:'attack.mp3',sniper:'sniper.mp3',laser:'laser.mp3',melee:'melee.mp3',explosion:'explosion.mp3',drone:'drone.mp3',summon:'summon.mp3',merge:'merge.mp3',level:'level.mp3',relic:'relic.wav',critical:'critical.wav',core:'core-hit.wav',block:'shield-block.wav','skill-guard':'skill-guard.wav','skill-support':'skill-support.wav','skill-sniper':'skill-sniper.wav','skill-impact':'skill-impact.wav',boss:'boss.mp3',victory:'victory.mp3',defeat:'defeat.mp3'} as const;
+const soundFiles={attack:'attack.mp3',sniper:'sniper.mp3',laser:'laser.mp3',melee:'melee.mp3',explosion:'explosion.mp3',drone:'drone.mp3',summon:'summon.mp3',merge:'merge.mp3',level:'level.mp3',relic:'relic.wav',critical:'critical.wav',core:'core-hit.wav',block:'shield-block.wav','skill-guard':'skill-guard.mp3','skill-support':'skill-support.mp3','skill-sniper':'skill-sniper.mp3','skill-impact':'skill-impact.mp3',boss:'boss.mp3',victory:'victory.mp3',defeat:'defeat.mp3'} as const;
 type SoundKind=keyof typeof soundFiles;
 export type MusicKind='maint'|'formation'|'recruit'|'battle1'|'battle2';
 const musicFiles:Record<MusicKind,string>={maint:'menu-maint.ogg',formation:'menu-formation.ogg',recruit:'menu-recruit.ogg',battle1:'battle-region-1.ogg',battle2:'battle-region-2.ogg'};
 const backgroundKinds=new Set<SoundKind>(['boss']);
-const volumes:Record<SoundKind,number>={attack:.13,sniper:.20,laser:.14,melee:.17,explosion:.14,drone:.12,summon:.22,merge:.23,level:.21,relic:.23,critical:.18,core:.22,block:.2,'skill-guard':.2,'skill-support':.18,'skill-sniper':.21,'skill-impact':.19,boss:.18,victory:.25,defeat:.23};
+const volumes:Record<SoundKind,number>={attack:.13,sniper:.20,laser:.14,melee:.17,explosion:.14,drone:.12,summon:.22,merge:.23,level:.21,relic:.23,critical:.18,core:.22,block:.2,'skill-guard':.28,'skill-support':.25,'skill-sniper':.3,'skill-impact':.27,boss:.18,victory:.25,defeat:.23};
+const MUSIC_GAIN=.52;
 const cooldowns:Partial<Record<SoundKind,number>>={attack:.11,laser:.12,melee:.13,explosion:.18,drone:.2,sniper:.18};
 
 export class GameAudio {
@@ -37,7 +38,7 @@ export class GameAudio {
   configure(settings:{sound:boolean;bgm:boolean;sfx:boolean;bgmVolume:number;sfxVolume:number}){
     this.enabled=settings.sound;this.bgmEnabled=settings.bgm;this.sfxEnabled=settings.sfx;this.bgmVolume=Math.max(0,Math.min(1,settings.bgmVolume));this.sfxVolume=Math.max(0,Math.min(1,settings.sfxVolume));
     for(const [kind,pool] of this.pools)for(const audio of pool)audio.volume=this.volume(kind);
-    if(this.music)this.music.volume=.34*this.bgmVolume;
+    if(this.music)this.music.volume=MUSIC_GAIN*this.bgmVolume;
     if(!this.enabled||!this.bgmEnabled)this.stop('boss');
     if(!this.enabled||!this.bgmEnabled)this.music?.pause();else if(this.desiredMusic)this.resumeMusic();
     if(!this.enabled||!this.sfxEnabled)for(const kind of Object.keys(soundFiles) as SoundKind[])if(!backgroundKinds.has(kind))this.stop(kind);
@@ -47,11 +48,11 @@ export class GameAudio {
     if(!kind){if(this.music){this.music.pause();this.music.currentTime=0;}this.music=undefined;this.musicKind=undefined;return;}
     if(this.musicKind===kind&&this.music){if(this.enabled&&this.bgmEnabled&&this.music.paused)this.resumeMusic();return;}
     if(this.music){this.music.pause();this.music.currentTime=0;}
-    const audio=new Audio(assetUrl(`/assets/audio/${musicFiles[kind]}`));audio.loop=true;audio.preload='auto';audio.volume=.34*this.bgmVolume;
+    const audio=new Audio(assetUrl(`/assets/audio/${musicFiles[kind]}`));audio.loop=true;audio.preload='auto';audio.volume=MUSIC_GAIN*this.bgmVolume;
     this.music=audio;this.musicKind=kind;
     if(this.enabled&&this.bgmEnabled)this.resumeMusic();
   }
-  private resumeMusic(){if(!this.music||!this.desiredMusic||!this.enabled||!this.bgmEnabled)return;this.music.volume=.34*this.bgmVolume;void this.music.play().catch(()=>{});}
+  private resumeMusic(){if(!this.music||!this.desiredMusic||!this.enabled||!this.bgmEnabled)return;this.music.volume=MUSIC_GAIN*this.bgmVolume;void this.music.play().catch(()=>{});}
   play(requested:string){
     if(!this.enabled)return;
     if(requested==='boss-end'){this.stop('boss');return;}

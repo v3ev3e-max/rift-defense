@@ -358,7 +358,7 @@ describe("save validation", () => {
     const base=defaultSave(),saved=parseSave(JSON.stringify({...base,settings:{...base.settings,bgm:false,sfx:true,bgmVolume:1.8,sfxVolume:-.4}}));
     expect(saved.settings).toMatchObject({sound:true,bgm:false,sfx:true,bgmVolume:1,sfxVolume:0});
     const legacy=parseSave(JSON.stringify({...base,settings:{sound:false,shake:true,lowEffects:false,battleSpeed:1}}));
-    expect(legacy.settings).toMatchObject({sound:false,bgm:true,sfx:true,bgmVolume:.65,sfxVolume:.8});
+    expect(legacy.settings).toMatchObject({sound:false,bgm:true,sfx:true,bgmVolume:.8,sfxVolume:.8});
   });
 
   it("migrates legacy Eve/Lize progress to Ian/Leon", () => {

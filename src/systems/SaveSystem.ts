@@ -35,7 +35,7 @@ export function defaultSave(): SaveData {
     bestWave: 0,
     runs: 0,
     tutorial: false,
-    settings: { sound: true, bgm:true, sfx:true, bgmVolume:.65, sfxVolume:.8, shake: false, lowEffects: false, battleSpeed:1 },
+    settings: { sound: true, bgm:true, sfx:true, bgmVolume:.8, sfxVolume:.8, shake: false, lowEffects: false, battleSpeed:1 },
     campaign:{selected:'1-1',doctrine:'rapid',autoAdvance:false,autoSkills:true,squad:[...STARTER_HERO_IDS],lastDeployment:{},deploymentPresetNames:['프리셋 1','프리셋 2','프리셋 3'],deploymentPresets:[null,null,null],records:{},research:{},fragments:{}},
     equipmentInventory:[],equipmentMaterials:30,autoSalvageB:false,equipmentPity:0,recruitPity:0,recruitCount:0,
   };

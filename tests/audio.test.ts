@@ -3,7 +3,8 @@ import {expect,it} from 'vitest';
 import {readFileSync,statSync} from 'node:fs';
 
 const files=['attack','sniper','laser','melee','explosion','drone','summon','merge','level','boss','victory','defeat'];
-const uniqueWavFiles=['relic','critical','core-hit','shield-block','skill-guard','skill-support','skill-sniper','skill-impact'];
+const uniqueWavFiles=['relic','critical','core-hit','shield-block'];
+const pixabaySkillFiles=['skill-guard','skill-support','skill-sniper','skill-impact'];
 const menuMusicFiles=['menu-maint','menu-formation','menu-recruit','battle-region-1','battle-region-2'];
 it('ships every referenced Pixabay sound as a real MP3',()=>{
  for(const name of files){const path=`public/assets/audio/${name}.mp3`;expect(statSync(path).size,name).toBeGreaterThan(10_000);const head=readFileSync(path).subarray(0,3);const id3=head[0]===0x49&&head[1]===0x44&&head[2]===0x33;const mpeg=head[0]===0xff&&(head[1]&0xe0)===0xe0;expect(id3||mpeg,name).toBe(true);}
@@ -26,6 +27,13 @@ it('ships distinct event and role skill effects instead of reusing generic sampl
  for(const name of uniqueWavFiles){const path=`public/assets/audio/${name}.wav`;expect(statSync(path).size,name).toBeGreaterThan(10_000);expect(readFileSync(path).subarray(0,4).toString(),name).toBe('RIFF');}
  const audio=readFileSync('src/utils/Audio.ts','utf8');
  for(const name of uniqueWavFiles)expect(audio).toContain(`${name}.wav`);
+});
+
+it('ships every role skill effect as a distinct Pixabay MP3',()=>{
+ const hashes=new Set<string>();
+ for(const name of pixabaySkillFiles){const path=`public/assets/audio/${name}.mp3`,data=readFileSync(path);expect(data.length,name).toBeGreaterThan(10_000);const head=data.subarray(0,3),id3=head[0]===0x49&&head[1]===0x44&&head[2]===0x33,mpeg=head[0]===0xff&&(head[1]&0xe0)===0xe0;expect(id3||mpeg,name).toBe(true);hashes.add(data.toString('base64',0,96));}
+ expect(hashes.size).toBe(pixabaySkillFiles.length);
+ const audio=readFileSync('src/utils/Audio.ts','utf8');for(const name of pixabaySkillFiles)expect(audio).toContain(`${name}.mp3`);
 });
 
 it('maps every combat archetype and major battle event to a sample',()=>{
