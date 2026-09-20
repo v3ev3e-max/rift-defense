@@ -73,12 +73,12 @@ export const regionalFinalBoss=['gale_colossus','leviathan','ancient_treant','gl
 export function campaignWave(stage:CampaignStage,n:number):Wave{
  const region=campaignRegion(stage),sub=Number(stage.id.split('-')[1])||1;
  const pool=stage.enemies;
- const dense=[3,8].includes(sub),fast=sub===2,mixed=[4,6,7,9].includes(sub);
- // The first four operations must teach an unmistakable pressure curve instead
- // of changing by fractions of a percent: baseline, runners, density, then a
- // dense mixed rush. Later operations keep their existing regional cadence.
- const openingPressure=region===1&&sub<=4?[0,1,3,4][sub-1]:Math.floor((sub-1)/3)+(dense?3:0);
- const count=7+n+(region-1)+openingPressure-(stage.waves>4?2:0)-(stage.id==='4-10'?2:0);
+ const fast=sub===2,mixed=[4,6,7,8,9].includes(sub);
+ // Every region follows the same readable rhythm. Regular operations climb
+ // steadily; mid/final bosses trade raw lane density for extra waves and the
+ // objective encounter instead of creating saw-tooth difficulty spikes.
+ const operationPressure=[0,1,2,3,2,3,4,5,6,4][sub-1];
+ const count=7+n+(region-1)+operationPressure-(stage.waves>4?2:0)-(stage.id==='4-10'?2:0);
  const list=Array.from({length:count},(_,i)=>{
   if(fast&&pool.includes('sprinter')&&i%3===2)return 'sprinter';
   if(fast&&pool.includes('runner')&&i%2===1)return 'runner';
@@ -91,8 +91,8 @@ export function campaignWave(stage:CampaignStage,n:number):Wave{
  list.unshift(...Array<string>(vanguard).fill('sprinter'));
  const boss=n===stage.waves?(sub===5?regionalMidBoss[region-1]:sub===CAMPAIGN_STAGES_PER_REGION?regionalFinalBoss[region-1]:undefined):undefined;
  const objective=n===stage.waves?(boss??regionalNamed[region-1]):undefined;
- const openingInterval=region===1&&sub<=4?[.98,.91,.83,.77][sub-1]:undefined;
- return {number:n,enemies:list,interval:openingInterval??Math.max(.62,.98-(region-1)*.015-sub*.002-(dense?.16:0)),reward:20+n*3+region*2,elite:n===stage.waves&&!boss,boss,objective,objectiveName:boss?undefined:enemies[regionalNamed[region-1]].name,phase:stage.name};
+ const operationTempo=[0,.035,.07,.105,.055,.075,.095,.115,.135,.075][sub-1];
+ return {number:n,enemies:list,interval:Math.max(.62,.98-(region-1)*.015-operationTempo),reward:20+n*3+region*2,elite:n===stage.waves&&!boss,boss,objective,objectiveName:boss?undefined:enemies[regionalNamed[region-1]].name,phase:stage.name};
 }
 /** Every enemy that the wave generator can spawn for a stage, including
  * injected vanguards and final-wave objectives that are not in stage.enemies. */

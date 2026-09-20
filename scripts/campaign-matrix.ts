@@ -25,6 +25,7 @@ const profiles=[
  {name:'water-electric',squad:['yuria','neris','adela','arin','ian']},
  {name:'three-elements',squad:['yuria','reina','arin','sera','ian']},
  {name:'support',squad:['yuria','mia','reina','karin','arin']},
+ {name:'endgame',squad:['astra','ophilia','arden','aurora','celestia'],stars:5,gear:5},
  {name:'growth-no-gear',squad:starter,noGear:true},
  {name:'manual-layout',squad:starter,layout:{yuria:4,karin:1,sera:3,reina:5,arin:0}},
  {name:'manual-skills',squad:starter,auto:false,manual:true,layout:{yuria:4,karin:1,sera:3,reina:5,arin:0}},

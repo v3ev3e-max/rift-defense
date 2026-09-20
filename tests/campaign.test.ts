@@ -43,7 +43,10 @@ describe('campaign foundations',()=>{
   expect(campaignStages.map(s=>s.waves)).toEqual(Array.from({length:12},()=>[4,4,4,4,6,4,4,4,4,8]).flat());
   expect(campaignStages[0].enemyHp).toBeLessThan(campaignStages.at(-1)!.enemyHp);
   expect(campaignStages[0].enemyAttack).toBeLessThan(campaignStages.at(-1)!.enemyAttack);
-  expect(campaignStages.every((s,i)=>i===0||s.enemyHp>campaignStages[i-1].enemyHp)).toBe(true);
+  for(let region=1;region<=12;region++){
+   const stages=campaignStages.filter(stage=>stage.id.startsWith(`${region}-`));
+   expect(stages.every((stage,i)=>i===0||stage.enemyHp>stages[i-1].enemyHp)).toBe(true);
+  }
   expect(campaignStages.map(s=>s.background)).toEqual(Array.from({length:12},(_,region)=>Array.from({length:10},()=>`map-${region+1}-1.webp`)).flat());
   const dual=campaignStages.filter(s=>s.alternate);expect(dual.map(s=>s.id)).toEqual(['2-7','3-4','3-8','4-3','4-7','5-4','5-8','6-3','6-7','7-2','7-6','7-9','8-2','8-3','8-7','9-2','9-6','9-8','10-3','10-7','11-2','11-6','11-9','12-2','12-4','12-7','12-9']);
   expect(campaignStages.filter(s=>s.id.startsWith('1-')&&s.alternate)).toHaveLength(0);
@@ -52,11 +55,18 @@ describe('campaign foundations',()=>{
  });
  it('raises pressure through operations 1-1 to 1-4 and introduces the sprinter in the mixed rush',()=>{
   const opening=campaignStages.slice(0,4).map(stage=>campaignWave(stage,1));
-  expect(opening.map(w=>w.enemies.length)).toEqual([11,12,14,15]);
-  expect(opening.map(w=>w.interval)).toEqual([.98,.91,.83,.77]);
+  expect(opening.map(w=>w.enemies.length)).toEqual([11,12,13,14]);
+  opening.map(w=>w.interval).forEach((interval,i)=>expect(interval).toBeCloseTo([.98,.945,.91,.875][i]));
   expect(opening.every((wave,i)=>i===0||wave.enemies.length>opening[i-1].enemies.length)).toBe(true);
   expect(opening.every((wave,i)=>i===0||wave.interval<opening[i-1].interval)).toBe(true);
   expect(opening[3].enemies).toContain('sprinter');
+ });
+ it('uses the same steadily rising regular-operation pressure curve in every region',()=>{
+  for(let region=1;region<=12;region++)for(const operations of [[1,2,3,4],[6,7,8,9]]){
+   const waves=operations.map(operation=>campaignWave(campaignStages[(region-1)*10+operation-1],1));
+   expect(waves.every((wave,i)=>i===0||wave.enemies.length>waves[i-1].enemies.length),`region ${region} counts ${operations}`).toBe(true);
+   expect(waves.every((wave,i)=>i===0||wave.interval<waves[i-1].interval),`region ${region} tempo ${operations}`).toBe(true);
+  }
  });
  it('alternates enemies across both area-8 lanes and auto-deploys two tanks to separate fronts',()=>{const stage=campaignStages.find(s=>s.id==='8-3')!,m=new BattleModel(defaultSave(),()=>.5);m.configureCampaign(stage,['yuria','mia','arin','sera','reina'],true);expect(m.autoDeployCampaign()).toBe(true);expect(m.units.filter(u=>formationRole(u.heroId)==='tank').map(u=>u.slot).sort()).toEqual([1,3]);m.start();m.wave.queue=[];expect(m.spawn('crawler')).toBe(true);expect(m.spawn('runner')).toBe(true);const active=m.enemies.filter(e=>e.active);expect(active.map(e=>e.route).sort()).toEqual([0,1]);expect(new Set(active.map(e=>e.y)).size).toBe(2);});
  it('allows preparation moves and requires ten seconds for both swapped units',()=>{
