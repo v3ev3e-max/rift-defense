@@ -36,6 +36,7 @@ export class BattleScene extends Phaser.Scene {
   ink!: Phaser.GameObjects.Graphics;
   heroSprites: Phaser.GameObjects.Image[] = [];
   heroHealthFrames: Phaser.GameObjects.Image[] = [];
+  heroSkillDurationGauges: Phaser.GameObjects.Image[] = [];
   heroVisualHp: number[] = [];
   heroLastHp: number[] = [];
   heroHealthHitUntil: number[] = [];
@@ -103,6 +104,7 @@ export class BattleScene extends Phaser.Scene {
     if(this.model.campaign)for(const name of ['pad','ring'])this.load.image(`campaign-${name}`,assetUrl(`/assets/campaign/${name}.png`));
     this.load.image('campaign-warning',assetUrl('/assets/campaign/warning.png'));
     this.load.image('hero-health-frame',assetUrl('/assets/ui/generated/hero-health-frame.webp'));
+    this.load.image('skill-duration-gauge',assetUrl('/assets/ui/generated/skill-duration-gauge-v2.png'));
     this.load.image('reaction-generated',assetUrl('/assets/effects/common/reaction_generated.png'));
     const campaignArea=this.model.campaign?campaignRegion(this.model.campaign):0;
     this.campaignArea=campaignArea;
@@ -279,6 +281,7 @@ export class BattleScene extends Phaser.Scene {
       });
       this.heroSprites.push(sp);
       this.heroHealthFrames.push(this.add.image(-50,-50,'hero-health-frame').setVisible(false).setDepth(654));
+      this.heroSkillDurationGauges.push(this.add.image(-50,-50,'skill-duration-gauge').setOrigin(0,.5).setVisible(false).setDepth(656).setBlendMode(Phaser.BlendModes.ADD));
       this.droneSprites.push(
         this.add.image(-50,-50,'drone-body').setVisible(false).setDepth(630),
       );
@@ -398,6 +401,7 @@ export class BattleScene extends Phaser.Scene {
       this.input.removeAllListeners();
       this.heroSprites = [];
       this.heroHealthFrames = [];
+      this.heroSkillDurationGauges = [];
       this.heroVisualHp = [];
       this.heroLastHp = [];
       this.heroHealthHitUntil = [];
@@ -614,12 +618,14 @@ export class BattleScene extends Phaser.Scene {
       const u = m.units[i],
         sp = this.heroSprites[i],
         healthFrame=this.heroHealthFrames[i],
+        skillGauge=this.heroSkillDurationGauges[i],
         label = this.labels[i],
         skillCallout=this.skillCalloutLabels[i],
         defeatCooldown = this.defeatCooldownLabels[i];
       if (!u || u.slot < 0) {
         sp.setVisible(false);
         healthFrame.setVisible(false);
+        skillGauge.setVisible(false);
         this.droneSprites[i].setVisible(false);
         label.setVisible(false);
         skillCallout.setVisible(false);
@@ -656,6 +662,12 @@ export class BattleScene extends Phaser.Scene {
         if(this.heroHealthHitUntil[i]>this.visualTime){const hit=(this.heroHealthHitUntil[i]-this.visualTime)/.42;g.lineStyle(2,0xffffff,.75*hit);g.strokeRoundedRect(barX-1,barY-1,64,10,4);}
         healthFrame.setVisible(true).setPosition(u.x,barY+4).setDisplaySize(84,21).setAlpha(low ? .82+Math.sin(this.visualTime*9)*.18 : 1).setTint(low?0xff8193:0xffffff);
       }else healthFrame.setVisible(false);
+      const skillRemaining=Math.max(0,(u.skillEffectUntil??0)-m.time),skillDuration=Math.max(.01,u.skillEffectDuration??0),skillRatio=Phaser.Math.Clamp(skillRemaining/skillDuration,0,1);
+      if(u.hp>0&&skillRatio>0){
+        g.fillStyle(0x160f2d,.94);g.fillRoundedRect(barX,barY-9,62,6,2);
+        g.lineStyle(1,0xb98cff,.9);g.strokeRoundedRect(barX,barY-9,62,6,2);
+        skillGauge.setVisible(true).setPosition(barX+1,barY-6).setCrop(45,395,Math.max(1,Math.round(1640*skillRatio)),95).setDisplaySize(60*skillRatio,4).setAlpha(.9+.1*Math.sin(this.visualTime*8));
+      }else skillGauge.setVisible(false);
       if ((u.shots !== this.heroShotCounts[i] || u.droneShots !== this.heroDroneShotCounts[i]) &&
           this.visualTime - this.heroAttackStarted[i] >= ATTACK_SECONDS) {
         this.heroShotCounts[i] = u.shots;

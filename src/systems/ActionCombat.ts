@@ -204,6 +204,11 @@ function resolve(m:BattleModel,a:CombatAction,u:Unit){
  }finally{m.attackElement=savedElement;}
 }
 export function stepActions(m:BattleModel,dt:number){
+ for(const u of m.units){
+  if(u.slot<0||u.hp<=0)continue;
+  if((u.supportRegenUntil??0)>m.time){const healed=Math.min(u.maxHp-u.hp,u.maxHp*(u.supportRegenRate??0)*dt);u.hp+=healed;}
+  if((u.supportChargeUntil??0)>m.time)charge(u,(u.supportChargeRate??0)*dt,m.time);
+ }
  for(const a of m.actions){if(!a.active)continue;
   const u=m.units.find(u=>u.uid===a.owner)??a.source;if(!u||u.slot<0){a.active=false;continue;}
   a.age+=dt;if(a.age<a.delay)continue;
@@ -238,15 +243,23 @@ export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
   announceSkill(m,u);
   const duration=skillDurationSeconds(u.heroId,u.star);
   const allies=m.units.filter(v=>v.slot>=0&&v.hp>0&&(u.heroId==='ophilia'||dist(v,u)<=m.stats(u).range));
-  const healRate=u.heroId==='rhea'?.16+u.star*.025:u.heroId==='echo'?.06+u.star*.01:u.heroId==='meriel'?.11+u.star*.018:u.heroId==='selene'?.13+u.star*.02:.2+u.star*.03;
-  for(const ally of allies){const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*healRate);ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;ally.stunned=0;
-   if(['rhea','meriel','ophilia'].includes(u.heroId))ally.guardHp=(ally.guardHp??0)+ally.maxHp*(u.heroId==='ophilia'?.14:.08);
-   if(u.heroId==='rhea')ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+duration);
-   if(u.heroId==='echo'){ally.cooldown=Math.min(ally.cooldown,.02);charge(ally,12+u.star*2,m.time);ally.supportSpeedBonus=Math.max(ally.supportSpeedBonus??0,.16+u.star*.02);ally.supportSpeedUntil=m.time+duration;}
-   if(u.heroId==='meriel'){ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+duration);ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.12+u.star*.02);ally.supportAttackUntil=m.time+duration;}
-   if(u.heroId==='ophilia')ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+duration);
+  for(const ally of allies){
+   ally.stunned=0;
+   if(u.heroId==='rhea'){
+    const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.13+u.star*.02));ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;
+    ally.supportRegenRate=Math.max(ally.supportRegenRate??0,.018+u.star*.002);ally.supportRegenUntil=m.time+duration;ally.guardHp=(ally.guardHp??0)+ally.maxHp*.06;
+   }else if(u.heroId==='echo'){
+    ally.cooldown=Math.min(ally.cooldown,.02);charge(ally,10+u.star*2,m.time);ally.supportSpeedBonus=Math.max(ally.supportSpeedBonus??0,.18+u.star*.02);ally.supportSpeedUntil=m.time+duration;ally.supportChargeRate=Math.max(ally.supportChargeRate??0,2.4+u.star*.25);ally.supportChargeUntil=m.time+duration;
+   }else if(u.heroId==='meriel'){
+    ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.11+u.star*.012);ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+duration);ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.14+u.star*.022);ally.supportAttackUntil=m.time+duration;
+   }else if(u.heroId==='selene'){
+    ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.12+u.star*.02);ally.supportAttackUntil=m.time+duration;ally.supportCritBonus=Math.max(ally.supportCritBonus??0,.12+u.star*.018);ally.supportCritUntil=m.time+duration;ally.supportRegenRate=Math.max(ally.supportRegenRate??0,.008+u.star*.0015);ally.supportRegenUntil=m.time+duration;
+   }else{
+    const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.18+u.star*.025));ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;
+    ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.14+u.star*.01);ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+duration);ally.supportRegenRate=Math.max(ally.supportRegenRate??0,.012+u.star*.002);ally.supportRegenUntil=m.time+duration;
+   }
+   m.emit('blast',u.x,u.y,ally.x,ally.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-skill-${u.heroId}`,duration:.55,radius:52});
   }
-  if(u.heroId==='selene')for(const ally of allies){ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.14+u.star*.025);ally.supportAttackUntil=m.time+skillDurationSeconds(u.heroId,u.star);}
   const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;const cooldown=u.heroId==='ophilia'?14:12;u.skillCharge=0;u.skillHeldAt=undefined;u.skillCooldownDuration=cooldown;u.skillReadyAt=m.time+cooldown;
   u.skillEffectDuration=duration;u.skillEffectUntil=m.time+duration;
   m.emit('blast',u.x,u.y,u.x,u.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-skill-${u.heroId}`,duration:.9,radius:u.heroId==='ophilia'?170:135});return true;
@@ -294,12 +307,13 @@ export function supportBasic(m:BattleModel,u:Unit){
  const allies=m.units.filter(v=>v.slot>=0&&v.hp>0&&v!==u&&dist(v,u)<=m.stats(u).range);
  if(!allies.length)return false;
  const ally=[...allies].sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0],power=.018+u.star*.004;
- if(u.heroId==='rhea'||u.heroId==='ophilia'||u.heroId==='selene'){
+ if(u.heroId==='rhea'||u.heroId==='ophilia'){
   for(const target of u.heroId==='ophilia'?allies:[ally]){const healed=Math.min(target.maxHp-target.hp,target.maxHp*power);target.hp+=healed;u.healingDone=(u.healingDone??0)+healed;}
  }
  if(u.heroId==='echo'){ally.supportSpeedBonus=Math.max(ally.supportSpeedBonus??0,.08+u.star*.012);ally.supportSpeedUntil=m.time+2.2;charge(ally,2+u.star*.4,m.time);}
  if(u.heroId==='meriel'){ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.018+u.star*.003);ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.04+u.star*.008);ally.supportAttackUntil=m.time+2.5;}
  if(u.heroId==='selene'){ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.045+u.star*.009);ally.supportAttackUntil=m.time+2.5;}
+ if(u.heroId==='selene'){ally.supportCritBonus=Math.max(ally.supportCritBonus??0,.04+u.star*.008);ally.supportCritUntil=m.time+2.5;}
  charge(u,4+u.star*.5,m.time);
  m.emit('blast',u.x,u.y,ally.x,ally.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-basic-${u.heroId}`,duration:.35,radius:34});
  return true;

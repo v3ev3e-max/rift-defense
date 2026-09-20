@@ -31,6 +31,12 @@ export interface Unit {
   supportAttackBonus?:number;
   supportSpeedUntil?:number;
   supportSpeedBonus?:number;
+  supportRegenUntil?:number;
+  supportRegenRate?:number;
+  supportChargeUntil?:number;
+  supportChargeRate?:number;
+  supportCritUntil?:number;
+  supportCritBonus?:number;
   uid: number;
   heroId: string;
   star: number;

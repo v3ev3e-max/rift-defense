@@ -37,3 +37,12 @@ it('shows configured duration and active remaining time in the battle skill UI',
  expect(castAutoSkill(m,support)).toBe(true);
  expect(campaignSkillBar(m)).toContain('효과 4.3초');
 });
+
+it('gives every support operator a distinct persistent team role',()=>{
+ const cast=(id:string)=>{const m=new BattleModel(defaultSave(),()=>.99),support=m.addUnit(id),ally=m.addUnit('yuria');ally.x=support.x+20;ally.y=support.y;ally.hp=ally.maxHp*.5;support.skillCharge=100;expect(castAutoSkill(m,support)).toBe(true);return ally;};
+ expect(cast('rhea').supportRegenUntil).toBeGreaterThan(0);
+ expect(cast('echo').supportChargeUntil).toBeGreaterThan(0);
+ expect(cast('meriel').supportAttackUntil).toBeGreaterThan(0);
+ expect(cast('selene').supportCritUntil).toBeGreaterThan(0);
+ expect(cast('ophilia').damageReductionUntil).toBeGreaterThan(0);
+});

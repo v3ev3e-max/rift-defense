@@ -531,7 +531,8 @@ export class BattleModel {
           (this.builds.crit ? 0.15 : 0) +
           (this.builds.crit >= 3 ? 0.2 : 0) +
           (h.element==='dark'?elementLevel*.04:0) +
-          (this.bonuses.luck ?? 0)+gear.crit,
+          (this.bonuses.luck ?? 0)+gear.crit+
+          ((u.supportCritUntil??0)>this.time?(u.supportCritBonus??0):0),
       ),
       e,
     };
