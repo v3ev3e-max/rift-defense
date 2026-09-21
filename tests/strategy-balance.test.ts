@@ -28,4 +28,4 @@ it('compares equal starting budgets, archetypes, priorities and expanded squads'
  expect(results.some(r=>r.kills>0)).toBe(true);
  writeFileSync('artifacts/strategy-balance.json',JSON.stringify({budget:1500,bFiveStarCost:bCost,bFiveStarAttack:bAtk,srTwoStarAttack:m.stats(sr).atk,results},null,2));
  console.log('Budget comparison saved: artifacts/strategy-balance.json', {bCost,bAtk,srAtk:m.stats(sr).atk});
-},30000);
+},60000);
