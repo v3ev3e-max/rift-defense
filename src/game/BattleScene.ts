@@ -13,6 +13,7 @@ import { ATTACK_SECONDS, visualFrame, heroVisuals, fitVisual } from './VisualRul
 import { enemyMotion, enemyMoveFrameCount } from './EnemyMotion';
 import {campaignEnemyIds,campaignLaneAsset,campaignRegion} from '../data/campaign';
 import {formationRole} from '../data/combatRoles';
+import {heroAuras} from './SkillVisuals';
 const regionalEnemyArt:Record<number,Set<string>>={
   1:new Set(['crawler']),
   2:new Set(['crawler','runner']),
@@ -663,6 +664,18 @@ export class BattleScene extends Phaser.Scene {
         healthFrame.setVisible(true).setPosition(u.x,barY+4).setDisplaySize(84,21).setAlpha(low ? .82+Math.sin(this.visualTime*9)*.18 : 1).setTint(low?0xff8193:0xffffff);
       }else healthFrame.setVisible(false);
       const skillRemaining=Math.max(0,(u.skillEffectUntil??0)-m.time),skillDuration=Math.max(.01,u.skillEffectDuration??0),skillRatio=Phaser.Math.Clamp(skillRemaining/skillDuration,0,1);
+      const auras=heroAuras(u,m.time,parseInt(heroById[u.heroId].color.slice(1),16));
+      for(let auraIndex=0;auraIndex<auras.length;auraIndex++){
+        const aura=auras[auraIndex],phase=this.visualTime*(aura.kind==='haste'?4.8:2.6)+u.uid*.7+auraIndex,baseRadius=30+auraIndex*5,pulse=1+Math.sin(phase)*.08;
+        g.lineStyle(aura.kind==='skill'?3:2,aura.color,(aura.kind==='skill' ? .7 : .48)*aura.strength);
+        g.strokeCircle(u.x,u.y+17,baseRadius*pulse);
+        if(aura.kind==='skill'){
+          g.lineStyle(1,0xffffff,.32);g.strokeCircle(u.x,u.y+17,(baseRadius+7)*(1+Math.sin(phase+1)*.05));
+          for(let p=0;p<3;p++){const a=phase+p*Math.PI*2/3;g.fillStyle(aura.color,.72);g.fillCircle(u.x+Math.cos(a)*(baseRadius+5),u.y+17+Math.sin(a)*(baseRadius+5),3);}
+        }else{
+          const a=phase+auraIndex;g.fillStyle(aura.color,.66);g.fillCircle(u.x+Math.cos(a)*baseRadius,u.y+17+Math.sin(a)*baseRadius,2.5);
+        }
+      }
       if(u.hp>0&&skillRatio>0){
         g.fillStyle(0x160f2d,.94);g.fillRoundedRect(barX,barY-9,62,6,2);
         g.lineStyle(1,0xb98cff,.9);g.strokeRoundedRect(barX,barY-9,62,6,2);
