@@ -91,8 +91,8 @@ it('every hero has a real attack action and five documented star stages',()=>{
  expect(Object.keys(combatRoles).sort()).toEqual(heroes.map(h=>h.id).sort());
  for(const h of heroes){const {m,u,e}=fixture(h.id);attack(m,u,e);expect(m.actions.some(a=>a.active&&a.kind===combatRoles[h.id].kind)).toBe(true);advance(m,1.2);expect(e.hp,h.id).toBeLessThan(10000);expect(combatRoles[h.id].stages).toHaveLength(5);}
 });
-it('Leon alone receives a north pose correction shared with his weapon transform',()=>{
- expect(poseSize('leon',true)).toBe(96);expect(poseSize('sera',true)).toBe(132);const p=weaponPoint('leon',{x:400,y:400},true,false,1);expect(Number.isFinite(p.x+p.y)).toBe(true);
+it('Leon uses the regenerated tank scale and keeps his weapon transform finite',()=>{
+ expect(poseSize('leon',true)).toBe(150);expect(poseSize('leon',false,true)).toBe(142);expect(poseSize('sera',true)).toBe(132);const p=weaponPoint('leon',{x:400,y:400},true,false,1);expect(Number.isFinite(p.x+p.y)).toBe(true);
 });
 it('DPS expires after ten seconds and damage categories add up to actual HP lost',()=>{
  const {m,u,e}=fixture('ian');attack(m,u,e);advance(m,1);const r=m.ranking()[0];expect(r.damage).toBeCloseTo(10000-e.hp);expect(Object.values(r.parts).reduce((a,b)=>a+b,0)).toBeCloseTo(r.damage);expect(r.dps).toBeGreaterThan(0);m.time+=11;expect(m.ranking()[0].dps).toBe(0);

@@ -19,9 +19,10 @@ it('keeps Kairon north attack at the same visible scale as side attack',()=>{
 });
 it('normalizes every late-added operator across idle, side, north and defeat poses',()=>{
  for(const id of ['gaia','astra','solara','zion','vera','elise','celestia']){
- expect(poseSize(id,false,true),`${id} idle`).toBe(id==='celestia'?94:86);
- expect(poseSize(id,false,false),`${id} side`).toBe(id==='celestia'?94:id==='astra'?84:80);
- expect(poseSize(id,true,false),`${id} north`).toBe(id==='celestia'?94:id==='solara'?96:id==='vera'?80:118);
+ const tank=id==='gaia'||id==='astra';
+ expect(poseSize(id,false,true),`${id} idle`).toBe(tank?142:id==='celestia'?94:86);
+ expect(poseSize(id,false,false),`${id} side`).toBe(tank?150:id==='celestia'?94:80);
+ expect(poseSize(id,true,false),`${id} north`).toBe(tank?150:id==='celestia'?94:id==='solara'?96:id==='vera'?80:118);
   expect(defeatPoseSize(id),`${id} defeat`).toBeCloseTo(108/.925);
  }
  expect(poseSize('reina',false,true)).toBe(132);
@@ -29,10 +30,10 @@ it('normalizes every late-added operator across idle, side, north and defeat pos
  expect(poseSize('reina',true,false)).toBe(132);
  expect(defeatPoseSize('reina')).toBe(132);
 });
-it('keeps Hana the same visible size after adding safe source-frame gutters',()=>{
- expect(poseSize('hana',false,true)).toBe(90);
- expect(poseSize('hana',false,false)).toBeCloseTo(90/.925);
- expect(poseSize('hana',true,false)).toBeCloseTo(120/.925);
+it('uses the regenerated tank scale for Hana while preserving the defeat pose',()=>{
+ expect(poseSize('hana',false,true)).toBe(142);
+ expect(poseSize('hana',false,false)).toBe(150);
+ expect(poseSize('hana',true,false)).toBe(150);
  expect(defeatPoseSize('hana')).toBeCloseTo(112/.925);
 });
 it('keeps Ophilia at one stable scale throughout idle and attack animation',()=>{

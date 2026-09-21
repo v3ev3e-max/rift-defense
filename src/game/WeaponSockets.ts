@@ -8,10 +8,12 @@ export const HERO_RENDER = {
 const oversizedAddedHeroes=new Set(['gaia','astra','solara','zion','vera','elise','celestia']);
 const normalizedDefeatHeroes=new Set(['astra','celestia','echo','elise','gaia','hana','meriel','ophilia','rhea','selene','solara','vera','zion']);
 const NORMALIZED_ASSET_SCALE=.925;
+const regeneratedTankSprites=new Set(['yuria','mia','leon','neris','livia','hana','gaia','astra']);
 /** The six late-added SD sets fill almost the entire 160px source canvas while the
  * established cast occupies roughly 94px idle / 126px attack. Pose-specific
  * display sizes normalize their visible bodies without resampling the artwork. */
 export function poseSize(id:string,north:boolean,idle=false){
+ if(regeneratedTankSprites.has(id))return idle?142:150;
  if(id==='ophilia')return 86;
  if(id==='hana')return idle?90:north?120/NORMALIZED_ASSET_SCALE:90/NORMALIZED_ASSET_SCALE;
  if(id==='celestia')return 94;

@@ -35,7 +35,6 @@ export class BattleScene extends Phaser.Scene {
   campaignWarnings: Phaser.GameObjects.Image[]=[];
   ink!: Phaser.GameObjects.Graphics;
   heroSprites: Phaser.GameObjects.Image[] = [];
-  heroTankEquipment: Phaser.GameObjects.Image[] = [];
   heroHealthFrames: Phaser.GameObjects.Image[] = [];
   heroSkillDurationGauges: Phaser.GameObjects.Image[] = [];
   heroVisualHp: number[] = [];
@@ -106,7 +105,6 @@ export class BattleScene extends Phaser.Scene {
     this.load.image('campaign-warning',assetUrl('/assets/campaign/warning.png'));
     this.load.image('hero-health-frame',assetUrl('/assets/ui/generated/hero-health-frame.webp'));
     this.load.image('skill-duration-gauge',assetUrl('/assets/ui/generated/skill-duration-gauge-v2.png'));
-    this.load.image('tank-sword-shield',assetUrl('/assets/ui/tank-sword-shield.png'));
     this.load.image('reaction-generated',assetUrl('/assets/effects/common/reaction_generated.png'));
     const campaignArea=this.model.campaign?campaignRegion(this.model.campaign):0;
     this.campaignArea=campaignArea;
@@ -282,7 +280,6 @@ export class BattleScene extends Phaser.Scene {
         else{this.lastUnitTapUid=u.uid;this.lastUnitTapAt=now;}
       });
       this.heroSprites.push(sp);
-      this.heroTankEquipment.push(this.add.image(-50,-50,'tank-sword-shield').setVisible(false).setDepth(25));
       this.heroHealthFrames.push(this.add.image(-50,-50,'hero-health-frame').setVisible(false).setDepth(654));
       this.heroSkillDurationGauges.push(this.add.image(-50,-50,'skill-duration-gauge').setOrigin(0,.5).setVisible(false).setDepth(656).setBlendMode(Phaser.BlendModes.ADD));
       this.droneSprites.push(
@@ -403,7 +400,6 @@ export class BattleScene extends Phaser.Scene {
     this.events.once("shutdown", () => {
       this.input.removeAllListeners();
       this.heroSprites = [];
-      this.heroTankEquipment = [];
       this.heroHealthFrames = [];
       this.heroSkillDurationGauges = [];
       this.heroVisualHp = [];
@@ -621,7 +617,6 @@ export class BattleScene extends Phaser.Scene {
     for (let i = 0; i < this.heroSprites.length; i++) {
       const u = m.units[i],
         sp = this.heroSprites[i],
-        tankEquipment=this.heroTankEquipment[i],
         healthFrame=this.heroHealthFrames[i],
         skillGauge=this.heroSkillDurationGauges[i],
         label = this.labels[i],
@@ -629,7 +624,6 @@ export class BattleScene extends Phaser.Scene {
         defeatCooldown = this.defeatCooldownLabels[i];
       if (!u || u.slot < 0) {
         sp.setVisible(false);
-        tankEquipment.setVisible(false);
         healthFrame.setVisible(false);
         skillGauge.setVisible(false);
         this.droneSprites[i].setVisible(false);
@@ -701,9 +695,6 @@ export class BattleScene extends Phaser.Scene {
       // Source art faces right. Use the real shot target, not a nearby bystander.
       sp.setFlipX(!idle && !north && (u.facingLeft ?? false));
       if (u.uid !== this.dragUid) sp.setPosition(u.x, u.y + HERO_RENDER.offsetY);
-      const isTank=formationRole(u.heroId)==='tank';
-      tankEquipment.setVisible(isTank&&u.hp>0).setPosition(sp.x,sp.y+2).setDisplaySize(size*.86,size*.86)
-        .setFlipX(sp.flipX).setAlpha(u.stunned?.55:1).setDepth((this.dragUid===u.uid?800:20+u.y)+1);
       label
         .setVisible(true)
         .setPosition(u.x, u.y + 25)
