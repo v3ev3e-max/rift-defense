@@ -34,8 +34,8 @@ it('late ordinary operations actually spawn their regional special enemies',()=>
 it('raises area 1 health and attack every operation while introducing tactical enemy roles',()=>{
  const area=campaignStages.slice(0,10);
  for(let i=1;i<area.length;i++){
-  expect(area[i].enemyHp/area[i-1].enemyHp).toBeCloseTo(1.05,2);
-  expect(area[i].enemyAttack/area[i-1].enemyAttack).toBeCloseTo(1.035,2);
+  expect(area[i].enemyHp/area[i-1].enemyHp).toBeCloseTo(1.07,2);
+  expect(area[i].enemyAttack/area[i-1].enemyAttack).toBeCloseTo(1.055,2);
  }
  expect(campaignWave(area[2],1).enemies).toContain('brute');
  expect(campaignWave(area[3],1).enemies).toContain('armored');

@@ -5,11 +5,12 @@ import {campaignStages} from '../src/data/campaign';
 import {seeded} from '../src/utils/random';
 import {makeEquipment,equipItem,heroWeaponGroup} from '../src/data/equipment';
 import {heroes} from '../src/data/heroes';
+import {campaignRegionBalance} from '../src/data/campaignBalance';
 import type {HeroGrade} from '../src/data/types';
 import {castManualSkill} from '../src/systems/AutoSkills';
 
 // Fixed input profiles; never tune enemies to the player's currently equipped team.
-const starter=['yuria','sera','reina','karin','arin'];
+const starter=['yuria','reina','sera','noel','arin'];
 const profiles=[
  {name:'starter-1',squad:starter,stars:1},
  {name:'recommended',squad:starter},
@@ -41,9 +42,9 @@ for(const stage of campaignStages.filter(s=>(!regions||regions.includes(s.id.spl
  for(const profile of profiles.filter(p=>!process.argv.some(a=>a.startsWith('--profile='))||process.argv.includes('--profile='+p.name))){
   if(rows.some(r=>r.stage===stage.id&&r.profile===profile.name))continue;
   const save=defaultSave();save.equipmentInventory=[];save.campaign!.research={};save.campaign!.fragments={};
-  for(const h of Object.values(save.heroes)){h.stars=profile.stars??[1,1,2,2,3,3,4,5,5,5,5,5][region-1];h.equipment=[];}
+  for(const h of Object.values(save.heroes)){h.stars=profile.stars??campaignRegionBalance[region-1].stars;h.equipment=[];}
   save.campaign!.squad=[...profile.squad];
-  const gear=profile.noGear||profile.name==='starter-1'?undefined:profile.gear??(region>=6?region===6?2:region===7?3:5:undefined);
+  const gear=profile.noGear||profile.name==='starter-1'?undefined:profile.gear??(region>=5?region===5?0:region===6?2:region===7?3:5:undefined);
   if(gear!==undefined&&profile.name!=='starter-1')for(const id of profile.squad){
    const rarity:HeroGrade=region<=6?'A':region===7?'S':'SR';
    for(const template of [`${heroWeaponGroup[id]}-0`,'armor-field',`necklace-${heroes.find(h=>h.id===id)!.element}`]){

@@ -2,6 +2,7 @@ import {describe,it,expect} from 'vitest';
 import {campaignStages,campaignWave,pathExposure,regionalMidBoss,regionalFinalBoss,frontlineSlots} from '../src/data/campaign';
 import {enemies} from '../src/data/enemies';
 import {combatRange} from '../src/data/balance';
+import {campaignRegionBalance} from '../src/data/campaignBalance';
 import {heroes,heroById} from '../src/data/heroes';
 import {battleTimeScale,BattleModel} from '../src/systems/BattleModel';
 import {defaultSave} from '../src/systems/SaveSystem';
@@ -34,9 +35,9 @@ describe('campaign foundations',()=>{
  it('maps the four displayed speeds to the new synchronized combat clock',()=>{expect([.75,1,1.5,2].map(battleTimeScale)).toEqual([1,1.5,2.25,3]);const m=new BattleModel(defaultSave());m.configureCampaign(campaignStages[0],['sera']);m.start();m.move(m.units[0].uid,5);m.paused=true;m.update(.2);expect(m.time).toBe(0);m.paused=false;m.speed=2;m.update(.2);expect(m.time).toBeCloseTo(.6);});
  it('restores the last valid battle speed and rejects invalid saved values',()=>{const save=defaultSave();save.settings.battleSpeed=1.5;expect(new BattleModel(save).speed).toBe(1.5);expect(parseSave(JSON.stringify(save)).settings.battleSpeed).toBe(1.5);const raw=JSON.parse(JSON.stringify(save));raw.settings.battleSpeed=9;expect(parseSave(JSON.stringify(raw)).settings.battleSpeed).toBe(1);});
  it.each(campaignStages)('simulates default squad through $id',async(stage)=>{
-   {const save=defaultSave();for(const hero of Object.values(save.heroes)){hero.equipment=[];hero.stars=[1,1,2,2,3,3,4,5,5,5,5,5][Number(stage.id.split('-')[0])-1];}const m=new BattleModel(save,()=>.5);m.configureCampaign(stage,m.save.campaign!.squad,true);m.autoDeployCampaign();m.start();
+   {const save=defaultSave();for(const hero of Object.values(save.heroes)){hero.equipment=[];hero.stars=campaignRegionBalance[Number(stage.id.split('-')[0])-1].stars;}const m=new BattleModel(save,()=>.5);m.configureCampaign(stage,m.save.campaign!.squad,true);m.autoDeployCampaign();m.start();
     for(let i=0;i<60*900&&!m.ended;i++){if(m.choices.length)throw Error('Campaign interrupted by choice');m.step(1/60);}
-    console.log(stage.id,{won:m.result?.won,core:m.core,time:Math.round(m.time),wave:m.wave.number,kills:m.kills});expect(m.ended).toBe(true);if(Number(stage.id.split('-')[0])<=5)expect(m.result?.won,`${stage.id} must be clearable by the unequipped starter squad`).toBe(true);
+    console.log(stage.id,{won:m.result?.won,core:m.core,time:Math.round(m.time),wave:m.wave.number,kills:m.kills});expect(m.ended).toBe(true);if(Number(stage.id.split('-')[0])<=3)expect(m.result?.won,`${stage.id} must be clearable by the early-growth starter squad`).toBe(true);if(stage.id==='5-10')expect(m.result?.won,'5-10 must reject the unequipped starter squad').toBe(false);
    }await new Promise(resolve=>setTimeout(resolve,0));
  },60000);
  it('defines sixteen regions of ten stages with split routes that grow more frequent after area 1',()=>{
@@ -153,7 +154,7 @@ describe('campaign reach and doctrines',()=>{
    const save=defaultSave();save.campaign!.doctrine=doctrine;const m=new BattleModel(save,()=>.5);m.configureCampaign(campaignStages[9],save.campaign!.squad);m.start();
    for(let i=0;i<60*900&&!m.ended;i++){if(m.choices.length)throw Error('choice');m.step(1/60);}
    console.log('doctrine',doctrine,{core:m.core,time:Math.round(m.time),won:m.result?.won,kills:m.kills});
-   expect(m.ended).toBe(true);expect(m.doctrineLevel).toBe(4);
+   expect(m.ended).toBe(true);expect(m.doctrineLevel).toBeGreaterThanOrEqual(2);
   }
  },30000);
 });

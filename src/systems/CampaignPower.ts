@@ -27,11 +27,11 @@ export function recommendedCampaignPower(stage:CampaignStage){
  if(recommendations.has(stage.id))return recommendations.get(stage.id)!;
  const region=Number(stage.id.split('-')[0]),save=defaultSave();save.equipmentInventory=[];
  for(const h of Object.values(save.heroes)){h.stars=campaignRegionBalance[region-1].stars;h.equipment=[];}
- if(region>=6)for(const id of save.campaign!.squad){
-  const rarity:HeroGrade=region===6?'A':region===7?'S':'SR';
+ if(region>=5)for(const id of save.campaign!.squad){
+  const rarity:HeroGrade=region<=6?'A':region===7?'S':'SR';
   for(const template of [`${heroWeaponGroup[id]}-0`,'armor-field',`necklace-${heroes.find(h=>h.id===id)!.element}`]){
-   const item=makeEquipment(template,rarity,save.equipmentInventory.length,`${id}-${template}`);item.enhance=region===6?2:region===7?3:5;save.equipmentInventory.push(item);equipItem(save,id,item.id);
+   const item=makeEquipment(template,rarity,save.equipmentInventory.length,`${id}-${template}`);item.enhance=region===5?0:region===6?2:region===7?3:5;save.equipmentInventory.push(item);equipItem(save,id,item.id);
   }
  }
- const power=Math.round(campaignPower(save,stage)*(1+(Number(stage.id.split('-')[1])-1)*.008));recommendations.set(stage.id,power);return power;
+ const power=Math.round(campaignPower(save,stage)*(1+(Number(stage.id.split('-')[1])-1)*.02));recommendations.set(stage.id,power);return power;
 }

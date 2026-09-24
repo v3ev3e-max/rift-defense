@@ -7,10 +7,10 @@ export const campaignHeroOutput:Record<string,number>={arden:.62,solara:.66,auro
 export const campaignVanguardHealth=[1,1.08,1.18,1.28,1.4,1.75,2.0,2.25,2.0,2.2,2.45,2.7] as const;
 export const campaignRegionBalance=[
  {hp:5.0,attack:.45,speed:.85,stars:1},
- {hp:6.3,attack:.55,speed:.86,stars:1},
- {hp:7.0,attack:.68,speed:.87,stars:2},
- {hp:7.2,attack:.72,speed:.88,stars:2},
- {hp:8.4,attack:.86,speed:.89,stars:3},
+ {hp:6.3,attack:.62,speed:.86,stars:1},
+ {hp:7.0,attack:.74,speed:.87,stars:2},
+ {hp:7.2,attack:.82,speed:.88,stars:2},
+ {hp:8.4,attack:.94,speed:.89,stars:3},
  {hp:10.5,attack:1.05,speed:.90,stars:3},
  {hp:13.0,attack:1.30,speed:.91,stars:4},
  {hp:16.0,attack:1.55,speed:.92,stars:5},

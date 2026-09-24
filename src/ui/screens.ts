@@ -22,11 +22,11 @@ export function home(s: SaveData) {
  </nav>
  <div class="hq-operator"><span class="hq-orbit one"></span><span class="hq-orbit two"></span><img class="hq-fullbody" src="${assetUrl('/assets/illustrations/sera-hq-fullbody.png')}" alt="메인 요원 세라 전신" draggable="false"><div class="hq-operator-name"><small>MAIN OPERATOR / 05</small><b>세라 <em>SERA</em></b><p>“지휘관, 사선은 제가 확보할게요.”</p></div></div>
  <nav class="hq-menu hq-menu-right" aria-label="작전 본부 오른쪽 메뉴">
-  <button class="primary" data-action="stage"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/campaign.png')}" alt=""><span><b>균열 원정</b><small>120 STAGES</small></span></button>
+  <button class="primary" data-action="stage"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/campaign.png')}" alt=""><span><b>균열 원정</b><small>160 STAGES</small></span></button>
   <button data-action="recruit"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/recruit.png')}" alt=""><span><b>모집</b><small>RECRUIT</small></span></button>
   <button data-action="settings"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/settings.png')}" alt=""><span><b>설정</b><small>CONFIG</small></span></button>
  </nav>
- <footer class="hq-status"><span><i class="live-dot"></i> COMMAND CENTER ONLINE</span><b>최고 기록 ${String(s.bestWave).padStart(2, "0")} WAVE</b><small>AREA 01–12 · 120 STAGES</small></footer>
+ <footer class="hq-status"><span><i class="live-dot"></i> COMMAND CENTER ONLINE</span><b>최고 기록 ${String(s.bestWave).padStart(2, "0")} WAVE</b><small>AREA 01–16 · 160 STAGES</small></footer>
  </section>`;
 }
 export function heroScreen(s: SaveData, id: string) {
