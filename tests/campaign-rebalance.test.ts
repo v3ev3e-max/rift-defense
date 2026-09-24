@@ -5,7 +5,7 @@ import {campaignStages,campaignWave} from '../src/data/campaign';
 import {stepCombat} from '../src/systems/CombatSystem';
 import {enemies} from '../src/data/enemies';
 import {seeded} from '../src/utils/random';
-import {castManualSkill} from '../src/systems/AutoSkills';
+import {castManualSkill,stepAutoSkills} from '../src/systems/AutoSkills';
 import {heroes} from '../src/data/heroes';
 import {combatRoles,formationRole} from '../src/data/combatRoles';
 it('fails when the final objective escapes instead of awarding a false victory',()=>{
@@ -49,8 +49,15 @@ it.each(heroes)('$id casts through its own combat effect key',hero=>{
  const m=new BattleModel(defaultSave(),()=>.5);m.configureCampaign(campaignStages[0],[hero.id],true);m.autoDeployCampaign();m.start();m.wave.queue=[];m.spawn('crawler');
  const u=m.units[0],e=m.enemies.find(v=>v.active)!;e.x=u.x+20;e.y=u.y;e.speed=0;e.hp=e.maxHp=1e8;u.skillCharge=100;
  expect(castManualSkill(m,u),hero.id).toBe(true);
+ expect(u.skillCastAt,`${hero.id} manual animation timestamp`).toBe(m.time);
  const defensive=formationRole(hero.id)==='tank'||combatRoles[hero.id].kind==='support';
  expect(m.effects.some(f=>f.visual===(defensive?`support-skill-${hero.id}`:`${hero.id}-skill`)),hero.id).toBe(true);
+});
+it.each(heroes)('$id AUTO path starts its dedicated skill animation',hero=>{
+ const m=new BattleModel(defaultSave(),()=>.5);m.configureCampaign(campaignStages[0],[hero.id],true);m.autoDeployCampaign();m.start();m.wave.queue=[];m.spawn('crawler');
+ const u=m.units[0],e=m.enemies.find(v=>v.active)!;e.x=u.x+10;e.y=u.y;e.speed=0;e.hp=e.maxHp=1e8;u.skillCharge=100;u.skillHeldAt=m.time-4;m.autoSkills=true;
+ stepAutoSkills(m,0);
+ expect(u.skillCastAt,`${hero.id} AUTO animation timestamp`).toBe(m.time);
 });
 it('both forward tanks can actually intercept their separate dual-lane paths',()=>{
  const stage=campaignStages.find(s=>s.id==='8-3')!,m=new BattleModel(defaultSave());m.configureCampaign(stage,['yuria','neris'],true);m.autoDeployCampaign();m.start();m.wave.queue=[];

@@ -707,7 +707,9 @@ export class BattleScene extends Phaser.Scene {
         sp.setTexture(textureKey, animatedHero ? undefined : heroById[u.heroId].asset.frame);
       sp.setAlpha(u.hp <= 0 ? 0.25 : u.stunned ? 0.55 : 1)
         .setDepth(this.dragUid===u.uid?800:20+u.y);
-      const size=poseSize(u.heroId,north,idle);
+      // Skill sheets include the character-specific barrier, muzzle or support
+      // bloom, so give them a little more room than the ordinary body pose.
+      const size=poseSize(u.heroId,north,idle)*(skillCasting?1.35:1);
       sp.setDisplaySize(size,size);
       // Source art faces right. Use the real shot target, not a nearby bystander.
       sp.setFlipX(!idle && !north && (u.facingLeft ?? false));
