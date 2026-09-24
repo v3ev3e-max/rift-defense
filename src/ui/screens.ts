@@ -16,15 +16,15 @@ export function home(s: SaveData) {
  <div class="city-scene" aria-hidden="true"><div class="city-grid"></div><div class="rift-ring"></div><div class="city-buildings">${Array.from({ length: 18 }, (_, i) => `<i style="--h:${22 + ((i * 29) % 61)}%;--w:${25 + ((i * 17) % 35)}px"></i>`).join("")}</div><div class="ground-grid"></div></div>
  <header class="hq-heading"><span class="eyebrow"><i class="live-dot"></i> RIFT RESPONSE DIVISION</span><h1>작전 본부 <small>OPERATION HQ</small></h1><p>원하는 메뉴를 선택해 작전을 준비하세요.</p></header>
  <nav class="hq-menu hq-menu-left" aria-label="작전 본부 왼쪽 메뉴">
-  <button data-action="hero">${icon("hero")}<span><b>요원</b><small>OPERATOR</small></span></button>
-  <button data-action="campaign-deploy">${icon("deck")}<span><b>실전 배치</b><small>FORMATION</small></span></button>
-  <button data-action="inventory">${icon("shop")}<span><b>아이템</b><small>ARMORY</small></span></button>
+  <button data-action="hero"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/operator.png')}" alt=""><span><b>요원</b><small>OPERATOR</small></span></button>
+  <button data-action="campaign-deploy"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/formation.png')}" alt=""><span><b>실전 배치</b><small>FORMATION</small></span></button>
+  <button data-action="inventory"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/armory.png')}" alt=""><span><b>아이템</b><small>ARMORY</small></span></button>
  </nav>
  <div class="hq-operator"><span class="hq-orbit one"></span><span class="hq-orbit two"></span><img class="hq-fullbody" src="${assetUrl('/assets/illustrations/sera-hq-fullbody.png')}" alt="메인 요원 세라 전신" draggable="false"><div class="hq-operator-name"><small>MAIN OPERATOR / 05</small><b>세라 <em>SERA</em></b><p>“지휘관, 사선은 제가 확보할게요.”</p></div></div>
  <nav class="hq-menu hq-menu-right" aria-label="작전 본부 오른쪽 메뉴">
-  <button class="primary" data-action="stage">${icon("battle")}<span><b>균열 원정</b><small>120 STAGES</small></span></button>
-  <button data-action="recruit">${icon("gem")}<span><b>모집</b><small>RECRUIT</small></span></button>
-  <button data-action="settings">${icon("settings")}<span><b>설정</b><small>CONFIG</small></span></button>
+  <button class="primary" data-action="stage"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/campaign.png')}" alt=""><span><b>균열 원정</b><small>120 STAGES</small></span></button>
+  <button data-action="recruit"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/recruit.png')}" alt=""><span><b>모집</b><small>RECRUIT</small></span></button>
+  <button data-action="settings"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/settings.png')}" alt=""><span><b>설정</b><small>CONFIG</small></span></button>
  </nav>
  <footer class="hq-status"><span><i class="live-dot"></i> COMMAND CENTER ONLINE</span><b>최고 기록 ${String(s.bestWave).padStart(2, "0")} WAVE</b><small>AREA 01–12 · 120 STAGES</small></footer>
  </section>`;
