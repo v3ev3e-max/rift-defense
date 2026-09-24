@@ -450,6 +450,10 @@ export class BattleScene extends Phaser.Scene {
       {edge:0x55321f,border:0xd89a4d,lane:0x8e6848,mark:0xffdd7b},
       {edge:0x172c31,border:0x54a9a7,lane:0x33484a,mark:0x76fff2},
       {edge:0x241738,border:0x8a65ba,lane:0x49385e,mark:0xe19cff},
+      {edge:0x123f69,border:0xbcecff,lane:0x7aaec7,mark:0x79f4ff},
+      {edge:0x291e48,border:0xbfaee7,lane:0x766b91,mark:0xdba8ff},
+      {edge:0x241c18,border:0xc38245,lane:0x62534a,mark:0xffbd69},
+      {edge:0x160e2c,border:0x8b68bd,lane:0x44345f,mark:0x8ff4ff},
     ];
     const routeTheme=routeThemes[Math.max(0,this.campaignArea-1)]??routeThemes[4];
     if(this.campaignArea&&this.textureReady('campaign-lane')){

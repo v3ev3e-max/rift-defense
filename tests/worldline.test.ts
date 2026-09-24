@@ -2,6 +2,12 @@ import {expect,it} from 'vitest';
 import {campaignLaneAsset,campaignLocalRegion,campaignStageLabel,campaignStages,campaignWorldline,campaignWorldlineLabel,campaignWorldlines,regionalStories,stageUnlocked,worldlineUnlocked} from '../src/data/campaign';
 import {campaignSelect} from '../src/ui/CampaignUI';
 import {defaultSave} from '../src/systems/SaveSystem';
+// @ts-expect-error Vitest runs in Node while the game compiler targets browsers.
+import {readFileSync} from 'node:fs';
+// @ts-expect-error Vitest runs in Node while the game compiler targets browsers.
+import {createHash} from 'node:crypto';
+
+const assetHash=(path:string)=>createHash('sha256').update(readFileSync(path)).digest('hex');
 
 it('splits 160 operations into four four-area worldlines while keeping simple stage labels',()=>{
  expect(campaignWorldlines.map(v=>v.regions)).toEqual([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]);
@@ -24,6 +30,13 @@ it('provides a generated lane texture for every campaign region',()=>{
  expect(campaignWorldlines.flatMap(v=>v.regions).map(campaignLaneAsset)).toEqual(
   Array.from({length:16},(_,i)=>`/assets/campaign/lanes/region-${String(i+1).padStart(2,'0')}.webp`),
  );
+});
+
+it('keeps every new worldline background and lane material distinct',()=>{
+ const backgrounds=Array.from({length:4},(_,i)=>assetHash(`public/assets/campaign/map-${i+13}-1.png`));
+ const lanes=Array.from({length:4},(_,i)=>assetHash(`public/assets/campaign/lanes/region-${i+13}.webp`));
+ expect(new Set(backgrounds).size).toBe(4);
+ expect(new Set(lanes).size).toBe(4);
 });
 
 it('opens the research worldline after the first finale while preserving sequential stage locks',()=>{
