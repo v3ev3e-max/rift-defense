@@ -19,4 +19,8 @@ export const campaignRegionBalance=[
  {hp:22.0,attack:2.00,speed:.94,stars:5},
  {hp:22.0,attack:2.20,speed:.95,stars:5},
  {hp:22.5,attack:2.55,speed:.96,stars:5},
+ {hp:35.0,attack:2.75,speed:.97,stars:5},
+ {hp:36.0,attack:3.00,speed:.98,stars:5},
+ {hp:48.0,attack:3.28,speed:.99,stars:5},
+ {hp:62.0,attack:3.60,speed:1.00,stars:5},
 ] as const;

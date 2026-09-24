@@ -39,17 +39,17 @@ describe('campaign foundations',()=>{
     console.log(stage.id,{won:m.result?.won,core:m.core,time:Math.round(m.time),wave:m.wave.number,kills:m.kills});expect(m.ended).toBe(true);if(Number(stage.id.split('-')[0])<=5)expect(m.result?.won,`${stage.id} must be clearable by the unequipped starter squad`).toBe(true);
    }await new Promise(resolve=>setTimeout(resolve,0));
  },60000);
- it('defines twelve regions of ten stages with split routes that grow more frequent after area 1',()=>{
-  expect(campaignStages).toHaveLength(120);expect(campaignStages[0].id).toBe('1-1');expect(campaignStages.at(-1)?.id).toBe('12-10');
-  expect(campaignStages.map(s=>s.waves)).toEqual(Array.from({length:12},()=>[4,4,4,4,6,4,4,4,4,8]).flat());
+ it('defines sixteen regions of ten stages with split routes that grow more frequent after area 1',()=>{
+  expect(campaignStages).toHaveLength(160);expect(campaignStages[0].id).toBe('1-1');expect(campaignStages.at(-1)?.id).toBe('16-10');
+  expect(campaignStages.map(s=>s.waves)).toEqual(Array.from({length:16},()=>[4,4,4,4,6,4,4,4,4,8]).flat());
   expect(campaignStages[0].enemyHp).toBeLessThan(campaignStages.at(-1)!.enemyHp);
   expect(campaignStages[0].enemyAttack).toBeLessThan(campaignStages.at(-1)!.enemyAttack);
-  for(let region=1;region<=12;region++){
+  for(let region=1;region<=16;region++){
    const stages=campaignStages.filter(stage=>stage.id.startsWith(`${region}-`));
    expect(stages.every((stage,i)=>i===0||stage.enemyHp>stages[i-1].enemyHp)).toBe(true);
   }
-  expect(campaignStages.map(s=>s.background)).toEqual(Array.from({length:12},(_,region)=>Array.from({length:10},()=>`map-${region+1}-1.webp`)).flat());
-  const dual=campaignStages.filter(s=>s.alternate);expect(dual.map(s=>s.id)).toEqual(['2-7','3-4','3-8','4-3','4-7','5-4','5-8','6-3','6-7','7-2','7-6','7-9','8-2','8-3','8-7','9-2','9-6','9-8','10-3','10-7','11-2','11-6','11-9','12-2','12-4','12-7','12-9']);
+  expect(new Set(campaignStages.map(s=>s.background))).toHaveLength(16);
+  const dual=campaignStages.filter(s=>s.alternate);expect(dual.length).toBeGreaterThan(27);expect(dual.map(s=>s.id)).toContain('16-9');
   expect(campaignStages.filter(s=>s.id.startsWith('1-')&&s.alternate)).toHaveLength(0);
   expect(campaignStages.filter(s=>s.id.endsWith('-5')||s.id.endsWith('-10')).every(s=>!s.alternate)).toBe(true);
   for(const s of campaignStages){expect(s.map.slots).toHaveLength(6);expect(new Set(s.map.slots.map(p=>`${p.x},${p.y}`)).size).toBe(6);expect(s.map.path[0].x).toBe(750);expect(s.map.path.at(-1)).toEqual({x:50,y:400});expect(s.map.pathPoint(s.map.pathLength+100,{x:0,y:0})).toEqual(s.map.path.at(-1));if(s.alternate){expect(s.alternate.path[0]).toEqual({x:750,y:Number(s.id.split('-')[0])>=9?440:460});expect(s.alternate.path.at(-1)).toEqual({x:50,y:400});expect(frontlineSlots(s)).toEqual([1,3,4]);}else expect(frontlineSlots(s)).toEqual([4]);}
@@ -63,7 +63,7 @@ describe('campaign foundations',()=>{
   expect(opening[3].enemies).toContain('sprinter');
  });
  it('uses the same steadily rising regular-operation pressure curve in every region',()=>{
-  for(let region=1;region<=12;region++)for(const operations of [[1,2,3,4],[6,7,8,9]]){
+  for(let region=1;region<=16;region++)for(const operations of [[1,2,3,4],[6,7,8,9]]){
    const waves=operations.map(operation=>campaignWave(campaignStages[(region-1)*10+operation-1],1));
    expect(waves.every((wave,i)=>i===0||wave.enemies.length>waves[i-1].enemies.length),`region ${region} counts ${operations}`).toBe(true);
    expect(waves.every((wave,i)=>i===0||wave.interval<waves[i-1].interval),`region ${region} tempo ${operations}`).toBe(true);

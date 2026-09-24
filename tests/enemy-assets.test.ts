@@ -25,9 +25,9 @@ describe('campaign enemy assets',()=>{
 
   it('has a complete static and movement fallback for every spawned enemy',()=>{
     for(const stage of campaignStages){
-      const area=campaignRegion(stage),folder=`/assets/generated/campaign-enemies/map-${String(area).padStart(2,'0')}`;
+      const area=campaignRegion(stage),visualArea=area>12?area-4:area,folder=`/assets/generated/campaign-enemies/map-${String(visualArea).padStart(2,'0')}`;
       for(const id of campaignEnemyIds(stage)){
-        const def=enemies[id],visual=def.visualId??id,isRegional=regional[area].has(visual);
+        const def=enemies[id],visual=def.visualId??id,isRegional=!!regional[visualArea]?.has(visual);
         const still=isRegional&&visual!=='elite'?`${folder}/${visual}.webp`:`/assets/generated/enemies/${visual}.webp`;
         expect(present(still),`${stage.id}: ${id} static ${still}`).toBe(true);
         for(let frame=1;frame<=enemyMoveFrameCount(!!def.boss,isRegional);frame++){

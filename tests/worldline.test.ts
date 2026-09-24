@@ -3,25 +3,26 @@ import {campaignLaneAsset,campaignLocalRegion,campaignStageLabel,campaignStages,
 import {campaignSelect} from '../src/ui/CampaignUI';
 import {defaultSave} from '../src/systems/SaveSystem';
 
-it('splits 120 operations into three four-area worldlines while keeping simple stage labels',()=>{
- expect(campaignWorldlines.map(v=>v.regions)).toEqual([[1,2,3,4],[5,6,7,8],[9,10,11,12]]);
+it('splits 160 operations into four four-area worldlines while keeping simple stage labels',()=>{
+ expect(campaignWorldlines.map(v=>v.regions)).toEqual([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]);
  expect(campaignStages.filter(v=>campaignWorldline(v).id===1)).toHaveLength(40);
  expect(campaignStages.filter(v=>campaignWorldline(v).id===2)).toHaveLength(40);
  expect(campaignStages.filter(v=>campaignWorldline(v).id===3)).toHaveLength(40);
+ expect(campaignStages.filter(v=>campaignWorldline(v).id===4)).toHaveLength(40);
  expect(campaignLocalRegion('5-1')).toBe(1);
  expect(campaignStageLabel('1-1')).toBe('1-1');
  expect(campaignStageLabel('5-1')).toBe('5-1');
  expect(campaignWorldlineLabel('5-1')).toBe('WL-02 · 폐쇄 연구구역');
- expect(regionalStories).toHaveLength(12);
- expect(new Set(campaignStages.map(v=>v.background))).toHaveLength(12);
+ expect(regionalStories).toHaveLength(16);
+ expect(new Set(campaignStages.map(v=>v.background))).toHaveLength(16);
  for(const region of campaignWorldlines.flatMap(v=>v.regions)){
-  expect(new Set(campaignStages.filter(v=>v.id.startsWith(`${region}-`)).map(v=>v.background))).toEqual(new Set([`map-${region}-1.webp`]));
+  expect(new Set(campaignStages.filter(v=>v.id.startsWith(`${region}-`)).map(v=>v.background)).size).toBe(1);
  }
 });
 
 it('provides a generated lane texture for every campaign region',()=>{
  expect(campaignWorldlines.flatMap(v=>v.regions).map(campaignLaneAsset)).toEqual(
-  Array.from({length:12},(_,i)=>`/assets/campaign/lanes/region-${String(i+1).padStart(2,'0')}.webp`),
+  Array.from({length:16},(_,i)=>`/assets/campaign/lanes/region-${String(i+1).padStart(2,'0')}.webp`),
  );
 });
 

@@ -108,6 +108,7 @@ export class BattleScene extends Phaser.Scene {
     this.load.image('skill-duration-gauge',assetUrl('/assets/ui/generated/skill-duration-gauge-v2.png'));
     this.load.image('reaction-generated',assetUrl('/assets/effects/common/reaction_generated.png'));
     const campaignArea=this.model.campaign?campaignRegion(this.model.campaign):0;
+    const visualArea=campaignArea>12?campaignArea-4:campaignArea;
     this.campaignArea=campaignArea;
     if(campaignArea)this.load.image('campaign-lane',assetUrl(campaignLaneAsset(campaignArea)));
     const campaignIds=this.model.campaign?campaignEnemyIds(this.model.campaign):new Set<string>();
@@ -117,9 +118,9 @@ export class BattleScene extends Phaser.Scene {
     this.initialEnemyKey=`enemy-${activeEnemyDefs[0]?.id??'crawler'}`;
     for (const def of activeEnemyDefs){
       const visualId=def.visualId??def.id;
-      const regional=campaignArea>0&&campaignIds.has(def.id)&&regionalEnemyArt[campaignArea]?.has(visualId);
+      const regional=campaignArea>0&&campaignIds.has(def.id)&&regionalEnemyArt[visualArea]?.has(visualId);
       if(regional)this.regionalEnemyVisuals.add(def.id);
-      const folder=`/assets/generated/campaign-enemies/map-${String(campaignArea).padStart(2,'0')}`;
+      const folder=`/assets/generated/campaign-enemies/map-${String(visualArea).padStart(2,'0')}`;
       this.load.image(`enemy-${def.id}`, assetUrl(regional&&visualId!=="elite"?`${folder}/${visualId}.webp`:`/assets/generated/enemies/${visualId}.webp`));
       const moveCount=enemyMoveFrameCount(!!def.boss,!!regional);
       this.enemyMoveFrames[def.id]=moveCount;
@@ -132,7 +133,7 @@ export class BattleScene extends Phaser.Scene {
     for(let frame=1;frame<=4;frame++)
       this.load.image(`slash-anim-${frame}`,assetUrl(`/assets/generated/slash-animation/slash_${String(frame).padStart(2,'0')}.webp`));
     for (let frame=1;frame<=4;frame++)
-      this.load.image(`enemy-step-${frame}`,assetUrl(campaignArea?`/assets/generated/campaign-enemies/map-${String(campaignArea).padStart(2,'0')}/fx/step/frame_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemy-steps/step_${String(frame).padStart(2,'0')}.webp`));
+      this.load.image(`enemy-step-${frame}`,assetUrl(campaignArea?`/assets/generated/campaign-enemies/map-${String(visualArea).padStart(2,'0')}/fx/step/frame_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemy-steps/step_${String(frame).padStart(2,'0')}.webp`));
     for (const grade of ['B','A','S','SR'])
       this.load.image(`summon-${grade}`, assetUrl(`/assets/ui/summon_${grade}.png`));
     this.load.image('summon-slot', assetUrl('/assets/ui/summon_slot.png'));
@@ -172,6 +173,7 @@ export class BattleScene extends Phaser.Scene {
       this.load.image(`hero-${id}-idle-front`,assetUrl(`/assets/heroes/${id}/frame_01.png`));
       for(let frame=1;frame<=3;frame++)this.load.image(`hero-${id}-defeat-${frame}`,assetUrl(`/assets/generated/hero-defeat/${id}/frame_${String(frame).padStart(2,'0')}.webp`));
       for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-up-${frame}`,assetUrl(`/assets/combat/${id}/up6_${String(frame).padStart(2,"0")}.png`));
+      for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-skill-${frame}`,assetUrl(`/assets/combat/${id}/skill_${String(frame).padStart(2,"0")}.png`));
       for (let frame = 1; frame <= 8; frame++) {
         this.load.image(
           `hero-${id}-anim-${frame}`,
@@ -695,7 +697,9 @@ export class BattleScene extends Phaser.Scene {
       const north = !!u.facingUp && this.textures.exists(`hero-${u.heroId}-up-1`);
       const upFrame = attacking ? [1,2,3,4,5,6,6,1][heroAnimFrame-1] : 1;
       const idle=m.time-(u.lastAttackAt??-999)>=1;
-      const textureKey = idle ? `hero-${u.heroId}-idle-front` : north ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
+      const skillElapsed=m.time-(u.skillCastAt??-999),skillCasting=skillElapsed>=0&&skillElapsed<.9&&u.hp>0;
+      const skillFrame=Math.min(6,Math.floor(skillElapsed/.15)+1);
+      const textureKey = skillCasting ? `hero-${u.heroId}-skill-${skillFrame}` : idle ? `hero-${u.heroId}-idle-front` : north ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
         ? `hero-${u.heroId}-anim-${heroAnimFrame}`
         : heroById[u.heroId].asset.key;
       sp.setVisible(true);

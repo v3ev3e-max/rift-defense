@@ -25,6 +25,7 @@ export interface Unit {
   skillCooldownDuration?:number;
   skillCallout?:string;
   skillCalloutAt?:number;
+  skillCastAt?:number;
   skillEffectUntil?:number;
   skillEffectDuration?:number;
   supportAttackUntil?:number;
