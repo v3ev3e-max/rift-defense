@@ -709,7 +709,9 @@ export class BattleScene extends Phaser.Scene {
         .setDepth(this.dragUid===u.uid?800:20+u.y);
       // Skill sheets include the character-specific barrier, muzzle or support
       // bloom, so give them a little more room than the ordinary body pose.
-      const size=poseSize(u.heroId,north,idle)*(skillCasting?1.35:1);
+      // The generated sheets reserve a hard 40px transparent safe area on
+      // every edge. Compensate for that padding without ever cropping it.
+      const size=poseSize(u.heroId,north,idle)*(skillCasting?1.7:1);
       sp.setDisplaySize(size,size);
       // Source art faces right. Use the real shot target, not a nearby bystander.
       sp.setFlipX(!idle && !north && (u.facingLeft ?? false));
