@@ -12,6 +12,7 @@ import {attack,stepActions} from '../src/systems/ActionCombat';
 import {stepCombat} from '../src/systems/CombatSystem';
 import {formationRole} from '../src/data/combatRoles';
 import {equipItem,heroWeaponGroup,makeEquipment} from '../src/data/equipment';
+import {campaignGradeStarAttack} from '../src/data/campaignBalance';
 
 const make=()=>new BattleModel(defaultSave(),seeded(709));
 
@@ -39,6 +40,7 @@ it('uses one five-step battle upgrade per element without increasing range',()=>
 
 it('assigns each grade a distinct combat budget and gives A a combination premium',()=>{
  expect(gradeCombatBudget.B.label).toContain('성장');expect(gradeCombatBudget.A.reaction).toBe(.10);expect(gradeCombatBudget.S.base).toBeGreaterThan(gradeCombatBudget.A.base);expect(gradeCombatBudget.SR.base).toBeGreaterThan(gradeCombatBudget.S.base);
+ expect(campaignGradeStarAttack('A',4)).toBeGreaterThan(campaignGradeStarAttack('B',4));expect(campaignGradeStarAttack('A',5)).toBeGreaterThan(campaignGradeStarAttack('B',5));
 });
 
 it('keeps same-role 4★ and 5★ grade averages ordered with identical equipment quality',()=>{

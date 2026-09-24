@@ -24,7 +24,7 @@ import { elementAttackBonus, synergies } from "./SynergySystem";
 import type { RNG } from "../utils/random";
 import { recommendedEnemyCap } from "../utils/performance";
 import {equipmentBonus,hasEquipmentTemplate} from '../data/equipment';
-import {campaignStarAttack,campaignStarHealth,campaignHeroOutput} from '../data/campaignBalance';
+import {campaignGradeStarAttack,campaignStarHealth,campaignHeroOutput} from '../data/campaignBalance';
 
 function operatorCombatRange(id:string,bonus:number,inCampaign:boolean){
   const native=combatRange(heroById[id].range),role=formationRole(id),kind=combatRoles[id].kind;
@@ -499,7 +499,7 @@ export class BattleModel {
       atk:
         (h.atk+gear.attack) * gradeBasePower[h.grade] * (1+(this.roleUpgrades[combatRoles[u.heroId].kind]??0)*.12+(this.campaign?(this.save.campaign?.research[combatRoles[u.heroId].kind]??0)*.03+(this.save.campaign?.research[h.element]??0)*.03+(this.save.campaign?.fragments[u.heroId]??0)*.005:0)) *
         (1 + .08*(permanentStars-1)) * (this.campaign?(campaignHeroOutput[u.heroId]??1):1) *
-        (this.campaign?campaignStarAttack(u.star)/(1+.08*(permanentStars-1)):gradeStarMultiplier(h.grade,u.star)) *
+        (this.campaign?campaignGradeStarAttack(h.grade,u.star)/(1+.08*(permanentStars-1)):gradeStarMultiplier(h.grade,u.star)) *
         (1 + e.attack) *
         (1 +
           (this.bonuses.ascend ?? 0) +

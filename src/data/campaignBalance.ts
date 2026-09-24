@@ -1,5 +1,6 @@
 /** Campaign growth is separate from the copy-merging economy in endless mode. */
 export const campaignStarAttack=(star:number)=>1+.24*Math.max(0,star-1);
+export const campaignGradeStarAttack=(grade:'B'|'A'|'S'|'SR',star:number)=>campaignStarAttack(star)*(star===4?(grade==='B'?.95:grade==='A'?1.05:1):star>=5?(grade==='B'?.9:grade==='A'?1.12:1):1);
 export const campaignStarHealth=(star:number)=>1+.32*Math.max(0,star-1);
 // Thirty-second single-target audits exposed self-reaction outliers in dual-element SR units.
 export const campaignHeroOutput:Record<string,number>={arden:.62,solara:.66,aurora:.78};
