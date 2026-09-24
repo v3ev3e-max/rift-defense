@@ -66,3 +66,19 @@ it('both forward tanks can actually intercept their separate dual-lane paths',()
  for(let i=0;i<60;i++)m.step(1/60);
  expect(m.records.every(r=>r.blockTime>.5)).toBe(true);
 });
+it('assigns each forward tank only to its own route when dual lanes overlap',()=>{
+ const stage=campaignStages.find(s=>s.id==='8-3')!,m=new BattleModel(defaultSave());m.configureCampaign(stage,['yuria','neris'],true);m.autoDeployCampaign();m.start();m.wave.queue=[];
+ for(const kind of ['crawler','crawler'])m.spawn(kind);
+ const active=m.enemies.filter(e=>e.active);active[0].route=0;active[1].route=1;
+ for(const e of active){e.x=495;e.y=400;e.speed=0;e.hp=e.maxHp=1e7;}
+ stepCombat(m,1/60);
+ expect(m.records.find(r=>r.heroId==='yuria')!.blockTime).toBeGreaterThan(0);
+ expect(m.records.find(r=>r.heroId==='neris')!.blockTime).toBeGreaterThan(0);
+});
+it('does not let a charger phase through an active tank block',()=>{
+ const stage=campaignStages.find(s=>s.id==='9-1')!,m=new BattleModel(defaultSave());m.configureCampaign(stage,['yuria'],true);m.autoDeployCampaign();m.start();m.wave.queue=[];m.spawn('sky_lancer');
+ const u=m.units[0],e=m.enemies.find(e=>e.active)!;e.x=u.x;e.y=u.y;e.speed=0;e.hp=e.maxHp=1e7;e.progress=100;e.namedSkillTimer=enemies.sky_lancer.charge!.interval;
+ stepCombat(m,1/60);
+ expect(e.progress).toBe(100);
+ expect(m.records[0].blockTime).toBeGreaterThan(0);
+});

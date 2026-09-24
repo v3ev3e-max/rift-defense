@@ -25,6 +25,14 @@ function adjacent(
       if (++n >= limit) break;
     }
 }
+function tankCoversRoute(m:BattleModel,u:Unit,e:Enemy){
+  if(!m.campaign?.alternate)return true;
+  // The two forward pads belong to their visible route. The centre pad is the
+  // deliberate flex position and may intercept either lane.
+  if(u.slot===1)return (e.route??0)===0;
+  if(u.slot===3)return (e.route??0)===1;
+  return true;
+}
 export function stepCombat(m: BattleModel, dt: number) {
   const blockedBy=new Map<number,Unit>();
   for(const u of m.units){
@@ -36,7 +44,7 @@ export function stepCombat(m: BattleModel, dt: number) {
     // frontline tank enough reach to claim its own lane without pulling the
     // opposite route across the formation.
     const tauntRange=frontline?(m.campaign?.alternate?110:20):guardian.range;
-    const candidates=m.enemies.filter(e=>e.active&&!enemies[e.kind].boss&&!blockedBy.has(e.index)&&distance(u,e)<=tauntRange).sort((a,b)=>b.progress-a.progress);
+    const candidates=m.enemies.filter(e=>e.active&&!enemies[e.kind].boss&&!blockedBy.has(e.index)&&tankCoversRoute(m,u,e)&&distance(u,e)<=tauntRange).sort((a,b)=>b.progress-a.progress);
     let remaining=cap;
     for(const e of candidates){const cost=m.campaign?(e.kind==='sprinter'?3:e.kind==='runner'?2:1):1;if(remaining>=cost){blockedBy.set(e.index,u);remaining-=cost;}}
   }
@@ -71,7 +79,7 @@ export function stepCombat(m: BattleModel, dt: number) {
     }
     const blocker=blockedBy.get(e.index);
     const living=m.units.filter(u=>u.slot>=0&&u.hp>0);
-    const lineTank=m.campaign?living.filter(u=>formationRole(u.heroId)==='tank'&&isFrontlineSlot(m.campaign,u.slot)&&Math.abs(u.y-e.y)<=90).sort((a,b)=>distance(a,e)-distance(b,e))[0]:undefined;
+    const lineTank=m.campaign?living.filter(u=>formationRole(u.heroId)==='tank'&&isFrontlineSlot(m.campaign,u.slot)&&tankCoversRoute(m,u,e)&&Math.abs(u.y-e.y)<=90).sort((a,b)=>distance(a,e)-distance(b,e))[0]:undefined;
     const rangedFieldTarget=def.ranged&&!lineTank?living.filter(u=>formationRole(u.heroId)!=='tank'||!isFrontlineSlot(m.campaign,u.slot)).sort((a,b)=>Number((b.tauntUntil??0)>m.time)-Number((a.tauntUntil??0)>m.time)||distance(a,e)-distance(b,e))[0]:undefined;
     const campaignTarget=m.campaign?(lineTank??rangedFieldTarget??living.sort((a,b)=>{
       const priority=(u:Unit)=>Number((u.tauntUntil??0)>m.time)*100+Number(formationRole(u.heroId)==='tank'&&isFrontlineSlot(m.campaign,u.slot))*20+Number(formationRole(u.heroId)==='tank')*10+u.x/100;
@@ -88,7 +96,12 @@ export function stepCombat(m: BattleModel, dt: number) {
     if(activeBlocker){charge(activeBlocker,dt*5,m.time);const r=m.records.find(r=>r.uid===activeBlocker.uid);if(r)r.blockTime+=dt;}
     e.attackTimer += dt;
     e.namedSkillTimer += dt;
-    if(def.charge&&e.namedSkillTimer>=def.charge.interval){e.progress+=def.charge.distance;e.namedSkillTimer=0;m.emit('blast',e.x,e.y,e.x,e.y,def.color,{visual:'enemy-rage',duration:.45,radius:70});}
+    if(def.charge&&e.namedSkillTimer>=def.charge.interval){
+      // A completed charge may close open ground, but cannot phase through a
+      // tank that is already blocking or trading melee attacks with it.
+      if(!blocked)e.progress+=def.charge.distance;
+      e.namedSkillTimer=0;m.emit('blast',e.x,e.y,e.x,e.y,def.color,{visual:'enemy-rage',duration:.45,radius:70});
+    }
     if(def.support&&e.namedSkillTimer>=def.support.interval){for(const ally of m.enemies)if(ally.active&&Math.hypot(ally.x-e.x,ally.y-e.y)<=def.support.radius)ally.hp=Math.min(ally.maxHp,ally.hp+ally.maxHp*def.support.heal);e.namedSkillTimer=0;m.emit('blast',e.x,e.y,e.x,e.y,def.color,{visual:'enemy-disrupt',duration:.55,radius:def.support.radius});}
     // Ranged enemies begin aiming only after reaching their engagement line.
     // This prevents a whole spawn group from banking cooldown off-screen and
@@ -120,7 +133,7 @@ export function stepCombat(m: BattleModel, dt: number) {
       }
       if(def.namedSkill&&e.namedSkillTimer>=6.5){
         const living=m.units.filter(u=>u.slot>=0&&u.hp>0),nearest=living.sort((a,b)=>distance(a,e)-distance(b,e))[0],far=living.sort((a,b)=>distance(b,e)-distance(a,e))[0];
-        if(def.namedSkill==='rush')e.progress+=30;
+        if(def.namedSkill==='rush'&&!blocked)e.progress+=30;
         else if(def.namedSkill==='mend')e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.1);
         else if(def.namedSkill==='root'&&nearest)nearest.stunned=Math.max(nearest.stunned,1.4);
         else if(def.namedSkill==='frostbite'){for(const u of living)if(distance(u,e)<260){m.hurtUnit(u,10*campaignAttack);u.stunned=Math.max(u.stunned,.5);}}
