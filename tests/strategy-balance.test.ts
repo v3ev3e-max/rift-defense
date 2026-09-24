@@ -4,7 +4,8 @@ import {writeFileSync} from 'node:fs';
 import {BattleModel} from '../src/systems/BattleModel';
 import {defaultSave} from '../src/systems/SaveSystem';
 import {seeded} from '../src/utils/random';
-import {purchasePrice} from '../src/data/strategy';
+import {investmentForStar,purchasePrice} from '../src/data/strategy';
+import {heroById} from '../src/data/heroes';
 function recruit(m:BattleModel,id:string,copies:number){
  for(let i=0;i<copies;i++){
   const slot=m.map.slots.findIndex((_,i)=>!m.units.some(u=>u.slot===i));m.selectHero(id);if(!m.summonAt(slot))break;
@@ -29,3 +30,16 @@ it('compares equal starting budgets, archetypes, priorities and expanded squads'
  writeFileSync('artifacts/strategy-balance.json',JSON.stringify({budget:1500,bFiveStarCost:bCost,bFiveStarAttack:bAtk,srTwoStarAttack:m.stats(sr).atk,results},null,2));
  console.log('Budget comparison saved: artifacts/strategy-balance.json', {bCost,bAtk,srAtk:m.stats(sr).atk});
 },60000);
+
+it('reruns equal-gold same-role grade combat at each affordable star',()=>{
+ const budget=1500,ids=['reina','belka','kairon','solara'],results=[] as any[];
+ for(const id of ids){
+  const star=[5,4,3,2,1].find(v=>investmentForStar(id,v)<=budget)!;
+  const m=new BattleModel(defaultSave(),seeded(2409));m.gold=0;const u=m.addUnit(id,star);m.start();m.wave.start(20);m.wave.queue=[];m.wave.elapsed=-1000;m.invincible=true;
+  for(let i=0;i<48;i++){m.spawn(i%3===0?'armored':i%3===1?'runner':'crawler');const e=m.enemies.filter(e=>e.active).at(-1)!;e.progress=(i%12)*16;m.map.pathPoint(e.progress,e);e.hp*=4;e.maxHp=e.hp;}
+  for(let i=0;i<40*60;i++)m.update(1/60);
+  results.push({id,grade:heroById[id].grade,star,investment:investmentForStar(id,star),damage:Math.round(m.records[0].damage),kills:m.records[0].kills});
+ }
+ expect(results.every(v=>v.investment<=budget&&Number.isFinite(v.damage))).toBe(true);expect(results.some(v=>v.damage>0)).toBe(true);
+ writeFileSync('artifacts/equal-gold-grade-balance.json',JSON.stringify({generated:'2026-09-24',budget,role:'dealer',duration:40,results},null,2));
+},30000);

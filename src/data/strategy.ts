@@ -9,6 +9,10 @@ export const priceFactors={B:1.18,A:1.15,S:1.12,SR:1.08};
 // fully merged B unit a useful late-game ceiling.
 export const gradeBasePower={B:1,A:1.22,S:1.55,SR:2.15} as const;
 export const gradeStarGrowth={B:2.18,A:2.02,S:1.88,SR:1.72} as const;
+// Late merges are deliberately non-exponential: B remains the economical
+// growth grade, while A earns a clear 4★/5★ payoff instead of falling behind B.
+export const gradeStarMultipliers={B:[1,2.18,4.75,9.3,18.5],A:[1,2.02,4.08,9,20.5],S:[1,1.88,3.53,6.64,12.48],SR:[1,1.72,2.96,5.09,8.75]} as const;
+export function gradeStarMultiplier(grade:keyof typeof gradeStarMultipliers,star:number){return gradeStarMultipliers[grade][Math.max(0,Math.min(4,star-1))];}
 export const gradeCombatBudget={B:{base:1,star:2.18,reaction:0,label:'저비용 고성장'},A:{base:1.22,star:2.02,reaction:.10,label:'속성 조합 특화'},S:{base:1.55,star:1.88,reaction:.12,label:'역할 전문화'},SR:{base:2.15,star:1.72,reaction:.18,label:'초기 집중 화력'}} as const;
 export function purchasePrice(id:string,count:number){let price=basePrices[id];for(let i=0;i<count;i++)price=Math.round(price*priceFactors[heroById[id].grade]);return price;}
 export function copiesForStar(star:number){return 2**Math.max(0,star-1);}

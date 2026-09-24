@@ -11,7 +11,7 @@ import {applyElementHit} from './ElementSystem';
 import type {Element} from '../data/types';
 import type {DamageKind} from './CombatLedger';
 import {MAP} from '../data/map';
-import {equipmentBonus} from '../data/equipment';
+import {equipmentBonus,skillEquipmentMultiplier} from '../data/equipment';
 const dist=(a:{x:number;y:number},b:{x:number;y:number})=>Math.hypot(a.x-b.x,a.y-b.y);
 export const SNIPER_ROUND_SPEED=1050;
 function rayToMapEdge(x:number,y:number,dx:number,dy:number){
@@ -108,6 +108,7 @@ function hit(m:BattleModel,u:Unit,e:Enemy,power:number,kind:DamageKind,crit=fals
  if(heroById[u.heroId].element==='water'&&elementLevel>=3&&e.slowTime>0)power*=1.12;
  if(heroById[u.heroId].element==='fire'&&elementLevel>=4&&(enemies[e.kind].boss||e.kind==='elite'))power*=1.15;
  if(heroById[u.heroId].element==='dark'&&elementLevel>=4&&e.vulnerabilityTime>0)power*=1.18;
+ if(kind==='skill')power*=skillEquipmentMultiplier(m.save,u.heroId);
  const magical=['chain','meteor','water','curse'].includes(combatRoles[u.heroId].kind);
  if(e.kind==='armored'&&!magical)power*=.65;
  if(e.kind==='phantom'&&magical)power*=.55;
@@ -128,12 +129,14 @@ function hit(m:BattleModel,u:Unit,e:Enemy,power:number,kind:DamageKind,crit=fals
  if(m.builds.blast)for(const other of m.enemies)if(other.active&&other!==e&&dist(other,e)<65)m.damage(other,value*.06*m.builds.blast,u,true);
  if(m.builds.shock&&heroById[u.heroId].element==='electric'){const next=m.enemies.find(other=>other.active&&other!==e&&dist(other,e)<170);if(next)m.damage(next,value*.08*m.builds.shock,u,true);}if(e.active)applyElementHit(m,u,e,m.campaign&&kind==='skill'?Math.min(value,m.stats(u).atk):value,m.attackElement);
  const gear=equipmentBonus(m.save,u.heroId),bonusElement=gear.element;
- if(e.active&&bonusElement&&bonusElement!==(m.attackElement??heroById[u.heroId].element)){
-  applyElementHit(m,u,e,value*gear.elementDamage,bonusElement);
-  if(bonusElement==='water'){e.slow=Math.max(e.slow,.12);e.slowTime=Math.max(e.slowTime,.7);e.controlOwner=u.uid;}
-  else if(bonusElement==='fire'){e.burn=Math.max(e.burn,1);e.burnTime=Math.max(e.burnTime,1.2);e.dotOwner=u.uid;e.dotPower=Math.max(e.dotPower,value*.2);}
-  else if(bonusElement==='electric'&&m.rng()<.12){const next=m.enemies.find(v=>v.active&&v!==e&&dist(v,e)<130);if(next){const old=m.damageKind;m.damageKind='chain';m.damage(next,value*gear.elementDamage*.55,u,true);m.damageKind=old;m.emit('shot',e.x,e.y,next.x,next.y,0xffef83,{visual:'transfer-electric',duration:.2});}}
-  else if(bonusElement==='dark'){e.armorBreak=Math.max(e.armorBreak,.08);e.armorBreakTime=Math.max(e.armorBreakTime,1);}
+ if(e.active&&kind==='basic'&&bonusElement&&gear.elementDamage>0){
+  const extra=value*gear.elementDamage;m.damage(e,extra,u,true);
+  if(e.active)applyElementHit(m,u,e,extra,bonusElement);
+  const secondary=bonusElement!==(m.attackElement??heroById[u.heroId].element);
+  if(secondary&&bonusElement==='water'){e.slow=Math.max(e.slow,.12);e.slowTime=Math.max(e.slowTime,.7);e.controlOwner=u.uid;}
+  else if(secondary&&bonusElement==='fire'){e.burn=Math.max(e.burn,1);e.burnTime=Math.max(e.burnTime,1.2);e.dotOwner=u.uid;e.dotPower=Math.max(e.dotPower,value*.2);}
+  else if(secondary&&bonusElement==='electric'&&m.rng()<.12){const next=m.enemies.find(v=>v.active&&v!==e&&dist(v,e)<130);if(next){const old=m.damageKind;m.damageKind='chain';m.damage(next,value*gear.elementDamage*.55,u,true);m.damageKind=old;m.emit('shot',e.x,e.y,next.x,next.y,0xffef83,{visual:'transfer-electric',duration:.2});}}
+  else if(secondary&&bonusElement==='dark'){e.armorBreak=Math.max(e.armorBreak,.08);e.armorBreakTime=Math.max(e.armorBreakTime,1);}
  }
  if(u.heroId==='karin'){e.bleed=Math.min(12,e.bleed+1);e.bleedTime=4;e.dotPower=Math.max(e.dotPower,value*.75);e.dotOwner=u.uid;}
  m.damageKind=previous;
@@ -250,7 +253,7 @@ export function stepActions(m:BattleModel,dt:number){
 }
 export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
  if(m.paused||m.ended||(u.skillCharge??0)<100||m.time<(u.skillReadyAt??0))return false;
- const kind=combatRoles[u.heroId].kind;if(target)face(m,u,target);
+ const kind=combatRoles[u.heroId].kind,skillMul=skillEquipmentMultiplier(m.save,u.heroId);if(target)face(m,u,target);
  if(kind==='support'){
   announceSkill(m,u);
   const duration=skillDurationSeconds(u.heroId,u.star);
@@ -260,17 +263,17 @@ export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
   for(const ally of allies){
    ally.stunned=0;
    if(u.heroId==='rhea'){
-    const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.055+u.star*.009));ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;
-    ally.supportRegenRate=Math.max(ally.supportRegenRate??0,.006+u.star*.0008);ally.supportRegenUntil=m.time+duration;ally.guardHp=(ally.guardHp??0)+ally.maxHp*.025;
+    const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.055+u.star*.009)*skillMul);ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;
+    ally.supportRegenRate=Math.max(ally.supportRegenRate??0,(.006+u.star*.0008)*skillMul);ally.supportRegenUntil=m.time+duration;ally.guardHp=(ally.guardHp??0)+ally.maxHp*.025*skillMul;
    }else if(u.heroId==='echo'){
     ally.cooldown=Math.min(ally.cooldown,.12);charge(ally,5+u.star,m.time);ally.supportSpeedBonus=Math.max(ally.supportSpeedBonus??0,.1+u.star*.012);ally.supportSpeedUntil=m.time+duration;ally.supportChargeRate=Math.max(ally.supportChargeRate??0,1+u.star*.12);ally.supportChargeUntil=m.time+duration;
    }else if(u.heroId==='meriel'){
-    ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.06+u.star*.008);ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+Math.min(2.5,duration));ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.08+u.star*.012);ally.supportAttackUntil=m.time+duration;
+    ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.06+u.star*.008)*skillMul;ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+Math.min(2.5,duration));ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.08+u.star*.012);ally.supportAttackUntil=m.time+duration;
    }else if(u.heroId==='selene'){
     ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.07+u.star*.012);ally.supportAttackUntil=m.time+duration;ally.supportCritBonus=Math.max(ally.supportCritBonus??0,.06+u.star*.01);ally.supportCritUntil=m.time+duration;ally.supportRegenRate=Math.max(ally.supportRegenRate??0,.003+u.star*.0006);ally.supportRegenUntil=m.time+duration;
    }else{
-    const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.08+u.star*.012));ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;
-    ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.06+u.star*.007);ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+Math.min(3,duration));ally.supportRegenRate=Math.max(ally.supportRegenRate??0,.004+u.star*.0007);ally.supportRegenUntil=m.time+duration;
+    const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.08+u.star*.012)*skillMul);ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;
+    ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.06+u.star*.007)*skillMul;ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+Math.min(3,duration));ally.supportRegenRate=Math.max(ally.supportRegenRate??0,(.004+u.star*.0007)*skillMul);ally.supportRegenUntil=m.time+duration;
    }
    m.emit('blast',u.x,u.y,ally.x,ally.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-skill-${u.heroId}`,duration:.55,radius:52});
   }
@@ -282,24 +285,24 @@ export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
   announceSkill(m,u);
   const nearby=m.units.filter(v=>v.slot>=0&&v.hp>0&&dist(v,u)<=m.stats(u).range);
   if(u.heroId==='yuria'){
-   u.guardHp=(u.guardHp??0)+u.maxHp*(.28+u.star*.05);u.tauntUntil=m.time+5+u.star*.35;u.tankBlockUntil=m.time+5+u.star*.35;addZone(m,u,u.x,u.y,95,'barrier');
+   u.guardHp=(u.guardHp??0)+u.maxHp*(.28+u.star*.05)*skillMul;u.tauntUntil=m.time+5+u.star*.35;u.tankBlockUntil=m.time+5+u.star*.35;addZone(m,u,u.x,u.y,95,'barrier');
   }else if(u.heroId==='mia'){
-   u.guardHp=(u.guardHp??0)+u.maxHp*(.2+u.star*.04);u.tauntUntil=m.time+4;
-   for(const ally of nearby){const heal=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.12+u.star*.025));ally.hp+=heal;u.healingDone=(u.healingDone??0)+heal;ally.guardHp=(ally.guardHp??0)+ally.maxHp*.08;}
+   u.guardHp=(u.guardHp??0)+u.maxHp*(.2+u.star*.04)*skillMul;u.tauntUntil=m.time+4;
+   for(const ally of nearby){const heal=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.12+u.star*.025)*skillMul);ally.hp+=heal;u.healingDone=(u.healingDone??0)+heal;ally.guardHp=(ally.guardHp??0)+ally.maxHp*.08*skillMul;}
   }else if(u.heroId==='leon'){
-   u.tauntUntil=m.time+5+u.star*.4;u.guardHp=(u.guardHp??0)+u.maxHp*(.18+u.star*.04);
+   u.tauntUntil=m.time+5+u.star*.4;u.guardHp=(u.guardHp??0)+u.maxHp*(.18+u.star*.04)*skillMul;
    for(const ally of m.units)if(ally.slot>=0&&ally.hp>0)ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+4+u.star*.3);
   }else if(u.heroId==='neris'){
-   u.projectileGuardUntil=m.time+5+u.star*.5;u.projectileGuardHits=2+Math.ceil(u.star/2);u.guardHp=(u.guardHp??0)+u.maxHp*.18;addZone(m,u,u.x,u.y,125,'water');
+   u.projectileGuardUntil=m.time+5+u.star*.5;u.projectileGuardHits=2+Math.ceil(u.star/2);u.guardHp=(u.guardHp??0)+u.maxHp*.18*skillMul;addZone(m,u,u.x,u.y,125,'water');
   }else if(u.heroId==='livia'){
-   u.damageReductionUntil=m.time+5+u.star*.5;u.guardHp=(u.guardHp??0)+u.maxHp*(.2+u.star*.04);addZone(m,u,u.x,u.y,140,'ice');
+   u.damageReductionUntil=m.time+5+u.star*.5;u.guardHp=(u.guardHp??0)+u.maxHp*(.2+u.star*.04)*skillMul;addZone(m,u,u.x,u.y,140,'ice');
    for(const e of m.enemies)if(e.active&&dist(e,u)<=220+u.star*12){e.slow=Math.max(e.slow,.55);e.slowTime=Math.max(e.slowTime,1.4+u.star*.22);e.controlOwner=u.uid;}
   }else if(u.heroId==='hana'){
-   u.projectileGuardUntil=m.time+4.5+u.star*.4;u.projectileGuardHits=2+Math.ceil(u.star/2);u.guardHp=(u.guardHp??0)+u.maxHp*(.2+u.star*.035);u.tauntUntil=m.time+4;addZone(m,u,u.x,u.y,112,'water');
+   u.projectileGuardUntil=m.time+4.5+u.star*.4;u.projectileGuardHits=2+Math.ceil(u.star/2);u.guardHp=(u.guardHp??0)+u.maxHp*(.2+u.star*.035)*skillMul;u.tauntUntil=m.time+4;addZone(m,u,u.x,u.y,112,'water');
   }else if(u.heroId==='gaia'){
-   u.guardHp=(u.guardHp??0)+u.maxHp*(.22+u.star*.04);u.tauntUntil=m.time+5;u.tankBlockUntil=m.time+5;for(const e of m.enemies)if(e.active&&dist(e,u)<190){e.slow=Math.max(e.slow,.3);e.slowTime=Math.max(e.slowTime,1.2);e.electricMark=Math.max(e.electricMark,1);e.electricTime=Math.max(e.electricTime,3);}
+   u.guardHp=(u.guardHp??0)+u.maxHp*(.22+u.star*.04)*skillMul;u.tauntUntil=m.time+5;u.tankBlockUntil=m.time+5;for(const e of m.enemies)if(e.active&&dist(e,u)<190){e.slow=Math.max(e.slow,.3);e.slowTime=Math.max(e.slowTime,1.2);e.electricMark=Math.max(e.electricMark,1);e.electricTime=Math.max(e.electricTime,3);}
   }else if(u.heroId==='astra'){
-   u.tauntUntil=m.time+6+u.star*.4;u.tankBlockUntil=m.time+6;u.guardHp=(u.guardHp??0)+u.maxHp*(.3+u.star*.05);for(const ally of m.units)if(ally.slot>=0&&ally.hp>0)ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+5+u.star*.35);addZone(m,u,u.x,u.y,145,'abyss');
+   u.tauntUntil=m.time+6+u.star*.4;u.tankBlockUntil=m.time+6;u.guardHp=(u.guardHp??0)+u.maxHp*(.3+u.star*.05)*skillMul;for(const ally of m.units)if(ally.slot>=0&&ally.hp>0)ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+5+u.star*.35);addZone(m,u,u.x,u.y,145,'abyss');
   }
   const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;
   const cooldown=skillCooldownSeconds(u.heroId);u.skillCharge=0;u.skillHeldAt=undefined;u.skillCooldownDuration=cooldown;u.skillReadyAt=m.time+cooldown;

@@ -3,6 +3,10 @@ import {defaultSave,localTestResetSave,parseSave} from '../src/systems/SaveSyste
 import {armorCatalog,campaignEquipmentDropChance,campaignEquipmentRarity,equipItem,equipmentBonus,equipmentCraftCost,equipmentSalvageValue,equipmentShopPrice,heroWeaponGroup,makeEquipment,necklaceCatalog,rarityMax,weaponCatalog} from '../src/data/equipment';
 import {heroes} from '../src/data/heroes';
 import {BattleModel} from '../src/systems/BattleModel';
+import {attack,castAutoSkill,stepActions} from '../src/systems/ActionCombat';
+
+const emptyEquipmentSave=()=>{const s=defaultSave();s.equipmentInventory=[];for(const h of Object.values(s.heroes))h.equipment=[];return s;};
+const equip= (s:ReturnType<typeof defaultSave>,heroId:string,templateId:string,rarity:'B'|'A'|'S'|'SR'='SR')=>{const item=makeEquipment(templateId,rarity,s.equipmentInventory.length+1,`${heroId}-${templateId}`);s.equipmentInventory.push(item);expect(equipItem(s,heroId,item.id)).toBe(true);return item;};
 
 describe('permanent stars and equipment',()=>{
  it('clears every item and equipped reference for a local test reset and keeps it empty after parsing',()=>{const reset=localTestResetSave();expect(reset.equipmentInventory).toEqual([]);expect(reset.equipmentMaterials).toBe(0);expect(Object.values(reset.heroes).every(h=>h.equipment.length===0)).toBe(true);const loaded=parseSave(JSON.stringify(reset));expect(loaded.equipmentInventory).toEqual([]);expect(Object.values(loaded.heroes).every(h=>h.equipment.length===0)).toBe(true);});
@@ -17,4 +21,23 @@ describe('permanent stars and equipment',()=>{
  it('raises the guaranteed equipment floor through later maps',()=>{expect(campaignEquipmentRarity(0,false,.99,0)).toBe('B');expect(campaignEquipmentRarity(2,false,.99,0)).toBe('A');expect(campaignEquipmentRarity(5,false,.99,0)).toBe('S');expect(campaignEquipmentRarity(7,true,.99,0)).toBe('SR');});
  it('keeps equipment drops occasional and rewards boss operations more often',()=>{expect(campaignEquipmentDropChance(false)).toBe(.22);expect(campaignEquipmentDropChance(true)).toBe(.45);expect(campaignEquipmentDropChance(false)).toBeLessThan(campaignEquipmentDropChance(true));});
  it('awards permanent equipment-shop loot value for monster kills',()=>{const m=new BattleModel(defaultSave()),u=m.addUnit('sera');m.spawn('armored');const e=m.enemies.find(v=>v.active)!;m.damage(e,e.hp+1,u);expect(m.equipmentGoldEarned).toBeGreaterThan(0);m.finish(true);expect(m.result?.equipmentGold).toBe(m.equipmentGoldEarned);});
+ it('applies every armor identity in combat instead of description only',()=>{
+  const field=makeEquipment('armor-field','SR'),barrier=makeEquipment('armor-barrier','SR'),ranged=makeEquipment('armor-ranged','SR'),guardian=makeEquipment('armor-guardian','SR');
+  expect(field.hp).toBeGreaterThan(barrier.hp);expect(guardian.hp).toBeGreaterThan(ranged.hp);
+  const run=(template:string,source:'melee'|'ranged'='melee',blocking=0,guard=0)=>{const s=emptyEquipmentSave();equip(s,'yuria',template);const m=new BattleModel(s),u=m.addUnit('yuria');u.blockingCount=blocking;u.guardHp=guard;const hp=u.hp;m.hurtUnit(u,100,source);return {lost:hp-u.hp,guard:u.guardHp??0};};
+  expect(run('armor-ranged','ranged').lost).toBeCloseTo(82);
+  expect(run('armor-guardian','melee',1).lost).toBeCloseTo(85);
+  expect(run('armor-barrier','melee',0,80).lost).toBeCloseTo(0);
+  expect(run('armor-field','melee',0,80).lost).toBeCloseTo(20);
+ });
+ it('makes special weapons strengthen real skill damage, healing and shields',()=>{
+  const damage=(special:boolean)=>{const s=emptyEquipmentSave();if(special)equip(s,'reina','rifle-3');const m=new BattleModel(s,()=>.9),u=m.addUnit('reina');m.start();m.wave.queue=[];m.spawn('brute');const e=m.enemies.find(v=>v.active)!;e.x=u.x+10;e.y=u.y;e.hp=e.maxHp=100000;u.skillCharge=100;castAutoSkill(m,u,e);for(let i=0;i<90;i++)stepActions(m,1/60);return 100000-e.hp;};
+  const support=(special:boolean)=>{const s=emptyEquipmentSave();if(special)equip(s,'rhea','catalyst-3');const m=new BattleModel(s),u=m.addUnit('rhea'),ally=m.addUnit('reina');m.start();m.wave.queue=[];ally.hp=ally.maxHp*.5;u.skillCharge=100;castAutoSkill(m,u);return {heal:ally.hp-ally.maxHp*.5,guard:ally.guardHp??0};};
+  const shield=(special:boolean)=>{const s=emptyEquipmentSave();if(special)equip(s,'yuria','guardian-3');const m=new BattleModel(s),u=m.addUnit('yuria');m.start();m.wave.queue=[];u.skillCharge=100;castAutoSkill(m,u);return u.guardHp??0;};
+  expect(damage(true)).toBeGreaterThan(damage(false)*1.1);expect(support(true).heal).toBeGreaterThan(support(false).heal*1.1);expect(support(true).guard).toBeGreaterThan(support(false).guard*1.1);expect(shield(true)).toBeGreaterThan(shield(false)*1.1);
+ });
+ it('keeps necklaces off global and skill attack while adding basic elemental damage',()=>{
+  const run=(necklace:boolean,skill:boolean)=>{const s=emptyEquipmentSave();if(necklace)equip(s,'reina','necklace-water');const m=new BattleModel(s,()=>.9),u=m.addUnit('reina');m.start();m.wave.queue=[];m.spawn('brute');const e=m.enemies.find(v=>v.active)!;e.x=u.x+10;e.y=u.y;e.hp=e.maxHp=100000;const atk=m.stats(u).atk;if(skill){u.skillCharge=100;castAutoSkill(m,u,e);}else attack(m,u,e);for(let i=0;i<90;i++)stepActions(m,1/60);return {atk,damage:100000-e.hp,water:e.waterMark};};
+  const plain=run(false,false),neck=run(true,false),plainSkill=run(false,true),neckSkill=run(true,true);expect(neck.atk).toBe(plain.atk);expect(neck.damage).toBeGreaterThan(plain.damage);expect(neck.water).toBeGreaterThan(0);expect(neckSkill.damage).toBeCloseTo(plainSkill.damage);
+ });
 });

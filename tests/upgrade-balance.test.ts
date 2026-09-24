@@ -10,6 +10,8 @@ import {elementUpgradeCosts,elementUpgradeMax} from '../src/data/elementUpgrades
 import {gradeCombatBudget} from '../src/data/strategy';
 import {attack,stepActions} from '../src/systems/ActionCombat';
 import {stepCombat} from '../src/systems/CombatSystem';
+import {formationRole} from '../src/data/combatRoles';
+import {equipItem,heroWeaponGroup,makeEquipment} from '../src/data/equipment';
 
 const make=()=>new BattleModel(defaultSave(),seeded(709));
 
@@ -37,6 +39,30 @@ it('uses one five-step battle upgrade per element without increasing range',()=>
 
 it('assigns each grade a distinct combat budget and gives A a combination premium',()=>{
  expect(gradeCombatBudget.B.label).toContain('성장');expect(gradeCombatBudget.A.reaction).toBe(.10);expect(gradeCombatBudget.S.base).toBeGreaterThan(gradeCombatBudget.A.base);expect(gradeCombatBudget.SR.base).toBeGreaterThan(gradeCombatBudget.S.base);
+});
+
+it('keeps same-role 4★ and 5★ grade averages ordered with identical equipment quality',()=>{
+ const gradeOrder=['B','A','S','SR'] as const;
+ const report:any[]=[];
+ for(const star of [4,5]){
+  const rows=heroes.map(hero=>{const save=defaultSave();save.equipmentInventory=[];for(const h of Object.values(save.heroes))h.equipment=[];const weapon=makeEquipment(`${heroWeaponGroup[hero.id]}-0`,'SR',1,`${hero.id}-weapon`),armor=makeEquipment('armor-field','SR',2,`${hero.id}-armor`);save.equipmentInventory.push(weapon,armor);equipItem(save,hero.id,weapon.id);equipItem(save,hero.id,armor.id);const m=new BattleModel(save),u=m.addUnit(hero.id,star),s=m.stats(u);return {id:hero.id,role:formationRole(hero.id),grade:hero.grade,value:s.atk*s.speed};});
+  for(const role of ['tank','dealer','sniper','support'] as const){
+   const groups=gradeOrder.map(grade=>rows.filter(v=>v.role===role&&v.grade===grade)).filter(v=>v.length);
+   for(let i=1;i<groups.length;i++){
+    const lower=groups[i-1],higher=groups[i],summary=(values:typeof rows)=>({min:Math.min(...values.map(v=>v.value)),avg:values.reduce((n,v)=>n+v.value,0)/values.length,max:Math.max(...values.map(v=>v.value))});
+    const a=summary(lower),b=summary(higher);
+    report.push({star,role,lower:lower[0].grade,higher:higher[0].grade,lowerBand:a,higherBand:b});
+    // Individual kits may overlap (a B burst dealer can out-DPS an S support),
+    // but no lower-grade role band may exceed the next grade by over 50%.
+    expect(a.avg,`${role} ${star}★ ${lower[0].grade}->${higher[0].grade} severe average inversion`).toBeLessThan(b.avg*1.5);
+    expect(a.max,`${role} ${star}★ ${lower[0].grade}->${higher[0].grade} severe maximum inversion`).toBeLessThan(b.max*1.5);
+   }
+  }
+ }
+  const global=Array.from({length:2},(_,index)=>{const star=index+4;return gradeOrder.map(grade=>{const values=rowsFor(star,grade);return {star,grade,min:Math.min(...values),avg:values.reduce((n,v)=>n+v,0)/values.length,max:Math.max(...values)};});}).flat();
+  function rowsFor(star:number,grade:typeof gradeOrder[number]){return heroes.filter(h=>h.grade===grade).map(h=>{const m=make(),u=m.addUnit(h.id,star),s=m.stats(u);return s.atk*s.speed;});}
+  for(const star of [4,5]){const bands=global.filter(v=>v.star===star);for(let i=1;i<bands.length;i++){expect(bands[i].avg,`${star}★ ${bands[i].grade} average`).toBeGreaterThan(bands[i-1].avg);expect(bands[i-1].max,`${star}★ ${bands[i].grade} maximum band`).toBeLessThan(bands[i].max*1.5);expect(bands[i-1].min,`${star}★ ${bands[i].grade} minimum band`).toBeLessThan(bands[i].min*1.5);}}
+  writeFileSync('artifacts/role-grade-balance.json',JSON.stringify({generated:'2026-09-24',equipment:'SR standard weapon + SR field armor',comparisons:report,global},null,2));
 });
 
 it('Yuria uses bounded non-stacking slow and exclusive block assignments',()=>{

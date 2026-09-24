@@ -35,6 +35,7 @@ function tankCoversRoute(m:BattleModel,u:Unit,e:Enemy){
 }
 export function stepCombat(m: BattleModel, dt: number) {
   const blockedBy=new Map<number,Unit>();
+  for(const u of m.units)u.blockingCount=0;
   for(const u of m.units){
     if(u.slot<0||u.hp<=0||formationRole(u.heroId)!=='tank')continue;
     const guardian=m.stats(u);
@@ -46,7 +47,7 @@ export function stepCombat(m: BattleModel, dt: number) {
     const tauntRange=frontline?(m.campaign?.alternate?110:20):guardian.range;
     const candidates=m.enemies.filter(e=>e.active&&!enemies[e.kind].boss&&!blockedBy.has(e.index)&&tankCoversRoute(m,u,e)&&distance(u,e)<=tauntRange).sort((a,b)=>b.progress-a.progress);
     let remaining=cap;
-    for(const e of candidates){const cost=m.campaign?(e.kind==='sprinter'?3:e.kind==='runner'?2:1):1;if(remaining>=cost){blockedBy.set(e.index,u);remaining-=cost;}}
+    for(const e of candidates){const cost=m.campaign?(e.kind==='sprinter'?3:e.kind==='runner'?2:1):1;if(remaining>=cost){blockedBy.set(e.index,u);u.blockingCount=(u.blockingCount??0)+1;remaining-=cost;}}
   }
   for (const e of m.enemies) {
     if (!e.active) continue;
@@ -93,7 +94,7 @@ export function stepCombat(m: BattleModel, dt: number) {
     const blocked=!!blocker||!!m.campaign&&engaged;
     const nearbyTarget=blocker??(engaged?campaignTarget:undefined)??m.units.filter(u=>u.slot>=0&&u.hp>0&&distance(u,e)<=125).sort((a,b)=>Number((b.tauntUntil??0)>m.time)-Number((a.tauntUntil??0)>m.time)||Number(formationRole(b.heroId)==='tank')-Number(formationRole(a.heroId)==='tank')||distance(a,e)-distance(b,e))[0];
     const activeBlocker=blocker??(engaged?lineTank:undefined);
-    if(activeBlocker){charge(activeBlocker,dt*5,m.time);const r=m.records.find(r=>r.uid===activeBlocker.uid);if(r)r.blockTime+=dt;}
+    if(activeBlocker){if(!blocker)activeBlocker.blockingCount=(activeBlocker.blockingCount??0)+1;charge(activeBlocker,dt*5,m.time);const r=m.records.find(r=>r.uid===activeBlocker.uid);if(r)r.blockTime+=dt;}
     e.attackTimer += dt;
     e.namedSkillTimer += dt;
     if(def.charge&&e.namedSkillTimer>=def.charge.interval){
@@ -127,7 +128,7 @@ export function stepCombat(m: BattleModel, dt: number) {
         if(target){
           const interceptor=m.units.find(u=>['neris','hana'].includes(u.heroId)&&u.slot>=0&&u.hp>0&&(u.projectileGuardUntil??0)>m.time&&(u.projectileGuardHits??0)>0&&distance(u,target)<=m.stats(u).range);
           if(interceptor){interceptor.projectileGuardHits=Math.max(0,(interceptor.projectileGuardHits??0)-1);m.emit('blast',interceptor.x,interceptor.y,interceptor.x,interceptor.y,0x73e9ff,{visual:'tank-guard-hit-neris',duration:.38,radius:50});m.onSound?.('block');}
-          else{m.hurtUnit(target,e.rangedDamage??0);m.emit('blast',target.x,target.y,target.x,target.y,def.color,{visual:'enemy-ranged-impact',duration:.38,radius:38});}
+          else{m.hurtUnit(target,e.rangedDamage??0,'ranged');m.emit('blast',target.x,target.y,target.x,target.y,def.color,{visual:'enemy-ranged-impact',duration:.38,radius:38});}
         }
         e.rangedHitAt=undefined;e.rangedTargetUid=undefined;e.rangedDamage=undefined;
       }

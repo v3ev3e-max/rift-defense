@@ -19,11 +19,11 @@ import {blankAction,blankZone,stepActions} from './ActionCombat';
 import {castManualSkill} from './AutoSkills';
 import {newRecord,recentDps,accumulateRecord,type CombatRecord,type DamageKind} from './CombatLedger';
 import {CAMPAIGN_SQUAD_CAP,combatRoles,formationComplete,formationRole} from '../data/combatRoles';
-import {purchasePrice,growthOptions,activeLinks,gradeBasePower,gradeStarGrowth} from '../data/strategy';
+import {purchasePrice,growthOptions,activeLinks,gradeBasePower,gradeStarMultiplier} from '../data/strategy';
 import { elementAttackBonus, synergies } from "./SynergySystem";
 import type { RNG } from "../utils/random";
 import { recommendedEnemyCap } from "../utils/performance";
-import {equipmentBonus} from '../data/equipment';
+import {equipmentBonus,hasEquipmentTemplate} from '../data/equipment';
 import {campaignStarAttack,campaignStarHealth,campaignHeroOutput} from '../data/campaignBalance';
 
 function operatorCombatRange(id:string,bonus:number,inCampaign:boolean){
@@ -122,12 +122,15 @@ export class BattleModel {
     if(this.selected===uid)this.selected=0;
     this.say(`${heroById[u.heroId].name} 배치 해제 · 대기 상태`);this.refresh();return true;
   }
-  hurtUnit(u:Unit,amount:number){
+  hurtUnit(u:Unit,amount:number,source:'melee'|'ranged'|'skill'='melee'){
     if(u.hp<=0||u.slot<0)return;
     if(this.campaign&&this.doctrine==='guard')amount*=1-this.doctrineLevel*.05;
     if((u.damageReductionUntil??0)>this.time)amount*=.72;
-    const absorbed=Math.min(u.guardHp??0,amount);
-    if(absorbed>0){u.guardHp=Math.max(0,(u.guardHp??0)-absorbed);amount-=absorbed;this.emit('blast',u.x,u.y,u.x,u.y,0x9fffea,{visual:`tank-guard-hit-${u.heroId}`,duration:.32,radius:34});}
+    if(source==='ranged'&&hasEquipmentTemplate(this.save,u.heroId,'armor-ranged'))amount*=.82;
+    if((u.blockingCount??0)>0&&hasEquipmentTemplate(this.save,u.heroId,'armor-guardian'))amount*=.85;
+    const barrierEfficiency=hasEquipmentTemplate(this.save,u.heroId,'armor-barrier')?1.25:1;
+    const absorbed=Math.min((u.guardHp??0)*barrierEfficiency,amount);
+    if(absorbed>0){u.guardHp=Math.max(0,(u.guardHp??0)-absorbed/barrierEfficiency);amount-=absorbed;this.emit('blast',u.x,u.y,u.x,u.y,0x9fffea,{visual:`tank-guard-hit-${u.heroId}`,duration:.32,radius:34});}
     if(amount<=0)return;
     const damage=Math.min(u.hp,amount);u.hp-=damage;u.damageTaken=(u.damageTaken??0)+damage;
     this.emit('blast',u.x,u.y,u.x,u.y,0xff8f8f,{visual:'enemy-disrupt',duration:.3,radius:22});
@@ -495,8 +498,8 @@ export class BattleModel {
     return {
       atk:
         (h.atk+gear.attack) * gradeBasePower[h.grade] * (1+(this.roleUpgrades[combatRoles[u.heroId].kind]??0)*.12+(this.campaign?(this.save.campaign?.research[combatRoles[u.heroId].kind]??0)*.03+(this.save.campaign?.research[h.element]??0)*.03+(this.save.campaign?.fragments[u.heroId]??0)*.005:0)) *
-        (1 + .08*(permanentStars-1)) * (1+gear.elementDamage) * (this.campaign?(campaignHeroOutput[u.heroId]??1):1) *
-        (this.campaign?campaignStarAttack(u.star)/(1+.08*(permanentStars-1)):Math.pow(gradeStarGrowth[h.grade], u.star - 1)) *
+        (1 + .08*(permanentStars-1)) * (this.campaign?(campaignHeroOutput[u.heroId]??1):1) *
+        (this.campaign?campaignStarAttack(u.star)/(1+.08*(permanentStars-1)):gradeStarMultiplier(h.grade,u.star)) *
         (1 + e.attack) *
         (1 +
           (this.bonuses.ascend ?? 0) +
