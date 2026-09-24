@@ -1,5 +1,7 @@
 // @ts-expect-error Vitest runs in Node while the game compiler targets browsers.
-import {existsSync,statSync} from 'node:fs';
+import {existsSync,readFileSync,statSync} from 'node:fs';
+// @ts-expect-error Vitest runs in Node while the game compiler targets browsers.
+import {createHash} from 'node:crypto';
 import {describe,expect,it} from 'vitest';
 import {campaignEnemyIds,campaignRegion,campaignStages} from '../src/data/campaign';
 import {enemies} from '../src/data/enemies';
@@ -42,5 +44,16 @@ describe('campaign enemy assets',()=>{
   it('has regional movement effects for every campaign area',()=>{
     for(let area=1;area<=12;area++)for(const [kind,count] of [['step',4],['projectile',3],['impact',3]] as const)
       for(let frame=1;frame<=count;frame++)expect(present(`/assets/generated/campaign-enemies/map-${String(area).padStart(2,'0')}/fx/${kind}/frame_${String(frame).padStart(2,'0')}.webp`),`map ${area} ${kind} ${frame}`).toBe(true);
+  });
+
+  it('ships six distinct generated attack frames for the first authored melee enemy',()=>{
+    const hashes=[];
+    for(let frame=1;frame<=6;frame++){
+      const path=`public/assets/generated/campaign-enemies/map-04/brute/attack/frame_${String(frame).padStart(2,'0')}.png`;
+      expect(present(path.slice('public'.length)),`brute attack ${frame}`).toBe(true);
+      expect(statSync(path).size).toBeGreaterThan(100_000);
+      hashes.push(createHash('sha256').update(readFileSync(path)).digest('hex'));
+    }
+    expect(new Set(hashes).size).toBe(6);
   });
 });

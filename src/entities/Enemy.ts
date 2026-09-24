@@ -34,6 +34,7 @@ export interface Enemy {
   rangedTargetUid?: number;
   rangedDamage?: number;
   rangedFiredAt?: number;
+  meleeAttackedAt?: number;
   waterMark: number;
   waterTime: number;
   fireMark: number;

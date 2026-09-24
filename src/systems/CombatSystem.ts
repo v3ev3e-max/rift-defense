@@ -110,7 +110,7 @@ export function stepCombat(m: BattleModel, dt: number) {
     e.rangedTimer = def.ranged&&m.campaign&&(!rangedMode||!engaged)?0:e.rangedTimer+dt;
     if(m.campaign){
       const campaignAttack=m.campaign.enemyAttack*(def.boss?.4:1);
-      if(nearbyTarget&&!def.boss&&(!def.ranged||!!lineTank)&&e.attackTimer>=1.5){m.hurtUnit(nearbyTarget,(8+(m.wave.number*.8))*campaignAttack);e.attackTimer=0;}
+      if(nearbyTarget&&!def.boss&&(!def.ranged||!!lineTank)&&e.attackTimer>=1.5){m.hurtUnit(nearbyTarget,(8+(m.wave.number*.8))*campaignAttack);e.meleeAttackedAt=m.time;e.attackTimer=0;}
       if(rangedMode&&!e.rangedHitAt&&e.rangedTimer>=def.ranged!.cooldown){
         const target=m.campaign?(engaged?campaignTarget:undefined):m.units.filter(u=>u.slot>=0&&u.hp>0&&distance(u,e)<=def.ranged!.range).sort((a,b)=>{
            const frontline=(u:Unit)=>formationRole(u.heroId)==='tank'&&isFrontlineSlot(m.campaign,u.slot)?1:0;

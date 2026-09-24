@@ -126,6 +126,7 @@ export class BattleScene extends Phaser.Scene {
       this.enemyMoveFrames[def.id]=moveCount;
       for(let frame=1;frame<=moveCount;frame++)this.load.image(`enemy-${def.id}-move-${frame}`,assetUrl(regional&&visualId!=="elite"?`${folder}/${visualId}/move/move_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemy-motion/${visualId}/move_${String(frame).padStart(2,'0')}.webp`));
       if(regional)for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-death-${frame}`,assetUrl(visualId!=="elite"?`${folder}/${visualId}/death/frame_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemies/${visualId}.webp`));
+      if(visualArea===4&&visualId==='brute')for(let frame=1;frame<=6;frame++)this.load.image(`enemy-${def.id}-attack-${frame}`,assetUrl(`${folder}/${visualId}/attack/frame_${String(frame).padStart(2,'0')}.png`));
       if(def.ranged&&regional)for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-fire-${frame}`,assetUrl(`${folder}/${def.id}/fire/frame_${String(frame).padStart(2,'0')}.webp`));
     }
     for(const element of ['water','fire','electric','dark'])for(let frame=1;frame<=4;frame++)
@@ -170,7 +171,7 @@ export class BattleScene extends Phaser.Scene {
       else this.load.image(h.asset.key, url);
     }
     for (const id of activeIds) {
-      this.load.image(`hero-${id}-idle-front`,assetUrl(`/assets/heroes/${id}/frame_01.png`));
+      for(let frame=1;frame<=3;frame++)this.load.image(`hero-${id}-idle-${frame}`,assetUrl(`/assets/heroes/${id}/frame_${String(frame).padStart(2,'0')}.png`));
       for(let frame=1;frame<=3;frame++)this.load.image(`hero-${id}-defeat-${frame}`,assetUrl(`/assets/generated/hero-defeat/${id}/frame_${String(frame).padStart(2,'0')}.webp`));
       for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-up-${frame}`,assetUrl(`/assets/combat/${id}/up6_${String(frame).padStart(2,"0")}.png`));
       for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-skill-${frame}`,assetUrl(`/assets/combat/${id}/skill_${String(frame).padStart(2,"0")}.png`));
@@ -703,7 +704,8 @@ export class BattleScene extends Phaser.Scene {
       const idle=m.time-(u.lastAttackAt??-999)>=1;
       const skillElapsed=m.time-(u.skillCastAt??-999),skillCasting=skillElapsed>=0&&skillElapsed<.9&&u.hp>0;
       const skillFrame=Math.min(6,Math.floor(skillElapsed/.15)+1);
-      const textureKey = skillCasting ? `hero-${u.heroId}-skill-${skillFrame}` : idle ? `hero-${u.heroId}-idle-front` : north ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
+      const idleSequence=[1,2,3,2],idleFrame=idleSequence[Math.floor((this.visualTime+u.uid*.071)*3)%idleSequence.length];
+      const textureKey = skillCasting ? `hero-${u.heroId}-skill-${skillFrame}` : idle ? `hero-${u.heroId}-idle-${idleFrame}` : north ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
         ? `hero-${u.heroId}-anim-${heroAnimFrame}`
         : heroById[u.heroId].asset.key;
       sp.setVisible(true);
@@ -764,7 +766,9 @@ export class BattleScene extends Phaser.Scene {
       const bodyCount=this.enemyMoveFrames[e.kind]??enemyMoveFrameCount(boss,false),bodyCadence=Math.max(3,Math.min(9,e.speed/9))*(boss?.65:1),bodyFrame=1+Math.floor((this.visualTime*bodyCadence+e.index*.41)%bodyCount);
       const firing=!!enemies[e.kind].ranged&&e.rangedFiredAt!==undefined&&m.time-e.rangedFiredAt<.32;
       const fireFrame=firing?Math.min(3,Math.floor((m.time-e.rangedFiredAt!)/.32*3)+1):0;
-      const requestedTexture=firing?`enemy-${e.kind}-fire-${fireFrame}`:`enemy-${e.kind}-move-${bodyFrame}`;
+      const meleeElapsed=m.time-(e.meleeAttackedAt??-999),meleeAttacking=meleeElapsed>=0&&meleeElapsed<.66;
+      const meleeFrame=meleeAttacking?Math.min(6,Math.floor(meleeElapsed/.11)+1):0;
+      const requestedTexture=firing?`enemy-${e.kind}-fire-${fireFrame}`:meleeAttacking&&this.textureReady(`enemy-${e.kind}-attack-${meleeFrame}`)?`enemy-${e.kind}-attack-${meleeFrame}`:`enemy-${e.kind}-move-${bodyFrame}`;
       const staticTexture=`enemy-${e.kind}`;
       const enemyTexture=this.textureReady(requestedTexture)?requestedTexture:this.textureReady(staticTexture)?staticTexture:this.initialEnemyKey;
       if(sp.texture.key!==enemyTexture)sp.setTexture(enemyTexture);
