@@ -14,9 +14,19 @@ import {assetUrl} from '../utils/assets';
 export function home(s: SaveData) {
   return `<section class="home-screen">
  <div class="city-scene" aria-hidden="true"><div class="city-grid"></div><div class="rift-ring"></div><div class="city-buildings">${Array.from({ length: 18 }, (_, i) => `<i style="--h:${22 + ((i * 29) % 61)}%;--w:${25 + ((i * 17) % 35)}px"></i>`).join("")}</div><div class="ground-grid"></div></div>
- <div class="hero-art"><span class="orbit one"></span><span class="orbit two"></span>${portrait("sera", "featured")}<div class="character-caption"><span>OPERATOR / 05</span><b>세라 <small>SERA</small></b><p>“지휘관, 사선은 제가 확보할게요.”</p></div></div>
- <div class="home-copy"><span class="eyebrow"><i class="live-dot"></i> RIFT RESPONSE DIVISION</span><h1>BEYOND<br>THE <em>RIFT.</em></h1><p class="home-subtitle">균열 너머의 위협.<br>당신만의 작전으로 돌파하세요.</p><div class="chapter-label"><span>CHAPTER 01</span><b>청록 연구시설의 균열</b></div><div class="home-actions">${button("작전 개시", "stage", "primary large", "arrow")}${button("실전 배치", "campaign-deploy", "ghost", "deck")}</div><p class="build-tag">PLAYABLE ALPHA <span>v0.1 / LOCAL SAVE</span></p></div>
- <aside class="command-panel"><div class="panel-head"><span>COMMAND CENTER</span><span class="live-dot"></span></div><div class="command-status"><small>현재 위협 단계</small><strong>LEVEL <em>01</em></strong><div class="threat-bar"><i></i><i></i><i></i><i></i><i></i></div><p>연구시설에서 균열 반응이 감지되었습니다.</p></div><button class="mission-tile" data-action="stage"><div class="mission-map">${icon("shield")}<span>AREA 01–12</span></div><small>STORY OPERATION</small><h3>균열 원정 ${icon("chevron")}</h3><p>120 STAGES <span>·</span> 5 OPERATORS</p></button><div class="operation-progress"><span>최고 기록</span><b>${String(s.bestWave).padStart(2, "0")} <small>WAVE</small></b></div><div class="mini-progress"><i style="width:${Math.min(100, s.bestWave)}%"></i></div><div class="dispatch-note">${icon("info")}<span>육성은 강함을, 전략은 승률을.<br>그리고 운은 한 판을 뒤집습니다.</span></div></aside>
+ <header class="hq-heading"><span class="eyebrow"><i class="live-dot"></i> RIFT RESPONSE DIVISION</span><h1>작전 본부 <small>OPERATION HQ</small></h1><p>원하는 메뉴를 선택해 작전을 준비하세요.</p></header>
+ <nav class="hq-menu hq-menu-left" aria-label="작전 본부 왼쪽 메뉴">
+  <button data-action="hero">${icon("hero")}<span><b>요원</b><small>OPERATOR</small></span></button>
+  <button data-action="campaign-deploy">${icon("deck")}<span><b>실전 배치</b><small>FORMATION</small></span></button>
+  <button data-action="inventory">${icon("shop")}<span><b>아이템</b><small>ARMORY</small></span></button>
+ </nav>
+ <div class="hq-operator"><span class="hq-orbit one"></span><span class="hq-orbit two"></span><img class="hq-fullbody" src="${assetUrl('/assets/illustrations/sera-hq-fullbody.png')}" alt="메인 요원 세라 전신" draggable="false"><div class="hq-operator-name"><small>MAIN OPERATOR / 05</small><b>세라 <em>SERA</em></b><p>“지휘관, 사선은 제가 확보할게요.”</p></div></div>
+ <nav class="hq-menu hq-menu-right" aria-label="작전 본부 오른쪽 메뉴">
+  <button class="primary" data-action="stage">${icon("battle")}<span><b>균열 원정</b><small>120 STAGES</small></span></button>
+  <button data-action="recruit">${icon("gem")}<span><b>모집</b><small>RECRUIT</small></span></button>
+  <button data-action="settings">${icon("settings")}<span><b>설정</b><small>CONFIG</small></span></button>
+ </nav>
+ <footer class="hq-status"><span><i class="live-dot"></i> COMMAND CENTER ONLINE</span><b>최고 기록 ${String(s.bestWave).padStart(2, "0")} WAVE</b><small>AREA 01–12 · 120 STAGES</small></footer>
  </section>`;
 }
 export function heroScreen(s: SaveData, id: string) {

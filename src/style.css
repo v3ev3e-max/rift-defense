@@ -4503,6 +4503,67 @@ body:has(.compact-battle) .ad-mobile,body:has(.compact-battle) .ad-rail{display:
 }
 @media(max-width:390px){.home-copy h1{font-size:40px}}
 
+/* Operation HQ: full-body operator with balanced side navigation. */
+.app-shell:has(.home-screen) .bottom-nav{display:none}
+.app-shell:has(.home-screen) #screen{height:calc(100dvh - var(--topbar-h,72px));padding-bottom:0}
+.home-screen{
+  display:grid!important;
+  grid-template-columns:minmax(150px,220px) minmax(300px,1fr) minmax(150px,220px)!important;
+  grid-template-rows:auto 1fr auto!important;
+  align-items:stretch!important;
+  gap:10px 18px!important;
+  padding:18px clamp(16px,3.5vw,44px) 14px!important;
+}
+.hq-heading{grid-column:1/-1;z-index:4;text-align:center;pointer-events:none}
+.hq-heading .eyebrow{justify-content:center}
+.hq-heading h1{margin:5px 0 2px;font-size:clamp(25px,3.4vw,42px);letter-spacing:-1.5px;color:#f1fbff;text-shadow:0 3px 20px #07121d}
+.hq-heading h1 small{display:block;margin-top:3px;font:600 9px/1.2 monospace;letter-spacing:4px;color:var(--mint)}
+.hq-heading p{margin:4px 0;color:#a9c0cd;font-size:12px}
+.hq-menu{z-index:5;display:flex;flex-direction:column;justify-content:center;gap:12px;min-width:0}
+.hq-menu button{position:relative;display:flex;align-items:center;gap:12px;min-height:76px;padding:12px 14px;border:1px solid #4a7387;background:linear-gradient(135deg,#102b3bd9,#0b1928e8);color:#dff7ff;text-align:left;cursor:pointer;overflow:hidden;box-shadow:inset 0 0 18px #72e5ff0a,0 8px 24px #020a1299;transition:.18s ease}
+.hq-menu button:before{content:"";position:absolute;inset:5px;border:1px solid #7ac9d31c;pointer-events:none}
+.hq-menu button:hover,.hq-menu button:focus-visible{transform:translateY(-2px);border-color:#73e6d0;background:linear-gradient(135deg,#16465a,#0b2332);box-shadow:0 0 24px #63e7d42b}
+.hq-menu button.primary{border-color:#6bf0cf;background:linear-gradient(135deg,#176557e8,#0a3843f2);box-shadow:inset 0 0 24px #73ffe625,0 0 24px #38d8bb1f}
+.hq-menu button>svg{flex:0 0 34px;width:34px;height:34px;padding:6px;border:1px solid #6d9bad66;background:#071522aa;color:#76f0d7}
+.hq-menu button span{display:flex;min-width:0;flex-direction:column;gap:3px}
+.hq-menu button b{font-size:15px;white-space:nowrap}
+.hq-menu button small{font:600 9px/1 monospace;letter-spacing:1.2px;color:#7fa1b3;white-space:nowrap}
+.hq-menu-left{grid-column:1;grid-row:2}.hq-menu-right{grid-column:3;grid-row:2}
+.hq-operator{grid-column:2;grid-row:2;position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:center;min-height:0;overflow:visible;isolation:isolate}
+.hq-operator:after{content:"";position:absolute;z-index:-2;left:50%;bottom:1%;width:min(92%,480px);height:18%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse,#65e9d65c,transparent 68%);filter:blur(4px)}
+.hq-operator .hq-fullbody{display:block;width:auto;max-width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 14px 24px #02070dcc) drop-shadow(0 0 18px #70daca24)}
+.hq-orbit{position:absolute;z-index:-1;left:50%;top:48%;width:min(90%,430px);aspect-ratio:1;border:1px solid #77dddc45;border-radius:50%;transform:translate(-50%,-50%) rotate(-18deg);box-shadow:inset 0 0 28px #6de4d40b}
+.hq-orbit.two{width:min(68%,330px);border-style:dashed;animation:spin-hq 24s linear infinite reverse}
+.hq-orbit.one{animation:spin-hq 32s linear infinite}
+@keyframes spin-hq{to{transform:translate(-50%,-50%) rotate(342deg)}}
+.hq-operator-name{position:absolute;right:0;bottom:5%;min-width:160px;padding:10px 12px;border-left:3px solid var(--mint);background:linear-gradient(90deg,#071523e8,#0b1724a8);text-align:left;box-shadow:0 8px 22px #01060c99}
+.hq-operator-name small{font:600 8px monospace;letter-spacing:1.5px;color:var(--mint)}
+.hq-operator-name b{display:block;margin-top:3px;font-size:20px}.hq-operator-name em{margin-left:5px;font:500 10px monospace;color:#86a7ba}
+.hq-operator-name p{margin:4px 0 0;font-size:10px;color:#b9cbd4}
+.hq-status{grid-column:1/-1;z-index:4;display:flex;align-items:center;justify-content:center;gap:18px;min-height:32px;padding:6px 12px;border-top:1px solid #456575;background:#07152299;color:#8ca9b8;font:600 9px monospace;letter-spacing:1px}
+.hq-status span{display:flex;align-items:center;gap:7px;color:#87ead7}.hq-status b{color:#d7e8ee}.hq-status small{font:inherit}
+
+@media(max-width:700px){
+ .app-shell:has(.home-screen) #screen{height:calc(100dvh - 62px)}
+ .home-screen{grid-template-columns:72px minmax(0,1fr) 72px!important;grid-template-rows:auto 1fr auto!important;gap:4px!important;padding:8px 7px 6px!important}
+ .home-screen .city-scene{grid-column:1/-1!important;grid-row:1/-1!important}
+ .hq-heading h1{font-size:23px;letter-spacing:-.5px}.hq-heading h1 small{font-size:7px;letter-spacing:2px}.hq-heading p{display:none}
+ .hq-menu{gap:7px}
+ .hq-menu button{flex-direction:column;justify-content:center;gap:5px;min-height:68px;padding:7px 3px;text-align:center}
+ .hq-menu button>svg{width:29px;height:29px;flex-basis:29px;padding:5px}
+ .hq-menu button b{font-size:10px}.hq-menu button small{display:none}
+ .hq-operator{min-width:0;overflow:hidden}
+ .hq-operator .hq-fullbody{position:absolute;left:50%;bottom:0;width:auto;max-width:none;height:100%;transform:translateX(-50%);object-fit:contain;object-position:center bottom}
+ .hq-orbit{width:150%;max-width:320px}.hq-orbit.two{width:112%}
+ .hq-operator-name{display:none}
+ .hq-status{justify-content:space-between;gap:5px;padding-inline:7px;font-size:7px;letter-spacing:0}.hq-status small{display:none}
+}
+
+@media(max-width:380px){
+ .home-screen{grid-template-columns:62px minmax(0,1fr) 62px!important}
+ .hq-menu button{min-height:61px}.hq-menu button>svg{width:25px;height:25px;flex-basis:25px}.hq-menu button b{font-size:9px}
+}
+
 /* Campaign formation happens on the actual battlefield. */
 .campaign-prep{padding:10px;background:#102a3a;border:1px solid #426d78;min-width:0}
 .campaign-prep>header{display:flex;align-items:center;justify-content:space-between;gap:8px}.campaign-prep>header>div{min-width:0}.campaign-prep>header b{font-size:16px}.campaign-prep>header small{display:block;margin-top:2px;color:#b9d7df;font-size:10px}.campaign-prep>header>.ui-button{width:auto;min-width:92px;min-height:38px;padding-inline:10px}
