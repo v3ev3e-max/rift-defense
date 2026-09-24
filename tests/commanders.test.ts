@@ -12,7 +12,11 @@ describe('test commander roster',()=>{
   it('persists a valid selection and safely migrates older saves',()=>{
     const save=defaultSave();save.commanderId='commander-10';
     expect(parseSave(JSON.stringify(save)).commanderId).toBe('commander-10');
+    save.commanderName='나만의 지휘관';
+    expect(parseSave(JSON.stringify(save)).commanderName).toBe('나만의 지휘관');
     delete (save as Partial<typeof save>).commanderId;
     expect(parseSave(JSON.stringify(save)).commanderId).toBe(defaultCommanderId);
+    delete (save as Partial<typeof save>).commanderName;
+    expect(parseSave(JSON.stringify(save)).commanderName).toBe(commanders[0].name);
   });
 });

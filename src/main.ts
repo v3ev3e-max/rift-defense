@@ -208,7 +208,7 @@ class App {
                     : home(s);
     const testPanel=localTestMode?`<details class="local-test-panel"><summary>LOCAL TEST</summary><div><label>C <input id="dev-credits" type="number" min="0" value="${s.credits}"></label><label>G <input id="dev-equipment-gold" type="number" min="0" value="${s.equipmentGold}"></label><label>재료 <input id="dev-materials" type="number" min="0" value="${s.equipmentMaterials}"></label>${button('재화 적용','dev-currency','compact')}${button('전체 스테이지 해금','dev-unlock','compact')}${button('전체 성장 MAX','dev-max','compact')}${(['B','A','S','SR'] as HeroGrade[]).map(g=>button(`${g} 장비 생성`,'dev-item','compact','',`data-id="${g}"`)).join('')}${(['B','A','S','SR'] as HeroGrade[]).map(g=>button(`${g==='SR'?'SSR':g} 모집 연출`,'dev-recruit','compact','',`data-id="${g}"`)).join('')}${this.model?button('전투 GOLD +1000','debug','compact','',`data-id="gold"`)+button('다음 웨이브','debug','compact','',`data-id="next"`)+button('무적','debug','compact','',`data-id="god"`):''}${button('저장 초기화','dev-reset','compact')}</div></details>`:'';
     const commander=commanderById[s.commanderId];
-    const draw=()=>{this.root.innerHTML = `<div class="app-shell ${this.screen === "battle" ? "in-battle" : ""}"><header class="topbar"><button class="brand" data-action="home" aria-label="RIFT DEFENSE 홈"><span class="brand-mark">${icon("bolt")}</span><span>RIFT<span class="brand-thin"> DEFENSE</span><small>TACTICAL SQUAD DEFENSE</small></span></button><button class="commander" data-action="settings" aria-label="지휘관 ${commander.name} 변경"><img class="avatar" src="${assetUrl(commanderPortrait(commander.id))}" alt=""><span><b>${commander.name}</b><small>RIFT RESPONSE DIVISION</small></span></button><div class="top-currencies"><span title="영구 성장에 사용하는 크레딧">${icon("coin")}<b>${num(s.credits)}</b><small>C</small></span><span title="장비 상점 골드">${icon("coin")}<b>${num(s.equipmentGold)}</b><small>G</small></span><span title="클리어 기록 재화">${icon("gem")}<b>${num(s.shards)}</b></span></div>${button("설정", "settings", "icon-only", "settings", 'aria-label="설정" title="설정"')}</header><main id="screen">${content}</main>${testPanel}<div id="modal-layer"></div></div>`;};
+    const draw=()=>{this.root.innerHTML = `<div class="app-shell ${this.screen === "battle" ? "in-battle" : ""}"><header class="topbar"><button class="brand" data-action="home" aria-label="RIFT DEFENSE 홈"><span class="brand-mark">${icon("bolt")}</span><span>RIFT<span class="brand-thin"> DEFENSE</span><small>TACTICAL SQUAD DEFENSE</small></span></button><button class="commander" data-action="settings" aria-label="지휘관 ${esc(s.commanderName)} 설정"><img class="avatar" src="${assetUrl(commanderPortrait(commander.id))}" alt=""><span><b>${esc(s.commanderName)}</b><small>RIFT RESPONSE DIVISION</small></span></button><div class="top-currencies"><span title="영구 성장에 사용하는 크레딧">${icon("coin")}<b>${num(s.credits)}</b><small>C</small></span><span title="장비 상점 골드">${icon("coin")}<b>${num(s.equipmentGold)}</b><small>G</small></span><span title="클리어 기록 재화">${icon("gem")}<b>${num(s.shards)}</b></span></div>${button("설정", "settings", "icon-only", "settings", 'aria-label="설정" title="설정"')}</header><main id="screen">${content}</main>${testPanel}<div id="modal-layer"></div></div>`;};
     if(keepScroll)preserveScroll(draw);else draw();this.renderedScreen=this.screen;
     this.syncMusic();
     if(this.screen==='deck')filterRoster();
@@ -349,6 +349,11 @@ class App {
       return;
     }
     switch (action) {
+      case 'commander-name-save':{
+        const input=this.root.querySelector<HTMLInputElement>('#commander-name'),name=input?.value.trim().replace(/\s+/g,' ').slice(0,12)??'';
+        if(!name){this.toast('닉네임을 1자 이상 입력해주세요.');input?.focus();break;}
+        this.save.data.commanderName=name;this.persist();this.audio.play('click');this.render();this.toast(`${name} 지휘관으로 저장했습니다.`);break;
+      }
       case 'commander-select':
         if(id&&commanderById[id]){this.save.data.commanderId=id;this.persist();this.audio.play('click');this.render();this.toast(`${commanderById[id].name} 지휘관을 선택했습니다.`);}
         break;

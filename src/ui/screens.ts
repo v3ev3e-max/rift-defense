@@ -4,7 +4,7 @@ import {dealerFirst,formationRole,formationRoleName,formationSort} from "../data
 import {heroCollectionFilter} from './CampaignUI';
 import type { SaveData } from "../data/types";
 import type { BattleResult } from "../systems/BattleModel";
-import { button, combatPortrait, heroCard, icon, num, portrait, time } from "./components";
+import { button, combatPortrait, heroCard, icon, num, portrait, time, esc } from "./components";
 import {armorCatalog,enhanceCost,equipped,equipmentBonus,equipmentCraftCost,equipmentSalvageValue,equipmentShopPrice,heroWeaponGroup,makeEquipment,necklaceCatalog,rarityMax,weaponCatalog,weaponGroupNames} from '../data/equipment';
 import type {EquipmentSlot} from '../data/equipment';
 import type {HeroGrade} from '../data/types';
@@ -87,6 +87,6 @@ export function settingsScreen(s: SaveData, available: boolean) {
 }
 
 export function commanderSettings(s:SaveData){
-  return `<section class="commander-picker-screen"><div class="settings-panel commander-settings"><h3>지휘관 선택 <span class="status-label">TEST · 전원 사용 가능</span></h3><p class="muted">여성 지휘관 8명과 남성 지휘관 2명 중 대표 얼굴을 선택합니다.</p><div class="commander-grid">${commanders.map((v,i)=>`<button data-action="commander-select" data-id="${v.id}" class="commander-card ${s.commanderId===v.id?'selected':''}" aria-pressed="${s.commanderId===v.id}"><img src="${assetUrl(commanderPortrait(v.id))}" alt="${v.name} 지휘관 얼굴"><span><b>${v.name}</b><small>${String(i+1).padStart(2,'0')} · ${v.gender==='female'?'여성':'남성'}</small></span></button>`).join('')}</div></div></section>`;
+  return `<section class="commander-picker-screen"><div class="settings-panel commander-settings"><h3>지휘관 설정 <span class="status-label">TEST · 전원 사용 가능</span></h3><div class="commander-name-editor"><label for="commander-name"><b>지휘관 닉네임</b><small>상단 프로필에 표시됩니다. 최대 12자</small></label><input id="commander-name" type="text" maxlength="12" value="${esc(s.commanderName)}" autocomplete="off" aria-label="지휘관 닉네임">${button('닉네임 저장','commander-name-save','primary')}</div><p class="muted">여성 지휘관 8명과 남성 지휘관 2명 중 대표 얼굴을 선택합니다.</p><div class="commander-grid">${commanders.map((v,i)=>`<button data-action="commander-select" data-id="${v.id}" class="commander-card ${s.commanderId===v.id?'selected':''}" aria-pressed="${s.commanderId===v.id}"><img src="${assetUrl(commanderPortrait(v.id))}" alt="${v.name} 지휘관 얼굴"><span><b>${v.name}</b><small>${String(i+1).padStart(2,'0')} · ${v.gender==='female'?'여성':'남성'}</small></span></button>`).join('')}</div></div></section>`;
 }
 

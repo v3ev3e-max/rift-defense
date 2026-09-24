@@ -14,6 +14,7 @@ export function validCampaignSquad(ids:string[],owned:Set<string>){
 export function defaultSave(): SaveData {
   const data:SaveData={
     commanderId:defaultCommanderId,
+    commanderName:commanderById[defaultCommanderId].name,
     saveVersion: 1,
     credits: 500,
     equipmentGold:0,
@@ -72,6 +73,7 @@ export function parseSave(raw: string | null): SaveData {
     const s = JSON.parse(raw);
     if (s.saveVersion !== 1) return d;
     if(typeof s.commanderId==='string'&&commanderById[s.commanderId])d.commanderId=s.commanderId;
+    if(typeof s.commanderName==='string'&&s.commanderName.trim())d.commanderName=s.commanderName.trim().slice(0,12);
     d.credits = integer(s.credits, 500);
     d.equipmentGold=integer(s.equipmentGold,0,99999999);
     d.shards = integer(s.shards, 0);
