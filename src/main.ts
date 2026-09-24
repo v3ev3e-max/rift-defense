@@ -46,9 +46,12 @@ import type {EquipmentSlot} from './data/equipment';
 import type {HeroGrade} from './data/types';
 import {RECRUIT_COST,recruit} from './systems/RecruitSystem';
 import {commanderById,commanderPortrait} from './data/commanders';
+import {raidScreen,type RaidRuntime} from './ui/RaidUI';
+import {RAID_DURATION,raidAutoDamage,raidManualDamage,refreshRaid} from './data/raid';
+import {campaignPower} from './systems/CampaignPower';
 
 type Screen =
-  "home" | "hero" | "deck" | "stage" | "battle" | "result" | "settings" | "shop" | "inventory" | "recruit";
+  "home" | "hero" | "deck" | "stage" | "raid" | "battle" | "result" | "settings" | "shop" | "inventory" | "recruit";
 const localTestMode=import.meta.env.DEV||location.protocol==='file:'||['localhost','127.0.0.1'].includes(location.hostname);
 class App {
   root = document.querySelector<HTMLDivElement>("#app")!;
@@ -78,6 +81,9 @@ class App {
   tutorialStep = 0;
   lastWave = 0;
   resultHandled = false;
+  raidBossIndex=0;
+  raidRuntime?:RaidRuntime;
+  raidTimer=0;
   renderToken = 0;
   renderedScreen?:Screen;
   prepDrag?:{heroId:string;startX:number;startY:number;pointerId:number;source:HTMLElement;active:boolean;ghost?:HTMLElement};
@@ -171,6 +177,8 @@ class App {
       );
   }
   navigate(screen: Screen) {
+    if(this.raidTimer){clearInterval(this.raidTimer);this.raidTimer=0;}
+    if(screen!=='raid')this.raidRuntime=undefined;
     if (this.game) {
       this.game.destroy(true);
       this.game = undefined;
@@ -197,6 +205,8 @@ class App {
               ? itemScreen(s,this.itemTab,this.itemSlot,this.itemRarity,this.itemSelected,this.craftRarity,this.craftSlot,this.shopWeaponGroup,this.salvageGrades)
             : this.screen === 'recruit'
               ? recruitScreen(s)
+            : this.screen === 'raid'
+              ? raidScreen(s,this.raidBossIndex,this.raidRuntime)
             : this.screen === "stage"
               ? campaignSelect(s)
               : this.screen === "result" && this.model?.result
@@ -217,7 +227,8 @@ class App {
   syncMusic(){
     if(this.screen==='home'||this.screen==='hero'||this.screen==='inventory')this.audio.setMusic('maint');
     else if(this.screen==='recruit')this.audio.setMusic('recruit');
-    else if(this.screen==='deck')this.audio.setMusic('formation');
+    else if(this.screen==='deck'||(this.screen==='raid'&&!this.raidRuntime))this.audio.setMusic('formation');
+    else if(this.screen==='raid'&&this.raidRuntime)this.audio.setMusic('battle2');
     else if(this.screen==='battle'&&this.model?.campaign&&!this.model.started){
       const playingBattle=this.audio.desiredMusic==='battle1'||this.audio.desiredMusic==='battle2';
       const region=Math.max(1,Number(this.model.campaign.id.split('-')[0])||1);
@@ -332,10 +343,24 @@ class App {
       this.navigate("stage");
     }
   }
+  startRaid(){
+    const raid=refreshRaid(this.save.data),squad=this.save.data.campaign?.squad.slice(0,5)??[];
+    if(raid.attempts<=0){this.toast('오늘의 레이드 도전 횟수를 모두 사용했습니다.');return;}
+    if(squad.length!==5){this.toast('캠페인 편성에서 요원 5명을 선택해주세요.');return;}
+    raid.attempts--;const power=campaignPower(this.save.data,campaignStages.find(v=>v.id===this.save.data.campaign?.selected)??campaignStages[0]),bossMaxHp=Math.max(1200000,Math.round(power*RAID_DURATION*1.55));
+    this.raidRuntime={bossIndex:this.raidBossIndex,time:RAID_DURATION,damage:0,bossHp:bossMaxHp,bossMaxHp,phase:1,pattern:'전투 개시 · 공격 예고',manualCooldown:0,squadHp:[100,100,100,100,100],summons:0,running:true};this.persist();this.render();
+    this.raidTimer=window.setInterval(()=>this.tickRaid(power),1000);
+  }
+  tickRaid(power:number){const r=this.raidRuntime;if(!r?.running)return;const auto=this.save.data.campaign?.autoSkills!==false,alive=r.squadHp.filter(v=>v>0).length;if(!alive){this.finishRaid();return;}const dealt=raidAutoDamage(power,auto,alive,r.summons);r.damage+=dealt;r.bossHp=Math.max(0,r.bossHp-dealt);r.time=Math.max(0,r.time-1);r.manualCooldown=Math.max(0,r.manualCooldown-1);const ratio=r.bossHp/r.bossMaxHp,newPhase=ratio<=.4?3:ratio<=.7?2:1;if(newPhase!==r.phase){r.phase=newPhase;r.pattern=`PHASE ${newPhase} 전환 · 공격 강화`;this.audio.play('boss');}
+    const elapsed=RAID_DURATION-r.time;if(elapsed>0&&elapsed%15===0){const pattern=(elapsed/15-1)%4,damage=4+r.phase*2;if(pattern===0){r.pattern='광역기 · 전 요원 피해';r.squadHp=r.squadHp.map(v=>Math.max(0,v-damage));}else if(pattern===1){r.pattern='전방 파괴 · 선두 요원 집중 피해';r.squadHp[0]=Math.max(0,r.squadHp[0]-damage*2.4);}else if(pattern===2){r.pattern='후열 저격 · 저격수 진형 경고';for(const i of [3,4])r.squadHp[i]=Math.max(0,r.squadHp[i]-damage*1.7);}else{r.pattern='균열 소환 · 소환체가 보스를 보호';r.summons=Math.min(6,r.summons+1);}}
+    if(r.time<=0||r.bossHp<=0){this.finishRaid();return;}this.render();
+  }
+  castRaidManual(){const r=this.raidRuntime;if(!r?.running||r.manualCooldown>0)return;const power=campaignPower(this.save.data,campaignStages.find(v=>v.id===this.save.data.campaign?.selected)??campaignStages[0]),burst=raidManualDamage(power,r.squadHp.filter(v=>v>0).length);r.damage+=burst;r.bossHp=Math.max(0,r.bossHp-burst);r.manualCooldown=12;r.summons=Math.max(0,r.summons-1);r.pattern='수동 집중 스킬 · 소환체 차단 및 약점 타격';this.audio.play('level');if(r.bossHp<=0)this.finishRaid();else this.render();}
+  finishRaid(){const r=this.raidRuntime;if(!r)return;if(this.raidTimer){clearInterval(this.raidTimer);this.raidTimer=0;}r.running=false;const raid=refreshRaid(this.save.data),damage=Math.floor(r.damage);raid.dailyBest=Math.max(raid.dailyBest,damage);raid.weeklyBest=Math.max(raid.weeklyBest,damage);raid.weeklyDamage+=damage;let reward='';for(const [i,[target,kind,amount]] of ([[250000,'credits',300],[750000,'materials',15],[1500000,'gold',1000]] as const).entries())if(raid.weeklyDamage>=target&&!raid.claimed.includes(i)){raid.claimed.push(i);if(kind==='credits')this.save.data.credits+=amount;else if(kind==='materials')this.save.data.equipmentMaterials+=amount;else this.save.data.equipmentGold+=amount;reward+=` · ${amount}${kind==='credits'?'C':kind==='gold'?'G':' 재료'}`;}this.persist();this.raidRuntime=undefined;this.render();this.toast(`레이드 종료 · 피해 ${num(damage)}${reward}`);}
   action(action: string, id?: string) {
     this.audio.unlock();
     const m = this.model;
-    if (["home", "hero", "deck", "stage", "settings", "shop", "inventory", "recruit"].includes(action) && !id) {
+    if (["home", "hero", "deck", "stage", "raid", "settings", "shop", "inventory", "recruit"].includes(action) && !id) {
       if (this.screen === "battle" && m && !m.ended) {
         if(m.campaign&&!m.started){m.paused=false;this.navigate(action as Screen);return;}
         m.paused = true;
@@ -349,6 +374,11 @@ class App {
       return;
     }
     switch (action) {
+      case 'raid-boss':this.raidBossIndex=Math.max(0,Math.min(2,Number(id)||0));this.render();break;
+      case 'raid-start':this.startRaid();break;
+      case 'raid-auto':if(this.save.data.campaign){this.save.data.campaign.autoSkills=!this.save.data.campaign.autoSkills;this.persist();this.render();}break;
+      case 'raid-manual':this.castRaidManual();break;
+      case 'raid-retreat':this.finishRaid();break;
       case 'commander-name-save':{
         const input=this.root.querySelector<HTMLInputElement>('#commander-name'),name=input?.value.trim().replace(/\s+/g,' ').slice(0,12)??'';
         if(!name){this.toast('닉네임을 1자 이상 입력해주세요.');input?.focus();break;}

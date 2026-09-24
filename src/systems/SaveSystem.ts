@@ -3,6 +3,7 @@ import type { SaveData } from "../data/types";
 import {CAMPAIGN_SQUAD_CAP} from '../data/combatRoles';
 import {armorCatalog,equipItem,heroWeaponGroup,makeEquipment,necklaceCatalog,rarityMax,weaponCatalog,type EquipmentItem} from '../data/equipment';
 import {commanderById,defaultCommanderId} from '../data/commanders';
+import {RAID_DAILY_ATTEMPTS,raidDateKey,raidWeekKey} from '../data/raid';
 export const SAVE_KEY = "rift-defense-save-v1";
 const LEGACY_HERO_IDS: Record<string, string> = { eve: "ian", lize: "leon" };
 export const STARTER_HERO_IDS=['yuria','reina','sera','noel','arin'];
@@ -15,6 +16,7 @@ export function defaultSave(): SaveData {
   const data:SaveData={
     commanderId:defaultCommanderId,
     commanderName:commanderById[defaultCommanderId].name,
+    raid:{day:raidDateKey(),week:raidWeekKey(),attempts:RAID_DAILY_ATTEMPTS,dailyBest:0,weeklyDamage:0,weeklyBest:0,claimed:[],lastSettlement:''},
     saveVersion: 1,
     credits: 500,
     equipmentGold:0,
@@ -74,6 +76,7 @@ export function parseSave(raw: string | null): SaveData {
     if (s.saveVersion !== 1) return d;
     if(typeof s.commanderId==='string'&&commanderById[s.commanderId])d.commanderId=s.commanderId;
     if(typeof s.commanderName==='string'&&s.commanderName.trim())d.commanderName=s.commanderName.trim().slice(0,12);
+    if(s.raid&&typeof s.raid==='object'){d.raid.day=typeof s.raid.day==='string'?s.raid.day:d.raid.day;d.raid.week=typeof s.raid.week==='string'?s.raid.week:d.raid.week;d.raid.attempts=integer(s.raid.attempts,RAID_DAILY_ATTEMPTS,RAID_DAILY_ATTEMPTS);d.raid.dailyBest=integer(s.raid.dailyBest,0);d.raid.weeklyDamage=integer(s.raid.weeklyDamage,0);d.raid.weeklyBest=integer(s.raid.weeklyBest,0);d.raid.claimed=Array.isArray(s.raid.claimed)?s.raid.claimed.filter((v:unknown)=>Number.isInteger(v)).slice(0,3):[];d.raid.lastSettlement=typeof s.raid.lastSettlement==='string'?s.raid.lastSettlement.slice(0,80):'';}
     d.credits = integer(s.credits, 500);
     d.equipmentGold=integer(s.equipmentGold,0,99999999);
     d.shards = integer(s.shards, 0);

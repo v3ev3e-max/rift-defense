@@ -23,6 +23,7 @@ export function home(s: SaveData) {
  <div class="hq-operator"><span class="hq-orbit one"></span><span class="hq-orbit two"></span><img class="hq-fullbody" src="${assetUrl('/assets/illustrations/sera-hq-fullbody.png')}" alt="메인 요원 세라 전신" draggable="false"><div class="hq-operator-name"><small>MAIN OPERATOR / 05</small><b>세라 <em>SERA</em></b><p>“지휘관, 사선은 제가 확보할게요.”</p></div></div>
  <nav class="hq-menu hq-menu-right" aria-label="작전 본부 오른쪽 메뉴">
   <button class="primary" data-action="stage"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/campaign.png')}" alt=""><span><b>균열 원정</b><small>160 STAGES</small></span></button>
+  <button data-action="raid"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/campaign.png')}" alt=""><span><b>보스 레이드</b><small>WEEKLY RAID</small></span></button>
   <button data-action="recruit"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/recruit.png')}" alt=""><span><b>모집</b><small>RECRUIT</small></span></button>
   <button data-action="settings"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/settings.png')}" alt=""><span><b>설정</b><small>CONFIG</small></span></button>
  </nav>
