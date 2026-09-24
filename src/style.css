@@ -369,12 +369,9 @@ img {
 .city-scene {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    ellipse at 53% 37%,
-    #2d4157 0,
-    #152335 37%,
-    #101725 72%
-  );
+  background:
+    linear-gradient(180deg, #06111d38 0%, #07131f12 52%, #06101ed4 100%),
+    url('/assets/backgrounds/operation-hq-v2.png') center center / cover no-repeat;
   z-index: -4;
 }
 .city-grid {
@@ -4506,6 +4503,10 @@ body:has(.compact-battle) .ad-mobile,body:has(.compact-battle) .ad-rail{display:
 
 /* Operation HQ: full-body operator with balanced side navigation. */
 .app-shell:has(.home-screen) .bottom-nav{display:none}
+.home-screen .city-scene>.city-grid,
+.home-screen .city-scene>.rift-ring,
+.home-screen .city-scene>.city-buildings,
+.home-screen .city-scene>.ground-grid{display:none}
 .app-shell:has(.home-screen) #screen{height:calc(100dvh - var(--topbar-h,72px));padding-bottom:0}
 .home-screen{
   display:grid!important;
