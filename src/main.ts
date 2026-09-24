@@ -21,6 +21,7 @@ import {
   stageScreen,
   resultScreen,
   settingsScreen,
+  commanderSettings,
   equipmentShop,
   itemScreen,
   recruitScreen,
@@ -44,6 +45,7 @@ import {armorCatalog,campaignEquipmentDropChance,campaignEquipmentRarity,enhance
 import type {EquipmentSlot} from './data/equipment';
 import type {HeroGrade} from './data/types';
 import {RECRUIT_COST,recruit} from './systems/RecruitSystem';
+import {commanderById,commanderPortrait} from './data/commanders';
 
 type Screen =
   "home" | "hero" | "deck" | "stage" | "battle" | "result" | "settings" | "shop" | "inventory" | "recruit";
@@ -200,12 +202,13 @@ class App {
               : this.screen === "result" && this.model?.result
                 ? (this.model.campaign?campaignResult(this.model.result):resultScreen(this.model.result))
                 : this.screen === "settings"
-                  ? settingsScreen(s, this.save.available)
+                  ? settingsScreen(s, this.save.available)+commanderSettings(s)
                   : this.model
                     ? (this.model.campaign?campaignBattle(this.model,this.prepStep):battleScreen(this.model))
                     : home(s);
     const testPanel=localTestMode?`<details class="local-test-panel"><summary>LOCAL TEST</summary><div><label>C <input id="dev-credits" type="number" min="0" value="${s.credits}"></label><label>G <input id="dev-equipment-gold" type="number" min="0" value="${s.equipmentGold}"></label><label>재료 <input id="dev-materials" type="number" min="0" value="${s.equipmentMaterials}"></label>${button('재화 적용','dev-currency','compact')}${button('전체 스테이지 해금','dev-unlock','compact')}${button('전체 성장 MAX','dev-max','compact')}${(['B','A','S','SR'] as HeroGrade[]).map(g=>button(`${g} 장비 생성`,'dev-item','compact','',`data-id="${g}"`)).join('')}${(['B','A','S','SR'] as HeroGrade[]).map(g=>button(`${g==='SR'?'SSR':g} 모집 연출`,'dev-recruit','compact','',`data-id="${g}"`)).join('')}${this.model?button('전투 GOLD +1000','debug','compact','',`data-id="gold"`)+button('다음 웨이브','debug','compact','',`data-id="next"`)+button('무적','debug','compact','',`data-id="god"`):''}${button('저장 초기화','dev-reset','compact')}</div></details>`:'';
-    const draw=()=>{this.root.innerHTML = `<div class="app-shell ${this.screen === "battle" ? "in-battle" : ""}"><header class="topbar"><button class="brand" data-action="home" aria-label="RIFT DEFENSE 홈"><span class="brand-mark">${icon("bolt")}</span><span>RIFT<span class="brand-thin"> DEFENSE</span><small>TACTICAL SQUAD DEFENSE</small></span></button><div class="commander"><span class="avatar">C</span><span><b>지휘관</b><small>RIFT RESPONSE DIVISION</small></span></div><div class="top-currencies"><span title="영구 성장에 사용하는 크레딧">${icon("coin")}<b>${num(s.credits)}</b><small>C</small></span><span title="장비 상점 골드">${icon("coin")}<b>${num(s.equipmentGold)}</b><small>G</small></span><span title="클리어 기록 재화">${icon("gem")}<b>${num(s.shards)}</b></span></div>${button("설정", "settings", "icon-only", "settings", 'aria-label="설정" title="설정"')}</header><main id="screen">${content}</main>${
+    const commander=commanderById[s.commanderId];
+    const draw=()=>{this.root.innerHTML = `<div class="app-shell ${this.screen === "battle" ? "in-battle" : ""}"><header class="topbar"><button class="brand" data-action="home" aria-label="RIFT DEFENSE 홈"><span class="brand-mark">${icon("bolt")}</span><span>RIFT<span class="brand-thin"> DEFENSE</span><small>TACTICAL SQUAD DEFENSE</small></span></button><button class="commander" data-action="settings" aria-label="지휘관 ${commander.name} 변경"><img class="avatar" src="${assetUrl(commanderPortrait(commander.id))}" alt=""><span><b>${commander.name}</b><small>RIFT RESPONSE DIVISION</small></span></button><div class="top-currencies"><span title="영구 성장에 사용하는 크레딧">${icon("coin")}<b>${num(s.credits)}</b><small>C</small></span><span title="장비 상점 골드">${icon("coin")}<b>${num(s.equipmentGold)}</b><small>G</small></span><span title="클리어 기록 재화">${icon("gem")}<b>${num(s.shards)}</b></span></div>${button("설정", "settings", "icon-only", "settings", 'aria-label="설정" title="설정"')}</header><main id="screen">${content}</main>${
       this.screen !== "battle"
         ? `<nav class="bottom-nav" aria-label="주 메뉴">${[
             ["home", "HOME", "작전 본부"],
@@ -364,6 +367,9 @@ class App {
       return;
     }
     switch (action) {
+      case 'commander-select':
+        if(id&&commanderById[id]){this.save.data.commanderId=id;this.persist();this.audio.play('click');this.render();this.toast(`${commanderById[id].name} 지휘관을 선택했습니다.`);}
+        break;
       case 'recruit-pull':{const count=id==='10'?10:1,cost=count===10?RECRUIT_COST.ten:RECRUIT_COST.one;if(this.save.data.equipmentGold<cost){this.toast(`모집 골드 부족 · ${cost}G 필요`);break;}this.save.data.equipmentGold-=cost;const results=recruit(this.save.data,count);this.persist();this.render();this.audio.play(results.some(v=>v.grade==='SR')?'boss':results.some(v=>v.grade==='S')?'level':'summon');this.showModal(recruitResult(results),'recruit-result');break;}
       case 'item-tab':if(['inventory','craft','equipped'].includes(id??'')){this.itemTab=id as typeof this.itemTab;this.render();}break;
       case 'item-select':if(id){this.itemSelected=id;this.itemTab='inventory';this.render();}break;

@@ -2,6 +2,7 @@ import { heroes } from "../data/heroes";
 import type { SaveData } from "../data/types";
 import {CAMPAIGN_SQUAD_CAP} from '../data/combatRoles';
 import {armorCatalog,equipItem,heroWeaponGroup,makeEquipment,necklaceCatalog,rarityMax,weaponCatalog,type EquipmentItem} from '../data/equipment';
+import {commanderById,defaultCommanderId} from '../data/commanders';
 export const SAVE_KEY = "rift-defense-save-v1";
 const LEGACY_HERO_IDS: Record<string, string> = { eve: "ian", lize: "leon" };
 export const STARTER_HERO_IDS=['yuria','reina','sera','noel','arin'];
@@ -12,6 +13,7 @@ export function validCampaignSquad(ids:string[],owned:Set<string>){
 }
 export function defaultSave(): SaveData {
   const data:SaveData={
+    commanderId:defaultCommanderId,
     saveVersion: 1,
     credits: 500,
     equipmentGold:0,
@@ -69,6 +71,7 @@ export function parseSave(raw: string | null): SaveData {
   try {
     const s = JSON.parse(raw);
     if (s.saveVersion !== 1) return d;
+    if(typeof s.commanderId==='string'&&commanderById[s.commanderId])d.commanderId=s.commanderId;
     d.credits = integer(s.credits, 500);
     d.equipmentGold=integer(s.equipmentGold,0,99999999);
     d.shards = integer(s.shards, 0);
