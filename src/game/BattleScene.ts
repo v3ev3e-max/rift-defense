@@ -231,11 +231,11 @@ export class BattleScene extends Phaser.Scene {
     this.drawMap();
     this.ink = this.add.graphics();
     this.input.dragDistanceThreshold=8;
-    this.reactionLabels=Array.from({length:8},()=>this.add.text(0,0,'',{fontSize:'16px',fontFamily:'sans-serif',fontStyle:'bold',color:'#bffbff',stroke:'#15232f',strokeThickness:3}).setOrigin(.5).setDepth(751).setVisible(false));
+    this.reactionLabels=Array.from({length:8},()=>this.add.text(0,0,'',{fontSize:'16px',fontFamily:'Rift Pretendard',fontStyle:'bold',color:'#bffbff',stroke:'#15232f',strokeThickness:3}).setOrigin(.5).setDepth(751).setVisible(false));
     this.aimSprites=this.model.actions.map(()=>this.add.image(0,0,'vfx-reticle').setVisible(false).setDepth(643));
     this.zoneSprites=this.model.zones.map(()=>this.add.image(0,0,'vfx-zone').setVisible(false).setDepth(3));
     this.actionSprites=this.model.actions.map(()=>this.add.image(0,0,'drone-body').setVisible(false).setDepth(645));
-    this.damageLabels=this.model.damageNumbers.map(()=>this.add.text(0,0,'',{fontSize:'20px',fontFamily:'sans-serif',fontStyle:'bold',color:'#fff3b0',stroke:'#15232f',strokeThickness:3}).setOrigin(.5).setDepth(750).setVisible(false));
+    this.damageLabels=this.model.damageNumbers.map(()=>this.add.text(0,0,'',{fontSize:'20px',fontFamily:'Rift Pretendard',fontStyle:'bold',color:'#fff3b0',stroke:'#15232f',strokeThickness:3}).setOrigin(.5).setDepth(750).setVisible(false));
     this.enemySprites = this.model.enemies.map(() =>
       this.add.image(-50, -50, this.initialEnemyKey).setOrigin(.5,.72).setVisible(false),
     );
@@ -285,7 +285,7 @@ export class BattleScene extends Phaser.Scene {
       this.labels.push(
         this.add
           .text(0, 0, "", {
-            fontFamily: "monospace",
+            fontFamily: "Rift Pretendard",
             fontSize: "13px",
             color: "#ffe299",
             stroke: "#101727",
@@ -295,10 +295,10 @@ export class BattleScene extends Phaser.Scene {
           .setVisible(false),
       );
       this.skillCalloutLabels.push(this.add.text(0,0,'',{
-        fontFamily:'sans-serif',fontSize:'17px',fontStyle:'bold',color:'#ffffff',
+        fontFamily:'Rift Pretendard',fontSize:'17px',fontStyle:'bold',color:'#ffffff',
         backgroundColor:'#10233ddd',padding:{x:9,y:4},stroke:'#09131f',strokeThickness:4,align:'center',
       }).setOrigin(.5,1).setDepth(755).setVisible(false));
-      this.defeatCooldownLabels.push(this.add.text(0,0,'',{fontFamily:'monospace',fontSize:'23px',fontStyle:'bold',color:'#ffcfdf',stroke:'#351526',strokeThickness:5,align:'center'}).setOrigin(.5).setDepth(690).setVisible(false));
+      this.defeatCooldownLabels.push(this.add.text(0,0,'',{fontFamily:'Rift Pretendard',fontSize:'23px',fontStyle:'bold',color:'#ffcfdf',stroke:'#351526',strokeThickness:5,align:'center'}).setOrigin(.5).setDepth(690).setVisible(false));
       this.heroShotCounts[i] = 0;
       this.heroDroneShotCounts[i] = 0;
       this.heroAttackStarted[i] = -999;
@@ -487,11 +487,11 @@ export class BattleScene extends Phaser.Scene {
     }
     for (const [i,s] of slots.entries()){
       this.add.image(s.x,s.y,this.model.campaign?'campaign-pad':'lab-pad').setDisplaySize(this.model.campaign?108:84,this.model.campaign?108:84).setDepth(1);
-      if(this.model.campaign&&(this.model.campaign.alternate?[1,3,4]:[4]).includes(i))this.add.text(s.x,s.y+35,this.model.campaign.alternate?(i===1?'FRONT A':i===3?'FRONT B':'FRONT C'):'FRONT',{fontFamily:'monospace',fontSize:'11px',fontStyle:'bold',color:'#ffd68a',stroke:'#10202d',strokeThickness:3}).setOrigin(.5).setDepth(3);
-      if(this.model.campaign&&i===5)this.add.text(s.x,s.y+35,'A',{fontFamily:'monospace',fontSize:'15px',fontStyle:'bold',color:'#b5a8ff',stroke:'#10202d',strokeThickness:3}).setOrigin(.5).setDepth(3);
+      if(this.model.campaign&&(this.model.campaign.alternate?[1,3,4]:[4]).includes(i))this.add.text(s.x,s.y+35,this.model.campaign.alternate?(i===1?'FRONT A':i===3?'FRONT B':'FRONT C'):'FRONT',{fontFamily:'Rift Pretendard',fontSize:'11px',fontStyle:'bold',color:'#ffd68a',stroke:'#10202d',strokeThickness:3}).setOrigin(.5).setDepth(3);
+      if(this.model.campaign&&i===5)this.add.text(s.x,s.y+35,'A',{fontFamily:'Rift Pretendard',fontSize:'15px',fontStyle:'bold',color:'#b5a8ff',stroke:'#10202d',strokeThickness:3}).setOrigin(.5).setDepth(3);
     }
     this.selectedPad=this.add.image(0,0,this.model.campaign?'campaign-ring':'lab-selected').setDisplaySize(112,112).setDepth(2).setVisible(false);
-    this.rangeLabel=this.add.text(0,0,'',{fontFamily:'sans-serif',fontSize:'13px',fontStyle:'bold',color:'#f5ffff',backgroundColor:'#071923dd',padding:{x:7,y:4},stroke:'#07131d',strokeThickness:2}).setOrigin(.5,1).setDepth(704).setVisible(false);
+    this.rangeLabel=this.add.text(0,0,'',{fontFamily:'Rift Pretendard',fontSize:'13px',fontStyle:'bold',color:'#f5ffff',backgroundColor:'#071923dd',padding:{x:7,y:4},stroke:'#07131d',strokeThickness:2}).setOrigin(.5,1).setDepth(704).setVisible(false);
     this.campaignWarnings=Array.from({length:this.model.enemies.length},()=>this.add.image(0,0,'campaign-warning').setDisplaySize(190,190).setDepth(680).setVisible(false));
     for(const o of obstacles){
       g.fillStyle(0x101925);g.fillRoundedRect(o.x-23,o.y-23,46,46,4);
