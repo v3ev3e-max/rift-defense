@@ -3,11 +3,11 @@ import type {SaveData} from './types';
 export const RAID_DURATION=180;
 export const RAID_DAILY_ATTEMPTS=3;
 export const raidBosses=[
- {id:'gale-colossus',name:'질풍의 거신',title:'천공 파괴자',pattern:'광역 폭풍 · 전방 파괴',color:'#62e8df'},
- {id:'void-observer',name:'공허의 천안',title:'후열 사냥꾼',pattern:'후열 저격 · 공허 소환',color:'#bd78ff'},
- {id:'machine-god',name:'기계도시의 신핵',title:'증식 병기',pattern:'수복 소환 · 전열 포격',color:'#ff8b55'},
- {id:'solar-sphinx',name:'태양의 스핑크스',title:'황혼 심판자',pattern:'광역 심판 · 후열 표식',color:'#ffd062'},
- {id:'aeon-sovereign',name:'영겁의 군주',title:'시간선 지배자',pattern:'시간 정지 · 분신 소환',color:'#8ba7ff'},
+ {id:'gale-colossus',name:'질풍의 거신',title:'천공 파괴자',pattern:'광역 폭풍 · 전방 파괴',color:'#62e8df',image:'/assets/generated/raid-bosses/gale-colossus.png'},
+ {id:'void-observer',name:'공허의 천안',title:'후열 사냥꾼',pattern:'후열 저격 · 공허 소환',color:'#bd78ff',image:'/assets/generated/raid-bosses/void-observer.png'},
+ {id:'machine-god',name:'기계도시의 신핵',title:'증식 병기',pattern:'수복 소환 · 전열 포격',color:'#ff8b55',image:'/assets/generated/raid-bosses/machine-god.png'},
+ {id:'solar-sphinx',name:'태양의 스핑크스',title:'황혼 심판자',pattern:'광역 심판 · 후열 표식',color:'#ffd062',image:'/assets/generated/raid-bosses/solar-sphinx.png'},
+ {id:'aeon-sovereign',name:'영겁의 군주',title:'시간선 지배자',pattern:'시간 정지 · 분신 소환',color:'#8ba7ff',image:'/assets/generated/raid-bosses/aeon-sovereign.png'},
 ] as const;
 export const raidDateKey=(date=new Date())=>date.toISOString().slice(0,10);
 export const raidWeekKey=(date=new Date())=>{const d=new Date(Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),date.getUTCDate()));d.setUTCDate(d.getUTCDate()+4-(d.getUTCDay()||7));const start=new Date(Date.UTC(d.getUTCFullYear(),0,1));return `${d.getUTCFullYear()}-W${String(Math.ceil((((+d-+start)/86400000)+1)/7)).padStart(2,'0')}`;};
