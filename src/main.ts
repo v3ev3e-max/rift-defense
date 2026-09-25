@@ -5,6 +5,7 @@ import {priorities} from './data/strategy';
 import {waveBrief} from './data/waves';
 import "./style.css";
 import "./operations.css";
+import "./raid-gear.css";
 import { SaveSystem,defaultSave,localTestResetSave,STARTER_HERO_IDS } from "./systems/SaveSystem";
 import { GameAudio } from "./utils/Audio";
 import {assetUrl} from './utils/assets';
