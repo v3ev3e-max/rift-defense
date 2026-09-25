@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <meta name="theme-color" content="#0b1020"/>
   <meta name="description" content="5인 편성으로 코어를 지키는 스테이지 디펜스 RPG RIFT DEFENSE."/>
-  <meta name="rift-build" content="premium-typography-2026-09-25"/>
+  <meta name="rift-build" content="no-service-worker-loader-fix-2026-09-25"/>
   <link rel="preload" href="./assets/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin/>
   <link rel="icon" href="/icon.svg"/>
   <link rel="manifest" href="./manifest.webmanifest"/>
@@ -15,6 +15,21 @@
     // double-clicking it, use the generated all-in-one build instead.
     if (location.protocol === 'file:' && !location.pathname.replace(/\\/g, '/').endsWith('/local-test/index.html')) {
       location.replace('./local-test/index.html');
+    }
+    // Older releases cached thousands of battle assets through a service
+    // worker. On some mobile browsers that worker can keep a dynamic battle
+    // module request pending forever at 0%. Retire it before booting the app.
+    if (/^https?:$/.test(location.protocol) && sessionStorage.getItem('rift-cache-retired') !== 'v1') {
+      window.__RIFT_CACHE_RESET_PENDING__ = true;
+      Promise.all([
+        navigator.serviceWorker ? navigator.serviceWorker.getRegistrations().then(items => Promise.all(items.map(item => item.unregister()))) : Promise.resolve(),
+        window.caches ? caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('rift-')).map(key => caches.delete(key)))) : Promise.resolve()
+      ]).finally(() => {
+        sessionStorage.setItem('rift-cache-retired', 'v1');
+        const url = new URL(location.href);
+        url.searchParams.set('fresh', 'loader-v3');
+        location.replace(url.href);
+      });
     }
   </script>
 </head>

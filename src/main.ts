@@ -156,19 +156,6 @@ class App {
     });
     window.addEventListener("pagehide", () => this.save.persist());
     this.render();
-    if (import.meta.env.PROD && "serviceWorker" in navigator)
-      window.addEventListener("load", () => {
-        const workerUrl=`${import.meta.env.BASE_URL}sw.js?v=battle-loader-hotfix-v2`;
-        let refreshing=false;
-        navigator.serviceWorker.addEventListener('controllerchange',()=>{
-          if(refreshing||sessionStorage.getItem('rift-worker-reloaded')==='battle-loader-hotfix-v2')return;
-          refreshing=true;sessionStorage.setItem('rift-worker-reloaded','battle-loader-hotfix-v2');location.reload();
-        });
-        void navigator.serviceWorker.register(workerUrl,{updateViaCache:'none'}).then(async registration=>{
-          await registration.update();
-          registration.waiting?.postMessage({type:'SKIP_WAITING'});
-        }).catch(() => {});
-      });
     if (import.meta.env.DEV) (window as unknown as { rift: App }).rift = this;
   }
   toast(text: string) {
@@ -326,7 +313,8 @@ class App {
     const model = this.model;
     const loaderStartedAt=performance.now();
     try {
-      const { createGame } = await import("./game/GameConfig");
+      const moduleTimeout=new Promise<never>((_,reject)=>setTimeout(()=>reject(new Error('전투 모듈 응답 시간 초과')),15000));
+      const { createGame } = await Promise.race([import("./game/GameConfig"),moduleTimeout]);
       if (token !== this.renderToken) return;
       let lastLoadPercent=-1,lastLoadGroup='';
       const loadProgress=(progress:number,file:string)=>{
@@ -996,7 +984,7 @@ class App {
     }
   }
 }
-new App();
+if(!(window as Window & {__RIFT_CACHE_RESET_PENDING__?:boolean}).__RIFT_CACHE_RESET_PENDING__)new App();
 
 
 
