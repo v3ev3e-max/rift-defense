@@ -14,10 +14,11 @@ const urls = files.map(
       .pop()
       .replace(/^dist\//, ""),
 );
+const coreUrls=urls.filter(url=>url==='./index.html'||/^\.\/assets\/(?:index|GameConfig|phaser)-[^/]+\.(?:js|css)$/.test(url));
 writeFileSync(
   "dist/sw.js",
   `const CACHE='rift-${version}';
-const FILES=${JSON.stringify(urls)};
+const FILES=${JSON.stringify(coreUrls)};
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('rift-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
@@ -25,7 +26,10 @@ self.addEventListener('fetch',event=>{
  if(event.request.mode==='navigate'){event.respondWith(fetch(event.request).catch(()=>caches.match('./index.html')));return;}
  // These are same-origin immutable static files. Vite's preview server varies
  // on Origin, but install-time requests and module loads send different Origin headers.
- event.respondWith(caches.match(event.request,{ignoreVary:true}).then(cached=>cached||fetch(event.request)));
+ event.respondWith(caches.match(event.request,{ignoreVary:true}).then(cached=>cached||fetch(event.request).then(response=>{
+  if(response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));}
+  return response;
+ })));
 });\n`,
 );
-console.log(`PWA offline cache: ${urls.length} local files / ${version}`);
+console.log(`PWA core cache: ${coreUrls.length} files; ${urls.length-coreUrls.length} assets cached on demand / ${version}`);

@@ -23,6 +23,12 @@ describe('character-specific skill animation assets',()=>{
    expect(heroVisualSize(hero.id,true,'skill'),hero.id).toBe(160);
   }
  });
+
+ it('does not preload every hero animation before formation selection',()=>{
+  const source=readFileSync('src/game/BattleScene.ts','utf8');
+  expect(source).not.toContain('const activeIds = heroes.map');
+  expect(source).toContain('this.enqueueHeroVisuals(u.heroId,true)');
+ });
  it('provides three distinct idle frames for every hero',()=>{
   for(const hero of heroes){
    const frames=Array.from({length:3},(_,i)=>hash(`public/assets/heroes/${hero.id}/frame_${String(i+1).padStart(2,'0')}.png`));

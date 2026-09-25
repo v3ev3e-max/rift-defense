@@ -61,6 +61,7 @@ export class BattleScene extends Phaser.Scene {
   damageLabels: Phaser.GameObjects.Text[] = [];
   fxSprites: Phaser.GameObjects.Image[] = [];
   activeHeroIds = new Set<string>();
+  pendingHeroIds = new Set<string>();
   heroShotCounts: number[] = [];
   heroDroneShotCounts: number[] = [];
   heroAttackStarted: number[] = [];
@@ -95,6 +96,23 @@ export class BattleScene extends Phaser.Scene {
     this.callback = callback;
     this.onLoadProgress=onLoadProgress;
     this.onReady=onReady;
+  }
+  enqueueHeroVisuals(id:string,autoStart=false){
+    if(this.activeHeroIds.has(id)||this.pendingHeroIds.has(id))return;
+    this.pendingHeroIds.add(id);
+    for(let frame=1;frame<=3;frame++)this.load.image(`hero-${id}-idle-${frame}`,assetUrl(`/assets/heroes/${id}/frame_${String(frame).padStart(2,'0')}.png`));
+    for(let frame=1;frame<=3;frame++)this.load.image(`hero-${id}-defeat-${frame}`,assetUrl(`/assets/generated/hero-defeat/${id}/frame_${String(frame).padStart(2,'0')}.webp`));
+    for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-up-${frame}`,assetUrl(`/assets/combat/${id}/up6_${String(frame).padStart(2,"0")}.png`));
+    for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-skill-${frame}`,assetUrl(`/assets/combat/${id}/skill_${String(frame).padStart(2,"0")}.png`));
+    for(let frame=1;frame<=8;frame++)this.load.image(`hero-${id}-anim-${frame}`,assetUrl(`/assets/combat/${id}/frame_${String(frame).padStart(2,"0")}.png`));
+    for(let frame=1;frame<=3;frame++){
+      this.load.image(`fx-${id}-projectile-${frame}`,assetUrl(`/assets/effects/${id}/projectile_${String(frame).padStart(2,'0')}.png`));
+      this.load.image(`fx-${id}-impact-${frame}`,assetUrl(`/assets/effects/${id}/impact_${String(frame).padStart(2,'0')}.png`));
+    }
+    this.load.image(`fx-${id}-skill`,assetUrl(`/assets/effects/${id}/skill.png`));
+    if(id==='yuria')this.load.image('fx-yuria-barrier',assetUrl('/assets/effects/yuria/barrier.png'));
+    this.load.once('complete',()=>{this.pendingHeroIds.delete(id);this.activeHeroIds.add(id);});
+    if(autoStart&&!this.load.isLoading())this.load.start();
   }
   preload() {
     this.load.on('progress',(value:number)=>this.onLoadProgress(value,''));
@@ -160,8 +178,7 @@ export class BattleScene extends Phaser.Scene {
       this.load.image(`common-${element}-projectile`, assetUrl(`/assets/effects/common/${element}_projectile.png`));
       this.load.image(`common-${element}-mark`, assetUrl(`/assets/effects/common/${element}_mark.png`));
     }
-    const activeIds = heroes.map(h=>h.id);
-    this.activeHeroIds = new Set(activeIds);
+    const activeIds = [...new Set(this.model.units.map(u=>u.heroId))];
 
     // Small static fallbacks are cheap enough to keep for every hero, while
     // animation/effect textures are loaded only for the active deck.
@@ -170,31 +187,7 @@ export class BattleScene extends Phaser.Scene {
       if (h.asset.atlas) this.load.atlas(h.asset.key, url, h.asset.atlas);
       else this.load.image(h.asset.key, url);
     }
-    for (const id of activeIds) {
-      for(let frame=1;frame<=3;frame++)this.load.image(`hero-${id}-idle-${frame}`,assetUrl(`/assets/heroes/${id}/frame_${String(frame).padStart(2,'0')}.png`));
-      for(let frame=1;frame<=3;frame++)this.load.image(`hero-${id}-defeat-${frame}`,assetUrl(`/assets/generated/hero-defeat/${id}/frame_${String(frame).padStart(2,'0')}.webp`));
-      for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-up-${frame}`,assetUrl(`/assets/combat/${id}/up6_${String(frame).padStart(2,"0")}.png`));
-      for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-skill-${frame}`,assetUrl(`/assets/combat/${id}/skill_${String(frame).padStart(2,"0")}.png`));
-      for (let frame = 1; frame <= 8; frame++) {
-        this.load.image(
-          `hero-${id}-anim-${frame}`,
-          assetUrl(`/assets/combat/${id}/frame_${String(frame).padStart(2, "0")}.png`),
-        );
-      }
-
-      this.load.image(`fx-${id}-projectile-1`, assetUrl(`/assets/effects/${id}/projectile_01.png`));
-      this.load.image(`fx-${id}-projectile-2`, assetUrl(`/assets/effects/${id}/projectile_02.png`));
-      this.load.image(`fx-${id}-projectile-3`, assetUrl(`/assets/effects/${id}/projectile_03.png`));
-
-      {
-        this.load.image(`fx-${id}-impact-1`, assetUrl(`/assets/effects/${id}/impact_01.png`));
-        this.load.image(`fx-${id}-impact-2`, assetUrl(`/assets/effects/${id}/impact_02.png`));
-        this.load.image(`fx-${id}-impact-3`, assetUrl(`/assets/effects/${id}/impact_03.png`));
-        this.load.image(`fx-${id}-skill`, assetUrl(`/assets/effects/${id}/skill.png`));
-      }
-      if (id === "yuria")
-        this.load.image("fx-yuria-barrier", assetUrl("/assets/effects/yuria/barrier.png"));
-    }
+    for(const id of activeIds)this.enqueueHeroVisuals(id);
   }
   create() {
     // Touch screens report a few pixels of finger jitter even for a tap. Require
@@ -640,6 +633,7 @@ export class BattleScene extends Phaser.Scene {
         defeatCooldown.setVisible(false);
         continue;
       }
+      this.enqueueHeroVisuals(u.heroId,true);
       defeatCooldown.setVisible(false);
       const animatedHero =
         this.activeHeroIds.has(u.heroId) &&
