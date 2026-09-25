@@ -2,7 +2,7 @@ import type {Element,HeroGrade,SaveData} from './types';
 
 export type EquipmentSlot='weapon'|'armor'|'necklace';
 export type WeaponGroup='rifle'|'machinegun'|'sniper'|'pistol'|'railgun'|'shotgun'|'blade'|'polearm'|'grimoire'|'catalyst'|'drone'|'guardian';
-export interface EquipmentItem {id:string;templateId:string;name:string;slot:EquipmentSlot;weaponGroup?:WeaponGroup;rarity:HeroGrade;enhance:number;attack:number;hp:number;speed:number;crit:number;skill:number;element?:Element;elementDamage:number;effect:string;equippedBy?:string;locked:boolean;order:number;}
+export interface EquipmentItem {id:string;templateId:string;name:string;slot:EquipmentSlot;weaponGroup?:WeaponGroup;rarity:HeroGrade;enhance:number;attack:number;hp:number;speed:number;crit:number;skill:number;element?:Element;elementDamage:number;effect:string;equippedBy?:string;locked:boolean;order:number;raidDamage?:number;raidGuard?:number;raidManual?:number;raidSummon?:number;}
 
 export const EQUIPMENT_MAX_ENHANCE=5;
 export const rarityMax:Record<HeroGrade,number>={B:EQUIPMENT_MAX_ENHANCE,A:EQUIPMENT_MAX_ENHANCE,S:EQUIPMENT_MAX_ENHANCE,SR:EQUIPMENT_MAX_ENHANCE};
@@ -23,14 +23,22 @@ export const armorCatalog=[
  {id:'armor-guardian',name:'중장 수호복',effect:'저지 중 피해 감소'},
 ].map(v=>({...v,slot:'armor' as const}));
 export const necklaceCatalog=(['water','fire','electric','dark'] as Element[]).map(element=>({id:`necklace-${element}`,name:{water:'수류',fire:'화염',electric:'전격',dark:'암흑'}[element]+' 공명 목걸이',slot:'necklace' as const,element,effect:'기본 공격에 추가 속성 피해'}));
+export const raidEquipmentCatalog=[
+ {id:'raid-gale-aegis',name:'거신의 풍압 장갑',slot:'armor' as const,effect:'레이드 패턴 피해 15% 감소',raidGuard:.15},
+ {id:'raid-void-lens',name:'천안의 공허 렌즈',slot:'necklace' as const,effect:'레이드 수동 스킬 피해 20% 증가',raidManual:.20},
+ {id:'raid-machine-core',name:'신핵의 연산 장갑',slot:'armor' as const,effect:'레이드 AUTO 피해 10% 증가',raidDamage:.10},
+ {id:'raid-solar-sigil',name:'태양 심판의 인장',slot:'necklace' as const,effect:'레이드 전체 피해 12% 증가',raidDamage:.12},
+ {id:'raid-aeon-clock',name:'영겁의 시계 장갑',slot:'armor' as const,effect:'소환체 피해 감소 효과 50% 완화',raidSummon:.50},
+];
 
 export function makeEquipment(templateId:string,rarity:HeroGrade,order=Date.now(),id=`eq-${order}-${Math.random().toString(36).slice(2,8)}`):EquipmentItem{
- const w=weaponCatalog.find(v=>v.id===templateId),a=armorCatalog.find(v=>v.id===templateId),n=necklaceCatalog.find(v=>v.id===templateId),t=w??a??n;
+ const w=weaponCatalog.find(v=>v.id===templateId),a=armorCatalog.find(v=>v.id===templateId),n=necklaceCatalog.find(v=>v.id===templateId),r=raidEquipmentCatalog.find(v=>v.id===templateId),t=w??a??n??r;
  if(!t)throw Error('unknown equipment '+templateId);
  const scale=rarityScale[rarity],variant=w?Number(w.id.at(-1)):0;
  const armorHp=a?(a.id==='armor-field'?135:a.id==='armor-guardian'?125:105):0;
- return {id,templateId,name:t.name,slot:t.slot,weaponGroup:w?.weaponGroup,rarity,enhance:0,attack:w?Math.round((18+variant*2)*scale):0,hp:Math.round(armorHp*scale),speed:w&&variant===2?.04*scale:0,crit:w&&variant===1?.035*scale:0,skill:w&&variant===3?.07*scale:0,element:n?.element,elementDamage:n?({B:.05,A:.08,S:.11,SR:.15}[rarity]):0,effect:t.effect,equippedBy:undefined,locked:false,order};
+ return {id,templateId,name:t.name,slot:t.slot,weaponGroup:w?.weaponGroup,rarity,enhance:0,attack:w?Math.round((18+variant*2)*scale):0,hp:Math.round((armorHp+(r?.slot==='armor'?115:0))*scale),speed:w&&variant===2?.04*scale:0,crit:w&&variant===1?.035*scale:0,skill:w&&variant===3?.07*scale:0,element:n?.element,elementDamage:n?({B:.05,A:.08,S:.11,SR:.15}[rarity]):0,effect:t.effect,equippedBy:undefined,locked:false,order,raidDamage:r?.raidDamage,raidGuard:r?.raidGuard,raidManual:r?.raidManual,raidSummon:r?.raidSummon};
 }
+export function raidEquipmentBonus(save:SaveData,heroIds:string[]){const b=heroIds.flatMap(id=>equipped(save,id)).reduce((x,v)=>({damage:x.damage+(v.raidDamage??0),guard:x.guard+(v.raidGuard??0),manual:x.manual+(v.raidManual??0),summon:x.summon+(v.raidSummon??0)}),{damage:0,guard:0,manual:0,summon:0});return {damage:Math.min(.3,b.damage),guard:Math.min(.45,b.guard),manual:Math.min(.4,b.manual),summon:Math.min(.75,b.summon)};}
 export function equipped(save:SaveData,heroId:string){const ids=save.heroes[heroId]?.equipment??[];return ids.map(id=>save.equipmentInventory.find(v=>v.id===id)).filter((v):v is EquipmentItem=>!!v);}
 export function equipmentBonus(save:SaveData,heroId:string){const items=equipped(save,heroId);return items.reduce((b,v)=>{const mul=1+v.enhance*.05;b.attack+=v.attack*mul;b.hp+=v.hp*mul;b.speed+=v.speed;b.crit+=v.crit;b.skill+=v.skill;if(v.element){b.element=v.element;b.elementDamage+=v.elementDamage;}return b;},{attack:0,hp:0,speed:0,crit:0,skill:0,element:undefined as Element|undefined,elementDamage:0});}
 export function hasEquipmentTemplate(save:SaveData,heroId:string,templateId:string){return equipped(save,heroId).some(v=>v.templateId===templateId);}

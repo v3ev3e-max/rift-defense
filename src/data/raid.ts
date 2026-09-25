@@ -12,8 +12,14 @@ export const raidBosses=[
 export const raidDateKey=(date=new Date())=>date.toISOString().slice(0,10);
 export const raidWeekKey=(date=new Date())=>{const d=new Date(Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),date.getUTCDate()));d.setUTCDate(d.getUTCDate()+4-(d.getUTCDay()||7));const start=new Date(Date.UTC(d.getUTCFullYear(),0,1));return `${d.getUTCFullYear()}-W${String(Math.ceil((((+d-+start)/86400000)+1)/7)).padStart(2,'0')}`;};
 export const weeklyRaidBosses=(date=new Date())=>{const week=Number(raidWeekKey(date).slice(-2));return Array.from({length:3},(_,i)=>raidBosses[(week+i)%raidBosses.length]);};
-export const raidAutoDamage=(power:number,auto:boolean,alive=5,summons=0)=>power*(auto?.85:.55)*(alive/5)*Math.max(.6,1-summons*.04);
-export const raidManualDamage=(power:number,alive=5)=>power*8*(alive/5);
+export const raidBossTuning={
+ 'gale-colossus':{hp:1,attack:1,tempo:12},'void-observer':{hp:1.08,attack:1.12,tempo:11},'machine-god':{hp:1.18,attack:1.14,tempo:12},'solar-sphinx':{hp:1.28,attack:1.22,tempo:10},'aeon-sovereign':{hp:1.4,attack:1.3,tempo:9},
+} as const;
+export const raidBossMaxHp=(power:number,bossId:keyof typeof raidBossTuning)=>Math.max(1100000,Math.round((250000+power*255)*raidBossTuning[bossId].hp));
+export const raidAutoDamage=(power:number,auto:boolean,alive=5,summons=0,gearDamage=0,summonRelief=0)=>power*(auto?.82:.5)*(alive/5)*(1+gearDamage)*Math.max(.58,1-summons*.045*(1-Math.min(.75,summonRelief)));
+export const raidManualDamage=(power:number,alive=5,gearDamage=0,manualBonus=0)=>power*7.5*(alive/5)*(1+gearDamage+manualBonus);
+export const raidPatternDamage=(phase:number,bossId:keyof typeof raidBossTuning,guard=0)=>(4.5+phase*2.1)*raidBossTuning[bossId].attack*(1-Math.min(.45,guard));
+export const raidDropEligible=(damageRatio:number,roll:number)=>damageRatio>=1||damageRatio>=.35&&roll<.3;
 export function refreshRaid(save:SaveData,date=new Date()){
  const day=raidDateKey(date),week=raidWeekKey(date),r=save.raid;
  if(r.day!==day){r.day=day;r.attempts=RAID_DAILY_ATTEMPTS;r.dailyBest=0;}

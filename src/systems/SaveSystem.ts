@@ -1,7 +1,7 @@
 import { heroes } from "../data/heroes";
 import type { SaveData } from "../data/types";
 import {CAMPAIGN_SQUAD_CAP} from '../data/combatRoles';
-import {armorCatalog,equipItem,heroWeaponGroup,makeEquipment,necklaceCatalog,rarityMax,weaponCatalog,type EquipmentItem} from '../data/equipment';
+import {armorCatalog,equipItem,heroWeaponGroup,makeEquipment,necklaceCatalog,raidEquipmentCatalog,rarityMax,weaponCatalog,type EquipmentItem} from '../data/equipment';
 import {commanderById,defaultCommanderId} from '../data/commanders';
 import {RAID_DAILY_ATTEMPTS,raidDateKey,raidWeekKey} from '../data/raid';
 export const SAVE_KEY = "rift-defense-save-v1";
@@ -61,7 +61,7 @@ export function localTestResetSave():SaveData{
 }
 function grantTestCollection(data:SaveData){
   for(const h of heroes)data.heroes[h.id].owned=true;
-  const catalog=[...weaponCatalog,...armorCatalog,...necklaceCatalog];
+  const catalog=[...weaponCatalog,...armorCatalog,...necklaceCatalog,...raidEquipmentCatalog];
   for(const template of catalog){const id=`test-SR-${template.id}`;if(!data.equipmentInventory.some(v=>v.templateId===template.id))data.equipmentInventory.push(makeEquipment(template.id,'SR',data.equipmentInventory.length+100,id));}
 }
 const integer = (x: unknown, fallback: number, max = 1e9) =>
