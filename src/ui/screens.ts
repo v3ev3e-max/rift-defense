@@ -24,6 +24,7 @@ export function home(s: SaveData) {
  <nav class="hq-menu hq-menu-right" aria-label="작전 본부 오른쪽 메뉴">
   <button class="primary" data-action="stage"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/campaign.png')}" alt=""><span><b>균열 원정</b><small>160 STAGES</small></span></button>
   <button data-action="raid"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/campaign.png')}" alt=""><span><b>보스 레이드</b><small>WEEKLY RAID</small></span></button>
+  <button data-action="operations"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/formation.png')}" alt=""><span><b>특수 작전</b><small>8 OPERATIONS</small></span></button>
   <button data-action="recruit"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/recruit.png')}" alt=""><span><b>모집</b><small>RECRUIT</small></span></button>
   <button data-action="settings"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/settings.png')}" alt=""><span><b>설정</b><small>CONFIG</small></span></button>
  </nav>

@@ -4,6 +4,7 @@ import {campaignStages,stageUnlocked,doctrines,campaignWorldlines} from './data/
 import {priorities} from './data/strategy';
 import {waveBrief} from './data/waves';
 import "./style.css";
+import "./operations.css";
 import { SaveSystem,defaultSave,localTestResetSave,STARTER_HERO_IDS } from "./systems/SaveSystem";
 import { GameAudio } from "./utils/Audio";
 import {assetUrl} from './utils/assets';
@@ -49,9 +50,10 @@ import {commanderById,commanderPortrait} from './data/commanders';
 import {raidScreen,type RaidRuntime} from './ui/RaidUI';
 import {RAID_DURATION,raidAutoDamage,raidBosses,raidBossMaxHp,raidBossTuning,raidDropEligible,raidManualDamage,raidPatternDamage,refreshRaid,weeklyRaidBosses} from './data/raid';
 import {campaignPower} from './systems/CampaignPower';
+import {operationsScreen} from './ui/OperationsUI';
 
 type Screen =
-  "home" | "hero" | "deck" | "stage" | "raid" | "battle" | "result" | "settings" | "shop" | "inventory" | "recruit";
+  "home" | "hero" | "deck" | "stage" | "raid" | "operations" | "battle" | "result" | "settings" | "shop" | "inventory" | "recruit";
 const localTestMode=import.meta.env.DEV||location.protocol==='file:'||['localhost','127.0.0.1'].includes(location.hostname);
 class App {
   root = document.querySelector<HTMLDivElement>("#app")!;
@@ -207,6 +209,8 @@ class App {
               ? recruitScreen(s)
             : this.screen === 'raid'
               ? raidScreen(s,this.raidBossIndex,this.raidRuntime)
+            : this.screen === 'operations'
+              ? operationsScreen(s)
             : this.screen === "stage"
               ? campaignSelect(s)
               : this.screen === "result" && this.model?.result
@@ -360,7 +364,7 @@ class App {
   action(action: string, id?: string) {
     this.audio.unlock();
     const m = this.model;
-    if (["home", "hero", "deck", "stage", "raid", "settings", "shop", "inventory", "recruit"].includes(action) && !id) {
+    if (["home", "hero", "deck", "stage", "raid", "operations", "settings", "shop", "inventory", "recruit"].includes(action) && !id) {
       if (this.screen === "battle" && m && !m.ended) {
         if(m.campaign&&!m.started){m.paused=false;this.navigate(action as Screen);return;}
         m.paused = true;
@@ -374,6 +378,14 @@ class App {
       return;
     }
     switch (action) {
+      case 'ops-infinite':void this.begin(battleMaps[0].id);break;
+      case 'ops-rift':this.navigate('stage');this.toast('오늘의 속성 균열에 맞는 지역을 선택하세요.');break;
+      case 'ops-hero':this.navigate('deck');this.toast('개인 작전의 중심 영웅을 편성하세요.');break;
+      case 'ops-rush':this.navigate('raid');this.toast('동일한 5인 편성으로 주간 보스를 공략합니다.');break;
+      case 'ops-constraint':this.navigate('deck');this.toast('이번 주 제약 조건에 맞춰 편성을 조정하세요.');break;
+      case 'ops-sets':this.navigate('inventory');this.toast('보스 전용 장비 세트를 구성하세요.');break;
+      case 'ops-world':this.navigate('raid');this.toast('월드 보스 누적 피해는 주간 피해 기록과 공유됩니다.');break;
+      case 'ops-hard':this.navigate('stage');this.toast('후반 세계선의 강화 작전을 선택하세요.');break;
       case 'raid-boss':this.raidBossIndex=Math.max(0,Math.min(2,Number(id)||0));this.render();break;
       case 'raid-start':this.startRaid();break;
       case 'raid-auto':if(this.save.data.campaign){this.save.data.campaign.autoSkills=!this.save.data.campaign.autoSkills;this.persist();this.render();}break;
