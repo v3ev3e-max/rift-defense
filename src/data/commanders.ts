@@ -13,4 +13,4 @@ export const commanders=[
 
 export const defaultCommanderId=commanders[0].id;
 export const commanderById=Object.fromEntries(commanders.map(v=>[v.id,v])) as Record<string,(typeof commanders)[number]>;
-export const commanderPortrait=(id:string)=>`/assets/commanders/${commanderById[id]?.id??defaultCommanderId}.png`;
+export const commanderPortrait=(id:string)=>`/assets/commanders/${commanderById[id]?.id??defaultCommanderId}.webp`;

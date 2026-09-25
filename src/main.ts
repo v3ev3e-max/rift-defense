@@ -10,6 +10,7 @@ import { SaveSystem,defaultSave,localTestResetSave,STARTER_HERO_IDS } from "./sy
 import { GameAudio } from "./utils/Audio";
 import {assetUrl} from './utils/assets';
 import { BATTLE_SPEEDS, BattleModel } from "./systems/BattleModel";
+import { createGame } from "./game/GameConfig";
 import { mergeGroup } from "./systems/MergeSystem";
 import { heroes, heroById } from "./data/heroes";
 import {CAMPAIGN_SQUAD_CAP,formationComplete,formationRole} from './data/combatRoles';
@@ -313,8 +314,6 @@ class App {
     const model = this.model;
     const loaderStartedAt=performance.now();
     try {
-      const moduleTimeout=new Promise<never>((_,reject)=>setTimeout(()=>reject(new Error('전투 모듈 응답 시간 초과')),15000));
-      const { createGame } = await Promise.race([import("./game/GameConfig"),moduleTimeout]);
       if (token !== this.renderToken) return;
       let lastLoadPercent=-1,lastLoadGroup='';
       const loadProgress=(progress:number,file:string)=>{

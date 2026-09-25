@@ -22,6 +22,7 @@ export function createGame(model: BattleModel, callback: () => void, onLoadProgr
     scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
     fps: { target: recommendedTargetFps(), forceSetTimeOut: false, smoothStep: false },
     audio: { noAudio: true },
+    loader: { maxParallelDownloads: 2 },
     scene: [new BattleScene(model, callback, onLoadProgress, onReady)],
     banner: false,
   });

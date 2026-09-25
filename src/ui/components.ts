@@ -30,9 +30,9 @@ export const icon = (name: string) =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${paths[name] ?? paths.bolt}"/></svg>`;
 const renewedSupportPortraits=new Set(['rhea','echo','meriel','selene','ophilia']);
 export const portrait = (id: string, cls = "") =>
-  `<img class="pixel-hero ${cls}" src="${assetUrl(`/assets/illustrations/${id}${renewedSupportPortraits.has(id)?'-v2.png':'.webp'}`)}" alt="${heroById[id].name}" draggable="false"/>`;
+  `<img class="pixel-hero ${cls}" src="${assetUrl(`/assets/illustrations/${id}${renewedSupportPortraits.has(id)?'-v2.png':'.webp'}`)}" alt="${heroById[id].name}" draggable="false" loading="lazy" decoding="async" fetchpriority="low"/>`;
 export const combatPortrait = (id: string) =>
-  `<img class="recruit-portrait" src="${assetUrl(renewedSupportPortraits.has(id)?`/assets/illustrations/${id}-v2.png`:`/assets/face-icons/${id}.${id==='hana'||id==='celestia'?'png':'webp'}`)}" alt="${heroById[id].name} 얼굴" width="256" height="256" draggable="false"/>`;
+  `<img class="recruit-portrait" src="${assetUrl(renewedSupportPortraits.has(id)?`/assets/illustrations/${id}-v2.png`:`/assets/face-icons/${id}.${id==='hana'||id==='celestia'?'png':'webp'}`)}" alt="${heroById[id].name} 얼굴" width="256" height="256" draggable="false" loading="lazy" decoding="async" fetchpriority="low"/>`;
 export const num = (v: number) => Math.floor(v).toLocaleString("ko-KR");
 export const time = (v: number) =>
   `${Math.floor(v / 60)

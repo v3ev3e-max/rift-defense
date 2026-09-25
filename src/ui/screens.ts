@@ -20,7 +20,7 @@ export function home(s: SaveData) {
   <button data-action="campaign-deploy"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/formation.png')}" alt=""><span><b>실전 배치</b><small>FORMATION</small></span></button>
   <button data-action="inventory"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/armory.png')}" alt=""><span><b>아이템</b><small>ARMORY</small></span></button>
  </nav>
- <div class="hq-operator"><span class="hq-orbit one"></span><span class="hq-orbit two"></span><img class="hq-fullbody" src="${assetUrl('/assets/illustrations/sera-hq-fullbody.png')}" alt="메인 요원 세라 전신" draggable="false"><div class="hq-operator-name"><small>MAIN OPERATOR / 05</small><b>세라 <em>SERA</em></b><p>“지휘관, 사선은 제가 확보할게요.”</p></div></div>
+ <div class="hq-operator"><span class="hq-orbit one"></span><span class="hq-orbit two"></span><img class="hq-fullbody" src="${assetUrl('/assets/illustrations/sera-hq-fullbody.webp')}" alt="메인 요원 세라 전신" draggable="false" fetchpriority="low"><div class="hq-operator-name"><small>MAIN OPERATOR / 05</small><b>세라 <em>SERA</em></b><p>“지휘관, 사선은 제가 확보할게요.”</p></div></div>
  <nav class="hq-menu hq-menu-right" aria-label="작전 본부 오른쪽 메뉴">
   <button class="primary" data-action="stage"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/campaign.png')}" alt=""><span><b>균열 원정</b><small>160 STAGES</small></span></button>
   <button data-action="raid"><img class="hq-menu-icon" src="${assetUrl('/assets/ui/hq-icons/campaign.png')}" alt=""><span><b>보스 레이드</b><small>WEEKLY RAID</small></span></button>

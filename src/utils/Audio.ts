@@ -26,13 +26,13 @@ export class GameAudio {
   unlock(){
     if(!this.enabled)return;
     try{this.context??=new AudioContext();if(this.context.state==='suspended')void this.context.resume().catch(()=>{});}catch{/* Audio samples still work without Web Audio. */}
-    if(!this.pools.size){
-      for(const [kind,file] of Object.entries(soundFiles) as [SoundKind,string][]){
-        const count=['attack','laser','melee'].includes(kind)?4:2;
-        this.pools.set(kind,Array.from({length:count},()=>{const audio=new Audio(assetUrl(`/assets/audio/${file}`));audio.preload='auto';audio.volume=this.volume(kind);return audio;}));
-      }
-    }
     if(this.music&&this.desiredMusic&&this.bgmEnabled)this.resumeMusic();
+  }
+  private pool(kind:SoundKind){
+    const current=this.pools.get(kind);if(current)return current;
+    const file=soundFiles[kind],count=['attack','laser','melee'].includes(kind)?4:2;
+    const created=Array.from({length:count},()=>{const audio=new Audio(assetUrl(`/assets/audio/${file}`));audio.preload='none';audio.volume=this.volume(kind);return audio;});
+    this.pools.set(kind,created);return created;
   }
   volume(kind:SoundKind){return volumes[kind]*(backgroundKinds.has(kind)?this.bgmVolume:this.sfxVolume);}
   configure(settings:{sound:boolean;bgm:boolean;sfx:boolean;bgmVolume:number;sfxVolume:number}){
@@ -48,7 +48,7 @@ export class GameAudio {
     if(!kind){if(this.music){this.music.pause();this.music.currentTime=0;}this.music=undefined;this.musicKind=undefined;return;}
     if(this.musicKind===kind&&this.music){if(this.enabled&&this.bgmEnabled&&this.music.paused)this.resumeMusic();return;}
     if(this.music){this.music.pause();this.music.currentTime=0;}
-    const audio=new Audio(assetUrl(`/assets/audio/${musicFiles[kind]}`));audio.loop=true;audio.preload='auto';audio.volume=MUSIC_GAIN*this.bgmVolume;
+    const audio=new Audio(assetUrl(`/assets/audio/${musicFiles[kind]}`));audio.loop=true;audio.preload='none';audio.volume=MUSIC_GAIN*this.bgmVolume;
     this.music=audio;this.musicKind=kind;
     if(this.enabled&&this.bgmEnabled)this.resumeMusic();
   }
@@ -62,7 +62,7 @@ export class GameAudio {
     const now=performance.now()/1000,last=this.last.get(kind)??-99;
     if(now-last<(cooldowns[kind]??.04))return;
     this.last.set(kind,now);
-    const pool=this.pools.get(kind);if(!pool?.length)return;
+    const pool=this.pool(kind);if(!pool.length)return;
     const index=this.cursor.get(kind)??0,audio=pool[index%pool.length];this.cursor.set(kind,index+1);
     try{audio.pause();audio.currentTime=0;audio.volume=this.volume(kind);audio.playbackRate=['attack','laser','melee','drone'].includes(kind)?.94+Math.random()*.12:1;const token=(this.playbackToken.get(audio)??0)+1;this.playbackToken.set(audio,token);void audio.play().catch(()=>{});const limit=kind==='boss'?2.4:kind==='drone'?1.1:kind==='explosion'||kind==='core'?.9:0;if(limit)setTimeout(()=>{if(this.playbackToken.get(audio)===token){audio.pause();audio.currentTime=0;}},limit*1000);}catch{/* Muted and restricted browsers remain playable. */}
   }

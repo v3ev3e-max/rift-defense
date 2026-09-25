@@ -27,7 +27,9 @@ describe('character-specific skill animation assets',()=>{
  it('does not preload every hero animation before formation selection',()=>{
   const source=readFileSync('src/game/BattleScene.ts','utf8');
   expect(source).not.toContain('const activeIds = heroes.map');
+  expect(source).not.toContain('for (const h of heroes)');
   expect(source).toContain('this.enqueueHeroVisuals(u.heroId,true)');
+  expect(source).toContain("support-skill-${id}-${frame}");
  });
  it('provides three distinct idle frames for every hero',()=>{
   for(const hero of heroes){

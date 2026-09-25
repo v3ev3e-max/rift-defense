@@ -1,7 +1,7 @@
 import {generatedVfxNames} from './GeneratedVfx';
 import Phaser from "phaser";
 import { assetUrl } from '../utils/assets';
-import { heroes, heroById } from "../data/heroes";
+import { heroById } from "../data/heroes";
 import { enemies } from "../data/enemies";
 import { HERO_RENDER, poseSize, defeatPoseSize, weaponPoint, dronePoint, fitProjectile, heroVisualPose, heroVisualSize } from "./WeaponSockets";
 
@@ -100,6 +100,9 @@ export class BattleScene extends Phaser.Scene {
   enqueueHeroVisuals(id:string,autoStart=false){
     if(this.activeHeroIds.has(id)||this.pendingHeroIds.has(id))return;
     this.pendingHeroIds.add(id);
+    const hero=heroById[id],portraitUrl=assetUrl(hero.asset.url??`/assets/heroes/${id}.png`);
+    if(hero.asset.atlas)this.load.atlas(hero.asset.key,portraitUrl,hero.asset.atlas);
+    else this.load.image(hero.asset.key,portraitUrl);
     for(let frame=1;frame<=3;frame++)this.load.image(`hero-${id}-idle-${frame}`,assetUrl(`/assets/heroes/${id}/frame_${String(frame).padStart(2,'0')}.png`));
     for(let frame=1;frame<=3;frame++)this.load.image(`hero-${id}-defeat-${frame}`,assetUrl(`/assets/generated/hero-defeat/${id}/frame_${String(frame).padStart(2,'0')}.webp`));
     for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-up-${frame}`,assetUrl(`/assets/combat/${id}/up6_${String(frame).padStart(2,"0")}.png`));
@@ -111,13 +114,14 @@ export class BattleScene extends Phaser.Scene {
     }
     this.load.image(`fx-${id}-skill`,assetUrl(`/assets/effects/${id}/skill.png`));
     if(id==='yuria')this.load.image('fx-yuria-barrier',assetUrl('/assets/effects/yuria/barrier.png'));
+    if(['yuria','mia','leon','neris','livia','hana','gaia','astra','rhea','echo','meriel','selene','ophilia'].includes(id))
+      for(let frame=1;frame<=4;frame++)this.load.image(`support-skill-${id}-${frame}`,assetUrl(`/assets/generated/support-skills/${id}/frame_${String(frame).padStart(2,'0')}.webp`));
     this.load.once('complete',()=>{this.pendingHeroIds.delete(id);this.activeHeroIds.add(id);});
     if(autoStart&&!this.load.isLoading())this.load.start();
   }
   preload() {
     this.load.on('progress',(value:number)=>this.onLoadProgress(value,''));
     this.load.on('fileprogress',(file:Phaser.Loader.File)=>this.onLoadProgress(this.load.progress,file.key));
-    for(const name of generatedVfxNames)this.load.image(`vfx-${name}`,assetUrl(`/assets/generated/vfx/${name}.webp`));
     this.load.image('map-rift-courtyard', assetUrl(this.model.campaign?`/assets/campaign/${this.model.campaign.background}`:'/assets/maps/teal-laboratory.png'));
     for(const name of ['pad','selected','entry','core'])this.load.image(`lab-${name}`,assetUrl(`/assets/lab/${name}.png`));
     if(this.model.campaign)for(const name of ['pad','ring'])this.load.image(`campaign-${name}`,assetUrl(`/assets/campaign/${name}.png`));
@@ -125,6 +129,10 @@ export class BattleScene extends Phaser.Scene {
     this.load.image('hero-health-frame',assetUrl('/assets/ui/generated/hero-health-frame.webp'));
     this.load.image('skill-duration-gauge',assetUrl('/assets/ui/generated/skill-duration-gauge-v2.png'));
     this.load.image('reaction-generated',assetUrl('/assets/effects/common/reaction_generated.png'));
+    // Large generated effects used to be queued first. On a real mobile
+    // connection Phaser split bandwidth across them and stayed at 0% until a
+    // multi-megabyte file finished. Queue the visible map/UI essentials first.
+    for(const name of generatedVfxNames)this.load.image(`vfx-${name}`,assetUrl(`/assets/generated/vfx/${name}.webp`));
     const campaignArea=this.model.campaign?campaignRegion(this.model.campaign):0;
     const visualArea=campaignArea>12?campaignArea-4:campaignArea;
     this.campaignArea=campaignArea;
@@ -161,8 +169,6 @@ export class BattleScene extends Phaser.Scene {
     this.load.image('drone-body', assetUrl('/assets/generated/drone/body.webp'));
     this.load.image('sniper-round-v2',assetUrl('/assets/generated/sniper-round-v2.webp'));
     for(let frame=1;frame<=3;frame++)this.load.image(`sniper-muzzle-${frame}`,assetUrl(`/assets/generated/sniper-muzzle/frame_${String(frame).padStart(2,'0')}.webp`));
-    for(const id of ['yuria','mia','leon','neris','livia','hana','gaia','astra','rhea','echo','meriel','selene','ophilia'])for(let frame=1;frame<=4;frame++)
-      this.load.image(`support-skill-${id}-${frame}`,assetUrl(`/assets/generated/support-skills/${id}/frame_${String(frame).padStart(2,'0')}.webp`));
     for (const name of ['projectile','impact','overcharge'])
       this.load.image(`drone-${name}`, assetUrl(`/assets/generated/drone/${name}.webp`));
     for (const name of ['rage','frost','storm','void','disrupt'])
@@ -180,13 +186,9 @@ export class BattleScene extends Phaser.Scene {
     }
     const activeIds = [...new Set(this.model.units.map(u=>u.heroId))];
 
-    // Small static fallbacks are cheap enough to keep for every hero, while
-    // animation/effect textures are loaded only for the active deck.
-    for (const h of heroes) {
-      const url = assetUrl(h.asset.url ?? `/assets/heroes/${h.id}.png`);
-      if (h.asset.atlas) this.load.atlas(h.asset.key, url, h.asset.atlas);
-      else this.load.image(h.asset.key, url);
-    }
+    // Roster portraits are ordinary HTML images. Phaser only decodes a hero's
+    // battle textures after that hero is actually placed, which keeps the
+    // preparation screen below mobile memory limits.
     for(const id of activeIds)this.enqueueHeroVisuals(id);
   }
   create() {

@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Rift Pretendard";
-  src: url("/assets/fonts/PretendardVariable.woff2") format("woff2-variations");
+  src: url("/assets/fonts/PretendardGameSubset.woff2") format("woff2-variations");
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
@@ -394,7 +394,7 @@ img {
   inset: 0;
   background:
     linear-gradient(180deg, #06111d38 0%, #07131f12 52%, #06101ed4 100%),
-    url('/assets/backgrounds/operation-hq-v2.png') center center / cover no-repeat;
+    url('/assets/backgrounds/operation-hq-v2.webp') center center / cover no-repeat;
   z-index: -4;
 }
 .city-grid {
