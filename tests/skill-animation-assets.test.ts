@@ -4,10 +4,25 @@ import {readFileSync,statSync} from 'node:fs';
 // @ts-expect-error Vitest runs in Node while the game compiler targets browsers.
 import {createHash} from 'node:crypto';
 import {heroes} from '../src/data/heroes';
+import {heroVisualPose,heroVisualSize} from '../src/game/WeaponSockets';
 
 const hash=(path:string)=>createHash('sha256').update(readFileSync(path)).digest('hex');
 
 describe('character-specific skill animation assets',()=>{
+ it('returns to idle immediately after the real attack animation ends',()=>{
+  expect(heroVisualPose(false,false,false)).toBe('idle');
+  expect(heroVisualPose(false,false,true)).toBe('idle');
+  expect(heroVisualPose(true,false,false)).toBe('attack');
+  expect(heroVisualPose(true,false,true)).toBe('up');
+  expect(heroVisualPose(true,true,true)).toBe('skill');
+ });
+
+ it('uses one clipping-safe footprint for every hero skill sheet',()=>{
+  for(const hero of heroes){
+   expect(heroVisualSize(hero.id,false,'skill'),hero.id).toBe(160);
+   expect(heroVisualSize(hero.id,true,'skill'),hero.id).toBe(160);
+  }
+ });
  it('provides three distinct idle frames for every hero',()=>{
   for(const hero of heroes){
    const frames=Array.from({length:3},(_,i)=>hash(`public/assets/heroes/${hero.id}/frame_${String(i+1).padStart(2,'0')}.png`));

@@ -3,7 +3,7 @@ import Phaser from "phaser";
 import { assetUrl } from '../utils/assets';
 import { heroes, heroById } from "../data/heroes";
 import { enemies } from "../data/enemies";
-import { HERO_RENDER, poseSize, defeatPoseSize, weaponPoint, dronePoint, fitProjectile } from "./WeaponSockets";
+import { HERO_RENDER, poseSize, defeatPoseSize, weaponPoint, dronePoint, fitProjectile, heroVisualPose, heroVisualSize } from "./WeaponSockets";
 
 import { MAP, CELL } from "../data/map";
 import {battleTimeScale,type BattleModel} from "../systems/BattleModel";
@@ -701,11 +701,11 @@ export class BattleScene extends Phaser.Scene {
         : 1;
       const north = !!u.facingUp && this.textures.exists(`hero-${u.heroId}-up-1`);
       const upFrame = attacking ? [1,2,3,4,5,6,6,1][heroAnimFrame-1] : 1;
-      const idle=m.time-(u.lastAttackAt??-999)>=1;
       const skillElapsed=m.time-(u.skillCastAt??-999),skillCasting=skillElapsed>=0&&skillElapsed<.9&&u.hp>0;
       const skillFrame=Math.min(6,Math.floor(skillElapsed/.15)+1);
+      const visualPose=heroVisualPose(attacking,skillCasting,north);
       const idleSequence=[1,2,3,2],idleFrame=idleSequence[Math.floor((this.visualTime+u.uid*.071)*3)%idleSequence.length];
-      const textureKey = skillCasting ? `hero-${u.heroId}-skill-${skillFrame}` : idle ? `hero-${u.heroId}-idle-${idleFrame}` : north ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
+      const textureKey = visualPose==='skill' ? `hero-${u.heroId}-skill-${skillFrame}` : visualPose==='idle' ? `hero-${u.heroId}-idle-${idleFrame}` : visualPose==='up' ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
         ? `hero-${u.heroId}-anim-${heroAnimFrame}`
         : heroById[u.heroId].asset.key;
       sp.setVisible(true);
@@ -713,14 +713,10 @@ export class BattleScene extends Phaser.Scene {
         sp.setTexture(textureKey, animatedHero ? undefined : heroById[u.heroId].asset.frame);
       sp.setAlpha(u.hp <= 0 ? 0.25 : u.stunned ? 0.55 : 1)
         .setDepth(this.dragUid===u.uid?800:20+u.y);
-      // Skill sheets include the character-specific barrier, muzzle or support
-      // bloom, so give them a little more room than the ordinary body pose.
-      // The generated sheets reserve a hard 40px transparent safe area on
-      // every edge. Compensate for that padding without ever cropping it.
-      const size=poseSize(u.heroId,north,idle)*(skillCasting?1.7:1);
+      const size=heroVisualSize(u.heroId,north,visualPose);
       sp.setDisplaySize(size,size);
       // Source art faces right. Use the real shot target, not a nearby bystander.
-      sp.setFlipX(!idle && !north && (u.facingLeft ?? false));
+      sp.setFlipX(visualPose==='attack' && (u.facingLeft ?? false));
       if (u.uid !== this.dragUid) sp.setPosition(u.x, u.y + HERO_RENDER.offsetY);
       label
         .setVisible(true)

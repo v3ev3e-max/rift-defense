@@ -23,6 +23,20 @@ export function poseSize(id:string,north:boolean,idle=false){
  if(oversizedAddedHeroes.has(id))return idle?86:north?118:80;
  return idle?HERO_RENDER.size:north?(['leon','kairon'].includes(id)?96:HERO_RENDER.size):HERO_RENDER.sideSize;
 }
+export type HeroVisualPose='idle'|'attack'|'up'|'skill';
+/** Keep animation state selection independent from attack cooldowns. An attack
+ * pose may only remain visible while its actual animation window is active. */
+export function heroVisualPose(attacking:boolean,skillCasting:boolean,north:boolean):HeroVisualPose{
+ if(skillCasting)return 'skill';
+ if(!attacking)return 'idle';
+ return north?'up':'attack';
+}
+/** Skill sheets use a common 384px canvas and already contain generous safe
+ * gutters. A fixed footprint prevents large-pose heroes from being enlarged
+ * past the battlefield edge while keeping every hero at the same visual scale. */
+export function heroVisualSize(id:string,north:boolean,pose:HeroVisualPose){
+ return pose==='skill'?160:poseSize(id,north,pose==='idle');
+}
 export function defeatPoseSize(id:string){
  const base=id==='hana'?112:oversizedAddedHeroes.has(id)?108:HERO_RENDER.size;
  return normalizedDefeatHeroes.has(id)?base/NORMALIZED_ASSET_SCALE:base;
