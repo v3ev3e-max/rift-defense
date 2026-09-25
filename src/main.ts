@@ -158,7 +158,16 @@ class App {
     this.render();
     if (import.meta.env.PROD && "serviceWorker" in navigator)
       window.addEventListener("load", () => {
-        void navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => {});
+        const workerUrl=`${import.meta.env.BASE_URL}sw.js?v=battle-loader-hotfix-v2`;
+        let refreshing=false;
+        navigator.serviceWorker.addEventListener('controllerchange',()=>{
+          if(refreshing||sessionStorage.getItem('rift-worker-reloaded')==='battle-loader-hotfix-v2')return;
+          refreshing=true;sessionStorage.setItem('rift-worker-reloaded','battle-loader-hotfix-v2');location.reload();
+        });
+        void navigator.serviceWorker.register(workerUrl,{updateViaCache:'none'}).then(async registration=>{
+          await registration.update();
+          registration.waiting?.postMessage({type:'SKIP_WAITING'});
+        }).catch(() => {});
       });
     if (import.meta.env.DEV) (window as unknown as { rift: App }).rift = this;
   }
