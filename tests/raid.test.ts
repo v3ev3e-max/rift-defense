@@ -2,6 +2,7 @@ import {describe,expect,it} from 'vitest';
 import {defaultSave,parseSave} from '../src/systems/SaveSystem';
 import {RAID_DAILY_ATTEMPTS,raidAutoDamage,raidManualDamage,raidRank,refreshRaid,weeklyRaidBosses} from '../src/data/raid';
 import {raidScreen} from '../src/ui/RaidUI';
+// @ts-expect-error Vitest runs in Node; the browser build intentionally omits Node typings.
 import {statSync} from 'node:fs';
 
 describe('weekly boss raid',()=>{
