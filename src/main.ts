@@ -88,6 +88,7 @@ class App {
   raidBossIndex=0;
   raidRuntime?:RaidRuntime;
   raidTimer=0;
+  activeOperation?:'rift'|'constraint'|'hard';
   renderToken = 0;
   renderedScreen?:Screen;
   prepDrag?:{heroId:string;startX:number;startY:number;pointerId:number;source:HTMLElement;active:boolean;ghost?:HTMLElement};
@@ -157,7 +158,7 @@ class App {
     });
     window.addEventListener("pagehide", () => this.save.persist());
     this.render();
-    if (import.meta.env.DEV) (window as unknown as { rift: App }).rift = this;
+    if (localTestMode) (window as unknown as { rift: App }).rift = this;
   }
   toast(text: string) {
     let el = document.querySelector<HTMLDivElement>("#toast");
@@ -297,7 +298,14 @@ class App {
     this.model = new BattleModel(structuredClone(this.save.data), Math.random, battleMaps.find(v=>v.id===mapId)??battleMaps[0]);
     this.model.onSound = (sound) => this.audio.play(sound);
     if(stage){
-      this.model.configureCampaign(stage,this.save.data.campaign!.squad,true);
+      const operationStage=this.activeOperation?{...stage,
+        name:`${stage.name} · ${this.activeOperation==='rift'?'속성 균열':this.activeOperation==='constraint'?'제약 작전':'고난도'}`,
+        enemyHp:+(stage.enemyHp*(this.activeOperation==='hard'?1.35:this.activeOperation==='rift'?1.18:1.12)).toFixed(3),
+        enemyAttack:+(stage.enemyAttack*(this.activeOperation==='hard'?1.28:this.activeOperation==='rift'?1.15:1.1)).toFixed(3),
+        enemySpeed:+(stage.enemySpeed+(this.activeOperation==='hard'?.1:.06)).toFixed(3),
+        reward:Math.round(stage.reward*(this.activeOperation==='hard'?1.8:1.45))}:stage;
+      const operationSquad=this.activeOperation==='constraint'?STARTER_HERO_IDS.filter(heroId=>['B','A'].includes(heroById[heroId].grade)).slice(0,5):this.save.data.campaign!.squad;
+      this.model.configureCampaign(operationStage,operationSquad,true);
       if(firstDeployment){this.model.autoSkills=false;this.model.autoDeployCampaign();this.save.data.campaign!.lastDeployment=Object.fromEntries(this.model.units.map(u=>[u.heroId,u.slot]));this.persist();}
     }
     else this.model.start();
@@ -376,13 +384,13 @@ class App {
     }
     switch (action) {
       case 'ops-infinite':void this.begin(battleMaps[0].id);break;
-      case 'ops-rift':this.navigate('stage');this.toast('오늘의 속성 균열에 맞는 지역을 선택하세요.');break;
+      case 'ops-rift':this.activeOperation='rift';void this.begin(this.save.data.campaign!.selected,true);break;
       case 'ops-hero':this.navigate('deck');this.toast('개인 작전의 중심 영웅을 편성하세요.');break;
       case 'ops-rush':this.navigate('raid');this.toast('동일한 5인 편성으로 주간 보스를 공략합니다.');break;
-      case 'ops-constraint':this.navigate('deck');this.toast('이번 주 제약 조건에 맞춰 편성을 조정하세요.');break;
+      case 'ops-constraint':this.activeOperation='constraint';void this.begin(this.save.data.campaign!.selected,true);break;
       case 'ops-sets':this.navigate('inventory');this.toast('보스 전용 장비 세트를 구성하세요.');break;
       case 'ops-world':this.navigate('raid');this.toast('월드 보스 누적 피해는 주간 피해 기록과 공유됩니다.');break;
-      case 'ops-hard':this.navigate('stage');this.toast('후반 세계선의 강화 작전을 선택하세요.');break;
+      case 'ops-hard':this.activeOperation='hard';void this.begin(this.save.data.campaign!.selected,true);break;
       case 'raid-boss':this.raidBossIndex=Math.max(0,Math.min(2,Number(id)||0));this.render();break;
       case 'raid-start':this.startRaid();break;
       case 'raid-auto':if(this.save.data.campaign){this.save.data.campaign.autoSkills=!this.save.data.campaign.autoSkills;this.persist();this.render();}break;
@@ -817,7 +825,8 @@ class App {
       if(tutorial){tutorial.innerHTML='';tutorial.removeAttribute('data-step');}
       const s = this.save.data;
       if(m.campaign){const c=s.campaign!,id=m.campaign.id,previous=c.records[id];
-        if(m.result.won){if(!previous)m.result.credits+=m.campaign.reward;c.records[id]={stars:Math.max(previous?.stars??0,m.result.stars??1),time:Math.min(previous?.time??Infinity,m.result.time),kills:Math.max(previous?.kills??0,m.result.kills)};for(const u of m.units)c.fragments[u.heroId]=Math.min(999,(c.fragments[u.heroId]??0)+1);if(id==='1-3'&&!s.tutorial){s.tutorial=true;this.toast('기초 작전 훈련 완료 · 자유롭게 편성과 장비를 조정할 수 있습니다.');}
+        if(this.activeOperation){const score=Math.max(0,Math.round(m.result.kills*100+m.core*20+(m.result.won?5000:0))),key=this.activeOperation==='rift'?'riftBest':this.activeOperation==='constraint'?'constraintBest':'hardBest';s.operations[key]=Math.max(s.operations[key],score);s.operations.lastDaily=new Date().toISOString().slice(0,10);m.result.credits+=m.result.won?Math.round(m.campaign.reward*.45):0;}
+        if(m.result.won&&!this.activeOperation){if(!previous)m.result.credits+=m.campaign.reward;c.records[id]={stars:Math.max(previous?.stars??0,m.result.stars??1),time:Math.min(previous?.time??Infinity,m.result.time),kills:Math.max(previous?.kills??0,m.result.kills)};for(const u of m.units)c.fragments[u.heroId]=Math.min(999,(c.fragments[u.heroId]??0)+1);if(id==='1-3'&&!s.tutorial){s.tutorial=true;this.toast('기초 작전 훈련 완료 · 자유롭게 편성과 장비를 조정할 수 있습니다.');}
           const stageIndex=Math.max(0,campaignStages.findIndex(stage=>stage.id===id)),regionIndex=Math.max(0,Number(id.split('-')[0])-1),boss=(campaignStages[stageIndex]?.waves??0)>=6;
           const materialReward=Math.max(1,Math.floor((regionIndex+1)/2))*(boss?2:1);s.equipmentMaterials+=materialReward;m.result.materials=materialReward;
           if(Math.random()<campaignEquipmentDropChance(boss)){const roll=Math.random(),rarity=campaignEquipmentRarity(regionIndex,boss,roll,s.equipmentPity),pool=[...weaponCatalog,...armorCatalog,...necklaceCatalog],template=pool[Math.floor(Math.random()*pool.length)],drop=makeEquipment(template.id,rarity);s.equipmentPity=rarity==='SR'?0:s.equipmentPity+1;if(s.equipmentPity>=20&&regionIndex>=6){Object.assign(drop,makeEquipment(template.id,'SR',drop.order,drop.id));s.equipmentPity=0;}
@@ -832,7 +841,8 @@ class App {
       s.cleared = Math.max(s.cleared, Number(m.result.won));
       this.persist();
       this.showModal(m.campaign?campaignResult(m.result):resultScreen(m.result),'battle-result');
-      if(m.campaign&&m.result.won&&s.campaign?.autoAdvance){
+      const completedOperation=this.activeOperation;this.activeOperation=undefined;
+      if(m.campaign&&m.result.won&&!completedOperation&&s.campaign?.autoAdvance){
         const next=campaignStages[campaignStages.findIndex(stage=>stage.id===m.campaign!.id)+1];
         if(next){const completedLayout=Object.fromEntries(m.units.map(u=>[u.heroId,u.slot]).filter(([,slot])=>(slot as number)>=0));s.campaign.lastDeployment=completedLayout;s.campaign.selected=next.id;this.persist();setTimeout(async()=>{if(this.screen!=="battle"||this.modalType!=="battle-result"||!this.save.data.campaign?.autoAdvance)return;await this.begin(next.id,true);const nextBattle=this.model;if(nextBattle?.campaign){const restored=nextBattle.deployCampaignLayout(this.save.data.campaign.lastDeployment);if((restored||nextBattle.autoDeployCampaign())){nextBattle.start();this.syncMusic();this.updateHud(true);this.toast(`${next.id} 이전 배치로 자동 출격`);}}},1800);}
       }

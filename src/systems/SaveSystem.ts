@@ -16,6 +16,7 @@ export function defaultSave(): SaveData {
   const data:SaveData={
     commanderId:defaultCommanderId,
     commanderName:commanderById[defaultCommanderId].name,
+    operations:{riftBest:0,constraintBest:0,hardBest:0,lastDaily:''},
     raid:{day:raidDateKey(),week:raidWeekKey(),attempts:RAID_DAILY_ATTEMPTS,dailyBest:0,weeklyDamage:0,weeklyBest:0,claimed:[],lastSettlement:''},
     saveVersion: 1,
     credits: 500,
@@ -97,7 +98,7 @@ export function parseSave(raw: string | null): SaveData {
         for(const id of squad){const slot=raw.layout[id];if(!Number.isInteger(slot)||slot<0||slot>5||used.has(slot))continue;layout[id]=slot;used.add(slot);}
         if(squad.length&&squad.every(id=>layout[id]!==undefined))c.deploymentPresets[i]={squad,layout};
       }
-      const stageIds=Array.from({length:8},(_,region)=>Array.from({length:10},(_,stage)=>`${region+1}-${stage+1}`)).flat();
+      const stageIds=Array.from({length:16},(_,region)=>Array.from({length:10},(_,stage)=>`${region+1}-${stage+1}`)).flat();
       if(stageIds.includes(s.campaign.selected))c.selected=s.campaign.selected;
       for(const id of stageIds){const r=s.campaign.records?.[id];if(r&&integer(r.stars,0,3)>0)c.records[id]={stars:integer(r.stars,0,3),time:integer(r.time,0),kills:integer(r.kills,0)};}
       for(const [key,value] of Object.entries(s.campaign.research??{}))if(/^(water|fire|electric|dark|burst|sniper|melee|chain|meteor|shell|drone|support|curse)$/.test(key))c.research[key]=integer(value,0,10);
@@ -136,6 +137,12 @@ export function parseSave(raw: string | null): SaveData {
     if(Array.isArray(s.campaign?.squad)){
       const savedSquad=s.campaign.squad.map((id:string)=>LEGACY_HERO_IDS[id]??id);
       d.campaign!.squad=validCampaignSquad(savedSquad.length===LEGACY_STARTER_HERO_IDS.length&&savedSquad.every((id:string,i:number)=>id===LEGACY_STARTER_HERO_IDS[i])?STARTER_HERO_IDS:savedSquad,owned);
+    }
+    if(s.operations&&typeof s.operations==='object'){
+      d.operations.riftBest=integer(s.operations.riftBest,0);
+      d.operations.constraintBest=integer(s.operations.constraintBest,0);
+      d.operations.hardBest=integer(s.operations.hardBest,0);
+      d.operations.lastDaily=typeof s.operations.lastDaily==='string'?s.operations.lastDaily.slice(0,10):'';
     }
     if (Array.isArray(s.deck)) {
       const deck = [

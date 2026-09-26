@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 
 test('permanent stars and three-slot equipment remain usable without horizontal overflow',async({page})=>{
  await page.goto('/',{waitUntil:'domcontentloaded'});
- await page.locator('.bottom-nav [data-action="hero"]').click();
+ await page.evaluate(()=>{(window as any).rift.navigate('hero');});
  await expect(page.locator('.equipment-screen')).toBeVisible();
  await expect(page.locator('.equipment-slots .equip-slot')).toHaveCount(3);
  await page.locator('.equipment-screen details').click();
@@ -17,7 +17,7 @@ test('permanent stars and three-slot equipment remain usable without horizontal 
 });
 test('opens equipment from live-map preparation and equips without leaving the battlefield',async({page})=>{
  await page.goto('/',{waitUntil:'domcontentloaded'});await page.locator('[data-action="campaign-deploy"]').first().click();
- await page.evaluate(()=>{const a=(window as any).rift;a.placeCampaignHero('sera',0);const u=a.model.units[0];a.model.selected=u.uid;a.updateHud(true);});
+ await page.evaluate(()=>{const a=(window as any).rift;a.placeCampaignHero('sera',0);const u=a.model.units.find((v:any)=>v.heroId==='sera');a.model.selected=u.uid;a.updateHud(true);});
  await expect(page.locator('.prep-bag')).toContainText('세라');
  await expect(page.locator('.prep-bag-slot')).toHaveCount(3);
  await page.locator('[data-action="prep-auto"]').click();

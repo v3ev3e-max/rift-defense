@@ -4,7 +4,7 @@ export const campaignGradeStarAttack=(grade:'B'|'A'|'S'|'SR',star:number)=>campa
 export const campaignStarHealth=(star:number)=>1+.32*Math.max(0,star-1);
 // Thirty-second single-target audits exposed self-reaction outliers in dual-element SR units.
 export const campaignHeroOutput:Record<string,number>={arden:.62,solara:.66,aurora:.78};
-export const campaignVanguardHealth=[1,1.08,1.18,1.28,1.4,1.75,2.0,2.25,2.0,2.2,2.45,2.7] as const;
+export const campaignVanguardHealth=[1,1.08,1.18,1.28,1.4,1.6,1.82,2.05,2.25,2.45,2.65,2.85,3.05,3.25,3.45,3.65] as const;
 export const campaignRegionBalance=[
  {hp:5.0,attack:.45,speed:.85,stars:1},
  {hp:6.3,attack:.62,speed:.86,stars:1},
@@ -20,8 +20,8 @@ export const campaignRegionBalance=[
  {hp:22.0,attack:2.00,speed:.94,stars:5},
  {hp:22.0,attack:2.20,speed:.95,stars:5},
  {hp:22.5,attack:2.55,speed:.96,stars:5},
- {hp:35.0,attack:2.75,speed:.97,stars:5},
- {hp:36.0,attack:3.00,speed:.98,stars:5},
- {hp:48.0,attack:3.28,speed:.99,stars:5},
- {hp:62.0,attack:3.60,speed:1.00,stars:5},
+ {hp:24.5,attack:2.75,speed:.97,stars:5},
+ {hp:26.5,attack:2.95,speed:.98,stars:5},
+ {hp:29.0,attack:3.00,speed:.99,stars:5},
+ {hp:32.0,attack:1.70,speed:1.00,stars:5},
 ] as const;

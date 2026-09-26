@@ -3,7 +3,7 @@ import {test,expect} from '@playwright/test';
 test('item menu crafts, filters and manages equipment without horizontal overflow',async({page})=>{
  await page.goto('/',{waitUntil:'domcontentloaded'});
  await page.evaluate(()=>{const app=(window as any).rift;app.save.data.equipmentGold=500;app.save.data.equipmentMaterials=100;app.persist();app.render();});
- await page.locator('.bottom-nav [data-action="inventory"]').click();
+ await page.evaluate(()=>{(window as any).rift.navigate('inventory');});
  await expect(page.locator('.item-screen')).toBeVisible();
  await expect(page.locator('.item-wallet')).toContainText('500G');
  await page.locator('[data-action="item-tab"][data-id="craft"]').click();

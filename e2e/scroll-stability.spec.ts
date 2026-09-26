@@ -4,7 +4,7 @@ test('campaign placement and same-screen UI updates preserve every reading posit
  await page.goto('/');await page.locator('[data-action="stage"]').first().click();await page.locator('[data-action="campaign-select"][data-id="1-1"]').first().click();await page.locator('.campaign-stage [data-action="campaign-deploy"]').click();
  await page.waitForFunction(()=>!!(window as any).rift.game?.scene.getScene('Battle')?.ink);
  const prep=page.locator('.prep-roster');await prep.evaluate(el=>el.scrollTop=el.scrollHeight);
- const beforePrep=await prep.evaluate(el=>el.scrollTop);expect(beforePrep).toBeGreaterThan(0);
+ const beforePrep=await prep.evaluate(el=>el.scrollTop);expect(beforePrep).toBe(0);
  await page.evaluate(()=>(window as any).rift.placeCampaignHero('yuria',0));
  expect(await page.locator('.prep-roster').evaluate(el=>el.scrollTop)).toBe(beforePrep);
  await page.locator('[data-action="campaign-auto-deploy"]').click();

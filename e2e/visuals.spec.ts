@@ -3,8 +3,7 @@ const ids=['yuria','reina','arin','karin','sera','noel','luna','mia','ian','leon
 for(const id of ids)test(`${id} actual combat textures, animation and bounds`,async({page},info)=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/');
- await page.evaluate(id=>{const a=(window as any).rift;a.save.data.deck=[id];a.save.data.tutorial=true;a.save.persist();},id);
- await page.locator('[data-action="stage"]').first().click();await page.locator('[data-action="start-battle"]').first().click();
+ await page.evaluate(id=>{const a=(window as any).rift;a.save.data.deck=[id];a.save.data.campaign.squad=[id];a.save.data.tutorial=true;a.save.persist();a.begin('1-1',true);},id);
  await page.waitForFunction(()=>!!(window as any).rift.game?.scene.getScene('Battle')?.ink);
  const result=await page.evaluate(async id=>{
   const a=(window as any).rift,m=a.model,s=a.game.scene.getScene('Battle');a.game.loop.stop();s.callback=()=>{};m.paused=true;
@@ -16,10 +15,10 @@ for(const id of ids)test(`${id} actual combat textures, animation and bounds`,as
   let skill=false,reaction=false;
   for(let n=0;n<30;n++){
    m.effects.forEach((f:any)=>f.life=0);e.waterMark=e.fireMark=e.electricMark=e.darkMark=1;
-   m.actions.forEach((a:any)=>a.active=false);combat.attack(m,u,e);for(let i=0;i<70;i++)stepActions(m,1/60);u.skillCharge=100;u.skillReadyAt=0;m.paused=false;castAutoSkill(m,u,e);m.paused=true;skill ||= m.effects.some((f:any)=>f.life>0&&f.visual===`${id}-skill`);
+   m.actions.forEach((a:any)=>a.active=false);combat.attack(m,u,e);for(let i=0;i<70;i++)stepActions(m,1/60);u.skillCharge=100;u.skillReadyAt=0;m.paused=false;castAutoSkill(m,u,e);m.paused=true;skill ||= m.effects.some((f:any)=>f.life>0&&(f.visual===`${id}-skill`||f.visual===`support-skill-${id}`));
    reaction ||= Object.values(m.reactionCounts).some((n:any)=>n>0);s.update(0,0);
   }
-  const heroFrames:string[]=[];s.update(0,0);u.shots++;s.visualTime+=1;
+  const heroFrames:string[]=[];u.skillCastAt=-999;s.update(0,0);u.shots++;s.visualTime+=1;
   s.update(0,0);heroFrames.push(s.heroSprites[0].texture.key);
   for(let i=0;i<7;i++){s.visualTime+=.084;s.update(0,0);heroFrames.push(s.heroSprites[0].texture.key);}
   const frames:string[]=[];m.effects.forEach((f:any)=>f.life=0);m.emit('shot',0,0,800,800,0xffffff,{visual:`${id}-projectile`,duration:.25});

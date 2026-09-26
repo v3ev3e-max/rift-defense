@@ -2,8 +2,9 @@ import {test,expect} from '@playwright/test';
 test('exact purchase, field movement and undo without reserve',async({page,isMobile},info)=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/');await page.evaluate(()=>{const a=(window as any).rift;a.save.data.tutorial=true;a.save.persist();});
- await page.locator('[data-action="stage"]').first().click();await page.locator('[data-action="start-battle"]').click();await page.waitForFunction(()=>!!(window as any).rift.game?.scene.getScene('Battle')?.ink);
+ await page.evaluate(()=>{const a=(window as any).rift;a.begin('laboratory');});await page.waitForFunction(()=>!!(window as any).rift.game?.scene.getScene('Battle')?.ink);
  await page.evaluate(()=>{const m=(window as any).rift.model;m.started=false;});
+ await page.locator('.hero-shop-shell > summary').click();
  const press=async(x:number,y:number)=>{await page.locator('canvas').scrollIntoViewIfNeeded();const b=(await page.locator('canvas').boundingBox())!;if(isMobile)await page.touchscreen.tap(b.x+x/800*b.width,b.y+y/800*b.height);else await page.mouse.click(b.x+x/800*b.width,b.y+y/800*b.height);};
  await page.locator('[data-action="buy-hero"][data-id="reina"]').click();await press(290,90);expect(await page.evaluate(()=>(window as any).rift.model.units.length)).toBe(0);
  await press(290,180);expect(await page.evaluate(()=>{const m=(window as any).rift.model;return [m.units[0].heroId,m.units[0].slot,m.gold];})).toEqual(['reina',1,55]);

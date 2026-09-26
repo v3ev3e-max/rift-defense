@@ -189,6 +189,9 @@ export class BattleScene extends Phaser.Scene {
     // Roster portraits are ordinary HTML images. Phaser only decodes a hero's
     // battle textures after that hero is actually placed, which keeps the
     // preparation screen below mobile memory limits.
+    // Decode one operator before first paint, then stream the remaining squad
+    // from update(). This avoids WebKit stalling on 100+ sprite files before a
+    // single frame can be shown while still guaranteeing an immediate hero.
     for(const id of activeIds)this.enqueueHeroVisuals(id);
   }
   create() {
@@ -198,6 +201,13 @@ export class BattleScene extends Phaser.Scene {
     this.input.dragDistanceThreshold=12;
     this.input.dragTimeThreshold=140;
     const syncBounds=()=>this.scale.updateBounds();
+    const releaseToPreparation=(event:PointerEvent)=>{
+      if(!this.dragUid||!this.model.campaign||this.model.started)return;
+      const panel=document.querySelector<HTMLElement>('#campaign-prep'),rect=panel?.getBoundingClientRect();
+      if(!rect||event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)return;
+      const uid=this.dragUid;this.model.reserveCampaignUnit(uid);window.dispatchEvent(new CustomEvent('campaign-unit-reserved',{detail:{uid}}));
+      this.dragUid=0;panel?.classList.remove('unit-drop-active');this.callback();
+    };
     const touchMerge=(event:TouchEvent)=>{
       const touch=event.changedTouches[0];if(!touch||this.model.paused||this.model.ended||this.model.choices.length)return;
       const rect=this.game.canvas.getBoundingClientRect(),x=(touch.clientX-rect.left)/rect.width*MAP.width,y=(touch.clientY-rect.top)/rect.height*MAP.height;
@@ -208,11 +218,13 @@ export class BattleScene extends Phaser.Scene {
       else{this.lastTouchUid=unit.uid;this.lastTouchAt=now;}
     };
     window.addEventListener('scroll',syncBounds,true);
+    window.addEventListener('pointerup',releaseToPreparation,true);
     this.game.canvas.addEventListener('pointerdown',syncBounds,true);
     this.game.canvas.addEventListener('touchstart',syncBounds,true);
     this.game.canvas.addEventListener('touchend',touchMerge,true);
     this.events.once('shutdown',()=>{
       window.removeEventListener('scroll',syncBounds,true);
+      window.removeEventListener('pointerup',releaseToPreparation,true);
       this.game.canvas.removeEventListener('pointerdown',syncBounds,true);
       this.game.canvas.removeEventListener('touchstart',syncBounds,true);
       this.game.canvas.removeEventListener('touchend',touchMerge,true);

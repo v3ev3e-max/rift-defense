@@ -141,7 +141,7 @@ export function stepCombat(m: BattleModel, dt: number) {
         else if(def.namedSkill==='barrage'&&far)m.hurtUnit(far,16*campaignAttack);
         else if(def.namedSkill==='jam'){for(const u of living)u.cooldown=Math.max(u.cooldown,.7);}
         else if(def.namedSkill==='drain'&&nearest){const dealt=14*campaignAttack;m.hurtUnit(nearest,dealt);e.hp=Math.min(e.maxHp,e.hp+dealt*3);}
-        else if(def.namedSkill==='collapse'){for(const u of living)m.hurtUnit(u,12*campaignAttack);}
+        else if(def.namedSkill==='collapse'){for(const u of living)m.hurtUnit(u,2*campaignAttack);}
         else if(def.namedSkill==='gale'){for(const u of living){u.stunned=Math.max(u.stunned,.65);m.hurtUnit(u,8*campaignAttack);}}
         else if(def.namedSkill==='mirage')e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.16);
         else if(def.namedSkill==='repair'){for(const ally of m.enemies)if(ally.active&&distance(ally,e)<220)ally.hp=Math.min(ally.maxHp,ally.hp+ally.maxHp*.14);}

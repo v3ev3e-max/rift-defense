@@ -8,6 +8,7 @@ import {heroes} from '../src/data/heroes';
 import {campaignRegionBalance} from '../src/data/campaignBalance';
 import type {HeroGrade} from '../src/data/types';
 import {castManualSkill} from '../src/systems/AutoSkills';
+import {formationRole} from '../src/data/combatRoles';
 
 // Fixed input profiles; never tune enemies to the player's currently equipped team.
 const starter=['yuria','reina','sera','noel','arin'];
@@ -41,26 +42,33 @@ for(const stage of campaignStages.filter(s=>(!regions||regions.includes(s.id.spl
  const region=Number(stage.id.split('-')[0]);
  for(const profile of profiles.filter(p=>!process.argv.some(a=>a.startsWith('--profile='))||process.argv.includes('--profile='+p.name))){
   if(rows.some(r=>r.stage===stage.id&&r.profile===profile.name))continue;
+  const squad=profile.name==='recommended'?(region>=9?['astra','ophilia','arden','aurora','celestia']:region>=6||stage.alternate?['yuria','neris','adela','luna','arin']:profile.squad):profile.squad;
   const save=defaultSave();save.equipmentInventory=[];save.campaign!.research={};save.campaign!.fragments={};
-  for(const h of Object.values(save.heroes)){h.stars=profile.stars??campaignRegionBalance[region-1].stars;h.equipment=[];}
-  save.campaign!.squad=[...profile.squad];
-  const gear=profile.noGear||profile.name==='starter-1'?undefined:profile.gear??(region>=5?region===5?0:region===6?2:region===7?3:5:undefined);
-  if(gear!==undefined&&profile.name!=='starter-1')for(const id of profile.squad){
+  const stageNumber=Number(stage.id.split('-')[1]);
+  // "Recommended growth" includes the promotion players can afford by the
+  // region boss; benchmarking every stage at the region-entry level made the
+  // 1-10 and 4-10 reports test an under-grown squad instead.
+  const recommendedStars=Math.min(5,campaignRegionBalance[region-1].stars+(profile.name==='recommended'&&stageNumber===10?1:0));
+  for(const h of Object.values(save.heroes)){h.stars=profile.stars??recommendedStars;h.equipment=[];}
+  save.campaign!.squad=[...squad];
+  const gear=profile.noGear||profile.name==='starter-1'?undefined:profile.gear??(region>=5?region===5?0:region===6?2:region===7?3:5:profile.name==='recommended'&&region===4&&stageNumber===10?0:undefined);
+  if(gear!==undefined&&profile.name!=='starter-1')for(const id of squad){
    const rarity:HeroGrade=region<=6?'A':region===7?'S':'SR';
    for(const template of [`${heroWeaponGroup[id]}-0`,'armor-field',`necklace-${heroes.find(h=>h.id===id)!.element}`]){
     const item=makeEquipment(template,rarity,save.equipmentInventory.length,`${id}-${template}`);item.enhance=gear;save.equipmentInventory.push(item);equipItem(save,id,item.id);
    }
   }
-  const m=new BattleModel(save,seeded(seed));m.configureCampaign(stage,profile.squad,true);m.autoDeployCampaign();m.autoSkills=profile.auto!==false;
+  const m=new BattleModel(save,seeded(seed));m.configureCampaign(stage,squad,true);m.autoDeployCampaign();m.autoSkills=profile.auto!==false;
   if(profile.layout)m.deployCampaignLayout(profile.layout);
-  const spawned=new Map<number,{kind:string;at:number;hp:number;front:boolean;end?:number;outcome?:string;skillCasts?:number}>();
-  const spawn=m.spawn.bind(m);m.spawn=(kind:string)=>{const ok=spawn(kind);if(ok){const e=m.enemies.find(e=>e.active&&e.generation===m.spawnGeneration)!;spawned.set(e.generation!,{kind,at:m.time,hp:e.maxHp,front:false});}return ok;};
+  const frontlineX=Math.max(580,...m.units.filter(u=>formationRole(u.heroId)==='tank').map(u=>u.x+55));
+  const spawned=new Map<number,{kind:string;at:number;hp:number;front:boolean;minX:number;end?:number;outcome?:string;skillCasts?:number}>();
+  const spawn=m.spawn.bind(m);m.spawn=(kind:string)=>{const ok=spawn(kind);if(ok){const e=m.enemies.find(e=>e.active&&e.generation===m.spawnGeneration)!;spawned.set(e.generation!,{kind,at:m.time,hp:e.maxHp,front:false,minX:e.x});}return ok;};
   m.start();for(let tick=0;tick<60*600&&!m.ended;tick++){
    if(profile.manual&&tick%15===0)for(const u of m.units)castManualSkill(m,u);
    m.step(1/60);
-   for(const e of m.enemies){const r=spawned.get(e.generation!);if(!r)continue;r.skillCasts=e.skillCasts;if(e.active&&e.x<=580)r.front=true;if(!e.active&&r.end===undefined){r.end=m.time;r.outcome=e.hp<=0?'killed':e.progress>=(e.route&&stage.alternate?stage.alternate:stage.map).pathLength?'escaped':'cleared';}}
+   for(const e of m.enemies){const r=spawned.get(e.generation!);if(!r)continue;r.skillCasts=e.skillCasts;if(e.active){r.minX=Math.min(r.minX,e.x);if(e.x<=frontlineX)r.front=true;}if(!e.active&&r.end===undefined){r.end=m.time;r.outcome=e.hp<=0?'killed':e.progress>=(e.route&&stage.alternate?stage.alternate:stage.map).pathLength?'escaped':'cleared';}}
   }
-  rows.push({stage:stage.id,profile:profile.name,stars:save.heroes[profile.squad[0]].stars,gear:gear??null,won:m.result?.won??false,ended:m.ended,core:m.core,time:m.time,wave:m.wave.number,kills:m.kills,frontRate:[...spawned.values()].filter(e=>e.front).length/Math.max(1,spawned.size),enemies:[...spawned.values()],heroes:m.records.map(r=>({...r,buckets:undefined})),reactions:m.reactionCounts,damageTaken:m.units.map(u=>({id:u.heroId,taken:u.damageTaken??0,healed:u.healingDone??0}))});
+  rows.push({stage:stage.id,profile:profile.name,squad,stars:save.heroes[squad[0]].stars,gear:gear??null,won:m.result?.won??false,ended:m.ended,core:m.core,time:m.time,wave:m.wave.number,kills:m.kills,frontRate:[...spawned.values()].filter(e=>e.front).length/Math.max(1,spawned.size),enemies:[...spawned.values()],heroes:m.records.map(r=>({...r,buckets:undefined})),reactions:m.reactionCounts,damageTaken:m.units.map(u=>({id:u.heroId,taken:u.damageTaken??0,healed:u.healingDone??0}))});
  }
  console.log(stage.id,rows.filter(r=>r.stage===stage.id).map(r=>`${r.profile}:${r.won?'W':'L'}/${Math.round(r.core)}`).join(' '));
  mkdirSync('artifacts',{recursive:true});writeFileSync(output,JSON.stringify({generatedAt:new Date().toISOString(),seed,rows},null,2));

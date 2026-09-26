@@ -9,8 +9,10 @@ for(const target of ['index.html','local-test/index.html']) {
  const ids=await page.evaluate(()=>Object.keys(window.__RIFT_LOCAL_ASSETS__).filter(p=>/heroes\/[^/]+\/frame_01.png$/.test(p)).map(p=>p.split('/')[3]));
  for(const id of ids){
   await page.evaluate(id=>sessionStorage.setItem('visual-test-hero',id),id);
-  await page.reload();await page.locator('[data-action="stage"]').first().click();await page.locator('[data-action="start-battle"]').click();
-  await page.locator('canvas').waitFor();await page.locator('#summon-btn').click();
+  await page.reload();await page.waitForFunction(()=>Boolean(window.rift));
+  await page.evaluate(id=>{const app=window.rift;app.save.data.campaign.squad=[id];app.save.persist();app.begin('1-1',true);},id);
+  await page.locator('canvas').waitFor();await page.locator('#battle-loader').waitFor({state:'detached',timeout:90000});
+  await page.evaluate(()=>{const app=window.rift;app.model.autoDeployCampaign();app.model.start();app.updateHud(true);});
   const missing=await page.evaluate(async id=>{
    const keys=[1,2,3].flatMap(f=>[`/assets/heroes/${id}/frame_0${f}.png`,`/assets/effects/${id}/projectile_0${f}.png`,`/assets/effects/${id}/impact_0${f}.png`]);keys.push(`/assets/effects/${id}/skill.png`);
    const missing=[];

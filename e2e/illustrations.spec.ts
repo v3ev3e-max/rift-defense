@@ -10,7 +10,7 @@ test('all operator screens and summon cards use the normalized illustrations',as
  for(let i=0;i<assets.length;i+=3){expect(assets[i].width).toBeGreaterThanOrEqual(576);expect(assets[i].height).toBeGreaterThanOrEqual(768);if(assets[i+1].src.includes('-v2.png')){expect(assets[i+1].width).toBeGreaterThanOrEqual(576);}else{expect(assets[i+1].width).toBe(assets[i+1].height);expect(assets[i+1].width).toBeGreaterThanOrEqual(256);}expect(assets[i+2].width).toBe(assets[i+2].height);expect(assets[i+2].width).toBeGreaterThanOrEqual(256);}
  await page.locator('[data-action="hero"]').first().click();
  await expect(page.locator('[data-hero-card]')).toHaveCount(34);
- await page.locator('[data-action="stage"]').first().click();
+ await page.evaluate(()=>(window as any).rift.navigate('stage'));
  await page.locator('[data-action="campaign-select"][data-id="1-1"]').click();
  await page.locator('.campaign-stage [data-action="campaign-deploy"]').click();
  await page.locator('[data-action="campaign-prep-role"][data-id="support"]').click();

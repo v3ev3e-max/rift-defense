@@ -198,6 +198,38 @@ export const enemies: Record<string, EnemyDef> = {
   chrono_reaper:{id:'chrono_reaper',name:'시간 수확자',hp:4400,speed:43,armor:35,reward:270,color:0xca65ff,coreDamage:46,boss:'void',bossTier:'mid'},
   aeon_sovereign:{id:'aeon_sovereign',name:'영겁의 군주',hp:6500,speed:27,armor:39,reward:430,color:0xc281ff,coreDamage:72,boss:'void',bossTier:'final'},
 
+  crystal_bastion:{id:'crystal_bastion',name:'수정 방벽수',hp:760,speed:45,armor:38,reward:23,color:0x70e6ff,coreDamage:13,archetype:'bruiser',visualId:'sky_guard'},
+  tide_skimmer:{id:'tide_skimmer',name:'조류 활강체',hp:370,speed:202,armor:15,reward:20,color:0x56cfff,coreDamage:12,archetype:'charger',charge:{interval:4.6,distance:75},visualId:'sky_lancer'},
+  prism_cannon:{id:'prism_cannon',name:'프리즘 포격체',hp:330,speed:59,armor:16,reward:22,color:0xb8f8ff,coreDamage:12,archetype:'ranged',ranged:{range:188,cooldown:2.45,damage:13,projectileSpeed:590},visualId:'cloud_gunner'},
+  coral_singer:{id:'coral_singer',name:'산호 공명자',hp:390,speed:60,armor:16,reward:24,color:0x73ffd8,coreDamage:11,archetype:'support',support:{interval:4.4,heal:.12,radius:168},visualId:'aether_mender'},
+  named_crystal:{id:'named_crystal',name:'수정해의 파수장',hp:1240,speed:49,armor:38,reward:70,color:0x67eaff,coreDamage:28,namedRegion:13,namedSkill:'gale',visualId:'named_sky'},
+  crystal_leviathan:{id:'crystal_leviathan',name:'수정해 레비아탄',hp:5000,speed:38,armor:39,reward:300,color:0x65e6ff,coreDamage:49,boss:'storm',bossTier:'mid',visualId:'storm_wyvern'},
+  prismatic_empress:{id:'prismatic_empress',name:'프리즘 여제',hp:7300,speed:26,armor:43,reward:475,color:0xc9fbff,coreDamage:76,boss:'frost',bossTier:'final',visualId:'sky_dominion'},
+
+  lunar_husk:{id:'lunar_husk',name:'월광 각질체',hp:840,speed:44,armor:41,reward:25,color:0xd4d0ff,coreDamage:14,archetype:'bruiser',visualId:'relic_golem'},
+  spore_leaper:{id:'spore_leaper',name:'포자 도약체',hp:405,speed:208,armor:16,reward:22,color:0xd897ff,coreDamage:13,archetype:'charger',charge:{interval:4.3,distance:80},visualId:'dune_ripper'},
+  moon_ray:{id:'moon_ray',name:'월광 사수',hp:360,speed:57,armor:17,reward:24,color:0xe7d4ff,coreDamage:13,archetype:'ranged',ranged:{range:195,cooldown:2.3,damage:14,projectileSpeed:610},visualId:'sun_archer'},
+  bloom_keeper:{id:'bloom_keeper',name:'개화 수호자',hp:430,speed:58,armor:18,reward:26,color:0xb9ff9a,coreDamage:12,archetype:'support',support:{interval:4.1,heal:.13,radius:172},visualId:'mirage_oracle'},
+  named_lunar:{id:'named_lunar',name:'월식의 정원사',hp:1360,speed:48,armor:41,reward:78,color:0xd89cff,coreDamage:30,namedRegion:14,namedSkill:'root',visualId:'named_dune'},
+  lunar_devourer:{id:'lunar_devourer',name:'월핵 포식자',hp:5600,speed:40,armor:42,reward:330,color:0xd29cff,coreDamage:52,boss:'rage',bossTier:'mid',visualId:'sand_colossus'},
+  eclipse_heart:{id:'eclipse_heart',name:'월식의 심장',hp:8100,speed:25,armor:46,reward:520,color:0x9e75ff,coreDamage:80,boss:'void',bossTier:'final',visualId:'solar_sphinx'},
+
+  stellar_plate:{id:'stellar_plate',name:'성간 장갑체',hp:930,speed:42,armor:45,reward:28,color:0xffb36b,coreDamage:15,archetype:'bruiser',visualId:'alloy_guard'},
+  plasma_hound:{id:'plasma_hound',name:'플라즈마 추격견',hp:445,speed:214,armor:18,reward:25,color:0xff795a,coreDamage:14,archetype:'charger',charge:{interval:4,distance:86},visualId:'gear_hound'},
+  nova_turret:{id:'nova_turret',name:'신성 포탑',hp:390,speed:55,armor:19,reward:27,color:0xffd078,coreDamage:14,archetype:'ranged',ranged:{range:202,cooldown:2.15,damage:15,projectileSpeed:640},visualId:'pulse_turret'},
+  forge_conductor:{id:'forge_conductor',name:'제련 지휘체',hp:470,speed:56,armor:20,reward:29,color:0xffe19a,coreDamage:13,archetype:'support',support:{interval:3.9,heal:.14,radius:176},visualId:'repair_weaver'},
+  named_stellar:{id:'named_stellar',name:'항성 제련장',hp:1500,speed:46,armor:45,reward:86,color:0xff875c,coreDamage:32,namedRegion:15,namedSkill:'barrage',visualId:'named_machine'},
+  starforged_titan:{id:'starforged_titan',name:'별벼림 거신',hp:6300,speed:35,armor:46,reward:365,color:0xffa05e,coreDamage:55,boss:'storm',bossTier:'mid',visualId:'forge_overseer'},
+  supernova_foundry:{id:'supernova_foundry',name:'초신성 제련핵',hp:9000,speed:24,armor:50,reward:570,color:0xff744f,coreDamage:84,boss:'storm',bossTier:'final',visualId:'machine_god'},
+
+  origin_warden:{id:'origin_warden',name:'기원 수문장',hp:1040,speed:40,armor:49,reward:31,color:0xffe9b0,coreDamage:16,archetype:'bruiser',visualId:'paradox_shell'},
+  causal_blade:{id:'causal_blade',name:'인과 절단자',hp:490,speed:220,armor:20,reward:28,color:0xffb8ec,coreDamage:15,archetype:'charger',charge:{interval:3.8,distance:92},visualId:'chrono_stalker'},
+  genesis_eye:{id:'genesis_eye',name:'창세의 눈',hp:430,speed:53,armor:21,reward:30,color:0xffd7fb,coreDamage:15,archetype:'ranged',ranged:{range:210,cooldown:2,damage:16,projectileSpeed:670},visualId:'epoch_caster'},
+  fate_weaver:{id:'fate_weaver',name:'운명 직조자',hp:520,speed:54,armor:22,reward:32,color:0xe9c1ff,coreDamage:14,archetype:'support',support:{interval:4.6,heal:.1,radius:180},visualId:'time_mender'},
+  named_origin:{id:'named_origin',name:'최초 좌표 집행자',hp:1660,speed:44,armor:49,reward:96,color:0xf1b2ff,coreDamage:35,namedRegion:16,namedSkill:'collapse',visualId:'named_time'},
+  causal_reaper:{id:'causal_reaper',name:'인과 수확자',hp:4700,speed:41,armor:48,reward:405,color:0xe991ff,coreDamage:59,boss:'void',bossTier:'mid',visualId:'chrono_reaper'},
+  origin_sovereign:{id:'origin_sovereign',name:'원초 균열의 군주',hp:10200,speed:23,armor:54,reward:640,color:0xffc4ff,coreDamage:90,boss:'void',bossTier:'final',visualId:'aeon_sovereign'},
+
 };
 
 // Regional bosses retain their signature ability and also threaten the front line
@@ -205,3 +237,6 @@ export const enemies: Record<string, EnemyDef> = {
 for(const enemy of Object.values(enemies))if(enemy.bossTier){
  enemy.ranged={range:300,cooldown:enemy.bossTier==='mid'?5.5:4.8,damage:enemy.bossTier==='mid'?18:24,projectileSpeed:360};
 }
+// Region 16 already layers the global collapse pulse over its frontline boss.
+// Keep the reaper's aimed shot readable without stacking two lethal patterns.
+enemies.causal_reaper.ranged={range:300,cooldown:6,damage:12,projectileSpeed:360};

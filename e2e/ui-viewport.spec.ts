@@ -13,7 +13,7 @@ test('all primary menus share one fixed viewport with internal scrolling only',a
   expect(dimensions.sectionBottom,screen).toBeLessThanOrEqual(dimensions.screenBottom+1);
   expect(dimensions.horizontal,screen).toBe(true);
   if(screen==='home'){
-   const heroLayout=await page.evaluate(()=>{const title=document.querySelector('.home-copy h1')!.getBoundingClientRect(),actions=document.querySelector('.home-actions')!.getBoundingClientRect();return {titleBottom:title.bottom,actionsTop:actions.top,actionsBottom:actions.bottom,screenBottom:document.querySelector('#screen')!.getBoundingClientRect().bottom};});
+   const heroLayout=await page.evaluate(()=>{const title=document.querySelector('.hq-heading h1')!.getBoundingClientRect(),actions=document.querySelector('.hq-menu-left')!.getBoundingClientRect();return {titleBottom:title.bottom,actionsTop:actions.top,actionsBottom:actions.bottom,screenBottom:document.querySelector('#screen')!.getBoundingClientRect().bottom};});
    expect(heroLayout.titleBottom,'home title must not overlap its actions').toBeLessThanOrEqual(heroLayout.actionsTop+1);
    expect(heroLayout.actionsBottom,'home actions must remain visible').toBeLessThanOrEqual(heroLayout.screenBottom+1);
   }

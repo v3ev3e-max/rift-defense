@@ -61,6 +61,7 @@ export interface SaveData {
   commanderName:string;
     raid:{day:string;week:string;attempts:number;dailyBest:number;weeklyDamage:number;weeklyBest:number;claimed:number[];lastSettlement:string};
   campaign?: {selected:string; doctrine?:string; autoAdvance:boolean; autoSkills:boolean; squad:string[]; lastDeployment:Record<string,number>; deploymentPresetNames:string[]; deploymentPresets:Array<{squad:string[];layout:Record<string,number>}|null>; records:Record<string,{stars:number;time:number;kills:number}>; research:Record<string,number>; fragments:Record<string,number>};
+  operations:{riftBest:number;constraintBest:number;hardBest:number;lastDaily:string};
   saveVersion: 1;
   credits: number;
   equipmentGold:number;

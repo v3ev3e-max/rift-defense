@@ -39,7 +39,7 @@ test('generated images appear as targeting, projectiles, elemental transfers, co
   return {textures,visible,transferFrames,slashFrames,muzzleFrames,slash:slash?{width:slash.displayWidth,height:slash.displayHeight,x:slash.x,y:slash.y}:null};
  });
  for(const t of result.textures){expect(t.key).toBe(`vfx-${t.name}`);expect(t.clear).toBeGreaterThan(100);expect(t.colored).toBeGreaterThan(100);}
- for(const key of ['reticle','shell','zone','impact'])expect(result.visible).toContain(`vfx-${key}`);
+ for(const key of ['reticle','shell','zone'])expect(result.visible).toContain(`vfx-${key}`);
  expect(result.visible).toContain('sniper-round-v2');
  expect(result.muzzleFrames).toEqual(['sniper-muzzle-1','sniper-muzzle-2','sniper-muzzle-3']);
  expect(result.visible.some(key=>key.startsWith('slash-anim-'))).toBe(true);

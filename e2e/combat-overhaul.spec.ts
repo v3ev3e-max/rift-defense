@@ -1,11 +1,11 @@
 import {test,expect} from '@playwright/test';
 test('new combat, skill controls, capacity and responsive statistics',async({page},info)=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('/');await page.evaluate(()=>{const a=(window as any).rift;a.save.data.tutorial=true;a.save.persist();});
- await page.locator('[data-action="stage"]').first().click();await page.locator('[data-action="start-battle"]').click();
+ await page.goto('/');await page.evaluate(()=>{const a=(window as any).rift;a.save.data.tutorial=true;a.save.data.campaign.squad=['sera'];a.save.persist();});
+ await page.evaluate(()=>{const a=(window as any).rift;a.begin('1-1',true);});
  await page.waitForFunction(()=>!!(window as any).rift.game?.scene.getScene('Battle')?.ink);
  const result=await page.evaluate(async()=>{
-  const a=(window as any).rift,m=a.model,s=a.game.scene.getScene('Battle');a.game.loop.stop();s.callback=()=>{};m.units=[];m.gold=2000;
+  const a=(window as any).rift,m=a.model,s=a.game.scene.getScene('Battle');a.game.loop.stop();s.callback=()=>{};m.units=[];m.gold=2000;m.start();
   const {attack,stepActions}=await import('/src/systems/ActionCombat.ts');
   const ids=['sera','noel','karin','luna','adela','ian'];for(const id of ids)m.addUnit(id,3);
   m.enemies.forEach((e:any)=>e.active=false);
@@ -19,7 +19,7 @@ test('new combat, skill controls, capacity and responsive statistics',async({pag
  expect(result.actionKinds).toHaveLength(6);expect(result.visibleDrones).toBeGreaterThan(0);expect(result.clear).toBeGreaterThan(40000);expect(result.opaque).toBeGreaterThan(5000);
  await expect(page.locator('[data-action="upgrade-selected"]')).toHaveCount(0);
  await page.locator('[data-action="dps"]').click();await expect(page.locator('#dps-panel')).toBeVisible();
- expect(await page.evaluate(()=>(window as any).rift.model.capacity)).toBe(10);
+ expect(await page.evaluate(()=>(window as any).rift.model.capacity)).toBe(5);
  await expect(page.locator('#expand-btn')).toBeHidden();
  await page.locator('[data-action="skill"]').click();expect(await page.evaluate(()=>(window as any).rift.model.selectedUnit.priority)).toBe('boss');
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);

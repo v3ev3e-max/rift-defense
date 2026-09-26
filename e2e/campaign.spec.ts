@@ -11,10 +11,10 @@ test('campaign selection, formation, preparation, movement and unlock',async({pa
  await page.waitForFunction(()=>!!(window as any).rift.game?.scene.getScene('Battle')?.ink);
  const renderDensity=await page.evaluate(()=>{const canvas=document.querySelector('canvas')!;return {backing:canvas.width,css:canvas.getBoundingClientRect().width,dpr:devicePixelRatio};});
  expect(renderDensity.backing/renderDensity.css).toBeGreaterThanOrEqual(Math.min(2,renderDensity.dpr)-.05);
- expect(await page.evaluate(()=>{const m=(window as any).rift.model;return {started:m.started,units:m.units.length,slots:m.map.slots.length};})).toEqual({started:false,units:0,slots:6});
+ expect(await page.evaluate(()=>{const m=(window as any).rift.model;return {started:m.started,units:m.units.length,slots:m.map.slots.length};})).toEqual({started:false,units:5,slots:6});
  await expect(page.locator('#shop-shell')).toHaveCount(0);
  await expect(page.locator('.prep-steps [data-action="campaign-prep-step"]')).toHaveCount(0);
- await expect(page.locator('.prep-roster [data-action="campaign-prep-toggle"]')).toHaveCount(29);
+ await expect(page.locator('.prep-roster [data-action="campaign-prep-toggle"]')).toHaveCount(8);
  await expect(page.locator('.prep-roster [data-action="campaign-prep-toggle"]:disabled')).toHaveCount(0);
  await page.evaluate(()=>{const a=(window as any).rift;['yuria','sera','reina','karin','arin'].forEach((id,i)=>a.placeCampaignHero(id,i));});
  expect(await page.evaluate(()=>(window as any).rift.model.units.length)).toBe(5);
@@ -40,7 +40,7 @@ test('campaign selection, formation, preparation, movement and unlock',async({pa
  await expect(page.locator('.modal-backdrop .campaign-result.won')).toBeVisible();
  await expect(page.locator('.battle-screen')).toBeVisible();
  expect(await page.evaluate(()=>({screen:(window as any).rift.screen,rewards:(window as any).rift.save.data.runs}))).toMatchObject({screen:'battle'});
- await page.locator('[data-action="stage"]').first().click();await expect(page.locator('[data-action="campaign-select"][data-id="1-2"]').first()).toBeEnabled();
- await page.reload({waitUntil:'domcontentloaded'});await page.locator('[data-action="stage"]').first().click();await expect(page.locator('[data-action="campaign-select"][data-id="1-2"]').first()).toBeEnabled();
+ await page.evaluate(()=>{(window as any).rift.navigate('stage');});await expect(page.locator('[data-action="campaign-select"][data-id="1-2"]').first()).toBeEnabled();
+ await page.reload({waitUntil:'domcontentloaded'});await page.evaluate(()=>{(window as any).rift.navigate('stage');});await expect(page.locator('[data-action="campaign-select"][data-id="1-2"]').first()).toBeEnabled();
  expect(errors).toEqual([]);
 });
