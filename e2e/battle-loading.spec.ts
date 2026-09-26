@@ -19,6 +19,12 @@ test('전장 이미지가 준비될 때까지 로딩 화면을 유지한다',asy
 
   await expect(page.locator('#phaser-container canvas')).toBeVisible({timeout:60_000});
   await expect(loader).toBeHidden({timeout:60_000});
+  const idleBefore=await page.evaluate(()=>{const app=(window as any).rift,scene=app.game.scene.getScene('Battle');return scene.heroSprites.filter((v:any)=>v.visible).map((v:any)=>v.texture.key);});
+  await page.waitForTimeout(450);
+  const idleAfter=await page.evaluate(()=>{const app=(window as any).rift,scene=app.game.scene.getScene('Battle');return scene.heroSprites.filter((v:any)=>v.visible).map((v:any)=>v.texture.key);});
+  expect(idleBefore.length).toBe(5);
+  expect(idleBefore.every((key:string)=>key.endsWith('-idle-1'))).toBe(true);
+  expect(idleAfter).toEqual(idleBefore);
   const size=await page.locator('#phaser-container canvas').boundingBox();
   expect(size?.width).toBeGreaterThan(300);
   expect(size?.height).toBeGreaterThan(300);

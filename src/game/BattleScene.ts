@@ -703,17 +703,21 @@ export class BattleScene extends Phaser.Scene {
         this.heroAttackStarted[i] = this.visualTime;
       }
       const attackElapsed = this.visualTime - (this.heroAttackStarted[i] ?? -999);
-      const attacking = attackElapsed >= 0 && attackElapsed < ATTACK_SECONDS && u.hp > 0;
+      // Formation/deployment is a frozen tactical preview. Never let stale shot
+      // counters or the initial skill timestamp select a combat pose before the
+      // player actually starts the battle.
+      const attacking = m.started && attackElapsed >= 0 && attackElapsed < ATTACK_SECONDS && u.hp > 0;
       const heroAnimFrame = attacking
         ? visualFrame(attackElapsed)
         : 1;
       const north = !!u.facingUp && this.textures.exists(`hero-${u.heroId}-up-1`);
       const upFrame = attacking ? [1,2,3,4,5,6,6,1][heroAnimFrame-1] : 1;
-      const skillElapsed=m.time-(u.skillCastAt??-999),skillCasting=skillElapsed>=0&&skillElapsed<.9&&u.hp>0;
+      const skillElapsed=m.time-(u.skillCastAt??-999),skillCasting=m.started&&skillElapsed>=0&&skillElapsed<.9&&u.hp>0;
       const skillFrame=Math.min(6,Math.floor(skillElapsed/.15)+1);
       const visualPose=heroVisualPose(attacking,skillCasting,north);
-      const idleSequence=[1,2,3,2],idleFrame=idleSequence[Math.floor((this.visualTime+u.uid*.071)*3)%idleSequence.length];
-      const textureKey = visualPose==='skill' ? `hero-${u.heroId}-skill-${skillFrame}` : visualPose==='idle' ? `hero-${u.heroId}-idle-${idleFrame}` : visualPose==='up' ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
+      // Idle means a truly still stance. frame_02/03 contain transitional limb
+      // movement in several legacy sheets and read as repeated attacks.
+      const textureKey = visualPose==='skill' ? `hero-${u.heroId}-skill-${skillFrame}` : visualPose==='idle' ? `hero-${u.heroId}-idle-1` : visualPose==='up' ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
         ? `hero-${u.heroId}-anim-${heroAnimFrame}`
         : heroById[u.heroId].asset.key;
       sp.setVisible(true);
