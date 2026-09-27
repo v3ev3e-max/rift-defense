@@ -25,9 +25,19 @@ VOID={
  'phase':'exec-7844ea46-5d2d-4b0d-a28a-c09ab7c1437f.png',
  'death':'exec-fbe65bce-4176-4b42-b2c5-aab3bc538c8f.png',
 }
+MACHINE={
+ 'idle':'exec-1a62a677-363b-4252-8a42-fd0a61acd730.png',
+ 'prepare':'exec-13593c36-92a4-447c-a498-6273eaa8d33d.png',
+ 'attack':'exec-5bccec0b-8c5e-4c2f-917a-ce3bb0828a1a.png',
+ 'pattern':'exec-43035f27-2e19-4a62-8ef4-5699fe1e84e6.png',
+ 'hit':'exec-1fdac7fc-c930-4b8e-962a-81e05f19edd2.png',
+ 'phase':'exec-7c8d2ecb-a6a6-4d7e-ad75-1d629c9cc142.png',
+ 'death':'exec-aa38322a-e938-47aa-869b-69a4e2d34a02.png',
+}
 BOSSES={
  'gale-colossus':(GALE,'exec-049492da-36f0-4564-945d-5d025b75641c.png'),
  'void-observer':(VOID,'exec-4404aec8-3649-4f41-b5da-a8643495fe07.png'),
+ 'machine-god':(MACHINE,'exec-2725a644-d904-44a5-9795-c7c7914d7565.png'),
 }
 
 def crop(im:Image.Image):
