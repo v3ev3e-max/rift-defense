@@ -25,6 +25,7 @@ describe('weekly boss raid',()=>{
   for(const id of ids){for(const pose of ['idle','attack','phase','hit']){const count=pose==='idle'||pose==='phase'?4:pose==='attack'?6:3;for(let i=1;i<=count;i++)files.push(`public/assets/generated/raid-v2/bosses/${id}/${pose}_${String(i).padStart(2,'0')}.webp`);}files.push(`public/assets/generated/raid-v2/summons/${id}.webp`);expect(statSync(`public/assets/generated/raid-v2/bosses/${id}.webp`).size).toBeGreaterThan(3000);}
   files.push('public/assets/generated/raid-v2/arena.webp');
   expect(readdirSync('public/assets/generated/raid-v2/vfx').filter((v:string)=>v.endsWith('.webp'))).toHaveLength(12);
+  expect(readdirSync('public/assets/generated/raid-v2/heroes').filter((v:string)=>v.endsWith('-skill.webp')).length).toBeGreaterThanOrEqual(44);
   const hashes=new Set(files.map(file=>{expect(statSync(file).size).toBeGreaterThan(3000);return createHash('sha256').update(readFileSync(file)).digest('hex');}));expect(hashes.size).toBe(files.length);
  });
  it('raises boss durability, attack and tempo through the boss roster',()=>{const ids=Object.keys(raidBossTuning) as (keyof typeof raidBossTuning)[];const hp=ids.map(id=>raidBossMaxHp(5000,id)),attack=ids.map(id=>raidPatternDamage(3,id));expect(hp).toEqual([...hp].sort((a,b)=>a-b));expect(attack).toEqual([...attack].sort((a,b)=>a-b));expect(ids.map(id=>raidBossTuning[id].tempo)).toEqual([12,11,12,10,9]);});
