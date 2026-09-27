@@ -6,12 +6,12 @@ import {defaultSave} from '../src/systems/SaveSystem';
 import {castAutoSkill,skillCooldownSeconds,skillDurationSeconds,stepActions,supportBasic} from '../src/systems/ActionCombat';
 import {campaignSkillBar} from '../src/ui/CampaignUI';
 
-const supportIds=['rhea','echo','meriel','selene','ophilia'];
+const supportIds=['rhea','echo','meriel','selene','ophilia','daeun','freya','eir'];
 
-it('registers the requested B2 A1 S1 SR1 support roster',()=>{
+it('registers the expanded support roster',()=>{
  expect([...supportOperatorIds]).toEqual(supportIds);
- expect(supportIds.map(id=>formationRole(id))).toEqual(Array(5).fill('support'));
- expect(supportIds.map(id=>heroes.find(h=>h.id===id)!.grade).sort()).toEqual(['A','B','B','S','SR']);
+ expect(supportIds.map(id=>formationRole(id))).toEqual(Array(supportIds.length).fill('support'));
+ expect(supportIds.map(id=>heroes.find(h=>h.id===id)!.grade).sort()).toEqual(['A','A','B','B','B','S','SR','SR']);
 });
 
 it('casts support healing and the authored skill effect',()=>{
@@ -51,7 +51,7 @@ it('keeps support burst values below the former overpowered caps',()=>{
 });
 
 it('gives every support a cooldown substantially longer than its persistent effect',()=>{
- const expected:Record<string,number>={rhea:22,echo:20,meriel:22,selene:20,ophilia:30};
+ const expected:Record<string,number>={rhea:22,echo:20,meriel:22,selene:20,ophilia:30,daeun:22,freya:21,eir:30};
  for(const id of supportIds)for(const star of [1,5]){
   expect(skillCooldownSeconds(id),id).toBe(expected[id]);
   expect(skillCooldownSeconds(id)-skillDurationSeconds(id,star),`${id} ★${star}`).toBeGreaterThanOrEqual(12);

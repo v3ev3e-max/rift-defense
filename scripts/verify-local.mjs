@@ -10,7 +10,7 @@ for (const viewport of [
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(pathToFileURL(resolve("local-test/index.html")).href);
-  await page.getByRole("heading", { name: "BEYOND THE RIFT." }).waitFor();
+  await page.getByRole("heading", { name: /작전 본부/ }).waitFor();
   await page.screenshot({
     path: `artifacts/portrait-${viewport.width}-home.png`,
   });

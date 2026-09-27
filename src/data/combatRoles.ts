@@ -1,10 +1,10 @@
 export type AttackKind='burst'|'sniper'|'chain'|'melee'|'meteor'|'shell'|'water'|'drone'|'support'|'curse';
-export const supportOperatorIds=new Set(['rhea','echo','meriel','selene','ophilia']);
+export const supportOperatorIds=new Set(['rhea','echo','meriel','selene','ophilia','daeun','freya','eir']);
 export type FormationRole='tank'|'dealer'|'sniper'|'support';
 export const CAMPAIGN_SQUAD_CAP=5;
 export const formationSlots:FormationRole[]=['tank','dealer','dealer','sniper','support'];
-const tankOperators=new Set(['yuria','mia','leon','neris','livia','hana','gaia','astra']);
-const sniperOperators=new Set(['arin','noel','serin','aurora','zion','elise','vera','celestia']);
+const tankOperators=new Set(['yuria','mia','leon','neris','livia','hana','gaia','astra','minseo','valen']);
+const sniperOperators=new Set(['arin','noel','serin','aurora','zion','elise','vera','celestia','iris','nyx']);
 const supportOperators=supportOperatorIds;
 export const formationRole=(id:string):FormationRole=>tankOperators.has(id)?'tank':supportOperators.has(id)?'support':sniperOperators.has(id)?'sniper':'dealer';
 export const formationRoleName:Record<FormationRole,string>={tank:'탱커',dealer:'딜러',sniper:'저격수',support:'서포터'};
@@ -13,7 +13,7 @@ const gradeOrder:Record<string,number>={B:0,A:1,S:2,SR:3};
 export const formationSort=(a:{id:string;grade?:string;name?:string},b:{id:string;grade?:string;name?:string})=>formationOrder[formationRole(a.id)]-formationOrder[formationRole(b.id)]||(gradeOrder[a.grade??'']??9)-(gradeOrder[b.grade??'']??9)||(a.name??a.id).localeCompare(b.name??b.id,'ko');
 export const formationComplete=(ids:string[])=>ids.length>=1&&ids.length<=CAMPAIGN_SQUAD_CAP&&new Set(ids).size===ids.length;
 export function orderFormation(ids:string[]){return [...new Set(ids)].sort((a,b)=>formationSort({id:a,grade:heroGrade(a),name:a},{id:b,grade:heroGrade(b),name:b}));}
-const heroGrades:Record<string,string>={yuria:'B',reina:'B',arin:'B',karin:'B',sera:'B',noel:'B',luna:'B',ian:'B',mia:'B',rhea:'B',echo:'B',adela:'A',neris:'A',belka:'A',serin:'A',kyle:'A',hana:'A',zion:'A',meriel:'A',livia:'S',kairon:'S',theria:'S',noxia:'S',gaia:'S',elise:'S',vera:'S',selene:'S',leon:'SR',arden:'SR',aurora:'SR',astra:'SR',solara:'SR',celestia:'SR',ophilia:'SR'};
+const heroGrades:Record<string,string>={yuria:'B',reina:'B',arin:'B',karin:'B',sera:'B',noel:'B',luna:'B',ian:'B',mia:'B',rhea:'B',echo:'B',minseo:'B',daeun:'B',adela:'A',neris:'A',belka:'A',serin:'A',kyle:'A',hana:'A',zion:'A',meriel:'A',iris:'A',rook:'A',freya:'A',livia:'S',kairon:'S',theria:'S',noxia:'S',gaia:'S',elise:'S',vera:'S',selene:'S',valen:'S',nyx:'S',ciel:'S',leon:'SR',arden:'SR',aurora:'SR',astra:'SR',solara:'SR',celestia:'SR',ophilia:'SR',eir:'SR',raon:'SR'};
 const heroGrade=(id:string)=>heroGrades[id]??'';
 export const dealerFirst=(a:{id:string},b:{id:string})=>Number(supportOperatorIds.has(a.id))-Number(supportOperatorIds.has(b.id));
 export const combatRoles:Record<string,{kind:AttackKind;name:string;stages:string[]}>= {
@@ -51,4 +51,14 @@ export const combatRoles:Record<string,{kind:AttackKind;name:string;stages:strin
  meriel:{kind:'support',name:'화염 수호 성가',stages:['보호막 부여','상태 해제','피해 증폭','전군 보호','EMBER CHOIR']},
  selene:{kind:'support',name:'월식 저주진',stages:['취약 부여','회복 파동','저주 전이','방어 약화','ECLIPSE HYMN']},
  ophilia:{kind:'support',name:'성역 공명',stages:['전군 회복','전군 보호막','상태 해제','스킬 충전','CELESTIAL SANCTUM']},
+ minseo:{kind:'melee',name:'전격 검방패',stages:['검방패 타격','회로 방벽','감전 반격','도발 강화','CIRCUIT GUARD']},
+ daeun:{kind:'support',name:'온열 의료등',stages:['단일 회복','지속 회복','지원 범위 확대','회복 강화','EMBER CARE']},
+ iris:{kind:'sniper',name:'극저온 장총',stages:['3명 관통','조준 단축','빙결 탄두','약점 추적','FROSTLINE']},
+ rook:{kind:'melee',name:'공허 대검',stages:['2단 베기','속공','출혈 강화','전방 절단','VOID SEVER']},
+ freya:{kind:'support',name:'중계 공병 드론',stages:['공격 가속','충전 지원','범위 확대','가속 강화','RELAY FIELD']},
+ valen:{kind:'melee',name:'진홍 검방패',stages:['검방패 타격','피해 감소','화염 반격','강제 도발','CRIMSON FORTRESS']},
+ nyx:{kind:'sniper',name:'월식 레일석궁',stages:['3명 관통','약점 조준','후열 처형','관통 강화','NIGHTFALL BOLT']},
+ ciel:{kind:'water',name:'해류 왕관',stages:['수류 폭발','시전 가속','젖음 확산','범위 강화','HYDRO CROWN']},
+ eir:{kind:'support',name:'월광 성역',stages:['전군 회복','지속 회복','상태 해제','피해 경감','LUNAR SANCTUM']},
+ raon:{kind:'burst',name:'플라즈마 카빈',stages:['4발 연사','연사 가속','과부하 전이','폭발 탄막','PLASMA DRIVE']},
 };

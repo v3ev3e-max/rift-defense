@@ -2,11 +2,11 @@ import {test,expect} from '@playwright/test';
 test('roster, exact shop filters, two-person double click, growth choice and result',async({page},info)=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('/');await page.evaluate(()=>{const a=(window as any).rift;a.save.data.tutorial=true;a.save.persist();});
- await page.locator('[data-action="hero"]').last().click();await expect(page.locator('.hero-card')).toHaveCount(34);
+ await page.locator('[data-action="hero"]').last().click();await expect(page.locator('.hero-card')).toHaveCount(44);
  await page.evaluate(()=>{const a=(window as any).rift;a.begin('laboratory');});await page.waitForFunction(()=>!!(window as any).rift.game?.scene.getScene('Battle')?.ink);
  await page.evaluate(()=>{const a=(window as any).rift;a.game.loop.stop();a.model.started=false;a.model.gold=10000;a.render();});
  await page.locator('.hero-shop-shell > summary').click();
- await page.locator('[data-action="shop-grade"][data-id="ALL"]').click();await expect(page.locator('[data-action="buy-hero"]')).toHaveCount(34);
+ await page.locator('[data-action="shop-grade"][data-id="ALL"]').click();await expect(page.locator('[data-action="buy-hero"]')).toHaveCount(44);
  await page.locator('[data-action="buy-hero"][data-id="aurora"]').click();
  await page.evaluate(()=>{const app=(window as any).rift,m=app.model;m.summonAt(0);app.updateHud(true);});
  expect(await page.evaluate(()=>(window as any).rift.model.units[0].heroId)).toBe('aurora');

@@ -114,7 +114,7 @@ export class BattleScene extends Phaser.Scene {
     }
     this.load.image(`fx-${id}-skill`,assetUrl(`/assets/effects/${id}/skill.png`));
     if(id==='yuria')this.load.image('fx-yuria-barrier',assetUrl('/assets/effects/yuria/barrier.png'));
-    if(['yuria','mia','leon','neris','livia','hana','gaia','astra','rhea','echo','meriel','selene','ophilia'].includes(id))
+    if(['yuria','mia','leon','neris','livia','hana','gaia','astra','rhea','echo','meriel','selene','ophilia','minseo','daeun','freya','valen','eir'].includes(id))
       for(let frame=1;frame<=4;frame++)this.load.image(`support-skill-${id}-${frame}`,assetUrl(`/assets/generated/support-skills/${id}/frame_${String(frame).padStart(2,'0')}.webp`));
     this.load.once('complete',()=>{this.pendingHeroIds.delete(id);this.activeHeroIds.add(id);});
     if(autoStart&&!this.load.isLoading())this.load.start();

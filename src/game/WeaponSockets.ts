@@ -5,8 +5,8 @@ export const HERO_RENDER = {
  size:132, sideSize:94, upSize:132,
  sourceSize:160, originX:80, originY:142, offsetY:16,
 };
-const oversizedAddedHeroes=new Set(['gaia','astra','solara','zion','vera','elise','celestia']);
-const normalizedDefeatHeroes=new Set(['astra','celestia','echo','elise','gaia','hana','meriel','ophilia','rhea','selene','solara','vera','zion']);
+const oversizedAddedHeroes=new Set(['gaia','astra','solara','zion','vera','elise','celestia','minseo','daeun','iris','rook','freya','valen','nyx','ciel','eir','raon']);
+const normalizedDefeatHeroes=new Set(['astra','celestia','echo','elise','gaia','hana','meriel','ophilia','rhea','selene','solara','vera','zion','minseo','daeun','iris','rook','freya','valen','nyx','ciel','eir','raon']);
 const NORMALIZED_ASSET_SCALE=.925;
 const regeneratedTankSprites=new Set(['yuria','mia','leon','neris','livia','hana','gaia','astra']);
 /** The six late-added SD sets fill almost the entire 160px source canvas while the
@@ -82,6 +82,16 @@ export const muzzlePixels:Record<string,{side:Poses;up:Poses;melee?:boolean;sock
  meriel:{side:[[121,67],[117,73],[119,65]],up:[[105,37],[102,34],[104,37]],socket:'choir focus'},
  selene:{side:[[124,66],[119,72],[121,64]],up:[[106,35],[103,32],[105,35]],socket:'eclipse focus'},
  ophilia:{side:[[126,64],[121,70],[123,62]],up:[[108,34],[105,31],[107,34]],socket:'sanctum focus'},
+ minseo:{side:[[128,86],[124,82],[130,88]],up:[[104,34],[101,31],[105,35]],melee:true,socket:'electric sword edge'},
+ daeun:{side:[[122,70],[118,74],[121,68]],up:[[102,37],[99,34],[101,37]],socket:'medical lamp'},
+ iris:{side:[[142,94],[137,90],[144,96]],up:[[112,27],[109,24],[113,28]],socket:'cryo rifle muzzle'},
+ rook:{side:[[136,106],[141,98],[139,104]],up:[[118,42],[114,36],[120,44]],melee:true,socket:'void greatsword edge'},
+ freya:{side:[[124,68],[120,73],[123,66]],up:[[105,36],[102,33],[104,36]],socket:'relay drone'},
+ valen:{side:[[132,96],[137,90],[134,98]],up:[[108,38],[104,34],[109,39]],melee:true,socket:'flame sword edge'},
+ nyx:{side:[[144,94],[140,88],[146,96]],up:[[114,26],[111,23],[115,27]],socket:'rail-bow muzzle'},
+ ciel:{side:[[126,66],[122,71],[125,64]],up:[[106,34],[103,31],[105,35]],socket:'hydro crown focus'},
+ eir:{side:[[126,64],[121,70],[124,62]],up:[[108,34],[105,31],[107,34]],socket:'lunar staff focus'},
+ raon:{side:[[140,82],[136,78],[142,84]],up:[[110,30],[107,27],[111,31]],socket:'plasma carbine muzzle'},
 };
 const sequence=[0,0,1,1,2,2,1,0];
 const ranged=[[0,0],[0,1],[-2,0],[-4,0],[-5,1],[-3,1],[-1,0],[0,0]];

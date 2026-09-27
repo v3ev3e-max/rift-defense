@@ -14,8 +14,8 @@ test('selected merge preserves chosen position and upgrade spends once, improves
  const box=await page.locator('#selected-growth').boundingBox();expect(box!.width).toBeLessThanOrEqual(page.viewportSize()!.width);
  await page.screenshot({path:`artifacts/growth-${info.project.name}.png`,fullPage:true});expect(errors).toEqual([]);
 });
-test('all 34 heroes expose complete north and side attack frame sets',async({page})=>{
+test('all 44 heroes expose complete north and side attack frame sets',async({page})=>{
  await page.goto('/');
  const result=await page.evaluate(async()=>{const ids=Object.keys((window as any).rift.save.data.heroes),missing:string[]=[];for(const id of ids)for(const [name,count] of [['up6',6],['frame',8]] as const)for(let frame=1;frame<=count;frame++){const response=await fetch(`./assets/combat/${id}/${name}_${String(frame).padStart(2,'0')}.png`);if(!response.ok||(await response.blob()).size<1000)missing.push(`${id}/${name}/${frame}`);}return {count:ids.length,missing};});
- expect(result.count).toBe(34);expect(result.missing).toEqual([]);
+ expect(result.count).toBe(44);expect(result.missing).toEqual([]);
 });

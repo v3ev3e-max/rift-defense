@@ -14,7 +14,7 @@ test('campaign selection, formation, preparation, movement and unlock',async({pa
  expect(await page.evaluate(()=>{const m=(window as any).rift.model;return {started:m.started,units:m.units.length,slots:m.map.slots.length};})).toEqual({started:false,units:5,slots:6});
  await expect(page.locator('#shop-shell')).toHaveCount(0);
  await expect(page.locator('.prep-steps [data-action="campaign-prep-step"]')).toHaveCount(0);
- await expect(page.locator('.prep-roster [data-action="campaign-prep-toggle"]')).toHaveCount(8);
+ await expect(page.locator('.prep-roster [data-action="campaign-prep-toggle"]')).toHaveCount(10);
  await expect(page.locator('.prep-roster [data-action="campaign-prep-toggle"]:disabled')).toHaveCount(0);
  await page.evaluate(()=>{const a=(window as any).rift;['yuria','sera','reina','karin','arin'].forEach((id,i)=>a.placeCampaignHero(id,i));});
  expect(await page.evaluate(()=>(window as any).rift.model.units.length)).toBe(5);

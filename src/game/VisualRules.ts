@@ -23,6 +23,7 @@ export const heroVisuals: Record<string, { projectile: number; impact: number; s
   vera:{projectile:88,impact:82,skill:134},astra:{projectile:66,impact:94,skill:144},
   solara:{projectile:74,impact:92,skill:144},celestia:{projectile:94,impact:88,skill:148},
   rhea:{projectile:46,impact:68,skill:126},echo:{projectile:48,impact:66,skill:124},meriel:{projectile:52,impact:74,skill:134},selene:{projectile:56,impact:80,skill:142},ophilia:{projectile:60,impact:86,skill:150},
+  minseo:{projectile:54,impact:78,skill:128},daeun:{projectile:48,impact:70,skill:128},iris:{projectile:86,impact:76,skill:132},rook:{projectile:68,impact:86,skill:132},freya:{projectile:52,impact:72,skill:132},valen:{projectile:62,impact:90,skill:142},nyx:{projectile:90,impact:84,skill:140},ciel:{projectile:70,impact:92,skill:144},eir:{projectile:60,impact:88,skill:152},raon:{projectile:76,impact:90,skill:146},
 };
 /** Keep the entire rotated rectangle inside the camera, not just its center. */
 export function fitVisual(x:number,y:number,width:number,height:number,angle:number,bounds={width:1000,height:580},padding=3) {

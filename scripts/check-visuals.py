@@ -5,7 +5,7 @@ import json
 ROOT=Path(__file__).resolve().parents[1]
 heroes=sorted(p.name for p in (ROOT/'public/assets/heroes').iterdir() if p.is_dir())
 failures=[]; warnings=[]; rows=[]
-EXPECTED_HERO_COUNT=34
+EXPECTED_HERO_COUNT=44
 if len(heroes)!=EXPECTED_HERO_COUNT: failures.append(f'Expected {EXPECTED_HERO_COUNT} hero directories, got {len(heroes)}')
 
 for hero_id in heroes:

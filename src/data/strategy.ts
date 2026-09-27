@@ -2,7 +2,7 @@ import {heroes,heroById} from './heroes';
 import {combatRoles} from './combatRoles';
 import type {Choice} from './types';
 import type {Unit} from '../entities/HeroUnit';
-export const basePrices:Record<string,number>={yuria:35,reina:35,arin:40,karin:30,sera:30,noel:45,luna:40,mia:35,ian:30,leon:420,adela:85,belka:90,neris:80,noxia:210,livia:190,theria:200,kairon:210,kyle:95,serin:90,aurora:450,arden:430,hana:85,zion:90,gaia:205,elise:215,vera:220,astra:440,solara:460,celestia:480,rhea:35,echo:35,meriel:90,selene:215,ophilia:475};
+export const basePrices:Record<string,number>={yuria:35,reina:35,arin:40,karin:30,sera:30,noel:45,luna:40,mia:35,ian:30,leon:420,adela:85,belka:90,neris:80,noxia:210,livia:190,theria:200,kairon:210,kyle:95,serin:90,aurora:450,arden:430,hana:85,zion:90,gaia:205,elise:215,vera:220,astra:440,solara:460,celestia:480,rhea:35,echo:35,meriel:90,selene:215,ophilia:475,minseo:35,daeun:35,iris:90,rook:90,freya:95,valen:215,nyx:220,ciel:210,eir:480,raon:470};
 export const priceFactors={B:1.18,A:1.15,S:1.12,SR:1.08};
 // Grade identity is strongest on the first copy, while lower grades gain more
 // from repeated merges. This lets an early SR carry a lane and still gives a

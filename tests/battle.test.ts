@@ -271,7 +271,7 @@ describe("element links and operator grades", () => {
       (acc, h) => ({ ...acc, [h.grade]: acc[h.grade] + 1 }),
       { B: 0, A: 0, S: 0, SR: 0 },
     );
-    expect(counts).toEqual({ B: 11, A: 8, S: 8, SR: 7 });
+    expect(counts).toEqual({ B: 13, A: 11, S: 11, SR: 9 });
     for (const id of ["yuria", "reina", "arin", "karin", "sera", "luna", "mia", "noel", "ian"])
       expect(heroById[id].grade).toBe("B");
     expect(heroById.leon.grade).toBe("SR");
@@ -284,7 +284,7 @@ describe("element links and operator grades", () => {
       (acc, h) => ((acc[h.element] = (acc[h.element] ?? 0) + 1), acc),
       {},
     );
-    expect(elements).toEqual({ water: 10, fire: 9, electric: 9, dark: 6 });
+    expect(elements).toEqual({ water: 13, fire: 12, electric: 11, dark: 8 });
   });
 
   it("uses grade-based focus summon costs", () => {

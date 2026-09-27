@@ -91,6 +91,18 @@ it('every hero has a real attack action and five documented star stages',()=>{
  expect(Object.keys(combatRoles).sort()).toEqual(heroes.map(h=>h.id).sort());
  for(const h of heroes){const {m,u,e}=fixture(h.id);attack(m,u,e);expect(m.actions.some(a=>a.active&&a.kind===combatRoles[h.id].kind)).toBe(true);advance(m,1.2);expect(e.hp,h.id).toBeLessThan(10000);expect(combatRoles[h.id].stages).toHaveLength(5);}
 });
+it('plays a complete authored skill composition for every new operator',()=>{
+ for(const id of ['minseo','daeun','iris','rook','freya','valen','nyx','ciel','eir','raon']){
+  const {m,u,e}=fixture(id,5);u.skillCharge=100;
+  expect(castAutoSkill(m,u,e),id).toBe(true);
+  expect(u.skillCastAt,id).toBe(m.time);
+  expect(u.skillCallout,id).toBe(skillCalloutNames[id]);
+  const defensive=['minseo','daeun','freya','valen','eir'].includes(id);
+  expect(m.effects.some(f=>f.visual===`${defensive?'support-skill':id+'-skill'}${defensive?'-'+id:''}`),id).toBe(true);
+  advance(m,1.1);
+  expect(m.records[0].autoCasts,id).toBe(1);
+ }
+});
 it('Leon uses the regenerated tank scale and keeps his weapon transform finite',()=>{
  expect(poseSize('leon',true)).toBe(150);expect(poseSize('leon',false,true)).toBe(142);expect(poseSize('sera',true)).toBe(132);const p=weaponPoint('leon',{x:400,y:400},true,false,1);expect(Number.isFinite(p.x+p.y)).toBe(true);
 });

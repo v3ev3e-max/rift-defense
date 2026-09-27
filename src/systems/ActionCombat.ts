@@ -32,14 +32,15 @@ export const skillCalloutNames:Record<string,string>={
  noxia:'사건의 지평선',aurora:'이온 오로라',arden:'검은 태양',hana:'해일 방벽',zion:'적색 조준',gaia:'전격 방패',
  elise:'백색 궤적',vera:'밤의 화살',astra:'암흑 성채',solara:'태양 배열',celestia:'종말의 창',rhea:'생명 개화',
  echo:'박자 연결',meriel:'잿불 성가',selene:'월식 찬가',ophilia:'천공 성역',
+ minseo:'회로 방벽',daeun:'잿불 치유',iris:'빙결 사선',rook:'공허 절단',freya:'중계장',valen:'진홍 성채',nyx:'밤의 종언',ciel:'수해 왕관',eir:'월광 성역',raon:'플라즈마 구동',
 };
 export function skillDurationSeconds(heroId:string,star=1){
- if(combatRoles[heroId].kind==='support')return heroId==='rhea'?6+star*.4:heroId==='echo'?5+star*.35:heroId==='meriel'?5+star*.3:heroId==='selene'?5+star*.35:8+star*.4;
+ if(combatRoles[heroId].kind==='support')return heroId==='rhea'||heroId==='daeun'?6+star*.4:heroId==='echo'||heroId==='freya'?5+star*.35:heroId==='meriel'?5+star*.3:heroId==='selene'?5+star*.35:8+star*.4;
  if(formationRole(heroId)==='tank')return heroId==='yuria'?5+star*.35:heroId==='mia'?4:heroId==='leon'?5+star*.4:heroId==='neris'||heroId==='livia'?5+star*.5:heroId==='hana'?4.5+star*.4:heroId==='gaia'?5:6+star*.4;
  return .8;
 }
 export function skillCooldownSeconds(heroId:string){
- if(combatRoles[heroId].kind==='support')return heroId==='rhea'?22:heroId==='echo'?20:heroId==='meriel'?22:heroId==='selene'?20:30;
+ if(combatRoles[heroId].kind==='support')return heroId==='rhea'||heroId==='daeun'?22:heroId==='echo'?20:heroId==='freya'?21:heroId==='meriel'?22:heroId==='selene'?20:30;
  if(formationRole(heroId)==='tank')return 14;
  const kind=combatRoles[heroId].kind;return kind==='sniper'?13:kind==='burst'?10:11;
 }
@@ -103,7 +104,7 @@ export function attack(m:BattleModel,u:Unit,e:Enemy){
 function hit(m:BattleModel,u:Unit,e:Enemy,power:number,kind:DamageKind,crit=false){
  if(!e.active)return;
  const elementLevel=m.elementUpgrades[heroById[u.heroId].element];
- const ignore=Math.min(.95,(['noel','arin','zion','elise','vera','celestia'].includes(u.heroId)?(u.star>=4?.9:.7):0)+(heroById[u.heroId].element==='dark'&&elementLevel>=3?.12:0));
+ const ignore=Math.min(.95,(['noel','arin','zion','elise','vera','celestia','iris','nyx'].includes(u.heroId)?(u.star>=4?.9:.7):0)+(heroById[u.heroId].element==='dark'&&elementLevel>=3?.12:0));
  power*=u.branch==='focus'?(enemies[e.kind].boss||e.kind==='elite'?(u.star>=4?1.85:1.65):e.hp/e.maxHp<.3?1.4:1):1;
  if(heroById[u.heroId].element==='water'&&elementLevel>=3&&e.slowTime>0)power*=1.12;
  if(heroById[u.heroId].element==='fire'&&elementLevel>=4&&(enemies[e.kind].boss||e.kind==='elite'))power*=1.15;
@@ -114,7 +115,7 @@ function hit(m:BattleModel,u:Unit,e:Enemy,power:number,kind:DamageKind,crit=fals
  if(e.kind==='phantom'&&magical)power*=.55;
  if(e.kind==='bulwark'&&(e.shieldHits??0)<6){e.shieldHits=(e.shieldHits??0)+1;return;}
  if(m.enemies.some(v=>v.active&&v.kind==='bulwark'&&v!==e&&dist(v,e)<120))power*=.8;
- const execution=['noxia','arden','serin'].includes(u.heroId)&&u.star>=2&&e.hp/e.maxHp<(heroById[u.heroId].element==='dark'&&elementLevel>=5?.35:.3)?1.25+(u.star>=4?.25:0):1;
+ const execution=['noxia','arden','serin','rook','nyx'].includes(u.heroId)&&u.star>=2&&e.hp/e.maxHp<(heroById[u.heroId].element==='dark'&&elementLevel>=5?.35:.3)?1.25+(u.star>=4?.25:0):1;
  // A multi-hit combo pays one armor check in total. Otherwise Karin's listed
  // attack was split first and then reduced by armor two or five separate times.
  const armorSlices=u.heroId==='karin'&&kind==='basic'?(u.star>=5?5:2):1;
@@ -257,7 +258,7 @@ export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
  if(kind==='support'){
   announceSkill(m,u);
   const duration=skillDurationSeconds(u.heroId,u.star);
-  const allies=m.units.filter(v=>v.slot>=0&&v.hp>0&&(u.heroId==='ophilia'||dist(v,u)<=m.stats(u).range));
+  const allies=m.units.filter(v=>v.slot>=0&&v.hp>0&&(['ophilia','eir'].includes(u.heroId)||dist(v,u)<=m.stats(u).range));
   const visualTarget=[...allies].sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0];
   animateSupport(u,visualTarget,m.time);
   for(const ally of allies){
@@ -265,12 +266,20 @@ export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
    if(u.heroId==='rhea'){
     const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.055+u.star*.009)*skillMul);ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;
     ally.supportRegenRate=Math.max(ally.supportRegenRate??0,(.006+u.star*.0008)*skillMul);ally.supportRegenUntil=m.time+duration;ally.guardHp=(ally.guardHp??0)+ally.maxHp*.025*skillMul;
+   }else if(u.heroId==='daeun'){
+    const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.045+u.star*.008)*skillMul);ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;
+    ally.supportRegenRate=Math.max(ally.supportRegenRate??0,(.008+u.star*.001)*skillMul);ally.supportRegenUntil=m.time+duration;
    }else if(u.heroId==='echo'){
     ally.cooldown=Math.min(ally.cooldown,.12);charge(ally,5+u.star,m.time);ally.supportSpeedBonus=Math.max(ally.supportSpeedBonus??0,.1+u.star*.012);ally.supportSpeedUntil=m.time+duration;ally.supportChargeRate=Math.max(ally.supportChargeRate??0,1+u.star*.12);ally.supportChargeUntil=m.time+duration;
+   }else if(u.heroId==='freya'){
+    charge(ally,4+u.star*.8,m.time);ally.supportSpeedBonus=Math.max(ally.supportSpeedBonus??0,.12+u.star*.014);ally.supportSpeedUntil=m.time+duration;ally.supportChargeRate=Math.max(ally.supportChargeRate??0,.7+u.star*.1);ally.supportChargeUntil=m.time+duration;
    }else if(u.heroId==='meriel'){
     ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.06+u.star*.008)*skillMul;ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+Math.min(2.5,duration));ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.08+u.star*.012);ally.supportAttackUntil=m.time+duration;
    }else if(u.heroId==='selene'){
     ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.07+u.star*.012);ally.supportAttackUntil=m.time+duration;ally.supportCritBonus=Math.max(ally.supportCritBonus??0,.06+u.star*.01);ally.supportCritUntil=m.time+duration;ally.supportRegenRate=Math.max(ally.supportRegenRate??0,.003+u.star*.0006);ally.supportRegenUntil=m.time+duration;
+   }else if(u.heroId==='eir'){
+    const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.07+u.star*.011)*skillMul);ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;
+    ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.04+u.star*.006)*skillMul;ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+duration);ally.supportRegenRate=Math.max(ally.supportRegenRate??0,(.004+u.star*.0006)*skillMul);ally.supportRegenUntil=m.time+duration;
    }else{
     const healed=Math.min(ally.maxHp-ally.hp,ally.maxHp*(.08+u.star*.012)*skillMul);ally.hp+=healed;u.healingDone=(u.healingDone??0)+healed;
     ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.06+u.star*.007)*skillMul;ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+Math.min(3,duration));ally.supportRegenRate=Math.max(ally.supportRegenRate??0,(.004+u.star*.0007)*skillMul);ally.supportRegenUntil=m.time+duration;
@@ -303,6 +312,10 @@ export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
    u.guardHp=(u.guardHp??0)+u.maxHp*(.22+u.star*.04)*skillMul;u.tauntUntil=m.time+5;u.tankBlockUntil=m.time+5;for(const e of m.enemies)if(e.active&&dist(e,u)<190){e.slow=Math.max(e.slow,.3);e.slowTime=Math.max(e.slowTime,1.2);e.electricMark=Math.max(e.electricMark,1);e.electricTime=Math.max(e.electricTime,3);}
   }else if(u.heroId==='astra'){
    u.tauntUntil=m.time+6+u.star*.4;u.tankBlockUntil=m.time+6;u.guardHp=(u.guardHp??0)+u.maxHp*(.3+u.star*.05)*skillMul;for(const ally of m.units)if(ally.slot>=0&&ally.hp>0)ally.damageReductionUntil=Math.max(ally.damageReductionUntil??0,m.time+5+u.star*.35);addZone(m,u,u.x,u.y,145,'abyss');
+  }else if(u.heroId==='minseo'){
+   u.guardHp=(u.guardHp??0)+u.maxHp*(.24+u.star*.04)*skillMul;u.tauntUntil=m.time+4.5+u.star*.3;u.tankBlockUntil=m.time+4.5;for(const e of m.enemies)if(e.active&&dist(e,u)<175){e.electricMark=Math.max(e.electricMark,1);e.electricTime=Math.max(e.electricTime,3);e.slow=Math.max(e.slow,.22);e.slowTime=Math.max(e.slowTime,1);}
+  }else if(u.heroId==='valen'){
+   u.guardHp=(u.guardHp??0)+u.maxHp*(.27+u.star*.045)*skillMul;u.tauntUntil=m.time+5.5;u.tankBlockUntil=m.time+5;for(const e of m.enemies)if(e.active&&dist(e,u)<190){e.burn=Math.max(e.burn,2);e.burnTime=Math.max(e.burnTime,3);e.dotOwner=u.uid;e.dotPower=Math.max(e.dotPower,m.stats(u).atk*.18);}
   }
   const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;
   const cooldown=skillCooldownSeconds(u.heroId);u.skillCharge=0;u.skillHeldAt=undefined;u.skillCooldownDuration=cooldown;u.skillReadyAt=m.time+cooldown;
@@ -314,6 +327,11 @@ export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
  if(u.heroId==='yuria')addZone(m,u,target.x,target.y,90,'barrier');
  if(u.heroId==='mia')for(const ally of m.units)if(dist(ally,u)<m.stats(u).range){ally.stunned=0;ally.cooldown=0;}
  if(kind==='drone')for(let i=1;i<3;i++)queue(m,u,target,m.stats(u).atk,kind,i*.12,true);
+ if(u.heroId==='iris'){addZone(m,u,target.x,target.y,105,'ice');target.slow=Math.max(target.slow,.55);target.slowTime=Math.max(target.slowTime,2.4);}
+ if(u.heroId==='rook')for(let i=1;i<=2;i++)queue(m,u,target,m.stats(u).atk*.62,'melee',i*.14,true);
+ if(u.heroId==='nyx'){target.vulnerability=Math.max(target.vulnerability,.18);target.vulnerabilityTime=Math.max(target.vulnerabilityTime,4);queue(m,u,target,m.stats(u).atk*.7,'sniper',.22,true);}
+ if(u.heroId==='ciel')addZone(m,u,target.x,target.y,130,'water',m.stats(u).atk*.12);
+ if(u.heroId==='raon'){addZone(m,u,target.x,target.y,110,'plasma',m.stats(u).atk*.14);for(let i=1;i<=3;i++)queue(m,u,target,m.stats(u).atk*.36,'burst',i*.09,true);}
  const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;
  const cooldown=skillCooldownSeconds(u.heroId);u.skillCharge=0;u.skillHeldAt=undefined;u.skillCooldownDuration=cooldown;u.skillReadyAt=m.time+cooldown;
  u.skillEffectDuration=skillDurationSeconds(u.heroId,u.star);u.skillEffectUntil=m.time+u.skillEffectDuration;
@@ -325,10 +343,10 @@ export function supportBasic(m:BattleModel,u:Unit){
  if(!allies.length)return false;
  const ordered=[...allies].sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp),ally=ordered[0],power=.009+u.star*.002;
  animateSupport(u,ally,m.time);
- if(u.heroId==='rhea'||u.heroId==='ophilia'){
-  for(const target of u.heroId==='ophilia'?ordered.slice(0,2):[ally]){const healed=Math.min(target.maxHp-target.hp,target.maxHp*power);target.hp+=healed;u.healingDone=(u.healingDone??0)+healed;}
+ if(['rhea','daeun','ophilia','eir'].includes(u.heroId)){
+  for(const target of ['ophilia','eir'].includes(u.heroId)?ordered.slice(0,2):[ally]){const healed=Math.min(target.maxHp-target.hp,target.maxHp*power);target.hp+=healed;u.healingDone=(u.healingDone??0)+healed;}
  }
- if(u.heroId==='echo'){ally.supportSpeedBonus=Math.max(ally.supportSpeedBonus??0,.04+u.star*.006);ally.supportSpeedUntil=m.time+2;charge(ally,1+u.star*.2,m.time);}
+ if(u.heroId==='echo'||u.heroId==='freya'){ally.supportSpeedBonus=Math.max(ally.supportSpeedBonus??0,.04+u.star*.006);ally.supportSpeedUntil=m.time+2;charge(ally,1+u.star*.2,m.time);}
  if(u.heroId==='meriel'){ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.008+u.star*.0015);ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.02+u.star*.004);ally.supportAttackUntil=m.time+2.2;}
  if(u.heroId==='selene'){ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.025+u.star*.004);ally.supportAttackUntil=m.time+2.2;}
  if(u.heroId==='selene'){ally.supportCritBonus=Math.max(ally.supportCritBonus??0,.02+u.star*.004);ally.supportCritUntil=m.time+2.2;}

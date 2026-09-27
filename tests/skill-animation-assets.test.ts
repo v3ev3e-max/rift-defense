@@ -31,13 +31,14 @@ describe('character-specific skill animation assets',()=>{
   expect(source).toContain('this.enqueueHeroVisuals(u.heroId,true)');
   expect(source).toContain("support-skill-${id}-${frame}");
  });
- it('provides three distinct idle frames for every hero',()=>{
+ it('keeps new deployment idle frames motionless and preserves legacy authored idles',()=>{
+  const motionless=new Set(['minseo','daeun','iris','rook','freya','valen','nyx','ciel','eir','raon']);
   for(const hero of heroes){
    const frames=Array.from({length:3},(_,i)=>hash(`public/assets/heroes/${hero.id}/frame_${String(i+1).padStart(2,'0')}.png`));
-   expect(new Set(frames).size,`${hero.id} idle`).toBe(3);
+   expect(new Set(frames).size,`${hero.id} idle`).toBe(motionless.has(hero.id)?1:3);
   }
  });
- it('provides six substantial, globally unique skill frames for all 34 heroes',()=>{
+  it('provides six substantial, globally unique skill frames for all 44 heroes',()=>{
   const skillHashes:string[]=[];
   for(const hero of heroes)for(let frame=1;frame<=6;frame++){
    const path=`public/assets/combat/${hero.id}/skill_${String(frame).padStart(2,'0')}.png`;

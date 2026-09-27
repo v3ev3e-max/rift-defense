@@ -62,5 +62,5 @@ it('places damage dealers before support operators in operator lists',()=>{
  const firstSupport=ordered.findIndex(h=>supportOperatorIds.has(h.id));
  expect(firstSupport).toBeGreaterThan(0);
  expect(ordered.slice(0,firstSupport).every(h=>!supportOperatorIds.has(h.id))).toBe(true);
- expect(ordered.slice(firstSupport).map(h=>h.id)).toEqual(['rhea','echo','meriel','selene','ophilia']);
+ expect(ordered.slice(firstSupport).map(h=>h.id)).toEqual(['rhea','echo','meriel','selene','ophilia','daeun','freya','eir']);
 });
