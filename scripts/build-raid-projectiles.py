@@ -16,7 +16,19 @@ GALE={
  'phase':'exec-10a24c32-5795-4463-8be8-b6242bb0f7e5.png',
  'death':'exec-e1a27351-fdd5-4a10-8f4e-0bc4fe2d8ec7.png',
 }
-BOSS_PROJECTILE='exec-049492da-36f0-4564-945d-5d025b75641c.png'
+VOID={
+ 'idle':'exec-5dae507c-83a0-4ad7-b07e-47d275b7c69b.png',
+ 'prepare':'exec-a92a93e2-2128-4658-a572-9f733f93d790.png',
+ 'attack':'exec-fed8c229-26e0-4641-9fb3-2cfe27899ff7.png',
+ 'pattern':'exec-ca45670a-05e6-4a47-9e69-f38616e6554c.png',
+ 'hit':'exec-ee1dff71-71d9-4fd6-98b2-e22d721586d2.png',
+ 'phase':'exec-7844ea46-5d2d-4b0d-a28a-c09ab7c1437f.png',
+ 'death':'exec-fbe65bce-4176-4b42-b2c5-aab3bc538c8f.png',
+}
+BOSSES={
+ 'gale-colossus':(GALE,'exec-049492da-36f0-4564-945d-5d025b75641c.png'),
+ 'void-observer':(VOID,'exec-4404aec8-3649-4f41-b5da-a8643495fe07.png'),
+}
 
 def crop(im:Image.Image):
  im=im.convert('RGBA');box=im.getchannel('A').getbbox();return im.crop(box) if box else im
@@ -42,8 +54,9 @@ def skill_frames(path:Path):
 
 def main():
  hashes=[]
- for state,file in GALE.items():hashes.append(sheet(split(GEN/file,6),OUT/'bosses/gale-colossus'/f'{state}.webp'))
- hashes.append(sheet(split(GEN/BOSS_PROJECTILE,4),OUT/'bosses/gale-colossus/projectile-lifecycle.webp',384,.16))
+ for boss,(states,projectile) in BOSSES.items():
+  for state,file in states.items():hashes.append(sheet(split(GEN/file,6),OUT/'bosses'/boss/f'{state}.webp'))
+  hashes.append(sheet(split(GEN/projectile,4),OUT/'bosses'/boss/'projectile-lifecycle.webp',384,.16))
  heroes=0
  for folder in sorted(EFFECTS.iterdir()):
   if not folder.is_dir() or not (folder/'projectile_01.png').exists():continue
@@ -53,6 +66,6 @@ def main():
   hashes.append(sheet([Image.open(folder/f'impact_{i:02}.png') for i in range(1,4)],dest/'impact.webp',256,.14));heroes+=1
  assert heroes==44,heroes
  assert len(hashes)==len(set(hashes)),'shared projectile/animation sheet detected'
- print(f'raid-v3: Gale 7 states + projectile lifecycle; {heroes} unique hero projectile sets')
+ print(f'raid-v3: {len(BOSSES)} bosses with 7 states + projectile lifecycle; {heroes} unique hero projectile sets')
 
 if __name__=='__main__':main()
