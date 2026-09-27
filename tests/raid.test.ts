@@ -4,7 +4,9 @@ import {RAID_DAILY_ATTEMPTS,raidAutoDamage,raidBossMaxHp,raidBossTuning,raidDrop
 import {equipItem,makeEquipment,raidEquipmentBonus,raidEquipmentCatalog} from '../src/data/equipment';
 import {raidScreen} from '../src/ui/RaidUI';
 // @ts-expect-error Vitest runs in Node; the browser build intentionally omits Node typings.
-import {statSync} from 'node:fs';
+import {readdirSync,readFileSync,statSync} from 'node:fs';
+// @ts-expect-error Vitest runs in Node; the browser build intentionally omits Node typings.
+import {createHash} from 'node:crypto';
 
 describe('weekly boss raid',()=>{
  it('rotates exactly three bosses and resets daily attempts without erasing weekly damage',()=>{
@@ -18,6 +20,13 @@ describe('weekly boss raid',()=>{
  it('makes manual timing meaningfully stronger than AUTO alone',()=>{const power=1000,autoOnly=raidAutoDamage(power,true)*180,manual=autoOnly+raidManualDamage(power)*15;expect(manual).toBeGreaterThan(autoOnly*1.6);});
  it('settles the previous weekly rank on rollover',()=>{const save=defaultSave();save.raid.week='2026-W01';save.raid.weeklyBest=1600000;const before=save.credits;refreshRaid(save,new Date('2026-09-25T00:00:00Z'));expect(save.credits).toBe(before+800);expect(save.raid.lastSettlement).toContain('플래티넘');});
  it('ships non-empty raid boss action and projectile atlases',()=>{for(const file of ['raid-boss-actions.png','raid-pattern-vfx.png'])expect(statSync(`public/assets/generated/raid-bosses/${file}`).size).toBeGreaterThan(500000);});
+ it('ships the complete unique raid-v2 visual pack',()=>{
+  const ids=Object.keys(raidBossTuning),files:string[]=[];
+  for(const id of ids){for(const pose of ['idle','attack','phase','hit']){const count=pose==='idle'||pose==='phase'?4:pose==='attack'?6:3;for(let i=1;i<=count;i++)files.push(`public/assets/generated/raid-v2/bosses/${id}/${pose}_${String(i).padStart(2,'0')}.webp`);}files.push(`public/assets/generated/raid-v2/summons/${id}.webp`);expect(statSync(`public/assets/generated/raid-v2/bosses/${id}.webp`).size).toBeGreaterThan(3000);}
+  files.push('public/assets/generated/raid-v2/arena.webp');
+  expect(readdirSync('public/assets/generated/raid-v2/vfx').filter((v:string)=>v.endsWith('.webp'))).toHaveLength(12);
+  const hashes=new Set(files.map(file=>{expect(statSync(file).size).toBeGreaterThan(3000);return createHash('sha256').update(readFileSync(file)).digest('hex');}));expect(hashes.size).toBe(files.length);
+ });
  it('raises boss durability, attack and tempo through the boss roster',()=>{const ids=Object.keys(raidBossTuning) as (keyof typeof raidBossTuning)[];const hp=ids.map(id=>raidBossMaxHp(5000,id)),attack=ids.map(id=>raidPatternDamage(3,id));expect(hp).toEqual([...hp].sort((a,b)=>a-b));expect(attack).toEqual([...attack].sort((a,b)=>a-b));expect(ids.map(id=>raidBossTuning[id].tempo)).toEqual([12,11,12,10,9]);});
  it('applies equipped boss gear to real raid formulas',()=>{const save=defaultSave();save.equipmentInventory=[];const ids=save.campaign!.squad.slice(0,2),solar=makeEquipment('raid-solar-sigil','SR',1,'solar'),voidLens=makeEquipment('raid-void-lens','SR',2,'void');save.equipmentInventory.push(solar,voidLens);equipItem(save,ids[0],solar.id);equipItem(save,ids[1],voidLens.id);const b=raidEquipmentBonus(save,ids);expect(b.damage).toBe(.12);expect(b.manual).toBe(.2);expect(raidManualDamage(1000,5,b.damage,b.manual)).toBeGreaterThan(raidManualDamage(1000));expect(raidEquipmentCatalog).toHaveLength(5);});
  it('drops boss gear only after meaningful damage and guarantees a kill drop',()=>{expect(raidDropEligible(.34,0)).toBe(false);expect(raidDropEligible(.35,.29)).toBe(true);expect(raidDropEligible(.35,.31)).toBe(false);expect(raidDropEligible(1,.99)).toBe(true);});
