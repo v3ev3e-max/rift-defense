@@ -10,6 +10,12 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pillow numpy scipy
+      - run: python scripts/test-raid-pixels.py
+      - run: python scripts/test-origin-region-pixels.py
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium webkit

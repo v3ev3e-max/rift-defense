@@ -27,6 +27,10 @@ const regionalEnemyArt:Record<number,Set<string>>={
   10:new Set(['relic_golem','dune_ripper','sun_archer','mirage_oracle','named_dune','sand_colossus','solar_sphinx']),
   11:new Set(['alloy_guard','gear_hound','pulse_turret','repair_weaver','named_machine','forge_overseer','machine_god']),
   12:new Set(['paradox_shell','chrono_stalker','epoch_caster','time_mender','named_time','chrono_reaper','aeon_sovereign']),
+  13:new Set(['crystal_bastion','tide_skimmer','prism_cannon','coral_singer']),
+  14:new Set(['lunar_husk','spore_leaper','moon_ray','bloom_keeper']),
+  15:new Set(['stellar_plate','plasma_hound','nova_turret','forge_conductor']),
+  16:new Set(['origin_warden','causal_blade','genesis_eye','fate_weaver']),
 };
 export class BattleScene extends Phaser.Scene {
   model: BattleModel;
@@ -134,7 +138,7 @@ export class BattleScene extends Phaser.Scene {
     // multi-megabyte file finished. Queue the visible map/UI essentials first.
     for(const name of generatedVfxNames)this.load.image(`vfx-${name}`,assetUrl(`/assets/generated/vfx/${name}.webp`));
     const campaignArea=this.model.campaign?campaignRegion(this.model.campaign):0;
-    const visualArea=campaignArea>12?campaignArea-4:campaignArea;
+    const visualArea=campaignArea;
     this.campaignArea=campaignArea;
     if(campaignArea)this.load.image('campaign-lane',assetUrl(campaignLaneAsset(campaignArea)));
     const campaignIds=this.model.campaign?campaignEnemyIds(this.model.campaign):new Set<string>();
@@ -144,9 +148,12 @@ export class BattleScene extends Phaser.Scene {
     this.initialEnemyKey=`enemy-${activeEnemyDefs[0]?.id??'crawler'}`;
     for (const def of activeEnemyDefs){
       const visualId=def.visualId??def.id;
-      const regional=campaignArea>0&&campaignIds.has(def.id)&&regionalEnemyArt[visualArea]?.has(visualId);
+      // Regions 13-16 own new regular-enemy art. Their named/boss entries keep
+      // the previous signature art until dedicated replacements are authored.
+      const artArea=campaignArea>12&&def.visualId?campaignArea-4:visualArea;
+      const regional=campaignArea>0&&campaignIds.has(def.id)&&regionalEnemyArt[artArea]?.has(visualId);
       if(regional)this.regionalEnemyVisuals.add(def.id);
-      const folder=`/assets/generated/campaign-enemies/map-${String(visualArea).padStart(2,'0')}`;
+      const folder=`/assets/generated/campaign-enemies/map-${String(artArea).padStart(2,'0')}`;
       this.load.image(`enemy-${def.id}`, assetUrl(regional&&visualId!=="elite"?`${folder}/${visualId}.webp`:`/assets/generated/enemies/${visualId}.webp`));
       const moveCount=enemyMoveFrameCount(!!def.boss,!!regional);
       this.enemyMoveFrames[def.id]=moveCount;
@@ -801,7 +808,10 @@ export class BattleScene extends Phaser.Scene {
       const stepKey=`enemy-step-${motion.frame}`,stepReady=this.textureReady(stepKey);
       step.setVisible(stepReady&&motion.stepAlpha>0).setPosition(e.x,e.y+enemySize*.23).setDisplaySize(boss?70:46,boss?35:23).setDepth(19+e.y).setAlpha(motion.stepAlpha);
       if(stepReady&&step.texture.key!==stepKey)step.setTexture(stepKey);
-      sp.clearTint().setFlipX(motion.flipX).setAngle(motion.angle).setDisplaySize(enemySize*motion.scaleX,enemySize*motion.scaleY).setPosition(renderX,renderY).setDepth(20+e.y);
+      const enemyAngle=Phaser.Math.DegToRad(motion.angle),anchorOffset=(.5-sp.originY)*enemySize*motion.scaleY;
+      const enemyRect=fitVisual(renderX-Math.sin(enemyAngle)*anchorOffset,renderY+Math.cos(enemyAngle)*anchorOffset,enemySize*motion.scaleX,enemySize*motion.scaleY,enemyAngle,MAP);
+      const fittedOffset=(.5-sp.originY)*enemyRect.height;
+      sp.clearTint().setFlipX(motion.flipX).setAngle(motion.angle).setDisplaySize(enemyRect.width,enemyRect.height).setPosition(enemyRect.x+Math.sin(enemyAngle)*fittedOffset,enemyRect.y-Math.cos(enemyAngle)*fittedOffset).setDepth(20+e.y);
       // A short warm multiply tint preserves the authored silhouette. A full
       // white fill made damage-over-time targets disappear under continuous hits.
       if(hit)sp.setTint(0xffc7aa);
@@ -949,13 +959,14 @@ export class BattleScene extends Phaser.Scene {
           const boltFrame=Math.min(3,Math.floor(progress*9)%3+1),key=`enemy-rift-bolt-${boltFrame}`;
           if(!this.textureReady(key))continue;
           const sp=this.fxSprites[fxSpriteIndex++],dx=f.tx-f.x,dy=f.ty-f.y,angle=Math.atan2(dy,dx),travel=Phaser.Math.Easing.Quadratic.InOut(progress);
-          sp.setTexture(key).clearTint().setPosition(Phaser.Math.Linear(f.x,f.tx,travel),Phaser.Math.Linear(f.y,f.ty,travel))
-            .setDisplaySize(58,25).setRotation(angle+Math.PI).setAlpha(1-progress*.12).setDepth(674).setVisible(true);
+          const boltRect=fitVisual(Phaser.Math.Linear(f.x,f.tx,travel),Phaser.Math.Linear(f.y,f.ty,travel),58,25,angle+Math.PI,MAP);
+          sp.setTexture(key).clearTint().setPosition(boltRect.x,boltRect.y)
+            .setDisplaySize(boltRect.width,boltRect.height).setRotation(angle+Math.PI).setAlpha(1-progress*.12).setDepth(674).setVisible(true);
         }
         continue;
       }
       if(f.visual==='enemy-ranged-impact'){
-        if(fxSpriteIndex<this.fxSprites.length){const impactFrame=Math.min(3,Math.floor(progress*3)+1),key=`enemy-ranged-impact-${impactFrame}`;if(!this.textureReady(key))continue;const sp=this.fxSprites[fxSpriteIndex++],size=(f.radius??38)*2.2;sp.setTexture(key).clearTint().setPosition(f.tx,f.ty).setDisplaySize(size,size).setRotation(0).setAlpha(impactFrame===3?1-progress:.95).setDepth(676).setVisible(true);}
+        if(fxSpriteIndex<this.fxSprites.length){const impactFrame=Math.min(3,Math.floor(progress*3)+1),key=`enemy-ranged-impact-${impactFrame}`;if(!this.textureReady(key))continue;const sp=this.fxSprites[fxSpriteIndex++],size=(f.radius??38)*2.2,rect=fitVisual(f.tx,f.ty,size,size,0,MAP);sp.setTexture(key).clearTint().setPosition(rect.x,rect.y).setDisplaySize(rect.width,rect.height).setRotation(0).setAlpha(impactFrame===3?1-progress:.95).setDepth(676).setVisible(true);}
         continue;
       }
       if(f.visual?.startsWith('slash-')){
@@ -1051,7 +1062,7 @@ export class BattleScene extends Phaser.Scene {
             .setDepth(barrier ? 625 : skill ? 677 : 650);
           if(skill&&fxSpriteIndex<this.fxSprites.length){
             const impact=this.fxSprites[fxSpriteIndex++],impactFrame=Math.min(3,Math.floor(progress*3)+1),pulse=(f.radius??110)*(1.05+progress*.65);
-            impact.setTexture(`fx-${visualHero}-impact-${impactFrame}`).clearTint().setPosition(f.tx,f.ty)
+            impact.setTexture(`fx-${visualHero}-skill`).clearTint().setPosition(f.tx,f.ty)
               .setDisplaySize(pulse*.78,pulse*.78).setRotation(-progress*.22).setAlpha(impactFrame===3?(1-progress)*.5:.56).setDepth(678).setVisible(true);
           }
           if(skill&&progress<.58&&fxSpriteIndex<this.fxSprites.length){

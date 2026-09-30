@@ -16,19 +16,24 @@ const regional:Record<number,Set<string>>={
   10:new Set(['relic_golem','dune_ripper','sun_archer','mirage_oracle','named_dune','sand_colossus','solar_sphinx']),
   11:new Set(['alloy_guard','gear_hound','pulse_turret','repair_weaver','named_machine','forge_overseer','machine_god']),
   12:new Set(['paradox_shell','chrono_stalker','epoch_caster','time_mender','named_time','chrono_reaper','aeon_sovereign']),
+  13:new Set(['crystal_bastion','tide_skimmer','prism_cannon','coral_singer']),
+  14:new Set(['lunar_husk','spore_leaper','moon_ray','bloom_keeper']),
+  15:new Set(['stellar_plate','plasma_hound','nova_turret','forge_conductor']),
+  16:new Set(['origin_warden','causal_blade','genesis_eye','fate_weaver']),
 };
 const asset=(path:string)=>`public${path}`;
 const present=(path:string)=>existsSync(asset(path))&&statSync(asset(path)).size>0;
 
 describe('campaign enemy assets',()=>{
-  it('resolves every enemy injected by all 120 stage wave generators',()=>{
+  it('resolves every enemy injected by all campaign stage wave generators',()=>{
     for(const stage of campaignStages)for(const id of campaignEnemyIds(stage))expect(enemies[id],`${stage.id}: ${id}`).toBeDefined();
   });
 
   it('has a complete static and movement fallback for every spawned enemy',()=>{
     for(const stage of campaignStages){
-      const area=campaignRegion(stage),visualArea=area>12?area-4:area,folder=`/assets/generated/campaign-enemies/map-${String(visualArea).padStart(2,'0')}`;
+      const area=campaignRegion(stage);
       for(const id of campaignEnemyIds(stage)){
+        const visualArea=area>12&&enemies[id].visualId?area-4:area,folder=`/assets/generated/campaign-enemies/map-${String(visualArea).padStart(2,'0')}`;
         const def=enemies[id],visual=def.visualId??id,isRegional=!!regional[visualArea]?.has(visual);
         const still=isRegional&&visual!=='elite'?`${folder}/${visual}.webp`:`/assets/generated/enemies/${visual}.webp`;
         expect(present(still),`${stage.id}: ${id} static ${still}`).toBe(true);
@@ -42,7 +47,7 @@ describe('campaign enemy assets',()=>{
   });
 
   it('has regional movement effects for every campaign area',()=>{
-    for(let area=1;area<=12;area++)for(const [kind,count] of [['step',4],['projectile',3],['impact',3]] as const)
+    for(let area=1;area<=16;area++)for(const [kind,count] of [['step',4],['projectile',3],['impact',3]] as const)
       for(let frame=1;frame<=count;frame++)expect(present(`/assets/generated/campaign-enemies/map-${String(area).padStart(2,'0')}/fx/${kind}/frame_${String(frame).padStart(2,'0')}.webp`),`map ${area} ${kind} ${frame}`).toBe(true);
   });
 

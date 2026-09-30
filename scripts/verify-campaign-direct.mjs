@@ -2,8 +2,9 @@ import {chromium,webkit} from '@playwright/test';
 const only=process.argv[2];
 for(const [name,engine,viewport] of [['pc',chromium,{width:1440,height:900}],['short-pc',chromium,{width:1366,height:768}],['android',chromium,{width:412,height:915}],['iphone',webkit,{width:390,height:844}],['small-mobile',chromium,{width:360,height:740}]]){
  if(only&&name!==only)continue;
- const browser=await engine.launch();const page=await browser.newPage({viewport});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const browser=await engine.launch();const page=await browser.newPage({viewport});page.setDefaultTimeout(120000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('file:///D:/3V_TD/local-test/index.html');
+ await page.waitForFunction(()=>!!window.rift,{timeout:120000});
  await page.locator('[data-action="stage"]').first().click();
  await page.locator('[data-action="campaign-select"][data-id="1-1"]').first().click();
  await page.screenshot({path:`artifacts/campaign-direct-stages-${name}.png`});
@@ -12,7 +13,7 @@ for(const [name,engine,viewport] of [['pc',chromium,{width:1440,height:900}],['s
  await visible('.campaign-stage [data-action="campaign-deploy"]');
  await page.locator('.campaign-stage [data-action="campaign-deploy"]').click();
  await page.locator('canvas').waitFor();
- if(name!=='iphone'){const auto=page.locator('[data-action="campaign-auto-deploy"]');await auto.waitFor({timeout:60000});await auto.click();await page.waitForFunction(()=>document.querySelectorAll('.campaign-prep .prep-card.selected').length===5,{timeout:60000});}
+ if(name!=='iphone'){const auto=page.locator('[data-action="campaign-auto-deploy"]');await auto.waitFor({timeout:60000});await auto.click();await page.waitForFunction(()=>document.querySelector('#prep-count')?.textContent?.trim()==='5 / 5',{timeout:60000});}
  await page.screenshot({path:`artifacts/campaign-direct-formation-${name}.png`});
  if(name!=='iphone')await page.locator('[data-action="campaign-start"]').click();
  await page.waitForTimeout(3000);

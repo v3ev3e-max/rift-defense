@@ -2,6 +2,8 @@ from __future__ import annotations
 from pathlib import Path
 from PIL import Image, ImageEnhance
 import hashlib
+import numpy as np
+from scipy import ndimage
 
 ROOT=Path(__file__).resolve().parents[1]
 GEN=Path(r'C:/Users/PC/.codex/generated_images/01a0bcec-3497-7643-a99a-cfa603eae514')
@@ -48,13 +50,29 @@ def sheet(images:list[Image.Image],out:Path,size=512,margin=.12):
  dst=Image.new('RGBA',(size*len(images),size))
  for i,im in enumerate(images):
   im=im.resize((max(1,round(im.width*scale)),max(1,round(im.height*scale))),Image.Resampling.LANCZOS)
-  dst.alpha_composite(im,(i*size+(size-im.width)//2,(size-im.height)//2))
- out.parent.mkdir(parents=True,exist_ok=True);dst.save(out,'WEBP',quality=90,method=4)
+  dst.alpha_composite(im,(i*size+(size-im.width)//2,round(size*(1-margin))-im.height))
+ out.parent.mkdir(parents=True,exist_ok=True)
+ temporary=out.with_suffix('.webp.tmp')
+ dst.save(temporary,'WEBP',quality=90,method=4)
+ temporary.replace(out)
  return hashlib.sha256(out.read_bytes()).hexdigest()
 
 def split(path:Path,count:int):
- im=Image.open(path).convert('RGBA');w=im.width/count
- return [im.crop((round(i*w),0,round((i+1)*w),im.height)) for i in range(count)]
+ im=Image.open(path).convert('RGBA');a=np.array(im.getchannel('A'));w=im.width
+ density=(a>32).sum(axis=0);cuts=[0]
+ for i in range(1,count):
+  left,right=int(w*(i/count-.04)),int(w*(i/count+.04))
+  cuts.append(left+int(np.argmin(density[left:right])))
+ cuts.append(w);result=[]
+ for left,right in zip(cuts,cuts[1:]):
+  cell=np.array(im.crop((left,0,right,im.height)))
+  labels,n=ndimage.label(cell[:,:,3]>24);sizes=np.bincount(labels.ravel());sizes[0]=0
+  main=labels==sizes.argmax();near=ndimage.binary_dilation(main,iterations=5)
+  for label in range(1,n+1):
+   if np.any(near&(labels==label)):main|=labels==label
+  cell[:,:,3]=np.where(ndimage.binary_dilation(main,iterations=1),cell[:,:,3],0)
+  result.append(Image.fromarray(cell))
+ return result
 
 def skill_frames(path:Path):
  src=crop(Image.open(path));frames=[]
@@ -65,8 +83,14 @@ def skill_frames(path:Path):
 def main():
  hashes=[]
  for boss,(states,projectile) in BOSSES.items():
-  for state,file in states.items():hashes.append(sheet(split(GEN/file,6),OUT/'bosses'/boss/f'{state}.webp'))
-  hashes.append(sheet(split(GEN/projectile,4),OUT/'bosses'/boss/'projectile-lifecycle.webp',384,.16))
+  archive=ROOT/'art-source/raid-bosses'/boss;archive.mkdir(parents=True,exist_ok=True)
+  for state,file in states.items():
+   source=archive/f'{state}.webp'
+   if not source.exists():Image.open(GEN/file).save(source,'WEBP',lossless=True)
+   hashes.append(sheet(split(source,6),OUT/'bosses'/boss/f'{state}.webp'))
+  source=archive/'projectile.webp'
+  if not source.exists():Image.open(GEN/projectile).save(source,'WEBP',lossless=True)
+  hashes.append(sheet(split(source,4),OUT/'bosses'/boss/'projectile-lifecycle.webp',384,.16))
  heroes=0
  for folder in sorted(EFFECTS.iterdir()):
   if not folder.is_dir() or not (folder/'projectile_01.png').exists():continue

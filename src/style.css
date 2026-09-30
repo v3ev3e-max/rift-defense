@@ -5006,16 +5006,16 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 .raid-arena:before{content:"";position:absolute;inset:66% 0 0;background:repeating-linear-gradient(90deg,transparent 0 48px,#77ead20b 49px 50px),linear-gradient(180deg,#173848aa,#081721);transform:perspective(360px) rotateX(52deg);transform-origin:top}
 .raid-arena:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#57ead218 1px,transparent 1px),linear-gradient(#57ead20d 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,transparent,#000 65%,transparent)}
 .raid-boss-silhouette{position:absolute;z-index:3;right:5%;bottom:7%;display:block;width:min(42%,390px);height:88%;aspect-ratio:auto;overflow:visible}
-.raid-boss-main{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 12px 18px #000c) drop-shadow(0 0 25px var(--raid-color));animation:raid-boss-combat 1.8s ease-in-out infinite;transform-origin:50% 88%}
+.raid-boss-main{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 12px 18px #000c) drop-shadow(0 0 25px var(--raid-color));animation:none;transform-origin:50% 88%}
 .raid-boss-main{display:block;background-image:var(--boss-sheet);background-repeat:no-repeat;background-position:0 0}
-.raid-boss-main.idle{background-size:400% 100%;animation:raid-boss-sprite-idle .72s steps(3) infinite,raid-boss-combat 1.8s ease-in-out infinite}
-.raid-boss-main.attack{background-size:600% 100%;animation:raid-boss-sprite-attack .54s steps(5) infinite,raid-boss-combat 1.1s ease-in-out infinite}
-.raid-boss-main.v3{position:absolute;left:0;bottom:0;height:auto;aspect-ratio:1;background-size:600% 100%;animation:raid-boss-v3 .66s steps(5) infinite,raid-boss-combat 1.35s ease-in-out infinite}
+.raid-boss-main.idle{background-size:400% 100%;animation:none}
+.raid-boss-main.attack{background-size:600% 100%;animation:none}
+.raid-boss-main.v3{position:absolute;left:0;bottom:0;height:auto;aspect-ratio:1;background-size:600% 100%;animation:none}
 .phase-2 .raid-boss-main{animation-duration:1.35s;filter:drop-shadow(0 12px 18px #000c) drop-shadow(0 0 34px var(--raid-color)) saturate(1.18)}
 .phase-3 .raid-boss-main{animation-duration:1s;filter:drop-shadow(0 12px 18px #000c) drop-shadow(0 0 42px var(--raid-color)) saturate(1.35) brightness(1.08)}
 .raid-field-squad{position:absolute;z-index:4;left:2%;right:40%;bottom:7%;display:flex;align-items:flex-end;justify-content:space-around;height:68%}
-.raid-fighter{position:relative;width:20%;height:82%;animation:raid-hero-combat .85s calc(var(--fighter)*-.12s) ease-in-out infinite;transform-origin:50% 95%}
-.raid-hero-sprite{position:absolute;left:-30%;bottom:0;display:block;width:160%;height:auto;aspect-ratio:1;background-image:var(--sprite);background-repeat:no-repeat;background-size:600% 100%;background-position:0 0;filter:drop-shadow(0 8px 8px #000b) drop-shadow(0 0 9px #75efd28a);animation:raid-hero-sprite .66s steps(5) infinite}
+.raid-fighter{position:relative;width:20%;height:82%;animation:none;transform-origin:50% 95%}
+.raid-hero-sprite{position:absolute;left:0;bottom:0;display:block;width:100%;height:auto;aspect-ratio:1;background-image:var(--sprite);background-repeat:no-repeat;background-size:600% 100%;background-position:0 0;filter:drop-shadow(0 8px 8px #000b) drop-shadow(0 0 9px #75efd28a);animation:none}
 .raid-hero-projectile,.raid-hero-impact{position:absolute;z-index:7;left:55%;top:31%;width:66px;height:66px;background-repeat:no-repeat;background-position:0 0;pointer-events:none;opacity:0;filter:drop-shadow(0 0 7px #bafff1)}
 .raid-hero-projectile.basic{background-image:var(--projectile);background-size:300% 100%;animation:raid-basic-shot 1.05s steps(2) calc(var(--fighter)*-.13s) infinite}
 .raid-hero-projectile.skill{width:94px;height:94px;top:12%;background-image:var(--projectile);background-size:400% 100%;animation:raid-skill-shot 4.4s steps(3) calc(var(--fighter)*-.31s) infinite}
@@ -5052,4 +5052,19 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 @keyframes raid-summon{50%{translate:0 -9px;scale:1.08}}
 @keyframes raid-warning-art{50%{scale:1.22;opacity:1}}
 @keyframes raid-warning{to{filter:brightness(1.35)}}
+/* Sprite playback is owned by RaidAnimations, never by a looping CSS clock. */
+.raid-live .raid-arena{container-type:size}
+.raid-live .raid-boss-silhouette{height:auto;aspect-ratio:1;bottom:12%;right:4%;width:min(42%,70cqh,390px)}
+.raid-live .raid-boss-main,.raid-live .raid-boss-main.v3{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:1;animation:none;transform:none}
+.raid-live .raid-boss-silhouette.floating{animation:raid-minimal-float 4s ease-in-out infinite}
+.raid-live .raid-boss-silhouette.grounded{animation:none}
+.raid-live .raid-field-squad{left:2%;right:43%;bottom:12%;height:auto;align-items:flex-end}
+.raid-live .raid-fighter{width:20%;height:auto;aspect-ratio:1;animation:none;transform:none}
+.raid-live .raid-hero-sprite{left:0;bottom:0;width:100%;height:100%;background-size:100% 100%;animation:none;transform:none}
+.raid-live .raid-hero-sprite{transform:translateY(14.0625%)}
+.raid-live .raid-boss-main,.raid-live .raid-boss-main.v3{transform:translateY(15.8203125%)}
+.raid-live .raid-boss-main[data-boss="gale-colossus"]{transform:translateY(14.0625%)}
+.raid-live .raid-boss-main[data-boss="void-observer"],.raid-live .raid-boss-main[data-boss="machine-god"]{transform:translateY(11.9140625%)}
+.raid-live .raid-fighter::after{content:'';position:absolute;z-index:-1;left:20%;right:20%;bottom:12%;height:6%;border-radius:50%;background:#0008}
+@keyframes raid-minimal-float{50%{transform:translateY(-1.5px)}}
 @media(max-width:700px){.raid-live{grid-template-rows:auto minmax(300px,1fr) auto auto}.raid-boss-stage{padding-inline:3px}.raid-arena{min-height:280px}.raid-boss-silhouette{right:0;width:48%;height:82%}.raid-field-squad{left:2%;right:41%;height:63%}.raid-fighter{width:22%;height:76%}.raid-fighter img{transform:scale(1.5)}.raid-fighter>b{display:none}.raid-shot{width:175%}.raid-boss-projectile{top:63%;right:25%}.raid-summon{width:24px;height:24px}.raid-pattern-warning{top:7%;padding:5px;font-size:9px}.raid-impact-core{right:38%;width:24px;height:24px}.raid-boss-hp{width:98%}}
