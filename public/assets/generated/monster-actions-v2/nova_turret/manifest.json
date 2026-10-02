@@ -1,0 +1,123 @@
+{
+  "owner": "nova_turret",
+  "source": "art-source\\monster-actions-v2\\nova_turret-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\nova_turret\\attack\\frame_01.webp",
+      "bbox": [
+        46,
+        73,
+        209,
+        224
+      ],
+      "sha256": "9f2d764312a36f3d3d38cd2dbcaaba2a1092c21eacb5904f8e26cf0e43053075"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\nova_turret\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        76,
+        224,
+        224
+      ],
+      "sha256": "5a29b2a805cd812744791ea426bf417e0ca800578eaf1cdfdadf1dbb0d984634"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\nova_turret\\attack\\frame_03.webp",
+      "bbox": [
+        50,
+        74,
+        206,
+        224
+      ],
+      "sha256": "736f529ae116f9795a788a1b9b80e5b104a36144837f17281769fe33f4c0850f"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\nova_turret\\hit\\frame_01.webp",
+      "bbox": [
+        52,
+        81,
+        204,
+        224
+      ],
+      "sha256": "a9d4d55df60fa53cb47e366d0df3e8f999aab263a2505546cfddd708729472ec"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\nova_turret\\hit\\frame_02.webp",
+      "bbox": [
+        42,
+        76,
+        213,
+        224
+      ],
+      "sha256": "04f1e4ea11dbbbbcb10be78a60ea8074b06773a4a0cd1bebef258eaf9d13f0db"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\nova_turret\\hit\\frame_03.webp",
+      "bbox": [
+        52,
+        77,
+        203,
+        224
+      ],
+      "sha256": "3e40a3e8c28b98e2fc9a8b2923ae857bca67a8492c33099e1c3f8aa06bc235af"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\nova_turret\\death\\frame_01.webp",
+      "bbox": [
+        47,
+        72,
+        209,
+        224
+      ],
+      "sha256": "b96f8b2eecb1234dffe9140881b36481b7311caec6e199fd4a914f6844e85c35"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\nova_turret\\death\\frame_02.webp",
+      "bbox": [
+        35,
+        123,
+        221,
+        224
+      ],
+      "sha256": "8002d2a3d0746b57295c0c97bc406803d3ab06e41e0fc88ac90a89b670ddb078"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\nova_turret\\death\\frame_03.webp",
+      "bbox": [
+        44,
+        150,
+        211,
+        224
+      ],
+      "sha256": "005817d47738687f8d4974c0e97b3c3ce7eed3292a9ab157b0149bf3d1093cb2"
+    }
+  ]
+}

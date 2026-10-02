@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/aurora/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        39,
+        108,
+        200,
+        243
+      ],
+      "sha256": "4e273eb0209977242e696b9656f29c724593305a88531d46007bbac45ab423b5"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        34,
+        39,
+        243,
+        243
+      ],
+      "sha256": "c3c7d960c468dc9882900a551ee3b2fd5dd890f7b59de40024b48944680ff5a0"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        13,
+        123,
+        243,
+        243
+      ],
+      "sha256": "5f6f61b9b2d3f18d10b34c7557c0c14c332b12436bf1972b893ac8f1a4748a18"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        13,
+        89,
+        233,
+        243
+      ],
+      "sha256": "5aa6d4e105e5028b409e23d2ef89b62e1dd442b06d9e948763cc50cf9e1b0c96"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        24,
+        13,
+        243,
+        220
+      ],
+      "sha256": "d6f4ef0d28af465d0b03e492e1c73d0fd94f3c66a8998c92b6463a5c20a12d48"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        13,
+        243,
+        221
+      ],
+      "sha256": "90e44eb88890e24fdc1534541732b603d0a76c3dd4e2bd33fba7cf6db5b3e683"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        13,
+        243,
+        222
+      ],
+      "sha256": "4ddf93ab93ae677cc6f9f60addd44041ae140869966417909abd947d8b691f5b"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        13,
+        13,
+        208,
+        224
+      ],
+      "sha256": "f3efb6ab08f8de37e5f9761413fea6d9d912d507e1d7af71d877e00225c3b7c1"
+    }
+  ]
+}

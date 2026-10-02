@@ -10,7 +10,7 @@ for(const id of ids)test(`${id} actual combat textures, animation and bounds`,as
   m.units=[];const u=m.addUnit(id);m.enemies.forEach((e:any)=>e.active=false);m.spawn('brute');const e=m.enemies[0];e.x=u.x+35;e.y=u.y;e.hp=e.maxHp=1e8;
   const combat=await import('/src/systems/CombatSystem.ts');const {stepActions,castAutoSkill}=await import('/src/systems/ActionCombat.ts');
   const missing:string[]=[];for(const kind of ['hero','projectile','impact','skill'])for(const f of kind==='skill'?[1]:[1,2,3]){
-   const key=kind==='hero'?`hero-${id}-anim-${f}`:kind==='skill'?`fx-${id}-skill`:`fx-${id}-${kind}-${f}`;if(!s.textures.exists(key))missing.push(key);
+   const key=kind==='hero'?`hero-${id}-authored-attack-${f}`:kind==='skill'?`fx-${id}-skill`:`fx-${id}-${kind}-${f}`;if(!s.textures.exists(key))missing.push(key);
   }
   let skill=false,reaction=false;
   for(let n=0;n<30;n++){
@@ -18,7 +18,7 @@ for(const id of ids)test(`${id} actual combat textures, animation and bounds`,as
    m.actions.forEach((a:any)=>a.active=false);combat.attack(m,u,e);for(let i=0;i<70;i++)stepActions(m,1/60);u.skillCharge=100;u.skillReadyAt=0;m.paused=false;castAutoSkill(m,u,e);m.paused=true;skill ||= m.effects.some((f:any)=>f.life>0&&(f.visual===`${id}-skill`||f.visual===`support-skill-${id}`));
    reaction ||= Object.values(m.reactionCounts).some((n:any)=>n>0);s.update(0,0);
   }
-  const heroFrames:string[]=[];u.skillCastAt=-999;s.update(0,0);u.shots++;s.visualTime+=1;
+  const heroFrames:string[]=[];m.started=true;u.skillCastAt=-999;s.update(0,0);u.shots++;s.visualTime+=1;
   s.update(0,0);heroFrames.push(s.heroSprites[0].texture.key);
   for(let i=0;i<7;i++){s.visualTime+=.084;s.update(0,0);heroFrames.push(s.heroSprites[0].texture.key);}
   const frames:string[]=[];m.effects.forEach((f:any)=>f.life=0);m.emit('shot',0,0,800,800,0xffffff,{visual:`${id}-projectile`,duration:.25});
@@ -36,7 +36,7 @@ for(const id of ids)test(`${id} actual combat textures, animation and bounds`,as
  },id);
  expect(result.missing).toEqual([]);expect(result.skill).toBe(true);expect(result.reaction).toBe(true);
  expect(result.frames).toEqual([1,2,3].map(f=>`fx-${id}-projectile-${f}`));expect(result.inside).toBe(true);expect(result.ratio).toBe(true);
- expect(result.heroFrames).toEqual([1,2,3,4,5,6,7,8].map(f=>`hero-${id}-anim-${f}`));
+ expect(result.heroFrames).toEqual([1,2,3,4,5,6,7,8].map(f=>`hero-${id}-authored-attack-${f}`));
  await page.waitForTimeout(120);
  await page.screenshot({path:`artifacts/visual-audit/combat-${info.project.name}-${id}.png`});expect(errors).toEqual([]);
 });

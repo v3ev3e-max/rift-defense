@@ -1,0 +1,123 @@
+{
+  "owner": "frost_howler",
+  "source": "art-source\\monster-actions-v2\\frost_howler-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\frost_howler\\attack\\frame_01.webp",
+      "bbox": [
+        54,
+        94,
+        202,
+        224
+      ],
+      "sha256": "f08516c33ba4f154e890f1dd4cd2b49d8c0005602936800d1b6ef710a9f9b55c"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\frost_howler\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        104,
+        224,
+        224
+      ],
+      "sha256": "48dd21e7c93db20bbe2d544ae7e23ce53206fb68a41f20cdcdebd7b6cb95b401"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\frost_howler\\attack\\frame_03.webp",
+      "bbox": [
+        57,
+        108,
+        199,
+        224
+      ],
+      "sha256": "7bd37ee33090ef6f5fd7710c85cef0164fb574bea57e5611d1e3ee58fa9e049e"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\frost_howler\\hit\\frame_01.webp",
+      "bbox": [
+        56,
+        94,
+        199,
+        224
+      ],
+      "sha256": "4d717e24795fb31046067b25811ff1fc3e4566ff1f773266bd3aefa770e47f5b"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\frost_howler\\hit\\frame_02.webp",
+      "bbox": [
+        46,
+        91,
+        209,
+        224
+      ],
+      "sha256": "56013eaa5b798501bc918e4822acd1cf6305b9546438302cda857564d8601b12"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\frost_howler\\hit\\frame_03.webp",
+      "bbox": [
+        58,
+        100,
+        197,
+        224
+      ],
+      "sha256": "ce79130366646e95b14f22366503b0cde24cce0a6fe9af54d95f1a801ce9fb69"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\frost_howler\\death\\frame_01.webp",
+      "bbox": [
+        55,
+        105,
+        201,
+        224
+      ],
+      "sha256": "b2425a4109efa22125acad50302624a1ef6de496217862b71a18150c7129d406"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\frost_howler\\death\\frame_02.webp",
+      "bbox": [
+        39,
+        134,
+        217,
+        224
+      ],
+      "sha256": "b06d44013b102ac7ea7b73065caa20a67659ad943475e5c2c12f61f316863b46"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\frost_howler\\death\\frame_03.webp",
+      "bbox": [
+        54,
+        145,
+        201,
+        224
+      ],
+      "sha256": "437931b5d660d8767408f010dffe8235d15081d0dc81512b09478459378bc334"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "owner": "gale-colossus",
+  "source": "art-source\\monster-actions-v2\\summon-gale-colossus-v2.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "move",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\move\\frame_01.webp",
+      "bbox": [
+        53,
+        68,
+        203,
+        224
+      ],
+      "sha256": "2baef068129954973291fdfdd6c26d9a2095a618bc7b0bfd276bada3d2f05cdf"
+    },
+    {
+      "state": "move",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\move\\frame_02.webp",
+      "bbox": [
+        56,
+        64,
+        200,
+        224
+      ],
+      "sha256": "49eb1d280d62d669d6a2eceb4d3c812cec45e62eac291d3620b3927ae1b14ff9"
+    },
+    {
+      "state": "move",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\move\\frame_03.webp",
+      "bbox": [
+        56,
+        69,
+        200,
+        224
+      ],
+      "sha256": "e2cf7c71f584c302a43a88f6d53fe1b96c6c7f14d271674cfc461ad3d439558f"
+    },
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\attack\\frame_01.webp",
+      "bbox": [
+        55,
+        54,
+        200,
+        224
+      ],
+      "sha256": "bf2567b10c89e6db6c570c2c5cfa2c74829f808fcdc1b691851d9818b01819ae"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        51,
+        224,
+        224
+      ],
+      "sha256": "7d499c629f5e86a5fd9d33deb79fdc849bae8674c691a7096ac9dd1aa1acc12c"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\attack\\frame_03.webp",
+      "bbox": [
+        52,
+        61,
+        203,
+        224
+      ],
+      "sha256": "a1f9d40cecbbadaadf3370840006cca16176b483a41b6c7d7e8eb05372c55e14"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\hit\\frame_01.webp",
+      "bbox": [
+        47,
+        84,
+        209,
+        224
+      ],
+      "sha256": "e35a0603b351e3f0a720ec324cda342ddf1d3571e14a4dbd192d10e0395091f6"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\hit\\frame_02.webp",
+      "bbox": [
+        55,
+        79,
+        201,
+        224
+      ],
+      "sha256": "f25a245c0f625a3af0b2d5900ff730d188370288f273eb4f375c307956ee871a"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\hit\\frame_03.webp",
+      "bbox": [
+        55,
+        71,
+        201,
+        224
+      ],
+      "sha256": "7e9aa4b0d1bccbf362143482a3be56df573d295692449426afb144e91959fbd0"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\death\\frame_01.webp",
+      "bbox": [
+        43,
+        63,
+        213,
+        224
+      ],
+      "sha256": "4a26271ca94bb8cc90b24e19b4d9caee00afc2701852d651033086da0d814e16"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\death\\frame_02.webp",
+      "bbox": [
+        42,
+        78,
+        214,
+        224
+      ],
+      "sha256": "ee56aa29d7ff40c01f0c0d1f9604f10f3a99b5a594f5711383cc074e5fb11942"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\gale-colossus\\death\\frame_03.webp",
+      "bbox": [
+        66,
+        120,
+        189,
+        224
+      ],
+      "sha256": "f3a6e0bfd5dda3458c6bcff0e690985a7c8e722b92d55f44b30e8418b58f2a5b"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "source": "art-source/hero-reaction-skill-v3/yuria/source.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "groups": {
+    "hit": [
+      {
+        "file": "frame_01.webp",
+        "bbox": [
+          43,
+          50,
+          214,
+          212
+        ],
+        "sha256": "17357b11dd13a6e043138f84e5fa87f672e31fd039f59d2cb99ff4df9cf21af3"
+      },
+      {
+        "file": "frame_02.webp",
+        "bbox": [
+          32,
+          53,
+          227,
+          211
+        ],
+        "sha256": "9a873c66690d7ab2f3afa88ffe932c5b487eb33594f980b7e91aef0983e7ba6d"
+      },
+      {
+        "file": "frame_03.webp",
+        "bbox": [
+          43,
+          47,
+          217,
+          212
+        ],
+        "sha256": "da5b1e0b6efd5d32868068d751592a06fdb98171aa245a527852aec6c458bb87"
+      }
+    ],
+    "skill": [
+      {
+        "file": "frame_01.webp",
+        "bbox": [
+          33,
+          21,
+          223,
+          209
+        ],
+        "sha256": "7fcdedfe3705c4005bb317a0b64ebffb25d0c01cd099482cae1408fbd2929303"
+      },
+      {
+        "file": "frame_02.webp",
+        "bbox": [
+          22,
+          21,
+          231,
+          208
+        ],
+        "sha256": "ef7f75dc29071eb593720f73b266e0a545af4d44dc1d796392c5a63890e5b745"
+      },
+      {
+        "file": "frame_03.webp",
+        "bbox": [
+          25,
+          36,
+          229,
+          208
+        ],
+        "sha256": "03f58aba292a6cb1cdab71d6de19d3686f4792370ca4e2ed333b732bbdc18104"
+      },
+      {
+        "file": "frame_04.webp",
+        "bbox": [
+          32,
+          14,
+          229,
+          207
+        ],
+        "sha256": "7e0573796630a1fcbb03bd0aa7ad2cd94a073184ca620070ed5e54803cc67676"
+      },
+      {
+        "file": "frame_05.webp",
+        "bbox": [
+          34,
+          15,
+          232,
+          205
+        ],
+        "sha256": "408f09115e143d3178ce39e85659868da42be0278dbe98dfdbf428a310a35abc"
+      },
+      {
+        "file": "frame_06.webp",
+        "bbox": [
+          41,
+          41,
+          214,
+          204
+        ],
+        "sha256": "150c957672fb9963e06d58325f02cb7b04bb635bf1456a044e304e30ad78a74f"
+      }
+    ]
+  }
+}

@@ -25,6 +25,7 @@ import type { RNG } from "../utils/random";
 import { recommendedEnemyCap } from "../utils/performance";
 import {equipmentBonus,hasEquipmentTemplate} from '../data/equipment';
 import {campaignGradeStarAttack,campaignStarHealth,campaignHeroOutput} from '../data/campaignBalance';
+import {expireShield} from './TimedShield';
 
 function operatorCombatRange(id:string,bonus:number,inCampaign:boolean){
   const native=combatRange(heroById[id].range),role=formationRole(id),kind=combatRoles[id].kind;
@@ -124,6 +125,7 @@ export class BattleModel {
   }
   hurtUnit(u:Unit,amount:number,source:'melee'|'ranged'|'skill'='melee'){
     if(u.hp<=0||u.slot<0)return;
+    expireShield(u,this.time);
     if(this.campaign&&this.doctrine==='guard')amount*=1-this.doctrineLevel*.05;
     if((u.damageReductionUntil??0)>this.time)amount*=.72;
     if(source==='ranged'&&hasEquipmentTemplate(this.save,u.heroId,'armor-ranged'))amount*=.82;
@@ -497,7 +499,7 @@ export class BattleModel {
     const elementLevel=this.elementUpgrades[h.element];
     return {
       atk:
-        (h.atk+gear.attack) * gradeBasePower[h.grade] * (1+(this.roleUpgrades[combatRoles[u.heroId].kind]??0)*.12+(this.campaign?(this.save.campaign?.research[combatRoles[u.heroId].kind]??0)*.03+(this.save.campaign?.research[h.element]??0)*.03+(this.save.campaign?.fragments[u.heroId]??0)*.005:0)) *
+        (h.atk+gear.attack) * gradeBasePower[h.grade] * (1+(this.roleUpgrades[combatRoles[u.heroId].kind]??0)*.12+(this.campaign?(this.save.campaign?.research[combatRoles[u.heroId].kind]??0)*.03+(this.save.campaign?.research[h.element]??0)*.03:0)) *
         (1 + .08*(permanentStars-1)) * (this.campaign?(campaignHeroOutput[u.heroId]??1):1) *
         (this.campaign?campaignGradeStarAttack(h.grade,u.star)/(1+.08*(permanentStars-1)):gradeStarMultiplier(h.grade,u.star)) *
         (1 + e.attack) *
@@ -779,6 +781,7 @@ export class BattleModel {
     this.noticeTime = Math.max(0, this.noticeTime - dt);
     if (!this.started) return;
     this.time += dt;
+    for(const unit of this.units)expireShield(unit,this.time);
     if(this.campaign)for(const u of this.units){
       if(!u.readyNotified&&u.moveReadyAt&&this.time>=u.moveReadyAt){u.readyNotified=true;if(u.slot>=0)this.emit('spawn',u.x,u.y,u.x,u.y,0x99ffdf,{duration:.4,radius:35});}
     }

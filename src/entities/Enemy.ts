@@ -35,6 +35,7 @@ export interface Enemy {
   rangedDamage?: number;
   rangedFiredAt?: number;
   meleeAttackedAt?: number;
+  abilityCastAt?: number;
   waterMark: number;
   waterTime: number;
   fireMark: number;
@@ -73,6 +74,9 @@ export const createEnemy = (index: number): Enemy => ({
   namedSkillTimer:0,
   skillCasts:0,
   rangedTimer: 0,
+  rangedFiredAt: undefined,
+  meleeAttackedAt: undefined,
+  abilityCastAt: undefined,
   waterMark: 0,
   waterTime: 0,
   fireMark: 0,

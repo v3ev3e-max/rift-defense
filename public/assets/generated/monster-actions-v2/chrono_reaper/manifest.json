@@ -1,0 +1,123 @@
+{
+  "owner": "chrono_reaper",
+  "source": "art-source\\monster-actions-v2\\chrono_reaper-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_reaper\\attack\\frame_01.webp",
+      "bbox": [
+        55,
+        63,
+        201,
+        224
+      ],
+      "sha256": "59615ad7dcadeb68cbd0762a94ef229406f80b64813cfc1d5fa3b0230d3b365a"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_reaper\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        64,
+        224,
+        224
+      ],
+      "sha256": "13a0ba3f4a6b8eb616a1c44517904e65068e437bea5b9a4cad7477028605e36d"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_reaper\\attack\\frame_03.webp",
+      "bbox": [
+        60,
+        69,
+        196,
+        224
+      ],
+      "sha256": "cb6e42bb332090b3a35597034994ce34cd220a7032b82063c2d765ebc3298a71"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_reaper\\hit\\frame_01.webp",
+      "bbox": [
+        49,
+        65,
+        207,
+        224
+      ],
+      "sha256": "eb580f0ce6e6c7f8ae5fa4609a22b534782ad9ec875ee5a137938173e35e24a6"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_reaper\\hit\\frame_02.webp",
+      "bbox": [
+        49,
+        82,
+        207,
+        224
+      ],
+      "sha256": "0829ae2aec46fe16b6970b58dcca6365ca3465178f510936641bd5abdb952ed1"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_reaper\\hit\\frame_03.webp",
+      "bbox": [
+        60,
+        72,
+        195,
+        224
+      ],
+      "sha256": "16b20f427dad6bc4b56989fc747c86631b0295242dca01d58d2e62741b647a44"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_reaper\\death\\frame_01.webp",
+      "bbox": [
+        50,
+        73,
+        206,
+        224
+      ],
+      "sha256": "3d9b2301d060a4add592737381313c17313fbcb90f3ae87bb73a8976a178bf9a"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_reaper\\death\\frame_02.webp",
+      "bbox": [
+        45,
+        103,
+        211,
+        224
+      ],
+      "sha256": "e5cfe0e04b697affce1b998ef2d9d63009fc04b370aa36d460a657a318ecd83b"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_reaper\\death\\frame_03.webp",
+      "bbox": [
+        48,
+        108,
+        207,
+        224
+      ],
+      "sha256": "59b852075b49fe64d535e9ab1435090ce22bf31fc0a40872cf0a70ed6eb108a0"
+    }
+  ]
+}

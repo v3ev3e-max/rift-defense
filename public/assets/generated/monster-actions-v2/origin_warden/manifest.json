@@ -1,0 +1,123 @@
+{
+  "owner": "origin_warden",
+  "source": "art-source\\monster-actions-v2\\origin_warden-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\origin_warden\\attack\\frame_01.webp",
+      "bbox": [
+        56,
+        59,
+        200,
+        224
+      ],
+      "sha256": "0c718da34c10facfdeaca21681894721bb8381d2d3c3dbf7950db67690f09006"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\origin_warden\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        64,
+        224,
+        224
+      ],
+      "sha256": "2a76fecc2d66b7567238368137621a73828b4afaeda3996356102c19a03f9806"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\origin_warden\\attack\\frame_03.webp",
+      "bbox": [
+        45,
+        73,
+        210,
+        224
+      ],
+      "sha256": "c923b6fca54b522654c9b7ad21c21263094d61d75f2c135239f9791c3bec8a84"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\origin_warden\\hit\\frame_01.webp",
+      "bbox": [
+        51,
+        60,
+        204,
+        224
+      ],
+      "sha256": "f28e8e6fca860d64dba42a6e162515f91cb81fef639b39dfa39e08224791e8ef"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\origin_warden\\hit\\frame_02.webp",
+      "bbox": [
+        55,
+        81,
+        200,
+        224
+      ],
+      "sha256": "8e6f9b7ee81ca1409d6ab8dcb77c474b319a4b885f70f0433189a20c1242af4c"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\origin_warden\\hit\\frame_03.webp",
+      "bbox": [
+        56,
+        57,
+        199,
+        224
+      ],
+      "sha256": "26756ee44157f0e8f90113b1bee3051e6621d56c1b447d855101ff387de283aa"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\origin_warden\\death\\frame_01.webp",
+      "bbox": [
+        41,
+        95,
+        214,
+        224
+      ],
+      "sha256": "c1bcc7e38d555092d1b437aa16383252fd1f85ab7a0854fb806d42f2987f6bb3"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\origin_warden\\death\\frame_02.webp",
+      "bbox": [
+        42,
+        100,
+        213,
+        224
+      ],
+      "sha256": "64a312a305f83bd782dc43315a3c12868b421210fb59b8583d5809288260b921"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\origin_warden\\death\\frame_03.webp",
+      "bbox": [
+        43,
+        115,
+        212,
+        224
+      ],
+      "sha256": "f75b958d078347a29c73d161079133e3317cf803c003c5f9570fa21da941f771"
+    }
+  ]
+}

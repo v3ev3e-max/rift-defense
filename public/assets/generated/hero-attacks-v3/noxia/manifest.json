@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/noxia/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        55,
+        98,
+        233,
+        236
+      ],
+      "sha256": "f99f82863b0a588b371dfac8ae9c67fcb20e37964062e53f1f6068a1bf44b465"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        59,
+        49,
+        210,
+        236
+      ],
+      "sha256": "e2865d6cf2e96b10d2caf79ed59d24070c99be8a374dce32c86572fe5fc76b37"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        23,
+        104,
+        236,
+        236
+      ],
+      "sha256": "aa7b7626d14b7bfd18004284565a3d3486f72fb02d3fa18aa1aed1e72afc9f79"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        17,
+        57,
+        236,
+        236
+      ],
+      "sha256": "144ced9f6eb474bff3b9c7c4cb9c0774a0123ee416e463e15e5aee03ea9a9d7d"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        25,
+        60,
+        243,
+        212
+      ],
+      "sha256": "f9b70076a26af475f70903be5fb622120787108b5a707dea8f8587f6a702ffab"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        61,
+        243,
+        212
+      ],
+      "sha256": "b41d74b2224a999b0ee26e710553fa44f75f5e779bfea0ed89616c34dae9fc33"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        79,
+        231,
+        213
+      ],
+      "sha256": "f68ddd4efad34edbd67092d2d465cda9334e15644f20ff6d66478d87949d5396"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        43,
+        77,
+        220,
+        214
+      ],
+      "sha256": "444365aa5109f71284441ef7fb0c5a095159f730fd88fb58a57b33c8c21dd42c"
+    }
+  ]
+}

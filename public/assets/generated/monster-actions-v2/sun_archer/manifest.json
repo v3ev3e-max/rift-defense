@@ -1,0 +1,123 @@
+{
+  "owner": "sun_archer",
+  "source": "art-source\\monster-actions-v2\\sun_archer-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sun_archer\\attack\\frame_01.webp",
+      "bbox": [
+        57,
+        51,
+        198,
+        224
+      ],
+      "sha256": "dfccf2f486f6f33a594b0b1936f2a16a001f74a50053bc03ca73dd1803d62df0"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sun_archer\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        55,
+        224,
+        224
+      ],
+      "sha256": "fa3b39a317049d93b4a31ad7664a4470c1869d09abf569d58a84ae13f779f968"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sun_archer\\attack\\frame_03.webp",
+      "bbox": [
+        52,
+        51,
+        204,
+        224
+      ],
+      "sha256": "67985945d8d7e855d0ca13c7f5d610c827c230e8f769bfab884f1c7b9f6ce6ad"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sun_archer\\hit\\frame_01.webp",
+      "bbox": [
+        62,
+        74,
+        193,
+        224
+      ],
+      "sha256": "42015fd077ea647e7fa8123996c6524343a9b423f0c228396ea23908ab58550c"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sun_archer\\hit\\frame_02.webp",
+      "bbox": [
+        62,
+        73,
+        193,
+        224
+      ],
+      "sha256": "6217c3703fc53c9ab713847e5432d112b8487c1fdfde71c8f7e138a8b10e93c0"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sun_archer\\hit\\frame_03.webp",
+      "bbox": [
+        63,
+        65,
+        192,
+        224
+      ],
+      "sha256": "ee3a16d5cf6d30f362e1b90fe2d3196aa51c49a807da738e79a14866b13d2f8b"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sun_archer\\death\\frame_01.webp",
+      "bbox": [
+        68,
+        94,
+        187,
+        224
+      ],
+      "sha256": "cdd4d2b4d15493da5320e60141f15b491af20d781bc0144f8abf3a9ac4c2c8fa"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sun_archer\\death\\frame_02.webp",
+      "bbox": [
+        49,
+        109,
+        206,
+        224
+      ],
+      "sha256": "afb678fe8331b552794797ffabd96d2446789c6577ea7ffba6640dbd135b2ce9"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sun_archer\\death\\frame_03.webp",
+      "bbox": [
+        54,
+        123,
+        202,
+        224
+      ],
+      "sha256": "54048476dcc4ab22a1813c4fa5131c127b545ff9dd5d2e54852cc2e774ca2625"
+    }
+  ]
+}

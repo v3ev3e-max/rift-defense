@@ -1,0 +1,123 @@
+{
+  "owner": "verdant_stalker",
+  "source": "art-source\\monster-actions-v2\\verdant_stalker-v2.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\verdant_stalker\\attack\\frame_01.webp",
+      "bbox": [
+        48,
+        94,
+        208,
+        224
+      ],
+      "sha256": "f36f4b7089f7f9f16d6c3f07052da1fc8f557781879198a763171ab42b6114bc"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\verdant_stalker\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        95,
+        224,
+        224
+      ],
+      "sha256": "2a044997e169271c88f5fd12672bf965c3bdbef25f51809a8c12e2fd3302c862"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\verdant_stalker\\attack\\frame_03.webp",
+      "bbox": [
+        46,
+        106,
+        210,
+        224
+      ],
+      "sha256": "edb90770a925f07091d6edb5ee975e0aaa2ffd617fdd2e378643c22bb5d2b71b"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\verdant_stalker\\hit\\frame_01.webp",
+      "bbox": [
+        53,
+        113,
+        202,
+        224
+      ],
+      "sha256": "170b6d74ee034cb9015c7a0ee476033f29ee02d0262b08d5c7f4d402334d3b29"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\verdant_stalker\\hit\\frame_02.webp",
+      "bbox": [
+        47,
+        116,
+        209,
+        224
+      ],
+      "sha256": "81edcb9aee1d05f5343be1b203a4d3555cdf8e503c82632a8f974b1f7cc36f2e"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\verdant_stalker\\hit\\frame_03.webp",
+      "bbox": [
+        55,
+        123,
+        201,
+        224
+      ],
+      "sha256": "103f26d646367766439a2fcd907f7f8786b23a34c0736f3a74e99b1576b6bfae"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\verdant_stalker\\death\\frame_01.webp",
+      "bbox": [
+        50,
+        117,
+        205,
+        224
+      ],
+      "sha256": "0a98d2b05c25b1d4036dca2868217e223d0ed81fa3dac5d83ef521edfc5de388"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\verdant_stalker\\death\\frame_02.webp",
+      "bbox": [
+        33,
+        137,
+        223,
+        224
+      ],
+      "sha256": "014c3e12c89ea9d8236d31220bbf15a949ffba62c451934228e1b66d05382820"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\verdant_stalker\\death\\frame_03.webp",
+      "bbox": [
+        43,
+        156,
+        212,
+        224
+      ],
+      "sha256": "52897beb17eee6fdcb16f3bd1afeb2c21c4400ee0921a00663f5f21e94eff041"
+    }
+  ]
+}

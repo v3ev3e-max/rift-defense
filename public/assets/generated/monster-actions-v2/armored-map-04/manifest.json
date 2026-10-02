@@ -1,0 +1,123 @@
+{
+  "owner": "armored-map-04",
+  "source": "art-source\\monster-actions-v2\\armored-map-04-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\armored-map-04\\attack\\frame_01.webp",
+      "bbox": [
+        59,
+        69,
+        197,
+        224
+      ],
+      "sha256": "01293f1198c9f9d145958b9251360557a7a9658c82905292b6580d254307b54e"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\armored-map-04\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        69,
+        224,
+        224
+      ],
+      "sha256": "d8e82832fc1b513e1f18f2343b3ed7994437a696240eab3264f3195a296280ac"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\armored-map-04\\attack\\frame_03.webp",
+      "bbox": [
+        54,
+        74,
+        202,
+        224
+      ],
+      "sha256": "3d470037419ab1595f1f3874446c5903fc44958ff33853b5da47bc4d1a2ebf48"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\armored-map-04\\hit\\frame_01.webp",
+      "bbox": [
+        55,
+        68,
+        200,
+        224
+      ],
+      "sha256": "c73afeb658d9c7d4afe75345be73eedd132ef5f5946d40fecf318c3a50049c42"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\armored-map-04\\hit\\frame_02.webp",
+      "bbox": [
+        55,
+        70,
+        200,
+        224
+      ],
+      "sha256": "6d56d0c0f0c949a08197c02468e55f32dd390da3e3dff23132a1ec1032af0a65"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\armored-map-04\\hit\\frame_03.webp",
+      "bbox": [
+        63,
+        67,
+        192,
+        224
+      ],
+      "sha256": "5af47970d0eda1058135b3c8698eb2e513ebce89f6daf508310aae40f97c48b2"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\armored-map-04\\death\\frame_01.webp",
+      "bbox": [
+        59,
+        82,
+        197,
+        224
+      ],
+      "sha256": "124f41712d0ac17cf77c1c466a51a0d5e31dbab5d39f6de4777d089159646da3"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\armored-map-04\\death\\frame_02.webp",
+      "bbox": [
+        35,
+        117,
+        221,
+        224
+      ],
+      "sha256": "2f87bc5addb42b003d23bd614c25a1d98e9f2a9e625edb473a484f5f1ca2fc2d"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\armored-map-04\\death\\frame_03.webp",
+      "bbox": [
+        42,
+        141,
+        214,
+        224
+      ],
+      "sha256": "60f097e070eea4b320140279cb1bd108d14a072a6de166b2273b55c8981533ba"
+    }
+  ]
+}

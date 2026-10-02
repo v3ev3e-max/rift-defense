@@ -74,6 +74,9 @@ export function getWave(n: number): Wave {
 // Opening progression snapshot for tests/tools that still import `waves`.
 export const waves: Wave[] = Array.from({ length: 50 }, (_, i) => getWave(i + 1));
 
+/** All archetypes are unlocked by wave 51 and all four bosses cycle by 40. */
+export const classicEnemyIds=new Set(Array.from({length:60},(_,i)=>getWave(i+1)).flatMap(w=>[...w.enemies,...(w.boss?[w.boss]:[])]));
+
 export function waveBrief(n:number){
  const w=getWave(n), counts={고속:0,장갑:0,원거리:0,군집:0,교란:0};
  for(const id of w.enemies){const e=enemyDefs[id],special=e.armor>=12||!!e.ranged||!!e.disrupt;if(e.armor>=12)counts.장갑++;if(e.ranged)counts.원거리++;if(e.disrupt)counts.교란++;if(e.speed>=140)counts.고속++;else if(!special)counts.군집++;}

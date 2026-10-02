@@ -1,0 +1,123 @@
+{
+  "owner": "aeon_sovereign",
+  "source": "art-source\\monster-actions-v2\\aeon_sovereign-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aeon_sovereign\\attack\\frame_01.webp",
+      "bbox": [
+        48,
+        53,
+        208,
+        224
+      ],
+      "sha256": "fa1808d82635731dcaf1555fa0b8a43a00b3098789478a8237454874b1dd7ab4"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aeon_sovereign\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        69,
+        224,
+        224
+      ],
+      "sha256": "d19f96873523988e81f55165152d925a0cda59c1b4c301f3a9bc81bee0a1c449"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aeon_sovereign\\attack\\frame_03.webp",
+      "bbox": [
+        42,
+        60,
+        213,
+        224
+      ],
+      "sha256": "c8bbe75cf3e0b43261da5102797baff80842e6305852178ebc4bd1c90defd387"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aeon_sovereign\\hit\\frame_01.webp",
+      "bbox": [
+        50,
+        61,
+        206,
+        224
+      ],
+      "sha256": "69fe019a7051743f24d7c08263827f1a35c9c1faf4f664a48b9d174e0fdb0a30"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aeon_sovereign\\hit\\frame_02.webp",
+      "bbox": [
+        44,
+        63,
+        211,
+        224
+      ],
+      "sha256": "ce9382977a6d6f746e4042f9a00f855d291dde706898ef61f919f63010ca2526"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aeon_sovereign\\hit\\frame_03.webp",
+      "bbox": [
+        52,
+        58,
+        203,
+        224
+      ],
+      "sha256": "0d6a379a75fa4260705d6cc371123c25adf5564fa9b8158b22590b15bc347449"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aeon_sovereign\\death\\frame_01.webp",
+      "bbox": [
+        53,
+        55,
+        202,
+        224
+      ],
+      "sha256": "9f8ad1eda171480b1c7d3024a1e85278738e4719af193b80755ffd7047a3e9a4"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aeon_sovereign\\death\\frame_02.webp",
+      "bbox": [
+        38,
+        70,
+        217,
+        224
+      ],
+      "sha256": "2abc61b45197fe456466776e49758920a7f1ea43029026100146465c36fe10c9"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aeon_sovereign\\death\\frame_03.webp",
+      "bbox": [
+        39,
+        107,
+        217,
+        224
+      ],
+      "sha256": "e4152a0618409920d6debb82c5b8eb034e729dacba4b3cfee425d70af6600c03"
+    }
+  ]
+}

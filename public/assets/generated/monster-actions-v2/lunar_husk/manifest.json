@@ -1,0 +1,123 @@
+{
+  "owner": "lunar_husk",
+  "source": "art-source\\monster-actions-v2\\lunar_husk-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\lunar_husk\\attack\\frame_01.webp",
+      "bbox": [
+        53,
+        101,
+        203,
+        224
+      ],
+      "sha256": "8e1fd5e193c2d9cc896118c0b8ad0321bd8f9054df5b39f892bce95d5a9ed9de"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\lunar_husk\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        106,
+        224,
+        224
+      ],
+      "sha256": "dbeecbc2fe4a530b8c1957c5ad1eaffd9ebc402631585ddcb9e9011770bdf8b2"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\lunar_husk\\attack\\frame_03.webp",
+      "bbox": [
+        56,
+        101,
+        199,
+        224
+      ],
+      "sha256": "79d1a6ee50cfd4aebdb7792e44cbae50d95692c67b43105a8935ab87b9b55f08"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\lunar_husk\\hit\\frame_01.webp",
+      "bbox": [
+        55,
+        97,
+        200,
+        224
+      ],
+      "sha256": "250d486499918a8946b7ff8b3a31da007c25200ed3a0f221ec1e919c7e827b74"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\lunar_husk\\hit\\frame_02.webp",
+      "bbox": [
+        56,
+        90,
+        200,
+        224
+      ],
+      "sha256": "c1234e65f0a1d73b9f7fdf1d403057de8081fd95ee2edf27f9ab74cdccf2b0b8"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\lunar_husk\\hit\\frame_03.webp",
+      "bbox": [
+        60,
+        106,
+        196,
+        224
+      ],
+      "sha256": "2a1a1c31d99211986f2021095f66e0ec47d13395037f11e02bff24a2a6daa80f"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\lunar_husk\\death\\frame_01.webp",
+      "bbox": [
+        51,
+        120,
+        205,
+        224
+      ],
+      "sha256": "7b202efa55377f943bcb438c33a6e5dbd34ad8451644215ce24340c4481173c4"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\lunar_husk\\death\\frame_02.webp",
+      "bbox": [
+        38,
+        120,
+        217,
+        224
+      ],
+      "sha256": "7b0663f7ed8d9981e12a5d84433f5ea8237f80cb86a1d529302fab8aea64ae55"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\lunar_husk\\death\\frame_03.webp",
+      "bbox": [
+        48,
+        139,
+        207,
+        224
+      ],
+      "sha256": "b2946225092de9f20e9616980fb4d45bf5a32218c070a26f76b27a17f291c9b1"
+    }
+  ]
+}

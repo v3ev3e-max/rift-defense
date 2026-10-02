@@ -1,0 +1,1378 @@
+[
+  {
+    "id": "crawler",
+    "name": "균열 보행자",
+    "visual": "crawler",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-01",
+      "map-02",
+      "map-03",
+      "map-04",
+      "map-05"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "runner",
+    "name": "섬광 추적자",
+    "visual": "runner",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-02",
+      "map-03",
+      "map-06"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "brute",
+    "name": "공허 거체",
+    "visual": "brute",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-04",
+      "map-06"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 6
+  },
+  {
+    "id": "armored",
+    "name": "철갑 감시자",
+    "visual": "armored",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-04",
+      "map-05",
+      "map-06",
+      "map-08"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "jammer",
+    "name": "신호 교란자",
+    "visual": "jammer",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-05",
+      "map-06",
+      "map-07",
+      "map-08"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "bulwark",
+    "name": "중장 방벽체",
+    "visual": "bulwark",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-07",
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "sprinter",
+    "name": "과속 침식체",
+    "visual": "sprinter",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-03",
+      "map-04",
+      "map-07"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "phantom",
+    "name": "위상 망령",
+    "visual": "phantom",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-07",
+      "map-08"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "elite",
+    "name": "균열 집행자",
+    "visual": "elite",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_meadow",
+    "name": "초원의 돌진대장",
+    "visual": "elite",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_coast",
+    "name": "해안의 재생체",
+    "visual": "elite",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_autumn",
+    "name": "수림의 구속자",
+    "visual": "elite",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_snow",
+    "name": "설원의 동상기사",
+    "visual": "elite",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_lab",
+    "name": "연구동 포격체",
+    "visual": "elite",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_cold",
+    "name": "극저온 교란체",
+    "visual": "elite",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_abyss",
+    "name": "심연의 흡수자",
+    "visual": "elite",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_rift",
+    "name": "균열 붕괴자",
+    "visual": "elite",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "ravager",
+    "name": "경계 파괴자",
+    "visual": "ravager",
+    "ranged": false,
+    "boss": true,
+    "regionalArt": [
+      "map-04"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "sovereign",
+    "name": "영하의 군주",
+    "visual": "sovereign",
+    "ranged": false,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "tempest",
+    "name": "폭풍의 심장",
+    "visual": "tempest",
+    "ranged": false,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "abyssal",
+    "name": "심연의 관측자",
+    "visual": "abyssal",
+    "ranged": false,
+    "boss": true,
+    "regionalArt": [
+      "map-08"
+    ],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "verdant_stalker",
+    "name": "녹음의 추적왕",
+    "visual": "verdant_stalker",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "gale_colossus",
+    "name": "질풍의 거신",
+    "visual": "gale_colossus",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "coral_mauler",
+    "name": "산호 파쇄자",
+    "visual": "coral_mauler",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "leviathan",
+    "name": "청해의 레비아탄",
+    "visual": "leviathan",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "thorn_matriarch",
+    "name": "가시 여왕",
+    "visual": "thorn_matriarch",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "ancient_treant",
+    "name": "고목의 수호신",
+    "visual": "ancient_treant",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "frost_howler",
+    "name": "빙설 포효수",
+    "visual": "frost_howler",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "glacial_tyrant",
+    "name": "빙하의 폭군",
+    "visual": "glacial_tyrant",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "security_exarch",
+    "name": "보안 집행기",
+    "visual": "security_exarch",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "reactor_behemoth",
+    "name": "반응로 베히모스",
+    "visual": "reactor_behemoth",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "cryo_hunter",
+    "name": "극저온 사냥기",
+    "visual": "cryo_hunter",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "absolute_zero",
+    "name": "절대영도 파수체",
+    "visual": "absolute_zero",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "phase_reaper",
+    "name": "위상 수확자",
+    "visual": "phase_reaper",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "void_observer",
+    "name": "공허의 천안",
+    "visual": "void_observer",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "rift_executioner",
+    "name": "균열 처형자",
+    "visual": "rift_executioner",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "rift_sovereign",
+    "name": "종말의 균열군주",
+    "visual": "rift_sovereign",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [],
+    "attack": false,
+    "fire": false,
+    "hit": false,
+    "death": false,
+    "authoredActions": 0
+  },
+  {
+    "id": "sky_guard",
+    "name": "천공 방위체",
+    "visual": "sky_guard",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-09"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "sky_lancer",
+    "name": "천공 창기수",
+    "visual": "sky_lancer",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-09"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "cloud_gunner",
+    "name": "운해 포격기",
+    "visual": "cloud_gunner",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-09"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "aether_mender",
+    "name": "에테르 치유익",
+    "visual": "aether_mender",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-09"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_sky",
+    "name": "폭풍의 백인대장",
+    "visual": "named_sky",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-09"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "storm_wyvern",
+    "name": "뇌운 와이번",
+    "visual": "storm_wyvern",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-09"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "sky_dominion",
+    "name": "천공의 지배자",
+    "visual": "sky_dominion",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-09"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "relic_golem",
+    "name": "태양 유적 골렘",
+    "visual": "relic_golem",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-10"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "dune_ripper",
+    "name": "사구 갈퀴수",
+    "visual": "dune_ripper",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-10"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "sun_archer",
+    "name": "태양궁 사수",
+    "visual": "sun_archer",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-10"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "mirage_oracle",
+    "name": "신기루 예언자",
+    "visual": "mirage_oracle",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-10"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_dune",
+    "name": "황혼의 전쟁사제",
+    "visual": "named_dune",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-10"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "sand_colossus",
+    "name": "사막의 거신",
+    "visual": "sand_colossus",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-10"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "solar_sphinx",
+    "name": "태양의 스핑크스",
+    "visual": "solar_sphinx",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-10"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "alloy_guard",
+    "name": "합금 수호체",
+    "visual": "alloy_guard",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-11"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "gear_hound",
+    "name": "기어 사냥개",
+    "visual": "gear_hound",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-11"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "pulse_turret",
+    "name": "맥동 포탑",
+    "visual": "pulse_turret",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-11"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "repair_weaver",
+    "name": "수복 직조기",
+    "visual": "repair_weaver",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-11"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_machine",
+    "name": "제철소 백인대장",
+    "visual": "named_machine",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-11"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "forge_overseer",
+    "name": "용광로 감독관",
+    "visual": "forge_overseer",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-11"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "machine_god",
+    "name": "기계도시의 신핵",
+    "visual": "machine_god",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-11"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "paradox_shell",
+    "name": "역설 방각체",
+    "visual": "paradox_shell",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-12"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "chrono_stalker",
+    "name": "시간 추적자",
+    "visual": "chrono_stalker",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-12"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "epoch_caster",
+    "name": "시대 투사체",
+    "visual": "epoch_caster",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-12"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "time_mender",
+    "name": "시간 복원자",
+    "visual": "time_mender",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-12"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "named_time",
+    "name": "시간선 처형자",
+    "visual": "named_time",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-12"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "chrono_reaper",
+    "name": "시간 수확자",
+    "visual": "chrono_reaper",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-12"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "aeon_sovereign",
+    "name": "영겁의 군주",
+    "visual": "aeon_sovereign",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-12"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "crystal_bastion",
+    "name": "수정 방벽수",
+    "visual": "crystal_bastion",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-13"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "tide_skimmer",
+    "name": "조류 활강체",
+    "visual": "tide_skimmer",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-13"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "prism_cannon",
+    "name": "프리즘 포격체",
+    "visual": "prism_cannon",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-13"
+    ],
+    "attack": true,
+    "fire": true,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "coral_singer",
+    "name": "산호 공명자",
+    "visual": "coral_singer",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-13"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "named_crystal",
+    "name": "수정해의 파수장",
+    "visual": "named_sky",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-09"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "crystal_leviathan",
+    "name": "수정해 레비아탄",
+    "visual": "storm_wyvern",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-09"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "prismatic_empress",
+    "name": "프리즘 여제",
+    "visual": "sky_dominion",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-09"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "lunar_husk",
+    "name": "월광 각질체",
+    "visual": "lunar_husk",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-14"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "spore_leaper",
+    "name": "포자 도약체",
+    "visual": "spore_leaper",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-14"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "moon_ray",
+    "name": "월광 사수",
+    "visual": "moon_ray",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-14"
+    ],
+    "attack": true,
+    "fire": true,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "bloom_keeper",
+    "name": "개화 수호자",
+    "visual": "bloom_keeper",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-14"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "named_lunar",
+    "name": "월식의 정원사",
+    "visual": "named_dune",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-10"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "lunar_devourer",
+    "name": "월핵 포식자",
+    "visual": "sand_colossus",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-10"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "eclipse_heart",
+    "name": "월식의 심장",
+    "visual": "solar_sphinx",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-10"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "stellar_plate",
+    "name": "성간 장갑체",
+    "visual": "stellar_plate",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-15"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "plasma_hound",
+    "name": "플라즈마 추격견",
+    "visual": "plasma_hound",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-15"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "nova_turret",
+    "name": "신성 포탑",
+    "visual": "nova_turret",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-15"
+    ],
+    "attack": true,
+    "fire": true,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "forge_conductor",
+    "name": "제련 지휘체",
+    "visual": "forge_conductor",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-15"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "named_stellar",
+    "name": "항성 제련장",
+    "visual": "named_machine",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-11"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "starforged_titan",
+    "name": "별벼림 거신",
+    "visual": "forge_overseer",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-11"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "supernova_foundry",
+    "name": "초신성 제련핵",
+    "visual": "machine_god",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-11"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "origin_warden",
+    "name": "기원 수문장",
+    "visual": "origin_warden",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-16"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "causal_blade",
+    "name": "인과 절단자",
+    "visual": "causal_blade",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-16"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "genesis_eye",
+    "name": "창세의 눈",
+    "visual": "genesis_eye",
+    "ranged": true,
+    "boss": false,
+    "regionalArt": [
+      "map-16"
+    ],
+    "attack": true,
+    "fire": true,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "fate_weaver",
+    "name": "운명 직조자",
+    "visual": "fate_weaver",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-16"
+    ],
+    "attack": true,
+    "fire": false,
+    "hit": true,
+    "death": true,
+    "authoredActions": 4
+  },
+  {
+    "id": "named_origin",
+    "name": "최초 좌표 집행자",
+    "visual": "named_time",
+    "ranged": false,
+    "boss": false,
+    "regionalArt": [
+      "map-12"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "causal_reaper",
+    "name": "인과 수확자",
+    "visual": "chrono_reaper",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-12"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  },
+  {
+    "id": "origin_sovereign",
+    "name": "원초 균열의 군주",
+    "visual": "aeon_sovereign",
+    "ranged": true,
+    "boss": true,
+    "regionalArt": [
+      "map-12"
+    ],
+    "attack": false,
+    "fire": true,
+    "hit": false,
+    "death": true,
+    "authoredActions": 0
+  }
+]

@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/iris/source-sd-v2.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        47,
+        70,
+        217,
+        230
+      ],
+      "sha256": "8a5cbe7f1f372be788b95450af5963d7596c563a3a00fcb2d03b9d97a17d2688"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        30,
+        48,
+        243,
+        230
+      ],
+      "sha256": "b39be33b2f87f87fbb6c3e04d7ffe86012e2cb08a37830282a90d1637eb9f079"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        13,
+        88,
+        223,
+        229
+      ],
+      "sha256": "54549ae3172f6243279599f83587235b45457c95b760486e68c00e2d7b3b6492"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        13,
+        80,
+        227,
+        230
+      ],
+      "sha256": "00613f62f63d2560418e1a9d134acb5859b5d83cddfb433189f387c1337e6f5a"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        29,
+        67,
+        243,
+        211
+      ],
+      "sha256": "eac2867e63dd8d9821d0536c9c06483a49bfead90701617056bfc96bd9e6efb2"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        65,
+        234,
+        213
+      ],
+      "sha256": "5a55a1f9c927aa122008253cc4a1a47bdd713f8031e104a71396c5b099f7bcd2"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        45,
+        58,
+        214,
+        215
+      ],
+      "sha256": "a08ac0ef4091b054b99877079dcc1ac74bb92bb75aaa3f63164d911760e4fa87"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        33,
+        57,
+        202,
+        215
+      ],
+      "sha256": "76ea0ce68c05c13cd443195461142fb2452c8390f360a22005b6c600c60e3e29"
+    }
+  ]
+}

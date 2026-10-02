@@ -1,6 +1,7 @@
 import type { Evolution, Hero } from "../data/types";
 export interface Unit {
   guardHp?:number;
+  guardUntil?:number;
   blockingCount?:number;
   damageReductionUntil?:number;
   tauntUntil?:number;

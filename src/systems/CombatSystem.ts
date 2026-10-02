@@ -101,9 +101,9 @@ export function stepCombat(m: BattleModel, dt: number) {
       // A completed charge may close open ground, but cannot phase through a
       // tank that is already blocking or trading melee attacks with it.
       if(!blocked)e.progress+=def.charge.distance;
-      e.namedSkillTimer=0;m.emit('blast',e.x,e.y,e.x,e.y,def.color,{visual:'enemy-rage',duration:.45,radius:70});
+      e.namedSkillTimer=0;e.abilityCastAt=m.time;m.emit('blast',e.x,e.y,e.x,e.y,def.color,{visual:'enemy-rage',duration:.45,radius:70});
     }
-    if(def.support&&e.namedSkillTimer>=def.support.interval){for(const ally of m.enemies)if(ally.active&&Math.hypot(ally.x-e.x,ally.y-e.y)<=def.support.radius)ally.hp=Math.min(ally.maxHp,ally.hp+ally.maxHp*def.support.heal);e.namedSkillTimer=0;m.emit('blast',e.x,e.y,e.x,e.y,def.color,{visual:'enemy-disrupt',duration:.55,radius:def.support.radius});}
+    if(def.support&&e.namedSkillTimer>=def.support.interval){for(const ally of m.enemies)if(ally.active&&Math.hypot(ally.x-e.x,ally.y-e.y)<=def.support.radius)ally.hp=Math.min(ally.maxHp,ally.hp+ally.maxHp*def.support.heal);e.namedSkillTimer=0;e.abilityCastAt=m.time;m.emit('blast',e.x,e.y,e.x,e.y,def.color,{visual:'enemy-disrupt',duration:.55,radius:def.support.radius});}
     // Ranged enemies begin aiming only after reaching their engagement line.
     // This prevents a whole spawn group from banking cooldown off-screen and
     // firing into the frontline on the first frame that it becomes targetable.
@@ -147,7 +147,7 @@ export function stepCombat(m: BattleModel, dt: number) {
         else if(def.namedSkill==='repair'){for(const ally of m.enemies)if(ally.active&&distance(ally,e)<220)ally.hp=Math.min(ally.maxHp,ally.hp+ally.maxHp*.14);}
         else if(def.namedSkill==='rewind'){e.progress=Math.max(0,e.progress-45);e.hp=Math.min(e.maxHp,e.hp+e.maxHp*.1);}
         m.emit('blast',e.x,e.y,e.x,e.y,def.color,{visual:`enemy-${def.namedSkill==='rush'?'rage':'disrupt'}`,duration:.7,radius:170});
-        e.namedSkillTimer=0;e.skillCasts++;
+        e.namedSkillTimer=0;e.skillCasts++;e.abilityCastAt=m.time;
       }
       if((def.disrupt||def.boss==='rage')&&!e.strikeAt&&e.attackTimer>= (def.boss?(def.bossTier==='mid'?10:12):7)){
         const target=m.units.filter(u=>u.slot>=0&&u.hp>0&&(def.boss||distance(u,e)<300)&&m.time-(u.moveReadyAt??0)+10>=3).sort((a,b)=>{
@@ -156,13 +156,14 @@ export function stepCombat(m: BattleModel, dt: number) {
         })[0];
         if(target){e.strikeAt=m.time+2.5;e.strikeX=target.x;e.strikeY=target.y;e.attackTimer=0;e.skillCasts++;}
       }
-      if(e.strikeAt&&m.time>=e.strikeAt){for(const u of m.units)if(Math.hypot(u.x-e.strikeX!,u.y-e.strikeY!)<100)m.hurtUnit(u,(def.boss?(m.campaign?38:65):24)*campaignAttack);e.strikeAt=undefined;}
+      if(e.strikeAt&&m.time>=e.strikeAt){for(const u of m.units)if(Math.hypot(u.x-e.strikeX!,u.y-e.strikeY!)<100)m.hurtUnit(u,(def.boss?(m.campaign?38:65):24)*campaignAttack);e.abilityCastAt=m.time;e.strikeAt=undefined;}
     }
     const pulseBoss = def.boss === "frost" || def.boss === "storm" || def.boss === "void";
     const pulseEvery = m.campaign&&def.bossTier==='mid'?10:def.boss === "storm" ? 3 : def.boss === "void" ? 3.5 : 4;
     if ((!m.campaign&&def.disrupt||pulseBoss) && e.attackTimer >= pulseEvery) {
       e.attackTimer = 0;
       e.skillCasts++;
+      e.abilityCastAt=m.time;
       if(e.kind==="jammer")for(const v of m.enemies)if(v.active&&distance(v,e)<100){v.waterMark=0;v.fireMark=0;v.electricMark=0;v.darkMark=0;}
       const radius = def.boss === "storm" ? 430 : def.boss === "void" ? 300 : def.boss ? 350 : 210;
       for (const u of m.units)

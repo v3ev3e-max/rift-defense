@@ -1,0 +1,123 @@
+{
+  "owner": "void_observer",
+  "source": "art-source\\monster-actions-v2\\void_observer-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\void_observer\\attack\\frame_01.webp",
+      "bbox": [
+        45,
+        70,
+        210,
+        224
+      ],
+      "sha256": "c116704cb9947d3f89e270ad9692b3eb1650377701f7d4ccf220681a755364ed"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\void_observer\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        76,
+        224,
+        224
+      ],
+      "sha256": "0c548e3054ea232aa5c67165781b7179d17e62beebe1965509689c7768bfcdb1"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\void_observer\\attack\\frame_03.webp",
+      "bbox": [
+        44,
+        79,
+        211,
+        224
+      ],
+      "sha256": "bb3c553d7c8a5d06441c2a96b7c59b27012165299e94934e6fa90f4e3a77ebcc"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\void_observer\\hit\\frame_01.webp",
+      "bbox": [
+        41,
+        76,
+        215,
+        224
+      ],
+      "sha256": "bc33354524cac6cfbffd1e952290b1f67601aeab452c0b1474c5ba27ec052440"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\void_observer\\hit\\frame_02.webp",
+      "bbox": [
+        51,
+        76,
+        204,
+        224
+      ],
+      "sha256": "59701347da4d0cadc3cf083255051846254f490477895adc917c2f862e0f7d49"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\void_observer\\hit\\frame_03.webp",
+      "bbox": [
+        47,
+        80,
+        208,
+        224
+      ],
+      "sha256": "1a56bf6fddd42b076e45f94672927e1d59a05e4a5e921c1e68fb778db0dbb8e9"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\void_observer\\death\\frame_01.webp",
+      "bbox": [
+        43,
+        83,
+        212,
+        224
+      ],
+      "sha256": "ed1c6c75bea977cacc753355bf2a4156f93a8ea2bd20a4a3841a8a3285db66d1"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\void_observer\\death\\frame_02.webp",
+      "bbox": [
+        35,
+        99,
+        220,
+        224
+      ],
+      "sha256": "970e6802fc8e738b1b68aa21f332d7eaf1cc05bdb65db5bedd05e7e99e543ad0"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\void_observer\\death\\frame_03.webp",
+      "bbox": [
+        46,
+        124,
+        210,
+        224
+      ],
+      "sha256": "2108f036f618252aad71fe0418da1d932257fea6341b3af5a3f897d6e48f46e7"
+    }
+  ]
+}

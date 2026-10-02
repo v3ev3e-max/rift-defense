@@ -1,0 +1,123 @@
+{
+  "owner": "aether_mender",
+  "source": "art-source\\monster-actions-v2\\aether_mender-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aether_mender\\attack\\frame_01.webp",
+      "bbox": [
+        47,
+        47,
+        209,
+        224
+      ],
+      "sha256": "cf2f62381a44ad9623126177637aeb3a8dbe6e7ffc9728f53c0eb0df8fbcb17e"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aether_mender\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        43,
+        224,
+        224
+      ],
+      "sha256": "1eb3c74b585cd2dcad2bbb4157a980ab5602752a6fa2d249676cec1eceb6eb55"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aether_mender\\attack\\frame_03.webp",
+      "bbox": [
+        42,
+        54,
+        213,
+        224
+      ],
+      "sha256": "0fe9e97cc29c64f169f6d2a3e8d81e0a0c309f1b1cc346a065d9882e243bc5dd"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aether_mender\\hit\\frame_01.webp",
+      "bbox": [
+        54,
+        59,
+        202,
+        224
+      ],
+      "sha256": "2b90e08c9ea626355251cde36a1ce203b467763ce4b11a4817f1fe0bf8828ac7"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aether_mender\\hit\\frame_02.webp",
+      "bbox": [
+        45,
+        77,
+        211,
+        224
+      ],
+      "sha256": "1fcf5691ce44b36e98866e7aad56c571f71a1e12375eb9c0bbb1ca9c3e2765fa"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aether_mender\\hit\\frame_03.webp",
+      "bbox": [
+        57,
+        70,
+        199,
+        224
+      ],
+      "sha256": "d16e5d2f8048d0a4314335cb0a7fcb6b67bc91fca3af464e5a92a71353819f38"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aether_mender\\death\\frame_01.webp",
+      "bbox": [
+        55,
+        93,
+        200,
+        224
+      ],
+      "sha256": "adfbdbb54dbcaa46052868c71d763e81d138e8d100d058a20e331b703f3fd6d2"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aether_mender\\death\\frame_02.webp",
+      "bbox": [
+        42,
+        99,
+        213,
+        224
+      ],
+      "sha256": "1c066df0e8ba741d05e9196f7a2a0396d5991b5e2d7fb5dc676f4a22d2a46efe"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\aether_mender\\death\\frame_03.webp",
+      "bbox": [
+        46,
+        132,
+        210,
+        224
+      ],
+      "sha256": "a72824a4f109b2262b17b77109ae0658b50768eae8ce6bbaa320138e0a6421b9"
+    }
+  ]
+}

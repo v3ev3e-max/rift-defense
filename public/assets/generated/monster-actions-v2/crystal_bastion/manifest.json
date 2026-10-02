@@ -1,0 +1,123 @@
+{
+  "owner": "crystal_bastion",
+  "source": "art-source\\monster-actions-v2\\crystal_bastion-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crystal_bastion\\attack\\frame_01.webp",
+      "bbox": [
+        50,
+        102,
+        206,
+        224
+      ],
+      "sha256": "8a5f5c49a4fba57faf54e92c96666749951216e2c1af0825f1696ed1ec7d8eea"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crystal_bastion\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        99,
+        224,
+        224
+      ],
+      "sha256": "088de52dc7803e6809bdaa3b8f7f2a5016a2832d79babe6f52cfad23b7d695ac"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crystal_bastion\\attack\\frame_03.webp",
+      "bbox": [
+        48,
+        112,
+        208,
+        224
+      ],
+      "sha256": "963d929c83f2ec730e2e52241d01524bcaa1ef309e73e6f377044ae1bc0d8527"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crystal_bastion\\hit\\frame_01.webp",
+      "bbox": [
+        44,
+        75,
+        211,
+        224
+      ],
+      "sha256": "efd8b31153873f66580d3f188fab57536a42c7dbe9ffc38a5e2a932a79561c90"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crystal_bastion\\hit\\frame_02.webp",
+      "bbox": [
+        51,
+        71,
+        205,
+        224
+      ],
+      "sha256": "0138b92134763e7673534fcaf6a1d3cde50f2fce8c8beffeab42a43b8f592c91"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crystal_bastion\\hit\\frame_03.webp",
+      "bbox": [
+        54,
+        104,
+        202,
+        224
+      ],
+      "sha256": "2e953f0b3ded9598d67b9cbfd1c398886839f90abd7f9e0cee8a076f0991cbdb"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crystal_bastion\\death\\frame_01.webp",
+      "bbox": [
+        42,
+        106,
+        214,
+        224
+      ],
+      "sha256": "51afaaca5b37bc18d06eb1f94952d22612b96d6dfb996103dc79a0c67620ebae"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crystal_bastion\\death\\frame_02.webp",
+      "bbox": [
+        39,
+        121,
+        216,
+        224
+      ],
+      "sha256": "0ec094e8bae51a5320b3680b922d56732e1523a2f87a7308dc7cabfb9bde229e"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crystal_bastion\\death\\frame_03.webp",
+      "bbox": [
+        38,
+        146,
+        218,
+        224
+      ],
+      "sha256": "eed12fbb76d688a26d28cc4d5b31e29c7fedb09f24b12faef42469cec05f5a03"
+    }
+  ]
+}

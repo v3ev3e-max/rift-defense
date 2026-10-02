@@ -35,7 +35,9 @@ export function heroVisualPose(attacking:boolean,skillCasting:boolean,north:bool
  * gutters. A fixed footprint prevents large-pose heroes from being enlarged
  * past the battlefield edge while keeping every hero at the same visual scale. */
 export function heroVisualSize(id:string,north:boolean,pose:HeroVisualPose){
- return pose==='skill'?160:poseSize(id,north,pose==='idle');
+ // V3 side attacks share a 256px canvas, common scale and floor anchor.
+ // Keep their battlefield footprint equal to idle instead of changing size by pose.
+ return pose==='skill'?160:pose==='attack'?poseSize(id,false,true):poseSize(id,north,pose==='idle');
 }
 export function defeatPoseSize(id:string){
  const base=id==='hana'?112:oversizedAddedHeroes.has(id)?108:HERO_RENDER.size;

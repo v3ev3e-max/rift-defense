@@ -1,0 +1,123 @@
+{
+  "owner": "forge_conductor",
+  "source": "art-source\\monster-actions-v2\\forge_conductor-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_conductor\\attack\\frame_01.webp",
+      "bbox": [
+        62,
+        77,
+        193,
+        224
+      ],
+      "sha256": "c39dd028a777e2887d9f9ea55a6ee74d6169070f86758969bfbf2e05e0cab5b3"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_conductor\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        95,
+        224,
+        224
+      ],
+      "sha256": "433bd007e309705290fb5685b5160eb2baba1199a2cf3139db8da9049fef9569"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_conductor\\attack\\frame_03.webp",
+      "bbox": [
+        62,
+        80,
+        194,
+        224
+      ],
+      "sha256": "cb89bae0a1a3420f592c08493bb2bf4693e119b9d6e4d4deded67d50cebe2d8b"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_conductor\\hit\\frame_01.webp",
+      "bbox": [
+        55,
+        78,
+        200,
+        224
+      ],
+      "sha256": "dae65ff5baa6a4acbc93d4d0b19c92acb0c0cce1e850809e778b89040a115e62"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_conductor\\hit\\frame_02.webp",
+      "bbox": [
+        58,
+        95,
+        198,
+        224
+      ],
+      "sha256": "1336b99162b6fd2e108a26735b63a33a084433eed3280c3594a011e5ea567c40"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_conductor\\hit\\frame_03.webp",
+      "bbox": [
+        56,
+        83,
+        200,
+        224
+      ],
+      "sha256": "7ea31ffefff0f9e4d720d55bb3b7ffadc8cca31078a61a3c0c75d9599ed853c7"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_conductor\\death\\frame_01.webp",
+      "bbox": [
+        63,
+        101,
+        193,
+        224
+      ],
+      "sha256": "9e36e08a8a36e4a795cf78b7bda40b2b5984c0e689de25ca7bb57115f21b145c"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_conductor\\death\\frame_02.webp",
+      "bbox": [
+        49,
+        131,
+        207,
+        224
+      ],
+      "sha256": "7c31975285ce2e3d5a653d6ac2964253d2bdab749cd3a4aa903c80f2f4b29b55"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_conductor\\death\\frame_03.webp",
+      "bbox": [
+        54,
+        145,
+        202,
+        224
+      ],
+      "sha256": "aa0fb5b706ca1f569de1c2824de4b9c83a6224f147d0f0fa8642d24b5735c505"
+    }
+  ]
+}

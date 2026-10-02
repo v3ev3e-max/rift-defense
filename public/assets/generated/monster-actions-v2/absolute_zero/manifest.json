@@ -1,0 +1,123 @@
+{
+  "owner": "absolute_zero",
+  "source": "art-source\\monster-actions-v2\\absolute_zero-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\absolute_zero\\attack\\frame_01.webp",
+      "bbox": [
+        46,
+        46,
+        209,
+        224
+      ],
+      "sha256": "cdcffddaab22e37fc372f52358ee86e526f7fb6af8c1c527404c3eca93eb1086"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\absolute_zero\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        54,
+        224,
+        224
+      ],
+      "sha256": "811212e17d7dbbb011b3a664563f3971baa867e831ea25d17f756de23386f4ce"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\absolute_zero\\attack\\frame_03.webp",
+      "bbox": [
+        41,
+        54,
+        215,
+        224
+      ],
+      "sha256": "8a56a8e26472e96eb9442dd88d732cd9e8dc3e87586708b4d86a5326c6a5a952"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\absolute_zero\\hit\\frame_01.webp",
+      "bbox": [
+        45,
+        56,
+        211,
+        224
+      ],
+      "sha256": "22d4d432c6f07fde547b6cd319edc29eca362f74ba43d54d9b1c1de36db21b69"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\absolute_zero\\hit\\frame_02.webp",
+      "bbox": [
+        49,
+        58,
+        207,
+        224
+      ],
+      "sha256": "5af06b1da5d73ab851195847646f771592d6fa9e37528ca6ae8d6fac1736257b"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\absolute_zero\\hit\\frame_03.webp",
+      "bbox": [
+        41,
+        57,
+        214,
+        224
+      ],
+      "sha256": "f913b8b65b51c63cfebd98f1109420afb66621006244f6e8c57f457cf879a7ac"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\absolute_zero\\death\\frame_01.webp",
+      "bbox": [
+        37,
+        91,
+        219,
+        224
+      ],
+      "sha256": "aa0ed46eea283b421a32e87d8de28a1db06369a04b543e4e15725ec6485da6ce"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\absolute_zero\\death\\frame_02.webp",
+      "bbox": [
+        32,
+        103,
+        224,
+        224
+      ],
+      "sha256": "1bee4870494032fb59454819c72f066b7e28e8b87e0f346047d0ae735b09a648"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\absolute_zero\\death\\frame_03.webp",
+      "bbox": [
+        37,
+        135,
+        218,
+        224
+      ],
+      "sha256": "eba74fe886af4ed07aba877b302bbdbda3e9c15aaa27a972c4bcbf5562ddc2d4"
+    }
+  ]
+}

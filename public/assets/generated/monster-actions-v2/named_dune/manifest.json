@@ -1,0 +1,123 @@
+{
+  "owner": "named_dune",
+  "source": "art-source\\monster-actions-v2\\named_dune-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\named_dune\\attack\\frame_01.webp",
+      "bbox": [
+        50,
+        63,
+        206,
+        224
+      ],
+      "sha256": "976c651fb4c1a6c7608f65cc41beda84a2ef1026bb0520e74b3d462b216a16e4"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\named_dune\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        61,
+        224,
+        224
+      ],
+      "sha256": "1b3a296843d5b95ec20bb57635d4141d0fbfd68811495b6a23e3538e57467e69"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\named_dune\\attack\\frame_03.webp",
+      "bbox": [
+        49,
+        64,
+        207,
+        224
+      ],
+      "sha256": "847f898a9e5eced4842434fc0b0028ebea4e3210a624f36201beab1a200a8a8d"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\named_dune\\hit\\frame_01.webp",
+      "bbox": [
+        45,
+        81,
+        211,
+        224
+      ],
+      "sha256": "4cb11b22a598118a82f2fec9f9b886806ce2571172644788f2a575921622a553"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\named_dune\\hit\\frame_02.webp",
+      "bbox": [
+        41,
+        90,
+        214,
+        224
+      ],
+      "sha256": "ae31105b7416843364039fb5cca223429ca3e41ec773f96aaef8904058a84f58"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\named_dune\\hit\\frame_03.webp",
+      "bbox": [
+        46,
+        66,
+        210,
+        224
+      ],
+      "sha256": "e6c5e3bedf6bd16cca02e6751c3224b116f5338251fc0a54bc7cbfc8cfa0a603"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\named_dune\\death\\frame_01.webp",
+      "bbox": [
+        46,
+        88,
+        209,
+        224
+      ],
+      "sha256": "88d8743a455a78a54cdb6c97f14d4349c1a90d130e80cdd9fdf023b2ced73e4e"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\named_dune\\death\\frame_02.webp",
+      "bbox": [
+        38,
+        118,
+        218,
+        224
+      ],
+      "sha256": "dac8506f37400a96a86cbed61b93b03df36c0008d35eef78175b18518c7c12ae"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\named_dune\\death\\frame_03.webp",
+      "bbox": [
+        41,
+        137,
+        214,
+        224
+      ],
+      "sha256": "c3e2ec78bcb98a9a0520abe0de82dc066396663cee87c3755bd6e62ae98cb5db"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/neris/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        37,
+        60,
+        188,
+        221
+      ],
+      "sha256": "fd9d88372dc237c8aee0f51f7780c07aacf7a59a6cca2ebe3e261804beb74f60"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        16,
+        65,
+        243,
+        221
+      ],
+      "sha256": "e358d122bc936ca988e2dbf353afabe8ea2c59595b395d731edac0a84d88aac6"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        13,
+        65,
+        243,
+        221
+      ],
+      "sha256": "4cdfe67c7187208c6aab6a2e8e406fe99ee8eecc7dc07cfec13c82b00ec24fa6"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        13,
+        71,
+        235,
+        220
+      ],
+      "sha256": "41f5f618a32c80119cf7efc0cf2c4ddc6ad03a110301e1d3583c93c98f24db9e"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        27,
+        56,
+        243,
+        208
+      ],
+      "sha256": "f9f33e7be1501f1b02978af310b8790facf4b8e87f0c5698af2eedcd8781406b"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        64,
+        243,
+        206
+      ],
+      "sha256": "41b3562e3d3b2257e185b5685896968f17956c9eef39dd16f7eca1f1c9c0fab7"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        38,
+        243,
+        208
+      ],
+      "sha256": "a3f09a4e195ed43aee73a467cc5614fc6184e8e1f9c827bc30a74f885692dcf9"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        13,
+        50,
+        214,
+        211
+      ],
+      "sha256": "d19aa3edfcab4ecaa2453d1b10f06689171dadbd1f95410b59c517bec277052f"
+    }
+  ]
+}

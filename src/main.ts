@@ -1,4 +1,5 @@
 import {raidHeroActions, raidBossAction, playRaidPose} from './ui/RaidAnimations';
+import {syncRaidSummons} from './ui/RaidSummonAnimations';
 import { preserveScroll, replacePanel, updatePanel } from './ui/stablePanel';
 import {campaignSelect,campaignFormation,campaignBattle,campaignSkillBar,campaignUnit,campaignResult,squadSummary,formationFilter,filterRoster,formationHelp,campaignResearch,campaignPrep,campaignPrepEquipment,campaignPrepSelection,heroCollectionFilter,campaignPrepFilter} from './ui/CampaignUI';
 import {campaignStages,stageUnlocked,doctrines,campaignWorldlines} from './data/campaign';
@@ -29,7 +30,6 @@ import {
   equipmentShop,
   itemScreen,
   recruitScreen,
-  recruitResult,
 } from "./ui/screens";
 import {
   battleScreen,
@@ -48,7 +48,8 @@ import type Phaser from "phaser";
 import {armorCatalog,campaignEquipmentDropChance,campaignEquipmentRarity,enhanceCost,equipmentCraftCost,equipmentSalvageValue,equipmentShopPrice,equipItem,equipped,heroWeaponGroup,makeEquipment,necklaceCatalog,raidEquipmentBonus,raidEquipmentCatalog,rarityMax,weaponCatalog} from './data/equipment';
 import type {EquipmentSlot} from './data/equipment';
 import type {HeroGrade} from './data/types';
-import {RECRUIT_COST,recruit} from './systems/RecruitSystem';
+import {RECRUIT_COST,recruit,type RecruitResult} from './systems/RecruitSystem';
+import {mountRecruitReveal} from './ui/RecruitReveal';
 import {commanderById,commanderPortrait} from './data/commanders';
 import {raidScreen,type RaidRuntime} from './ui/RaidUI';
 import {RAID_DURATION,raidAutoDamage,raidBosses,raidBossMaxHp,raidBossTuning,raidDropEligible,raidManualDamage,raidPatternDamage,refreshRaid,weeklyRaidBosses} from './data/raid';
@@ -191,6 +192,7 @@ class App {
     this.render();
   }
   render() {
+    if(this.recruitRevealCleanup){this.recruitRevealCleanup();this.recruitRevealCleanup=undefined;this.modalType='';}
     const keepScroll=this.renderedScreen===this.screen;
     const s = this.save.data;
     this.renderToken++;
@@ -393,10 +395,7 @@ class App {
     const auto=this.root.querySelector<HTMLElement>('[data-action="raid-auto"]');if(auto)auto.textContent=this.save.data.campaign?.autoSkills?'AUTO 스킬 ON':'AUTO 스킬 OFF';
     const status=this.root.querySelector<HTMLElement>('.raid-boss-stage>small');if(status)status.textContent=`소환체 ${r.summons} · 누적 피해 ${num(Math.floor(r.damage))}`;
     const arena=this.root.querySelector<HTMLElement>('.raid-arena'),boss=weeklyRaidBosses()[r.bossIndex];
-    if(arena&&arena.querySelectorAll('.raid-summon').length!==r.summons){
-      arena.querySelectorAll('.raid-summon').forEach(el=>el.remove());
-      for(let i=0;i<r.summons;i++){const img=document.createElement('img');img.className='raid-summon';img.style.setProperty('--summon',String(i));img.src=assetUrl(`/assets/generated/raid-v2/summons/${boss.id}.webp`);img.alt='보스 소환체';arena.append(img);}
-    }
+    if(arena)syncRaidSummons(this.root,boss.id,r.summons);
     this.root.querySelectorAll<HTMLElement>('.raid-live-squad>div').forEach((card,i)=>{const value=Math.max(0,Math.round(r.squadHp[i]??100)),bar=card.querySelector<HTMLElement>('i span'),label=card.querySelector<HTMLElement>('small');if(bar)bar.style.width=`${value}%`;if(label)label.textContent=`HP ${value}%`;});
     let pop=this.root.querySelector<HTMLElement>('.raid-damage-pop');if(!pop){pop=document.createElement('b');pop.className='raid-damage-pop';this.root.querySelector('.raid-boss-silhouette')?.append(pop);}pop.textContent=`-${num(Math.round(r.lastHit??0))}`;for(const animation of pop.getAnimations()){animation.cancel();animation.play();}
   }
@@ -440,7 +439,7 @@ class App {
       case 'commander-select':
         if(id&&commanderById[id]){this.save.data.commanderId=id;this.persist();this.audio.play('click');this.render();this.toast(`${commanderById[id].name} 지휘관을 선택했습니다.`);}
         break;
-      case 'recruit-pull':{const count=id==='10'?10:1,cost=count===10?RECRUIT_COST.ten:RECRUIT_COST.one;if(this.save.data.equipmentGold<cost){this.toast(`모집 골드 부족 · ${cost}G 필요`);break;}this.save.data.equipmentGold-=cost;const results=recruit(this.save.data,count);this.persist();this.render();this.audio.play(results.some(v=>v.grade==='SR')?'boss':results.some(v=>v.grade==='S')?'level':'summon');this.showModal(recruitResult(results),'recruit-result');break;}
+      case 'recruit-pull':{if(this.modalType==='recruit-result')break;const count=id==='10'?10:1,cost=count===10?RECRUIT_COST.ten:RECRUIT_COST.one;if(this.save.data.equipmentGold<cost){this.toast(`모집 골드 부족 · ${cost}G 필요`);break;}this.save.data.equipmentGold-=cost;const results=recruit(this.save.data,count);this.persist();this.render();this.showRecruit(results);break;}
       case 'item-tab':if(['inventory','craft','equipped'].includes(id??'')){this.itemTab=id as typeof this.itemTab;this.render();}break;
       case 'item-select':if(id){this.itemSelected=id;this.itemTab='inventory';this.render();}break;
       case 'item-craft-slot':if(['weapon','armor','necklace'].includes(id??'')){this.craftSlot=id as EquipmentSlot;this.render();}break;
@@ -718,7 +717,7 @@ class App {
       case 'dev-item':{
         if(this.save.data.equipmentInventory.length>=100){this.toast('장비 보관함이 가득 찼습니다.');break;}const grade=(['B','A','S','SR'].includes(id??'')?id:'B') as HeroGrade,pool=[...weaponCatalog,...armorCatalog,...necklaceCatalog],template=pool[Math.floor(Math.random()*pool.length)];this.save.data.equipmentInventory.push(makeEquipment(template.id,grade));this.persist();this.render();break;
       }
-      case 'dev-recruit':{const grade=(['B','A','S','SR'].includes(id??'')?id:'B') as HeroGrade,results=recruit(this.save.data,1,Math.random,grade);this.persist();this.render();this.audio.play(grade==='SR'?'boss':grade==='S'?'level':'summon');this.showModal(recruitResult(results),'recruit-result');break;}
+      case 'dev-recruit':{const grade=(['B','A','S','SR'].includes(id??'')?id:'B') as HeroGrade,results=recruit(this.save.data,1,Math.random,grade);this.persist();this.render();this.showRecruit(results);break;}
       case 'dev-reset':
         this.game?.destroy(true);this.game=undefined;this.model=undefined;this.save.data=localTestResetSave();this.audio.configure(this.save.data.settings);this.persist();this.screen='home';this.render();break;
       case "tutorial-skip":
@@ -765,7 +764,13 @@ class App {
     }
     if (this.screen === "battle") this.updateHud(true);
   }
+  recruitRevealCleanup?:()=>void;
+  showRecruit(results:RecruitResult[]){
+    this.closeModal();const host=document.querySelector<HTMLElement>('#modal-layer');if(!host)return;this.modalType='recruit-result';
+    this.recruitRevealCleanup=mountRecruitReveal(host,results,tier=>this.audio.play(tier==='ssr'?'relic':tier==='sr'?'level':'summon'),()=>{this.audio.stop('relic');this.audio.stop('level');this.audio.stop('summon');},()=>this.closeModal());
+  }
   showModal(html: string, type: string) {
+    this.recruitRevealCleanup?.();this.recruitRevealCleanup=undefined;
     const layer = document.querySelector<HTMLDivElement>("#modal-layer");
     if (layer) {
       const tutorial=document.getElementById('tutorial-hint');
@@ -778,6 +783,7 @@ class App {
     }
   }
   closeModal() {
+    this.recruitRevealCleanup?.();this.recruitRevealCleanup=undefined;
     const layer = document.querySelector("#modal-layer");
     if (layer) layer.innerHTML = "";
     this.modalType = "";

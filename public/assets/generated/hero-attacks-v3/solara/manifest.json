@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/solara/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        33,
+        73,
+        222,
+        235
+      ],
+      "sha256": "93e113f95ea3db2497f7d1e65217f55c8ab62715198f9539f9df07097c4ff599"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        29,
+        23,
+        221,
+        235
+      ],
+      "sha256": "b87612cb6ca9d1d4340c0c44d4f5ff32a810b7c58282063eb9463bc57f50ee3f"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        23,
+        74,
+        235,
+        235
+      ],
+      "sha256": "e8555effef1eb04c62af00e841537da6612959c1652606acddfdcc45d7d0f29f"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        23,
+        56,
+        230,
+        235
+      ],
+      "sha256": "44085525319529f0e378b07ea1c3580c71db5851b75ed4b76dd8f753232c43c1"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        22,
+        59,
+        243,
+        224
+      ],
+      "sha256": "eb630784ffff7d51c8847fc192275403d01d4d73df116c980d125972917a4643"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        63,
+        234,
+        224
+      ],
+      "sha256": "4952d98bc180ccd9815524bd3b8c47be06ac1e72fb25bce09f476267ca1dd5f1"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        36,
+        68,
+        219,
+        227
+      ],
+      "sha256": "1894d41c87265fdc397f8157344b34881b317ea53228d0cf0d5ceff4cc693625"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        47,
+        69,
+        229,
+        227
+      ],
+      "sha256": "d14d887f860783ff19123b843c341a91b74615d2717784d0f05f33699fd30f19"
+    }
+  ]
+}

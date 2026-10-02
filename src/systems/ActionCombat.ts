@@ -12,6 +12,7 @@ import type {Element} from '../data/types';
 import type {DamageKind} from './CombatLedger';
 import {MAP} from '../data/map';
 import {equipmentBonus,skillEquipmentMultiplier} from '../data/equipment';
+import {finalizeCastShields,grantShield} from './TimedShield';
 const dist=(a:{x:number;y:number},b:{x:number;y:number})=>Math.hypot(a.x-b.x,a.y-b.y);
 export const SNIPER_ROUND_SPEED=1050;
 function rayToMapEdge(x:number,y:number,dx:number,dy:number){
@@ -254,6 +255,7 @@ export function stepActions(m:BattleModel,dt:number){
 }
 export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
  if(m.paused||m.ended||(u.skillCharge??0)<100||m.time<(u.skillReadyAt??0))return false;
+ const shieldsBefore=new Map(m.units.map(v=>[v.uid,v.guardHp??0]));
  const kind=combatRoles[u.heroId].kind,skillMul=skillEquipmentMultiplier(m.save,u.heroId);if(target)face(m,u,target);
  if(kind==='support'){
   announceSkill(m,u);
@@ -286,6 +288,7 @@ export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
    }
    m.emit('blast',u.x,u.y,ally.x,ally.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-skill-${u.heroId}`,duration:.55,radius:52});
   }
+  finalizeCastShields(m.units,shieldsBefore,m.time,duration);
   const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;const cooldown=skillCooldownSeconds(u.heroId);u.skillCharge=0;u.skillHeldAt=undefined;u.skillCooldownDuration=cooldown;u.skillReadyAt=m.time+cooldown;
   u.skillEffectDuration=duration;u.skillEffectUntil=m.time+duration;
   m.emit('blast',u.x,u.y,u.x,u.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-skill-${u.heroId}`,duration:.9,radius:u.heroId==='ophilia'?170:135});return true;
@@ -320,6 +323,7 @@ export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
   const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;
   const cooldown=skillCooldownSeconds(u.heroId);u.skillCharge=0;u.skillHeldAt=undefined;u.skillCooldownDuration=cooldown;u.skillReadyAt=m.time+cooldown;
   u.skillEffectDuration=skillDurationSeconds(u.heroId,u.star);u.skillEffectUntil=m.time+u.skillEffectDuration;
+  finalizeCastShields(m.units,shieldsBefore,m.time,u.skillEffectDuration);
   m.emit('blast',u.x,u.y,u.x,u.y,parseInt(heroById[u.heroId].color.slice(1),16),{visual:`support-skill-${u.heroId}`,duration:.9,radius:135});return true;
  }
  if(!target||!queue(m,u,target,m.stats(u).atk*(u.star===5?4.5:3),kind,0,true))return false;
@@ -332,6 +336,7 @@ export function castAutoSkill(m:BattleModel,u:Unit,target?:Enemy){
  if(u.heroId==='nyx'){target.vulnerability=Math.max(target.vulnerability,.18);target.vulnerabilityTime=Math.max(target.vulnerabilityTime,4);queue(m,u,target,m.stats(u).atk*.7,'sniper',.22,true);}
  if(u.heroId==='ciel')addZone(m,u,target.x,target.y,130,'water',m.stats(u).atk*.12);
  if(u.heroId==='raon'){addZone(m,u,target.x,target.y,110,'plasma',m.stats(u).atk*.14);for(let i=1;i<=3;i++)queue(m,u,target,m.stats(u).atk*.36,'burst',i*.09,true);}
+ finalizeCastShields(m.units,shieldsBefore,m.time,skillDurationSeconds(u.heroId,u.star));
  const r=m.records.find(r=>r.uid===u.uid);if(r)r.autoCasts++;
  const cooldown=skillCooldownSeconds(u.heroId);u.skillCharge=0;u.skillHeldAt=undefined;u.skillCooldownDuration=cooldown;u.skillReadyAt=m.time+cooldown;
  u.skillEffectDuration=skillDurationSeconds(u.heroId,u.star);u.skillEffectUntil=m.time+u.skillEffectDuration;
@@ -347,7 +352,7 @@ export function supportBasic(m:BattleModel,u:Unit){
   for(const target of ['ophilia','eir'].includes(u.heroId)?ordered.slice(0,2):[ally]){const healed=Math.min(target.maxHp-target.hp,target.maxHp*power);target.hp+=healed;u.healingDone=(u.healingDone??0)+healed;}
  }
  if(u.heroId==='echo'||u.heroId==='freya'){ally.supportSpeedBonus=Math.max(ally.supportSpeedBonus??0,.04+u.star*.006);ally.supportSpeedUntil=m.time+2;charge(ally,1+u.star*.2,m.time);}
- if(u.heroId==='meriel'){ally.guardHp=(ally.guardHp??0)+ally.maxHp*(.008+u.star*.0015);ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.02+u.star*.004);ally.supportAttackUntil=m.time+2.2;}
+ if(u.heroId==='meriel'){grantShield(ally,ally.maxHp*(.008+u.star*.0015),m.time,2.2);ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.02+u.star*.004);ally.supportAttackUntil=m.time+2.2;}
  if(u.heroId==='selene'){ally.supportAttackBonus=Math.max(ally.supportAttackBonus??0,.025+u.star*.004);ally.supportAttackUntil=m.time+2.2;}
  if(u.heroId==='selene'){ally.supportCritBonus=Math.max(ally.supportCritBonus??0,.02+u.star*.004);ally.supportCritUntil=m.time+2.2;}
  charge(u,2.5+u.star*.35,m.time);

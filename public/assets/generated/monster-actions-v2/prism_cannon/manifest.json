@@ -1,0 +1,123 @@
+{
+  "owner": "prism_cannon",
+  "source": "art-source\\monster-actions-v2\\prism_cannon-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\prism_cannon\\attack\\frame_01.webp",
+      "bbox": [
+        41,
+        83,
+        214,
+        224
+      ],
+      "sha256": "a1ffac40bb593ca01421ee80c9ef377a300da493828fba9720a8a322c8e42a76"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\prism_cannon\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        91,
+        224,
+        224
+      ],
+      "sha256": "a9c674a3da76df7f3d5c5c1537066fcfcd74f1c16c169888181e4bb0bb8858aa"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\prism_cannon\\attack\\frame_03.webp",
+      "bbox": [
+        45,
+        102,
+        211,
+        224
+      ],
+      "sha256": "382b752152583bf7999c30160089dc61c494f7773995b5cc74ab814498f9156e"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\prism_cannon\\hit\\frame_01.webp",
+      "bbox": [
+        55,
+        81,
+        201,
+        224
+      ],
+      "sha256": "579cb0a8ef13cfb31c2b6d4c25e62a2bcfad5e7855cc32e26181768ec39d30e1"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\prism_cannon\\hit\\frame_02.webp",
+      "bbox": [
+        55,
+        98,
+        201,
+        224
+      ],
+      "sha256": "d2811b35f16809ad2a2b2e77c81ae345723617efa6802c6c1f285b2f5f5cb9ea"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\prism_cannon\\hit\\frame_03.webp",
+      "bbox": [
+        54,
+        96,
+        202,
+        224
+      ],
+      "sha256": "0462f188d3200f4b2dcee224e691ab09d589e155def04fc0a38bf09e2a2e2ce3"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\prism_cannon\\death\\frame_01.webp",
+      "bbox": [
+        51,
+        102,
+        205,
+        224
+      ],
+      "sha256": "99e994fb294640b9e1419efd391057f404bd85abb6369f8a161166637d19b634"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\prism_cannon\\death\\frame_02.webp",
+      "bbox": [
+        45,
+        133,
+        211,
+        224
+      ],
+      "sha256": "3720bc71bbd3e8a1dfdd63b5689313b3edf176ea7e80b623331cdcad04bab067"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\prism_cannon\\death\\frame_03.webp",
+      "bbox": [
+        50,
+        173,
+        205,
+        224
+      ],
+      "sha256": "53ef10fa42cc05711a30da800d8a6949c46bd4072fe58f2e468cff5f97d4a8e0"
+    }
+  ]
+}

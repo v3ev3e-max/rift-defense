@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/daeun/source-sd-v2.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        50,
+        52,
+        204,
+        230
+      ],
+      "sha256": "905619a96cd7cb5ee50782119bf1932276677c082f525a588e92ada835b088a7"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        39,
+        53,
+        226,
+        230
+      ],
+      "sha256": "a9e4e4c8951b3ece7ad961389d7c45b09707e2c006359fe4796dbb2033e05092"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        27,
+        51,
+        219,
+        230
+      ],
+      "sha256": "3666623c99a650960fd9054cf5af0ffb3431dfac0bc99d1979f927f76254458c"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        29,
+        58,
+        243,
+        230
+      ],
+      "sha256": "8491bbb2ea726fb21cb720bd816e975b0dc25261be10d84ca47f10c3f37f23b2"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        23,
+        34,
+        240,
+        219
+      ],
+      "sha256": "7f0d0a5b94da4b19f47ab1494003b7e517cb9ee85fdb8fe51b7e87e5819b4b9e"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        43,
+        44,
+        200,
+        222
+      ],
+      "sha256": "a2eff4715c194dc430ec7ac5fc99b71aacd765776da5c863cd2805fc3af55901"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        24,
+        16,
+        228,
+        227
+      ],
+      "sha256": "2158dc313e1110ba524aac55c25720b99f967a4d879bca6ba5d025c9ed319931"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        48,
+        47,
+        202,
+        222
+      ],
+      "sha256": "cd2f8236a912996e4834fec28423e4fb6f4e9816599076e8eafe8992c55ec890"
+    }
+  ]
+}

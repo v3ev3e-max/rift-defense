@@ -1,0 +1,123 @@
+{
+  "owner": "machine_god",
+  "source": "art-source\\monster-actions-v2\\machine_god-v2.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\machine_god\\attack\\frame_01.webp",
+      "bbox": [
+        57,
+        83,
+        199,
+        224
+      ],
+      "sha256": "bf2aab48b7a89b335b398077fee880e7bcdb4abc0cec0a1bf71c7fe237a09df2"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\machine_god\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        85,
+        224,
+        224
+      ],
+      "sha256": "c0b68612c3d079963eccf8b8c3ef2fee11487f191bf89c71d394f3ff6b841f7e"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\machine_god\\attack\\frame_03.webp",
+      "bbox": [
+        59,
+        86,
+        197,
+        224
+      ],
+      "sha256": "5a3fde094716d03ef7999ea0a5e80ada418c60d46f71881937234aa99d759e4c"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\machine_god\\hit\\frame_01.webp",
+      "bbox": [
+        57,
+        77,
+        198,
+        224
+      ],
+      "sha256": "2d68caa1181f66a64fe5061bab3a895a2d45bc658d9117c9b239d85f6cecf582"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\machine_god\\hit\\frame_02.webp",
+      "bbox": [
+        51,
+        92,
+        204,
+        224
+      ],
+      "sha256": "49a1cae90134d4e49a62cb4ffda0ad88aeab318f2de589a08fa6efc0d983e241"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\machine_god\\hit\\frame_03.webp",
+      "bbox": [
+        60,
+        87,
+        195,
+        224
+      ],
+      "sha256": "c717c9f4a2801d0f62e29996c2aecf6caac7069c5df3a48f1abe7db89612a184"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\machine_god\\death\\frame_01.webp",
+      "bbox": [
+        53,
+        79,
+        203,
+        224
+      ],
+      "sha256": "cff16e4e176da6dac43561595a47cb971bcdc08348af46ad5d31364f8faa80a3"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\machine_god\\death\\frame_02.webp",
+      "bbox": [
+        41,
+        127,
+        214,
+        224
+      ],
+      "sha256": "af06aa9e0c631935e0039f3605f0a3aabf4dea8fd616b1d882eebbac7448500c"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\machine_god\\death\\frame_03.webp",
+      "bbox": [
+        49,
+        146,
+        207,
+        224
+      ],
+      "sha256": "10c9766ae42038dd42a40ffea1e9384e532423188ada1b065b90d11525aed70d"
+    }
+  ]
+}

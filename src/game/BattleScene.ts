@@ -11,27 +11,16 @@ import { baseEffectCap } from "../utils/performance";
 import { reactionColors,reactionNames } from "../systems/ElementSystem";
 import { ATTACK_SECONDS, visualFrame, heroVisuals, fitVisual } from './VisualRules';
 import { enemyMotion, enemyMoveFrameCount } from './EnemyMotion';
+import {originMonsterActions,monsterActionFrame} from './MonsterAnimations';
+import {monsterActionOwner,monsterActionPath} from './MonsterActionAssets';
+import {monsterFallbackArt} from './MonsterFallbackArt';
 import {campaignEnemyIds,campaignLaneAsset,campaignRegion} from '../data/campaign';
 import {formationRole} from '../data/combatRoles';
 import {heroAuras} from './SkillVisuals';
-const regionalEnemyArt:Record<number,Set<string>>={
-  1:new Set(['crawler']),
-  2:new Set(['crawler','runner']),
-  3:new Set(['crawler','runner','sprinter']),
-  4:new Set(['armored','brute','crawler','ravager','sprinter']),
-  5:new Set(['armored','crawler','jammer']),
-  6:new Set(['armored','brute','jammer','runner']),
-  7:new Set(['bulwark','jammer','phantom','sprinter']),
-  8:new Set(['abyssal','armored','bulwark','elite','jammer','phantom']),
-  9:new Set(['sky_guard','sky_lancer','cloud_gunner','aether_mender','named_sky','storm_wyvern','sky_dominion']),
-  10:new Set(['relic_golem','dune_ripper','sun_archer','mirage_oracle','named_dune','sand_colossus','solar_sphinx']),
-  11:new Set(['alloy_guard','gear_hound','pulse_turret','repair_weaver','named_machine','forge_overseer','machine_god']),
-  12:new Set(['paradox_shell','chrono_stalker','epoch_caster','time_mender','named_time','chrono_reaper','aeon_sovereign']),
-  13:new Set(['crystal_bastion','tide_skimmer','prism_cannon','coral_singer']),
-  14:new Set(['lunar_husk','spore_leaper','moon_ray','bloom_keeper']),
-  15:new Set(['stellar_plate','plasma_hound','nova_turret','forge_conductor']),
-  16:new Set(['origin_warden','causal_blade','genesis_eye','fate_weaver']),
-};
+import {ownedSkillImpactPaths} from './OwnedSkillFrames';
+import {enemyVisualContext} from './RegionalEnemyArt';
+import {classicEnemyIds} from '../data/waves';
+import {heroAttackFrameCount,heroAttackFramePath,normalizedSdHeroOwners} from './HeroActionAssets';
 export class BattleScene extends Phaser.Scene {
   model: BattleModel;
   ground!: Phaser.GameObjects.Graphics;
@@ -50,6 +39,7 @@ export class BattleScene extends Phaser.Scene {
   enemyStepSprites: Phaser.GameObjects.Image[] = [];
   enemyVisualHp: number[] = [];
   enemyVisualGeneration: number[] = [];
+  enemyVisualProgress: number[] = [];
   enemyHitUntil: number[] = [];
   enemyNextHitFlash: number[] = [];
   enemyStatusSprites: Phaser.GameObjects.Image[] = [];
@@ -85,6 +75,7 @@ export class BattleScene extends Phaser.Scene {
   campaignArea = 0;
   regionalEnemyVisuals = new Set<string>();
   enemyMoveFrames:Record<string,number>={};
+  enemyActionOwners:Record<string,string|undefined>={};
   initialEnemyKey='enemy-crawler';
   perfElapsed = 0;
   perfFrames = 0;
@@ -111,12 +102,13 @@ export class BattleScene extends Phaser.Scene {
     for(let frame=1;frame<=3;frame++)this.load.image(`hero-${id}-defeat-${frame}`,assetUrl(`/assets/generated/hero-defeat/${id}/frame_${String(frame).padStart(2,'0')}.webp`));
     for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-up-${frame}`,assetUrl(`/assets/combat/${id}/up6_${String(frame).padStart(2,"0")}.png`));
     for(let frame=1;frame<=6;frame++)this.load.image(`hero-${id}-skill-${frame}`,assetUrl(`/assets/combat/${id}/skill_${String(frame).padStart(2,"0")}.png`));
-    for(let frame=1;frame<=8;frame++)this.load.image(`hero-${id}-anim-${frame}`,assetUrl(`/assets/combat/${id}/frame_${String(frame).padStart(2,"0")}.png`));
+    for(let frame=1;frame<=heroAttackFrameCount;frame++)this.load.image(`hero-${id}-authored-attack-${frame}`,assetUrl(heroAttackFramePath(id,frame)));
     for(let frame=1;frame<=3;frame++){
       this.load.image(`fx-${id}-projectile-${frame}`,assetUrl(`/assets/effects/${id}/projectile_${String(frame).padStart(2,'0')}.png`));
       this.load.image(`fx-${id}-impact-${frame}`,assetUrl(`/assets/effects/${id}/impact_${String(frame).padStart(2,'0')}.png`));
     }
     this.load.image(`fx-${id}-skill`,assetUrl(`/assets/effects/${id}/skill.png`));
+    ownedSkillImpactPaths(id).forEach((path,i)=>this.load.image(`fx-${id}-skill-impact-${i+1}`,assetUrl(path)));
     if(id==='yuria')this.load.image('fx-yuria-barrier',assetUrl('/assets/effects/yuria/barrier.png'));
     if(['yuria','mia','leon','neris','livia','hana','gaia','astra','rhea','echo','meriel','selene','ophilia','minseo','daeun','freya','valen','eir'].includes(id))
       for(let frame=1;frame<=4;frame++)this.load.image(`support-skill-${id}-${frame}`,assetUrl(`/assets/generated/support-skills/${id}/frame_${String(frame).padStart(2,'0')}.webp`));
@@ -143,24 +135,36 @@ export class BattleScene extends Phaser.Scene {
     if(campaignArea)this.load.image('campaign-lane',assetUrl(campaignLaneAsset(campaignArea)));
     const campaignIds=this.model.campaign?campaignEnemyIds(this.model.campaign):new Set<string>();
     const activeEnemyDefs=Object.values(enemies).filter(def=>
-      !this.model.campaign||campaignIds.has(def.id)
+      this.model.campaign?campaignIds.has(def.id):classicEnemyIds.has(def.id)
     );
     this.initialEnemyKey=`enemy-${activeEnemyDefs[0]?.id??'crawler'}`;
     for (const def of activeEnemyDefs){
-      const visualId=def.visualId??def.id;
+      const {visualId,artArea,regional}=enemyVisualContext(def,campaignArea,campaignIds.has(def.id));
       // Regions 13-16 own new regular-enemy art. Their named/boss entries keep
       // the previous signature art until dedicated replacements are authored.
-      const artArea=campaignArea>12&&def.visualId?campaignArea-4:visualArea;
-      const regional=campaignArea>0&&campaignIds.has(def.id)&&regionalEnemyArt[artArea]?.has(visualId);
       if(regional)this.regionalEnemyVisuals.add(def.id);
       const folder=`/assets/generated/campaign-enemies/map-${String(artArea).padStart(2,'0')}`;
-      this.load.image(`enemy-${def.id}`, assetUrl(regional&&visualId!=="elite"?`${folder}/${visualId}.webp`:`/assets/generated/enemies/${visualId}.webp`));
-      const moveCount=enemyMoveFrameCount(!!def.boss,!!regional);
+      const fallback=!regional?monsterFallbackArt[visualId]:undefined;
+      this.load.image(`enemy-${def.id}`, assetUrl(regional&&visualId!=="elite"?`${folder}/${visualId}.webp`:fallback?.base??`/assets/generated/enemies/${visualId}.webp`));
+      const moveCount=fallback?.frames??enemyMoveFrameCount(!!def.boss,!!regional);
       this.enemyMoveFrames[def.id]=moveCount;
-      for(let frame=1;frame<=moveCount;frame++)this.load.image(`enemy-${def.id}-move-${frame}`,assetUrl(regional&&visualId!=="elite"?`${folder}/${visualId}/move/move_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemy-motion/${visualId}/move_${String(frame).padStart(2,'0')}.webp`));
+      for(let frame=1;frame<=moveCount;frame++)this.load.image(`enemy-${def.id}-move-${frame}`,assetUrl(regional&&visualId!=="elite"?`${folder}/${visualId}/move/move_${String(frame).padStart(2,'0')}.webp`:fallback?`${fallback.moveFolder}/move_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemy-motion/${visualId}/move_${String(frame).padStart(2,'0')}.webp`));
       if(regional)for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-death-${frame}`,assetUrl(visualId!=="elite"?`${folder}/${visualId}/death/frame_${String(frame).padStart(2,'0')}.webp`:`/assets/generated/enemies/${visualId}.webp`));
       if(visualArea===4&&visualId==='brute')for(let frame=1;frame<=6;frame++)this.load.image(`enemy-${def.id}-attack-${frame}`,assetUrl(`${folder}/${visualId}/attack/frame_${String(frame).padStart(2,'0')}.png`));
-      if(def.ranged&&regional)for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-fire-${frame}`,assetUrl(`${folder}/${def.id}/fire/frame_${String(frame).padStart(2,'0')}.webp`));
+      if(originMonsterActions[def.id]){
+        const actionFolder=`/assets/generated/campaign-enemies/map-${originMonsterActions[def.id]}/${def.id}`;
+        for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-attack-${frame}`,assetUrl(`${actionFolder}/attack/frame_${String(frame).padStart(2,'0')}.webp`));
+        this.load.image(`enemy-${def.id}-hit`,assetUrl(`${actionFolder}/hit/frame_01.webp`));
+      }
+      if(def.ranged&&(regional||fallback?.fireFolder))for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-fire-${frame}`,assetUrl(`${regional?`${folder}/${visualId}/fire`:fallback!.fireFolder}/frame_${String(frame).padStart(2,'0')}.webp`));
+      if(def.support){
+        const supportFolder=originMonsterActions[def.id]?`/assets/generated/campaign-enemies/map-${originMonsterActions[def.id]}/${def.id}/attack`:regional?`${folder}/${visualId}/fire`:fallback?.fireFolder;
+        if(supportFolder)for(let frame=1;frame<=3;frame++)this.load.image(`enemy-${def.id}-support-${frame}`,assetUrl(`${supportFolder}/frame_${String(frame).padStart(2,'0')}.webp`));
+      }
+      const actionOwner=monsterActionOwner(def.id,def.visualId,artArea,!!regional&&visualId!=='elite');
+      this.enemyActionOwners[def.id]=actionOwner;
+      if(actionOwner)for(const state of ['attack','hit','death'] as const)for(let frame=1;frame<=3;frame++)
+        this.load.image(`enemy-${def.id}-owned-${state}-${frame}`,assetUrl(monsterActionPath(actionOwner,state,frame)));
     }
     for(const element of ['water','fire','electric','dark'])for(let frame=1;frame<=4;frame++)
       this.load.image(`transfer-${element}-${frame}`,assetUrl(`/assets/generated/element-transfers/${element}_${String(frame).padStart(2,'0')}.webp`));
@@ -658,7 +662,7 @@ export class BattleScene extends Phaser.Scene {
       defeatCooldown.setVisible(false);
       const animatedHero =
         this.activeHeroIds.has(u.heroId) &&
-        this.textures.exists(`hero-${u.heroId}-anim-1`);
+        this.textures.exists(`hero-${u.heroId}-authored-attack-1`);
       // Real 12FPS attack animation: heroes stay on frame 1 while idle and only
       // run eight frames at 12FPS when a basic/drone shot actually happens.
       // This avoids permanently cycling textures and cuts render work on mobile.
@@ -717,15 +721,18 @@ export class BattleScene extends Phaser.Scene {
       const heroAnimFrame = attacking
         ? visualFrame(attackElapsed)
         : 1;
-      const north = !!u.facingUp && this.textures.exists(`hero-${u.heroId}-up-1`);
+      const normalizedSd=normalizedSdHeroOwners.has(u.heroId);
+      const north = !normalizedSd && !!u.facingUp && this.textures.exists(`hero-${u.heroId}-up-1`);
       const upFrame = attacking ? [1,2,3,4,5,6,6,1][heroAnimFrame-1] : 1;
       const skillElapsed=m.time-(u.skillCastAt??-999),skillCasting=m.started&&skillElapsed>=0&&skillElapsed<.9&&u.hp>0;
       const skillFrame=Math.min(6,Math.floor(skillElapsed/.15)+1);
       const visualPose=heroVisualPose(attacking,skillCasting,north);
       // Idle means a truly still stance. frame_02/03 contain transitional limb
       // movement in several legacy sheets and read as repeated attacks.
-      const textureKey = visualPose==='skill' ? `hero-${u.heroId}-skill-${skillFrame}` : visualPose==='idle' ? `hero-${u.heroId}-idle-1` : visualPose==='up' ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
-        ? `hero-${u.heroId}-anim-${heroAnimFrame}`
+      const textureKey = normalizedSd
+        ? `hero-${u.heroId}-authored-attack-${visualPose==='idle'?1:visualPose==='skill'?Math.min(7,skillFrame+1):heroAnimFrame}`
+        : visualPose==='skill' ? `hero-${u.heroId}-skill-${skillFrame}` : visualPose==='idle' ? `hero-${u.heroId}-idle-1` : visualPose==='up' ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
+        ? `hero-${u.heroId}-authored-attack-${heroAnimFrame}`
         : heroById[u.heroId].asset.key;
       sp.setVisible(true);
       if (sp.texture.key !== textureKey)
@@ -777,13 +784,21 @@ export class BattleScene extends Phaser.Scene {
       const enemySize=boss ? 126 : (enemies[e.kind].armor ? 76 : 68);
       const ahead={x:e.x,y:e.y};
       const route=e.route&&m.campaign?.alternate?m.campaign.alternate:m.map;route.pathPoint(Math.min(route.pathLength,e.progress+4),ahead);
-      const motion=enemyMotion(this.visualTime,e.index,e.speed,boss,ahead.x-e.x,ahead.y-e.y);
+      const moving=this.enemyVisualGeneration[e.index]===(e.generation??e.index)&&Math.abs(e.progress-(this.enemyVisualProgress[e.index]??e.progress))>.0001;
+      this.enemyVisualProgress[e.index]=e.progress;
+      const motion=enemyMotion(this.visualTime,e.index,e.speed,boss,moving?ahead.x-e.x:0,moving?ahead.y-e.y:0);
       const bodyCount=this.enemyMoveFrames[e.kind]??enemyMoveFrameCount(boss,false),bodyCadence=Math.max(3,Math.min(9,e.speed/9))*(boss?.65:1),bodyFrame=1+Math.floor((this.visualTime*bodyCadence+e.index*.41)%bodyCount);
       const firing=!!enemies[e.kind].ranged&&e.rangedFiredAt!==undefined&&m.time-e.rangedFiredAt<.32;
       const fireFrame=firing?Math.min(3,Math.floor((m.time-e.rangedFiredAt!)/.32*3)+1):0;
-      const meleeElapsed=m.time-(e.meleeAttackedAt??-999),meleeAttacking=meleeElapsed>=0&&meleeElapsed<.66;
-      const meleeFrame=meleeAttacking?Math.min(6,Math.floor(meleeElapsed/.11)+1):0;
-      const requestedTexture=firing?`enemy-${e.kind}-fire-${fireFrame}`:meleeAttacking&&this.textureReady(`enemy-${e.kind}-attack-${meleeFrame}`)?`enemy-${e.kind}-attack-${meleeFrame}`:`enemy-${e.kind}-move-${bodyFrame}`;
+      const ownedV2=!!this.enemyActionOwners[e.kind];
+      const ownedAction=ownedV2||!!originMonsterActions[e.kind];
+      const eventAt=ownedAction?Math.max(e.meleeAttackedAt??-999,e.rangedFiredAt??-999,e.abilityCastAt??-999):e.meleeAttackedAt;
+      const meleeFrame=monsterActionFrame(m.time,eventAt,.66,ownedAction?3:6);
+      const attackKey=ownedV2?`enemy-${e.kind}-owned-attack-${meleeFrame}`:`enemy-${e.kind}-attack-${meleeFrame}`;
+      const attacking=meleeFrame>0&&this.textureReady(attackKey);
+      const supportFrame=enemies[e.kind].support?monsterActionFrame(m.time,e.abilityCastAt,.66,3):0;
+      const supportKey=`enemy-${e.kind}-support-${supportFrame}`,supporting=supportFrame>0&&this.textureReady(supportKey);
+      const requestedTexture=supporting?supportKey:attacking?attackKey:firing?`enemy-${e.kind}-fire-${fireFrame}`:`enemy-${e.kind}-move-${moving?bodyFrame:1}`;
       const staticTexture=`enemy-${e.kind}`;
       const enemyTexture=this.textureReady(requestedTexture)?requestedTexture:this.textureReady(staticTexture)?staticTexture:this.initialEnemyKey;
       if(sp.texture.key!==enemyTexture)sp.setTexture(enemyTexture);
@@ -794,11 +809,17 @@ export class BattleScene extends Phaser.Scene {
         this.enemyHitUntil[e.index]=0;
         this.enemyNextHitFlash[e.index]=0;
       }else if(e.hp<this.enemyVisualHp[e.index]&&this.visualTime>=(this.enemyNextHitFlash[e.index]??0)){
-        this.enemyHitUntil[e.index]=this.visualTime+.055;
+        this.enemyHitUntil[e.index]=this.visualTime+(ownedV2?.3:ownedAction?.18:.055);
         this.enemyNextHitFlash[e.index]=this.visualTime+.28;
       }
       this.enemyVisualHp[e.index]=e.hp;
       const hit=this.visualTime<this.enemyHitUntil[e.index];
+      if(hit&&ownedV2&&!attacking&&!supporting){
+        const hitFrame=Math.min(3,1+Math.floor(Math.max(0,.3-(this.enemyHitUntil[e.index]-this.visualTime))/.3*3));
+        const hitKey=`enemy-${e.kind}-owned-hit-${hitFrame}`;
+        if(this.textureReady(hitKey))sp.setTexture(hitKey);
+      }else if(hit&&!ownedV2&&ownedAction&&this.textureReady(`enemy-${e.kind}-hit`))sp.setTexture(`enemy-${e.kind}-hit`);
+      if(!moving||attacking||supporting||hit){motion.angle=0;motion.scaleX=1;motion.scaleY=1;motion.lift=0;motion.stepAlpha=0;}
       const dirLength=Math.max(1,Math.hypot(ahead.x-e.x,ahead.y-e.y));
       const recoil=hit?(boss?2:3):0;
       const renderX=e.x-(ahead.x-e.x)/dirLength*recoil;
@@ -1008,9 +1029,12 @@ export class BattleScene extends Phaser.Scene {
       }
       if(f.visual?.startsWith('enemy-death-')&&fxSpriteIndex<this.fxSprites.length){
         const sp=this.fxSprites[fxSpriteIndex++],kind=f.visual.slice('enemy-death-'.length),size=enemies[kind]?.boss?126:enemies[kind]?.armor?76:68,frame=Math.min(3,Math.floor(progress*3)+1);
-        const requested=this.regionalEnemyVisuals.has(kind)?`enemy-${kind}-death-${frame}`:`enemy-${kind}`;
+        const requested=this.enemyActionOwners[kind]?`enemy-${kind}-owned-death-${frame}`:this.regionalEnemyVisuals.has(kind)?`enemy-${kind}-death-${frame}`:`enemy-${kind}`;
         const deathKey=this.textureReady(requested)?requested:this.textureReady(`enemy-${kind}`)?`enemy-${kind}`:this.initialEnemyKey;
-        sp.setTexture(deathKey).clearTint().setPosition(f.tx,f.ty-progress*7).setDisplaySize(size,size).setAngle(0).setAlpha(frame===3?Math.max(0,1-progress):1).setDepth(675).setVisible(true);continue;
+        // Match the live enemy's .72 origin using this pooled effect's .5 origin.
+        // Keep grounded deaths anchored instead of lifting the body every frame.
+        const deathRect=fitVisual(f.tx,f.ty-size*.22,size,size,0,MAP);
+        sp.setTexture(deathKey).clearTint().setPosition(deathRect.x,deathRect.y).setDisplaySize(deathRect.width,deathRect.height).setAngle(0).setAlpha(frame===3?Math.max(0,1-progress):1).setDepth(675).setVisible(true);continue;
       }
       if(f.visual?.startsWith('enemy-core-')&&fxSpriteIndex<this.fxSprites.length){const sp=this.fxSprites[fxSpriteIndex++],kind=f.visual.slice('enemy-core-'.length),size=enemies[kind]?.boss?126:enemies[kind]?.armor?76:68,key=this.textureReady(`enemy-${kind}`)?`enemy-${kind}`:this.initialEnemyKey;sp.setTexture(key).setTint(0xffc6b5).setPosition(f.tx-progress*18,f.ty).setDisplaySize(size*(1+progress*.25),size*(1-progress*.18)).setAlpha(1-progress).setDepth(676).setVisible(true);continue;}
       if (f.visual?.startsWith('common-') && fxSpriteIndex < this.fxSprites.length) {
@@ -1044,10 +1068,13 @@ export class BattleScene extends Phaser.Scene {
         } else {
           const barrier = f.visual === "yuria-barrier";
           const skill = f.visual.endsWith("-skill");
+          const ownedImpact=ownedSkillImpactPaths(visualHero);
+          const skillFrame=1+Math.min(ownedImpact.length-1,Math.floor(progress*ownedImpact.length));
+          const skillTexture=ownedImpact.length?`fx-${visualHero}-skill-impact-${skillFrame}`:`fx-${visualHero}-skill`;
           const key = barrier
             ? "fx-yuria-barrier"
             : skill
-              ? `fx-${visualHero}-skill`
+              ? skillTexture
               : `fx-${visualHero}-impact-${frame}`;
           const size = (barrier ? 104 : skill ? Math.max(heroVisuals[visualHero].skill,f.radius??0) : heroVisuals[visualHero].impact) * (skill?.72:.65+progress*(skill?.58:.35));
           const angle = progress * (barrier ? 0.16 : skill ? 0.32 : 0.12);
@@ -1062,13 +1089,15 @@ export class BattleScene extends Phaser.Scene {
             .setDepth(barrier ? 625 : skill ? 677 : 650);
           if(skill&&fxSpriteIndex<this.fxSprites.length){
             const impact=this.fxSprites[fxSpriteIndex++],impactFrame=Math.min(3,Math.floor(progress*3)+1),pulse=(f.radius??110)*(1.05+progress*.65);
-            impact.setTexture(`fx-${visualHero}-skill`).clearTint().setPosition(f.tx,f.ty)
-              .setDisplaySize(pulse*.78,pulse*.78).setRotation(-progress*.22).setAlpha(impactFrame===3?(1-progress)*.5:.56).setDepth(678).setVisible(true);
+            const impactRect=fitVisual(f.tx,f.ty,pulse*.78,pulse*.78,-progress*.22,MAP);
+            impact.setTexture(skillTexture).clearTint().setPosition(impactRect.x,impactRect.y)
+              .setDisplaySize(impactRect.width,impactRect.height).setRotation(-progress*.22).setAlpha(impactFrame===3?(1-progress)*.5:.56).setDepth(678).setVisible(true);
           }
           if(skill&&progress<.58&&fxSpriteIndex<this.fxSprites.length){
             const cast=this.fxSprites[fxSpriteIndex++],castProgress=progress/.58,castSize=46+castProgress*54;
-            cast.setTexture(`fx-${visualHero}-skill`).clearTint().setPosition(f.x,f.y)
-              .setDisplaySize(castSize,castSize).setRotation(castProgress*.28).setAlpha((1-castProgress)*.82).setDepth(676).setVisible(true);
+            const castRect=fitVisual(f.x,f.y,castSize,castSize,castProgress*.28,MAP);
+            cast.setTexture(`fx-${visualHero}-skill`).clearTint().setPosition(castRect.x,castRect.y)
+              .setDisplaySize(castRect.width,castRect.height).setRotation(castProgress*.28).setAlpha((1-castProgress)*.82).setDepth(676).setVisible(true);
           }
         }
         continue;

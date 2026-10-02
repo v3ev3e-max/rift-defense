@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/elise/source-v2.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        43,
+        90,
+        207,
+        224
+      ],
+      "sha256": "56e8db8fc57dacf98b067a45a4a8325c7876423d2d800a7cde952c1b8776ef35"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        35,
+        89,
+        210,
+        224
+      ],
+      "sha256": "3ff2b31e61e27ab3ba5dd2860839a74bf18b125b691115a5ba32fcad5f8da6df"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        30,
+        95,
+        209,
+        224
+      ],
+      "sha256": "8503dd8b15bab1291e52c343e50628a375d4e629c52b633bd294ff8a1b684867"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        20,
+        97,
+        217,
+        225
+      ],
+      "sha256": "3968bfd5bdecf02ffd362bbba7ca4d23287d940497670c1803d6611612966833"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        38,
+        64,
+        243,
+        202
+      ],
+      "sha256": "d2182ba411603a86eb050bee3e70e5afebd62115ddac7d4385066ba1c68420d4"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        69,
+        224,
+        203
+      ],
+      "sha256": "00dd8c7c600a3dbafc57c8c3bdf3b3c3acad019d954bcf64e7542bf3e6bb51bc"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        29,
+        66,
+        207,
+        203
+      ],
+      "sha256": "5395377e6c82ddc9835ca2bfc59dab3804894a41d95fea1ac61c724567d8a552"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        31,
+        62,
+        210,
+        203
+      ],
+      "sha256": "3550adc78b5fe9def403f6c386ff20f496b220dfeecc8d5377767e057f5b3f7d"
+    }
+  ]
+}

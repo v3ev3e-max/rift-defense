@@ -1,0 +1,123 @@
+{
+  "owner": "relic_golem",
+  "source": "art-source\\monster-actions-v2\\relic_golem-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\relic_golem\\attack\\frame_01.webp",
+      "bbox": [
+        43,
+        81,
+        212,
+        224
+      ],
+      "sha256": "8650361f7f8c38169b10bbd60c3526a5c40921759989ac649570151714d29a30"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\relic_golem\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        98,
+        224,
+        224
+      ],
+      "sha256": "0f9ee9031da4e20c77f4424c090002f1836697b270e3ea571dede4640cb80483"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\relic_golem\\attack\\frame_03.webp",
+      "bbox": [
+        51,
+        83,
+        204,
+        224
+      ],
+      "sha256": "602b5ee60113d07970618e4ad4714659a3b54463f63a4380e2760edea5bd1998"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\relic_golem\\hit\\frame_01.webp",
+      "bbox": [
+        49,
+        77,
+        207,
+        224
+      ],
+      "sha256": "b1f5f56eac52e25b89af6015a5522b8e97e877f35eca2c4ccc77d4eac0c43130"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\relic_golem\\hit\\frame_02.webp",
+      "bbox": [
+        46,
+        79,
+        209,
+        224
+      ],
+      "sha256": "a2500a6171b3e1534db61e432c71d55cb24fb94792640f7f8229fae705f3571a"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\relic_golem\\hit\\frame_03.webp",
+      "bbox": [
+        49,
+        90,
+        207,
+        224
+      ],
+      "sha256": "4c4c9a702238c91531e586e596ee64036e4d6a0aefe94df02a0a2a80f3185e7f"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\relic_golem\\death\\frame_01.webp",
+      "bbox": [
+        52,
+        86,
+        203,
+        224
+      ],
+      "sha256": "848f7c9be4518ab426084210619869f6c5a48eb90680815c6dd76ba6427aa451"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\relic_golem\\death\\frame_02.webp",
+      "bbox": [
+        38,
+        99,
+        217,
+        224
+      ],
+      "sha256": "9f5a6d4a3363dc7aeac51f252ba363781de6e17b19eb4ed11a9e99e5e1baff55"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\relic_golem\\death\\frame_03.webp",
+      "bbox": [
+        42,
+        119,
+        213,
+        224
+      ],
+      "sha256": "f71c0390dd2a0410aa3cbec8be625099f83e10b8035612a2fcbf6abdc64b7044"
+    }
+  ]
+}

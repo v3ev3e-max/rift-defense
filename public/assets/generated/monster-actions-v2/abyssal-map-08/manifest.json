@@ -1,0 +1,123 @@
+{
+  "owner": "abyssal-map-08",
+  "source": "art-source\\monster-actions-v2\\abyssal-map-08-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\abyssal-map-08\\attack\\frame_01.webp",
+      "bbox": [
+        42,
+        57,
+        214,
+        224
+      ],
+      "sha256": "449eb4afd930f688a9b6c9446dfdca0b1c8c994af2bbf9fcc2ff3560b90f3243"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\abyssal-map-08\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        61,
+        224,
+        224
+      ],
+      "sha256": "17c0e3a456b2058f3f4e4bd0285dda59c69401a5d92bb64c4cf5644d6610b6aa"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\abyssal-map-08\\attack\\frame_03.webp",
+      "bbox": [
+        43,
+        68,
+        213,
+        224
+      ],
+      "sha256": "5ffa8fb32984fb24d5f5a58b80457fc3b7ce95191975855fd90e0f4af2c4e078"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\abyssal-map-08\\hit\\frame_01.webp",
+      "bbox": [
+        40,
+        78,
+        216,
+        224
+      ],
+      "sha256": "f473e73a2d7c736cd62e1ae4bdf6a74cdcf529da16623437f5166958193c2d34"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\abyssal-map-08\\hit\\frame_02.webp",
+      "bbox": [
+        38,
+        69,
+        218,
+        224
+      ],
+      "sha256": "689f2eb7dd7d573e8cb8a56336d3ccdd40a7132923e0bc249a362b166ebaa7ae"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\abyssal-map-08\\hit\\frame_03.webp",
+      "bbox": [
+        45,
+        68,
+        211,
+        224
+      ],
+      "sha256": "6cb39c7675b8f944edd488c6b4146875f65c6a9bacbb621049033f05352a6d90"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\abyssal-map-08\\death\\frame_01.webp",
+      "bbox": [
+        50,
+        69,
+        206,
+        224
+      ],
+      "sha256": "fb2cbeb45a29d75a7d31be3c50ec0a3a6b57b3625995fa2f960d3544643337c3"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\abyssal-map-08\\death\\frame_02.webp",
+      "bbox": [
+        38,
+        87,
+        218,
+        224
+      ],
+      "sha256": "2eb32ea2e7839074c4ebdce75666384e21793f0f046c5b42152b964e85079ae1"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\abyssal-map-08\\death\\frame_03.webp",
+      "bbox": [
+        39,
+        113,
+        217,
+        224
+      ],
+      "sha256": "689b910451f931003b46edb8f31a3da3a45702f727d0a3dc0ccde73e46cc7f41"
+    }
+  ]
+}

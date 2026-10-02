@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/reina/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        40,
+        60,
+        202,
+        233
+      ],
+      "sha256": "198c42ae385ff1fd445bf35be78fcf8f86c2ca7bfd1d194eebfe75994c245f2d"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        29,
+        50,
+        204,
+        233
+      ],
+      "sha256": "bbd33213ea77cb42a40c71ce444b4b060662a2ece276a2c024f4163241d2def0"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        26,
+        71,
+        237,
+        233
+      ],
+      "sha256": "e8423cdeaeca20d7d3dc2e8d0a1f1079a5ddf7589c0c79a406c0e8736fd5b561"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        33,
+        59,
+        238,
+        233
+      ],
+      "sha256": "38f5384fc309e14d4fd8672d7581590b5e9911f3b5a92b6233560e4a6c755bb8"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        19,
+        47,
+        243,
+        214
+      ],
+      "sha256": "046a5eb24592e21de76a1b351bfbd93bfa748b578608bb2b5bbf271c56be1572"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        51,
+        243,
+        214
+      ],
+      "sha256": "8489a8aff025c1bd288be95836ec56c895ad57189a47b2e056bb3751c58cc178"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        44,
+        51,
+        231,
+        215
+      ],
+      "sha256": "63d6b2e251e90a66bda6036ae5afe4228ae784045552183b23fffcdeb2da2dc7"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        42,
+        50,
+        206,
+        215
+      ],
+      "sha256": "d9cb2d053797fe5d6990ef26ccd4d68353ea1f847ecb6c3c11a096f00c848503"
+    }
+  ]
+}

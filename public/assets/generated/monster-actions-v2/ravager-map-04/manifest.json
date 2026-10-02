@@ -1,0 +1,123 @@
+{
+  "owner": "ravager-map-04",
+  "source": "art-source\\monster-actions-v2\\ravager-map-04-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ravager-map-04\\attack\\frame_01.webp",
+      "bbox": [
+        45,
+        72,
+        211,
+        224
+      ],
+      "sha256": "5f71eab91a3df1c616484b3d942ed1d33b7ec29c5ffe9ad8fa18e8b9234c98c5"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ravager-map-04\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        73,
+        224,
+        224
+      ],
+      "sha256": "630be7e64f4a276a96e4e2c591081a8659fccc6baca3cefded761077d0759e8c"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ravager-map-04\\attack\\frame_03.webp",
+      "bbox": [
+        57,
+        73,
+        203,
+        224
+      ],
+      "sha256": "441c2ca574ab1de65d92055f3c8207eafbd6235d0d4f36988735a933161e474f"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ravager-map-04\\hit\\frame_01.webp",
+      "bbox": [
+        50,
+        66,
+        205,
+        224
+      ],
+      "sha256": "85f3dfe6b49568d0fb9e91a6ece9f2c83ed54f9865fba350bd3979fa03123321"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ravager-map-04\\hit\\frame_02.webp",
+      "bbox": [
+        44,
+        59,
+        211,
+        224
+      ],
+      "sha256": "41baf91640c97c119b42937a7eb0f9349c5f669907431c1627b842c464f888f3"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ravager-map-04\\hit\\frame_03.webp",
+      "bbox": [
+        53,
+        70,
+        203,
+        224
+      ],
+      "sha256": "1eab872eee0192dd110f0709ac5c356d0f7e5df77216980cdbb7c9ff8e7d73c4"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ravager-map-04\\death\\frame_01.webp",
+      "bbox": [
+        54,
+        73,
+        201,
+        224
+      ],
+      "sha256": "9dcef52280c44485894f9220824383e45b2d17256c0b073133e667d4ba5f3db8"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ravager-map-04\\death\\frame_02.webp",
+      "bbox": [
+        32,
+        91,
+        223,
+        224
+      ],
+      "sha256": "6b474ef6b7b4bf3adf0d4b808a577bc8e986e9519c56c553e3b3d23cd760eb49"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ravager-map-04\\death\\frame_03.webp",
+      "bbox": [
+        43,
+        119,
+        212,
+        224
+      ],
+      "sha256": "475b8974851ac073088d40d296382519053614844850292a128a1202204ff9c4"
+    }
+  ]
+}

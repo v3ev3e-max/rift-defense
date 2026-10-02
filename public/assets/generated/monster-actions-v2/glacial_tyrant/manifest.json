@@ -1,0 +1,123 @@
+{
+  "owner": "glacial_tyrant",
+  "source": "art-source\\monster-actions-v2\\glacial_tyrant-v2.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\glacial_tyrant\\attack\\frame_01.webp",
+      "bbox": [
+        54,
+        77,
+        201,
+        224
+      ],
+      "sha256": "3351e583a582a2da97218418a3cc4b05cf9f3e9152d068494dfb86699a583385"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\glacial_tyrant\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        91,
+        224,
+        224
+      ],
+      "sha256": "62363c26ffe513bb5cfcfe5b71614000068ce7f7fb8cc4b4edb66953bc8cc1b5"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\glacial_tyrant\\attack\\frame_03.webp",
+      "bbox": [
+        58,
+        88,
+        197,
+        224
+      ],
+      "sha256": "fd29052fa35dd2e26286d7eaf4608df74a7c3381c48f529d7f3a526e9076a332"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\glacial_tyrant\\hit\\frame_01.webp",
+      "bbox": [
+        49,
+        85,
+        207,
+        224
+      ],
+      "sha256": "0033431ac62b58b83c70c4c9864236f674c60a224e88a6f5850e02c309384a88"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\glacial_tyrant\\hit\\frame_02.webp",
+      "bbox": [
+        44,
+        91,
+        211,
+        224
+      ],
+      "sha256": "5579d3894abe97e4e3bc202a31d844e05fc90ec5f35c8122a883b4a2caf27242"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\glacial_tyrant\\hit\\frame_03.webp",
+      "bbox": [
+        58,
+        86,
+        197,
+        224
+      ],
+      "sha256": "3a34a229fc5219b79ab8865f92da235a188cc4dc88037b7459b78e661ace468c"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\glacial_tyrant\\death\\frame_01.webp",
+      "bbox": [
+        51,
+        105,
+        205,
+        224
+      ],
+      "sha256": "89f0dd3c603b6dbd186bc0ab469079ee7fcca93b2aa353d4db31ce9d03298ac4"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\glacial_tyrant\\death\\frame_02.webp",
+      "bbox": [
+        37,
+        144,
+        218,
+        224
+      ],
+      "sha256": "1ea8bd133f3a0d272bbe3f3b1dc51910a5ebde41e4fc1eff1f4063a0e94e926a"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\glacial_tyrant\\death\\frame_03.webp",
+      "bbox": [
+        42,
+        151,
+        213,
+        224
+      ],
+      "sha256": "9ebf9cb4a9b24e70bfa1d4f90d9abebe8e7a06595d3e99c534eab559e11f9566"
+    }
+  ]
+}

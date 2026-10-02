@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/livia/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        52,
+        89,
+        200,
+        235
+      ],
+      "sha256": "da231273793f420e04a17bdd32efc7c9ec0eccc0cf2355159b60de3297359376"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        27,
+        85,
+        231,
+        234
+      ],
+      "sha256": "0ee948dd799c3180b44dc99a291a47e4d70d3851e6b8e4be3bb0dd642c19bdaa"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        23,
+        107,
+        225,
+        235
+      ],
+      "sha256": "06af0ad7bd0c7c313fb115ed04478ccab9d0956aac91ef9ae12dbe2eab5e768d"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        23,
+        74,
+        236,
+        236
+      ],
+      "sha256": "9eb140293d1c1193f9388dc31886b5df97c445ce43cf309b681cad351cd9301a"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        21,
+        39,
+        243,
+        219
+      ],
+      "sha256": "d709cbc4a4e793b2f417e6c8a951a6baecf692163a48fbb2c7e8fd5922ea8555"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        56,
+        243,
+        214
+      ],
+      "sha256": "181df5760657841862a94d9e21556369f6ad9d9ba5da7fc5621b3402eb655b63"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        85,
+        243,
+        216
+      ],
+      "sha256": "79f6ae1c925fcedd100b52b7cc06a3a27bd7c1eda8e27ed6396181d5db396e57"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        13,
+        69,
+        203,
+        217
+      ],
+      "sha256": "53b8dc65768aed59f4a6f8c4806f9263960010a1a34b11fbfe72b5811d4aa2d0"
+    }
+  ]
+}

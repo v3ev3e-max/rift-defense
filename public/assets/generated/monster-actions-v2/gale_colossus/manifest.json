@@ -1,0 +1,123 @@
+{
+  "owner": "gale_colossus",
+  "source": "art-source\\monster-actions-v2\\gale_colossus-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gale_colossus\\attack\\frame_01.webp",
+      "bbox": [
+        45,
+        94,
+        210,
+        224
+      ],
+      "sha256": "4286e71d25c217dff762b9e6b11aa8074d266acbe7a747dbba7913b65aaade84"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gale_colossus\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        92,
+        224,
+        224
+      ],
+      "sha256": "129b6f1d922d8c3fe7d4d5fc08ff3932112f7f9db9ae975a8654505a28a4cd4b"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gale_colossus\\attack\\frame_03.webp",
+      "bbox": [
+        46,
+        92,
+        210,
+        224
+      ],
+      "sha256": "2aa4f635be94b65115938655871053a6a1b6f7d2d4ee7f3930d76d6710f885f3"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gale_colossus\\hit\\frame_01.webp",
+      "bbox": [
+        43,
+        91,
+        213,
+        224
+      ],
+      "sha256": "5c4d097c76a35c3f087abe1204dca26a493f3c8cec7ea003129a49484aa52ccd"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gale_colossus\\hit\\frame_02.webp",
+      "bbox": [
+        37,
+        84,
+        218,
+        224
+      ],
+      "sha256": "d3857aa352a831237e1bfc58828bd1148d5a5000b3e712e3c69295942fd55747"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gale_colossus\\hit\\frame_03.webp",
+      "bbox": [
+        48,
+        93,
+        208,
+        224
+      ],
+      "sha256": "6e8535964bd3044fc5c865f6661996e8a16182c41c01354be0534f0379412493"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gale_colossus\\death\\frame_01.webp",
+      "bbox": [
+        46,
+        87,
+        210,
+        224
+      ],
+      "sha256": "72e8a969de22b7f3e21825996ddb61ab67380b1fe8c9c14777fdd940157aca33"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gale_colossus\\death\\frame_02.webp",
+      "bbox": [
+        38,
+        102,
+        217,
+        224
+      ],
+      "sha256": "0693a22ad1ad13777c69c3debab25b249ab68fd360b7decf484e6ded4ee13c5b"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gale_colossus\\death\\frame_03.webp",
+      "bbox": [
+        40,
+        119,
+        215,
+        224
+      ],
+      "sha256": "06bc08cbb4c7045a4e5233c0e0197d7767496194761470adbfaac4524d3dc981"
+    }
+  ]
+}

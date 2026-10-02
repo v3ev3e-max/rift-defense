@@ -1,0 +1,159 @@
+{
+  "owner": "void-observer",
+  "source": "art-source\\monster-actions-v2\\summon-void-observer.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "move",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\move\\frame_01.webp",
+      "bbox": [
+        53,
+        124,
+        202,
+        224
+      ],
+      "sha256": "62c1fd6cfbf231007159c0158d70ea8760d2a37d6b9d1375decb6a52eb2a94d5"
+    },
+    {
+      "state": "move",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\move\\frame_02.webp",
+      "bbox": [
+        56,
+        125,
+        199,
+        224
+      ],
+      "sha256": "35b5ddb33d89e43eef5b2d11563a18af97ebde7abbe77bd2f732be675aae10c9"
+    },
+    {
+      "state": "move",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\move\\frame_03.webp",
+      "bbox": [
+        51,
+        127,
+        205,
+        224
+      ],
+      "sha256": "adae2f6585e94fe6f99a4f7e1a68078bdcf7d11ace4bf216fb4fed03dc2520bf"
+    },
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\attack\\frame_01.webp",
+      "bbox": [
+        51,
+        122,
+        205,
+        224
+      ],
+      "sha256": "3422efa0c952a7002052139c1f4940616218460c0a42501763bd1228f1632cd3"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        119,
+        224,
+        224
+      ],
+      "sha256": "7466907edd35b6d3de747547c0c367ed470f70693065a219b9e977051c5ab3d9"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\attack\\frame_03.webp",
+      "bbox": [
+        49,
+        125,
+        207,
+        224
+      ],
+      "sha256": "e81f99675891b67b3bc5dac028f42e4241462913531006f7f680a39e90592e04"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\hit\\frame_01.webp",
+      "bbox": [
+        45,
+        120,
+        211,
+        224
+      ],
+      "sha256": "ffc19905a5ffb030cf06c927e565b25549a50e43d51fd04a102e4567e4cfe93c"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\hit\\frame_02.webp",
+      "bbox": [
+        47,
+        123,
+        210,
+        224
+      ],
+      "sha256": "f84245f0b6166e518b241921730e275ed4548a7bd505a624f0a51cc6f097cdd7"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\hit\\frame_03.webp",
+      "bbox": [
+        56,
+        122,
+        199,
+        224
+      ],
+      "sha256": "53193c0d5fcfa1b008facfbf4abb84f775760815dab35b53b4df14ed7246c92e"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\death\\frame_01.webp",
+      "bbox": [
+        59,
+        118,
+        197,
+        224
+      ],
+      "sha256": "c0d8e4c4d5e4e3aa78f0950c81a2e14d0c84b9e9358b0183bc41516ba32413cb"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\death\\frame_02.webp",
+      "bbox": [
+        40,
+        115,
+        216,
+        224
+      ],
+      "sha256": "e02250e89b1d6a7ceabed54aa319a6e15b2381acbc67e4ddf77473336c767e47"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\void-observer\\death\\frame_03.webp",
+      "bbox": [
+        50,
+        120,
+        205,
+        224
+      ],
+      "sha256": "df793b38ba7766bdb271d5e38bee089d625eda311fd376b90618d3142c2a7785"
+    }
+  ]
+}

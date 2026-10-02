@@ -1,0 +1,123 @@
+{
+  "owner": "storm_wyvern",
+  "source": "art-source\\monster-actions-v2\\storm_wyvern-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\storm_wyvern\\attack\\frame_01.webp",
+      "bbox": [
+        42,
+        72,
+        213,
+        224
+      ],
+      "sha256": "c19f2146d960db3a3e5bfb3b2e970215068d0e96490df1cedd26b66f372c42d4"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\storm_wyvern\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        83,
+        224,
+        224
+      ],
+      "sha256": "bcd53941d00c89242d5318bced0c7f9d8f18ed7179b15c0065e6dc4cec152852"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\storm_wyvern\\attack\\frame_03.webp",
+      "bbox": [
+        45,
+        72,
+        210,
+        224
+      ],
+      "sha256": "c9a0fce47bcd26abb60bed0a946a8c89cd17391c905aa415cc244319acaec08f"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\storm_wyvern\\hit\\frame_01.webp",
+      "bbox": [
+        45,
+        79,
+        211,
+        224
+      ],
+      "sha256": "e953dc96228cfbb68d99a9eebcba197f32343220103c5739494413c0925d76a3"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\storm_wyvern\\hit\\frame_02.webp",
+      "bbox": [
+        46,
+        91,
+        209,
+        224
+      ],
+      "sha256": "53d8d7f69500cdeedf014502f51a521e392750ee2f34fffa403045be5e320b0c"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\storm_wyvern\\hit\\frame_03.webp",
+      "bbox": [
+        49,
+        79,
+        207,
+        224
+      ],
+      "sha256": "660318ac7d9768b040d261eace4458eace68e31b5e6d82ccce35157cafa76c60"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\storm_wyvern\\death\\frame_01.webp",
+      "bbox": [
+        44,
+        79,
+        212,
+        224
+      ],
+      "sha256": "b670d079e854ef072f96bf4d338631dd4c274e8a27c5d3ac60e3c0c2953710e0"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\storm_wyvern\\death\\frame_02.webp",
+      "bbox": [
+        34,
+        126,
+        222,
+        224
+      ],
+      "sha256": "28c54ef845fa4fa4160e0ebefb285d17fb2bda2a9643911e3f44aa6bba3c0aba"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\storm_wyvern\\death\\frame_03.webp",
+      "bbox": [
+        36,
+        143,
+        220,
+        224
+      ],
+      "sha256": "1c6d1fc71d98f9e6fd46b8e1421c432b401ae4708278b0c2ed3ece3c5c16edef"
+    }
+  ]
+}

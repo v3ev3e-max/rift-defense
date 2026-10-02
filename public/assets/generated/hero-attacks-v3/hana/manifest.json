@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/hana/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        42,
+        77,
+        208,
+        225
+      ],
+      "sha256": "dec4dae23ae8f1abd178d87011f213f5eb7d62674c624b27f5a13633e3ab82ac"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        23,
+        48,
+        242,
+        226
+      ],
+      "sha256": "53137c37c3a210bbabdcc2570a79bbf8dff421a35b82f71eab3160112bc44439"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        30,
+        98,
+        237,
+        226
+      ],
+      "sha256": "aeeec2e7c108ad03fd3b31d33792227e9bbd6fd3ae01d0967d5576d44539b38b"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        35,
+        46,
+        232,
+        227
+      ],
+      "sha256": "ef6728b4c5d105b90c4f01f2996012132da131e927d43b4d700294d0ee848627"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        23,
+        40,
+        243,
+        225
+      ],
+      "sha256": "c3818d05838ac0c6969fbb9a0cf7a16c8652863dd8578b993eb380a8924c7fea"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        35,
+        243,
+        218
+      ],
+      "sha256": "a05b8042dfc3fc6b23a7a1aee19aa7775aea41ba632c2d8812a28402b03ecbb3"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        67,
+        240,
+        218
+      ],
+      "sha256": "045cda557f4a33082e559fd3d8ffb7ae69dc102867456b925c9e1395f0d79931"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        51,
+        73,
+        213,
+        218
+      ],
+      "sha256": "6aa51d6594b8d1cdd5ecf0b0a2d06ce4ddc6d3a2de577caf0e515901e8c8d20e"
+    }
+  ]
+}

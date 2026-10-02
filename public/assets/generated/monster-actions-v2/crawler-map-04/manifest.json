@@ -1,0 +1,123 @@
+{
+  "owner": "crawler-map-04",
+  "source": "art-source\\monster-actions-v2\\crawler-map-04-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crawler-map-04\\attack\\frame_01.webp",
+      "bbox": [
+        46,
+        111,
+        210,
+        224
+      ],
+      "sha256": "1450f3f1fbab8749b38449777acbb3a67c67788789094111a5912c912c92732f"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crawler-map-04\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        108,
+        224,
+        224
+      ],
+      "sha256": "b7ad0e756db865a9ae136b8a4ac5a9d7546703f7586f20deb10950f66256f3a1"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crawler-map-04\\attack\\frame_03.webp",
+      "bbox": [
+        46,
+        115,
+        210,
+        224
+      ],
+      "sha256": "087bc5b3cd2c0c68726c01c77fb926b9d00b59919ccc3dedc64af32619a2bbc5"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crawler-map-04\\hit\\frame_01.webp",
+      "bbox": [
+        49,
+        102,
+        206,
+        224
+      ],
+      "sha256": "047d1a2dc97f134e16262bdfc87d68b782703c3962bb68f91671692f4a371032"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crawler-map-04\\hit\\frame_02.webp",
+      "bbox": [
+        58,
+        116,
+        197,
+        224
+      ],
+      "sha256": "3f0b409483623c00f1c32f7a0c96794f93f9847bc15d568602cf031fede44f1b"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crawler-map-04\\hit\\frame_03.webp",
+      "bbox": [
+        50,
+        111,
+        205,
+        224
+      ],
+      "sha256": "b2f7288feb9bd699378602029fee539f228571504f5ea9b09c52bb8f15bd821c"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crawler-map-04\\death\\frame_01.webp",
+      "bbox": [
+        46,
+        124,
+        209,
+        224
+      ],
+      "sha256": "7fd5067f2050226833a3b624802f5cca01083bc0c6632793dd975a83d684344d"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crawler-map-04\\death\\frame_02.webp",
+      "bbox": [
+        43,
+        125,
+        212,
+        224
+      ],
+      "sha256": "93b08b69585710df6b1e965ea316d6085c15c89bf05286001fbd9412543db855"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\crawler-map-04\\death\\frame_03.webp",
+      "bbox": [
+        54,
+        147,
+        201,
+        224
+      ],
+      "sha256": "d7a5008fd564a5e04950253fec9b36ec483cdd83f9987916d0720ee9b8a311d2"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "owner": "plasma_hound",
+  "source": "art-source\\monster-actions-v2\\plasma_hound-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\plasma_hound\\attack\\frame_01.webp",
+      "bbox": [
+        46,
+        95,
+        209,
+        224
+      ],
+      "sha256": "f8bb98c5135fca4b18ed8dda84f422121eb0eb89e542996e6f9ba0403b695795"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\plasma_hound\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        99,
+        224,
+        224
+      ],
+      "sha256": "93bd9d1277e68d6c9d786f9e2ccb40b83175ec4d75b1399a93835d19e919a82c"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\plasma_hound\\attack\\frame_03.webp",
+      "bbox": [
+        43,
+        94,
+        212,
+        224
+      ],
+      "sha256": "638e88b90eb8b8251240f19b11d433c76fe622d40d7711326b645f09dae6ed65"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\plasma_hound\\hit\\frame_01.webp",
+      "bbox": [
+        36,
+        62,
+        219,
+        224
+      ],
+      "sha256": "4a60637a5c7dc13c633c43033fab4307369a00a198e29de00d4bb8a9d6b975ac"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\plasma_hound\\hit\\frame_02.webp",
+      "bbox": [
+        46,
+        98,
+        210,
+        224
+      ],
+      "sha256": "00d5f8a5d62914a30d4191e19a48f9afa97bafd9158a2b215e899d884ad3145a"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\plasma_hound\\hit\\frame_03.webp",
+      "bbox": [
+        45,
+        96,
+        210,
+        224
+      ],
+      "sha256": "a28c075e90f5656aaad5dc11b48cb7800badb631e6d81c96e047110346fbbe49"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\plasma_hound\\death\\frame_01.webp",
+      "bbox": [
+        43,
+        88,
+        213,
+        224
+      ],
+      "sha256": "e15da46dda1c901a1305b8b11fb5dca4db5f419d5704efd7deab12f011cad214"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\plasma_hound\\death\\frame_02.webp",
+      "bbox": [
+        35,
+        125,
+        221,
+        224
+      ],
+      "sha256": "885c359ff516e61a76f8907bd5361d5d89e457a36cb0fa26bc6cfc2ab00a74ed"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\plasma_hound\\death\\frame_03.webp",
+      "bbox": [
+        37,
+        136,
+        218,
+        224
+      ],
+      "sha256": "37a5644d9a03de251e5540acd53c864a070ccfeff583dbf388d40d3edea2ed61"
+    }
+  ]
+}

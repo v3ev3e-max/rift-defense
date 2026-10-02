@@ -1,0 +1,123 @@
+{
+  "owner": "time_mender",
+  "source": "art-source\\monster-actions-v2\\time_mender-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\time_mender\\attack\\frame_01.webp",
+      "bbox": [
+        59,
+        44,
+        197,
+        224
+      ],
+      "sha256": "870ed5bf3db35b33344b2ddae6ce6170e1881697457105f55d4d6fb42c484b0b"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\time_mender\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        59,
+        224,
+        224
+      ],
+      "sha256": "3d412fb187ebc87377fb2ea32b706473f179baa1fd808d5de36dd0a18388bc57"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\time_mender\\attack\\frame_03.webp",
+      "bbox": [
+        54,
+        50,
+        202,
+        224
+      ],
+      "sha256": "61108a55b21066dcf84b49a10d4a197b5497ff0b93c2e670efb65b22e5999507"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\time_mender\\hit\\frame_01.webp",
+      "bbox": [
+        49,
+        64,
+        206,
+        224
+      ],
+      "sha256": "d4fc42a0d7847de3ad45b076f8e528125776225a17eb3d89d28bc1e203dcccd6"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\time_mender\\hit\\frame_02.webp",
+      "bbox": [
+        50,
+        58,
+        205,
+        224
+      ],
+      "sha256": "1989215ff9362343a95e80a512585b13210404b7eb64eab5e2636d17e710c245"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\time_mender\\hit\\frame_03.webp",
+      "bbox": [
+        61,
+        45,
+        194,
+        224
+      ],
+      "sha256": "95f532867e645c5cc44d734d798ff1cd740d7164cee5ee10f8827a9cb8c8f62a"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\time_mender\\death\\frame_01.webp",
+      "bbox": [
+        49,
+        84,
+        206,
+        224
+      ],
+      "sha256": "bbb07122121f97c0e96bf6ead94a9c02504965d4e59fc060873ed29aa835ad20"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\time_mender\\death\\frame_02.webp",
+      "bbox": [
+        47,
+        100,
+        209,
+        224
+      ],
+      "sha256": "69a44fd4a007c5f6b31585e160a4e5c9ffe7e38d537f98fdac9326423af22e8e"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\time_mender\\death\\frame_03.webp",
+      "bbox": [
+        42,
+        151,
+        213,
+        224
+      ],
+      "sha256": "81a9402dcca9e6b947b3c4e76aa2d672d7416c6d39702b8fdd427d03ab7af45e"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "owner": "tempest",
+  "source": "art-source\\monster-actions-v2\\tempest-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tempest\\attack\\frame_01.webp",
+      "bbox": [
+        36,
+        56,
+        220,
+        224
+      ],
+      "sha256": "add9a5248c9c9dcb69af8045b9a80f4b10ec71e8111ab5be71846c92970eba9e"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tempest\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        83,
+        224,
+        224
+      ],
+      "sha256": "c72a5d4ceddcfad99d6c72fcf6f79c20c7d5c32b6d099fb1af04a5aa7458c789"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tempest\\attack\\frame_03.webp",
+      "bbox": [
+        38,
+        64,
+        218,
+        224
+      ],
+      "sha256": "69997077dda717bdac8302bae76238a212bf12b5fee1154e16032af438d8f392"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tempest\\hit\\frame_01.webp",
+      "bbox": [
+        41,
+        77,
+        214,
+        224
+      ],
+      "sha256": "5aa380b80eab16fd360ddc3c0e5543fc8b0be8019f45dda6ab383e166751be3f"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tempest\\hit\\frame_02.webp",
+      "bbox": [
+        46,
+        77,
+        209,
+        224
+      ],
+      "sha256": "5ddbb59620c5ddb6986a9573ffd07eee5f2237092b1508d00799ee610500fe16"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tempest\\hit\\frame_03.webp",
+      "bbox": [
+        38,
+        58,
+        218,
+        224
+      ],
+      "sha256": "bb7ee7e9e7b3b4cc3742a437a7a6139d2e0391f1b8616aa9fb998bcb6fe06576"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tempest\\death\\frame_01.webp",
+      "bbox": [
+        44,
+        51,
+        211,
+        224
+      ],
+      "sha256": "4a7937aa32e630d1dc6c59df356efe7a2301895efc2a57669d1fd29f80c85c27"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tempest\\death\\frame_02.webp",
+      "bbox": [
+        41,
+        83,
+        214,
+        224
+      ],
+      "sha256": "1a495c4e0f3220b8a9660af08815db0dcf7a0c1ad0461697f890369313b3b6cc"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tempest\\death\\frame_03.webp",
+      "bbox": [
+        45,
+        86,
+        210,
+        224
+      ],
+      "sha256": "4eef9586c51e8e192a27922ac26ff0fd1025b88504da96d99c99ba62ecf9bc6f"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/mia/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        40,
+        77,
+        196,
+        231
+      ],
+      "sha256": "f6fbeec24882dfbd98d918fae06550589b03a60027fbe9c6e6692ef825a4ce3b"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        32,
+        90,
+        220,
+        231
+      ],
+      "sha256": "6bc73c4a9b264f7487014fa26dea11413b2debd661f904d1d7350645347f19d7"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        22,
+        92,
+        220,
+        232
+      ],
+      "sha256": "00ca98eaebba8689b2be12935077fd97b120f216d1468a28449c7a1ebd259656"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        20,
+        31,
+        232,
+        235
+      ],
+      "sha256": "7e4aa27ba81edee6e0b5d36dc714912d90e877637350aaec16bd2839ab3cc29e"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        38,
+        75,
+        239,
+        217
+      ],
+      "sha256": "2ae20ab8a8580b4352e71b093a035da3e7fa672225b5d359547e9a01a1717d86"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        31,
+        48,
+        243,
+        219
+      ],
+      "sha256": "46c2dc6886b6c969260842d464552235cbfb5a19b1835e2db28c9a596c6863cd"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        60,
+        242,
+        219
+      ],
+      "sha256": "453b13cc6c47773dbf239b9c63afa8319fd450da0cebc6499ddf8d03f886e31a"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        49,
+        63,
+        202,
+        217
+      ],
+      "sha256": "86b21c3c96678424f8642d9f282755b3d568f798cccfa27a90cc91e7b3cfd2c4"
+    }
+  ]
+}

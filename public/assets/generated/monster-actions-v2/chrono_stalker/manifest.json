@@ -1,0 +1,123 @@
+{
+  "owner": "chrono_stalker",
+  "source": "art-source\\monster-actions-v2\\chrono_stalker-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_stalker\\attack\\frame_01.webp",
+      "bbox": [
+        47,
+        53,
+        208,
+        224
+      ],
+      "sha256": "795fc6920cabcc9dbfc7d295c93c300a097d3dd8bad5765329bdc0020a6a6b04"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_stalker\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        75,
+        224,
+        224
+      ],
+      "sha256": "a897609a5014f740239330adf1d2da8e4d02c6c7d30ee9d871a0b587a6cd5643"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_stalker\\attack\\frame_03.webp",
+      "bbox": [
+        46,
+        76,
+        209,
+        224
+      ],
+      "sha256": "d8904e728f6919d3cfd96558314d1d022fe996a8455547e79752d0ae083c2845"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_stalker\\hit\\frame_01.webp",
+      "bbox": [
+        44,
+        79,
+        211,
+        224
+      ],
+      "sha256": "fc5661a1520dd4cd636d7bf9b3eeb3c9b5d4a885ab2a18555de0602112a84614"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_stalker\\hit\\frame_02.webp",
+      "bbox": [
+        47,
+        64,
+        208,
+        224
+      ],
+      "sha256": "b3ac4b6c17a882175bfe848bde7e9e756583dc78069bfe46c4791c89fd20cc9e"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_stalker\\hit\\frame_03.webp",
+      "bbox": [
+        50,
+        63,
+        206,
+        224
+      ],
+      "sha256": "f101bf7172a19174091e7b9e9bb255c98ca6f5cf8e91856b797323d77a6669ad"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_stalker\\death\\frame_01.webp",
+      "bbox": [
+        51,
+        77,
+        204,
+        224
+      ],
+      "sha256": "7be595239b13b43c7e4916f9c8040b2d3b9cb6649c1a6994329ce7382e59b616"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_stalker\\death\\frame_02.webp",
+      "bbox": [
+        39,
+        105,
+        217,
+        224
+      ],
+      "sha256": "fb89b755848e59f32e07a6e0dac8c232ab70892b56b8636b540ebc13029ecb52"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\chrono_stalker\\death\\frame_03.webp",
+      "bbox": [
+        34,
+        130,
+        222,
+        224
+      ],
+      "sha256": "cd14679a3d74691dfa2c4dd67b16fe65171dfb6c134f7c4c082fbf06c497d526"
+    }
+  ]
+}

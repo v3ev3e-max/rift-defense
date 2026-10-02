@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/noel/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        39,
+        76,
+        216,
+        238
+      ],
+      "sha256": "610751ab9f1b2685c927d044ea08f5d341656af189d7ced854a95b846bb1e3db"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        49,
+        47,
+        219,
+        238
+      ],
+      "sha256": "b805ff32b834bd4705cdc8482668797286f31637e857ac6f6db812fce74a741b"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        37,
+        85,
+        230,
+        238
+      ],
+      "sha256": "c0403227fa7f36d9fd8783de83610310021ff799d28ebc6205bc50c2da2bca4a"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        25,
+        63,
+        234,
+        238
+      ],
+      "sha256": "0ef28c48585f0ce48d77cf15937888ec7165a38cf24584bb0fe493a73580061c"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        32,
+        45,
+        243,
+        223
+      ],
+      "sha256": "eb84290a1b4ceea6f76d1dcc12db1527925134dc9c90fa554efb7c18fc35baed"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        61,
+        243,
+        224
+      ],
+      "sha256": "8da3f082aa4357619762df1e2b5de13b4eed94e8d9de0ecf610fa1b69b2e8da3"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        69,
+        230,
+        225
+      ],
+      "sha256": "32c7208c6c527251efecc7b053c3b0007324564edf9d7b21ddb35b96aed9261e"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        42,
+        69,
+        215,
+        225
+      ],
+      "sha256": "e7b37824d9529f4107be14b052a7151b3d4b95896ebbd7a60689a1899d4118a6"
+    }
+  ]
+}

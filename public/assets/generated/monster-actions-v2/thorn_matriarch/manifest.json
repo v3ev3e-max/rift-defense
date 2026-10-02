@@ -1,0 +1,123 @@
+{
+  "owner": "thorn_matriarch",
+  "source": "art-source\\monster-actions-v2\\thorn_matriarch-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\thorn_matriarch\\attack\\frame_01.webp",
+      "bbox": [
+        42,
+        62,
+        213,
+        224
+      ],
+      "sha256": "065b872ed20cbb61fd39e1e848bffff5af0cf8caf2340ca77d135671431a1a7b"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\thorn_matriarch\\attack\\frame_02.webp",
+      "bbox": [
+        34,
+        67,
+        221,
+        224
+      ],
+      "sha256": "635ab332cbf4906453dee7a1133e3d73a6ea3de2fd43d78df752954778b9c7c6"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\thorn_matriarch\\attack\\frame_03.webp",
+      "bbox": [
+        43,
+        61,
+        212,
+        224
+      ],
+      "sha256": "93a47bc7c2dbf56963c29b7dc4818383c4acdffe456d3d4e136da02d27284bec"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\thorn_matriarch\\hit\\frame_01.webp",
+      "bbox": [
+        43,
+        59,
+        212,
+        224
+      ],
+      "sha256": "26e05146c66731c94f0cfc5731cdfd0036dd65f70389222cf2d0ac309694fa1d"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\thorn_matriarch\\hit\\frame_02.webp",
+      "bbox": [
+        41,
+        45,
+        215,
+        224
+      ],
+      "sha256": "8379d9ed19c50f7bba2ab27ac2192cea98394764095bf99bf9c19a6c3e9bf9c9"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\thorn_matriarch\\hit\\frame_03.webp",
+      "bbox": [
+        48,
+        59,
+        208,
+        224
+      ],
+      "sha256": "24dae92e5907a8b544c16d2582874da7cc3027765675c06c2e5f7352be920352"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\thorn_matriarch\\death\\frame_01.webp",
+      "bbox": [
+        43,
+        63,
+        212,
+        224
+      ],
+      "sha256": "35bfff52ae76f055c25839368d3fc043f27fd1796391961f8655da63b7e1df32"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\thorn_matriarch\\death\\frame_02.webp",
+      "bbox": [
+        32,
+        112,
+        224,
+        224
+      ],
+      "sha256": "b9c6198aeddcef7e6b2c7e30eb4d9c035183a77e276042703f8c715954b15d1e"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\thorn_matriarch\\death\\frame_03.webp",
+      "bbox": [
+        38,
+        130,
+        217,
+        224
+      ],
+      "sha256": "9205183049bf31291e31ac21f8101426fdd6b2f74e07e7d9c2a47a52fa8e0a84"
+    }
+  ]
+}

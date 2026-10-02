@@ -1,0 +1,123 @@
+{
+  "owner": "rift_sovereign",
+  "source": "art-source\\monster-actions-v2\\rift_sovereign-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\rift_sovereign\\attack\\frame_01.webp",
+      "bbox": [
+        38,
+        71,
+        218,
+        224
+      ],
+      "sha256": "1f960e1a8a53e60ef7b9005b9fd07bf2f31a06e7ec0b56c94487478c6380387b"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\rift_sovereign\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        87,
+        224,
+        224
+      ],
+      "sha256": "9ddcd533db448c3625ddee40cf848aa63f230a1f2be790ace0fbeb4e49fa0dbc"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\rift_sovereign\\attack\\frame_03.webp",
+      "bbox": [
+        42,
+        86,
+        214,
+        224
+      ],
+      "sha256": "a6bd046f3502fc0b00dcfa846cb49b4ae3b745a97dba90b4d15456b640a2f62d"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\rift_sovereign\\hit\\frame_01.webp",
+      "bbox": [
+        34,
+        81,
+        221,
+        224
+      ],
+      "sha256": "d5a2cd5b3a9aacf090e3f347d39a27cb84963deb4ba1532162e2570d2dec7325"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\rift_sovereign\\hit\\frame_02.webp",
+      "bbox": [
+        41,
+        80,
+        215,
+        224
+      ],
+      "sha256": "ac855af9f6a87d4dce53de466095aff88323d0f3784ea366c4e8b427ea3a1df6"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\rift_sovereign\\hit\\frame_03.webp",
+      "bbox": [
+        39,
+        80,
+        216,
+        224
+      ],
+      "sha256": "ee7dcb4a2e11fa0c9b2c98e47f49c17abda1974a73a072d4452298743d0e06b9"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\rift_sovereign\\death\\frame_01.webp",
+      "bbox": [
+        39,
+        103,
+        216,
+        224
+      ],
+      "sha256": "9137283c18857df96ee52822ac63d7a0fe8717f1f3b02fb1ad576607166b2250"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\rift_sovereign\\death\\frame_02.webp",
+      "bbox": [
+        34,
+        128,
+        221,
+        224
+      ],
+      "sha256": "b3c1fb5dc0bfb21b595746b22ddbefd40928b9383c88db7dc41d170b4c5dad4d"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\rift_sovereign\\death\\frame_03.webp",
+      "bbox": [
+        37,
+        129,
+        218,
+        224
+      ],
+      "sha256": "e54196dbb0695790fc4608fb9e79212d17c4825a436f3f1213227a1614550d7f"
+    }
+  ]
+}

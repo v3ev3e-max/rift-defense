@@ -1,0 +1,123 @@
+{
+  "owner": "alloy_guard",
+  "source": "art-source\\monster-actions-v2\\alloy_guard-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\alloy_guard\\attack\\frame_01.webp",
+      "bbox": [
+        45,
+        72,
+        211,
+        224
+      ],
+      "sha256": "22cbc4475b892915976e1bfcce26cb7e208743872c79fa55bf6377477fc63c38"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\alloy_guard\\attack\\frame_02.webp",
+      "bbox": [
+        34,
+        76,
+        221,
+        224
+      ],
+      "sha256": "7b9b439617cda9e6d8c13f67cabc40d03838807101f9e05f711060d9518922ad"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\alloy_guard\\attack\\frame_03.webp",
+      "bbox": [
+        43,
+        85,
+        212,
+        224
+      ],
+      "sha256": "815ed0b4002aadd3a8d03f0e4d252f4fab9fb8078a5e05c28649a650a7f1dc80"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\alloy_guard\\hit\\frame_01.webp",
+      "bbox": [
+        35,
+        57,
+        220,
+        224
+      ],
+      "sha256": "59dded8dd0548bcfa3bb2eb2db76189528c9c6cda17c56ec05deccf8a75d4dc9"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\alloy_guard\\hit\\frame_02.webp",
+      "bbox": [
+        44,
+        90,
+        211,
+        224
+      ],
+      "sha256": "9898c6a90664f8a1997cfd8f3f44d47c0e195f72ec2b4f85cd44b314f5df70e6"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\alloy_guard\\hit\\frame_03.webp",
+      "bbox": [
+        52,
+        79,
+        203,
+        224
+      ],
+      "sha256": "1ac41075a257e28f7697354b9d3873630bc8aa601820b5c8d392be874de970b5"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\alloy_guard\\death\\frame_01.webp",
+      "bbox": [
+        42,
+        70,
+        213,
+        224
+      ],
+      "sha256": "5b47f066cfefa8f4025d6903a6a09d051bb91335d9eb6adb015b6561a8e577a5"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\alloy_guard\\death\\frame_02.webp",
+      "bbox": [
+        32,
+        104,
+        224,
+        224
+      ],
+      "sha256": "2a25182b7903d82e2beece8f79ff3d9fdfe83e63b4f89a21cf76eb7c0a2819a0"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\alloy_guard\\death\\frame_03.webp",
+      "bbox": [
+        41,
+        132,
+        214,
+        224
+      ],
+      "sha256": "4111824e19aeeeeb4d60f0bb440a0f8a36811df543ab9ce300f6f608481c735e"
+    }
+  ]
+}

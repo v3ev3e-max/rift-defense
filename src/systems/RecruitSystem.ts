@@ -4,7 +4,7 @@ import type {Hero,HeroGrade,SaveData} from '../data/types';
 export const RECRUIT_COST={one:100,ten:900};
 export const RECRUIT_RATES={B:55,A:30,S:12,SR:3} as const;
 export const RECRUIT_S_PITY=30;
-export const recruitDisplayGrade=(grade:HeroGrade)=>grade==='SR'?'SSR':grade;
+export const recruitDisplayGrade=(grade:HeroGrade)=>grade==='SR'?'SSR':grade==='S'?'SR':grade;
 export interface RecruitResult{hero:Hero;grade:HeroGrade;displayGrade:string;newHero:boolean;fragments:number;}
 const gradeFromRoll=(roll:number):HeroGrade=>roll<.03?'SR':roll<.15?'S':roll<.45?'A':'B';
 export function recruit(save:SaveData,count:1|10,rng=Math.random,forced?:HeroGrade):RecruitResult[]{

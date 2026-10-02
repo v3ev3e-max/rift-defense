@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/celestia/source-sd-v2.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        48,
+        82,
+        242,
+        238
+      ],
+      "sha256": "7183e5edb98c150ec97cb539f02839afca69c910e2aed99faac1e8fe9e5b6b51"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        36,
+        43,
+        223,
+        238
+      ],
+      "sha256": "0b1e4c6ad322500f60aed2dbc6c0b16263262e641bbe4edcfdc20cb04795bee9"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        26,
+        95,
+        235,
+        238
+      ],
+      "sha256": "12fb27071ac709d5e2c99d06d5e12360220639a516e838b914a989175481a376"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        17,
+        76,
+        221,
+        238
+      ],
+      "sha256": "546f3c37303b56c883b195ecdd41b8b4259397b44c6df2bf2388fff3bfcbe6b4"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        31,
+        72,
+        243,
+        214
+      ],
+      "sha256": "537526be10c2bbaa8b43f54c9285aa76cfbaf91292f1cb396bad61ece584443c"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        64,
+        243,
+        214
+      ],
+      "sha256": "2588a733f4d2abf071eb1e7ebb6ba1da275507c49c18c01c478f29401d417e98"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        52,
+        243,
+        214
+      ],
+      "sha256": "b2aa63ded980a7529df3b0ff8c129638924f29851ce951cd8b843ad3e452e1e1"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        13,
+        55,
+        223,
+        214
+      ],
+      "sha256": "c627ffd81703011ba75dfb3674cb1f765a0c7f3babeff5dcec9976792c8164ed"
+    }
+  ]
+}

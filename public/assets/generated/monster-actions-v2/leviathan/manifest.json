@@ -1,0 +1,123 @@
+{
+  "owner": "leviathan",
+  "source": "art-source\\monster-actions-v2\\leviathan-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\leviathan\\attack\\frame_01.webp",
+      "bbox": [
+        44,
+        76,
+        211,
+        224
+      ],
+      "sha256": "17b12299a25009b775bcf869ccb1970e40c2e2d0edae7bc7761fb409d773eb45"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\leviathan\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        77,
+        224,
+        224
+      ],
+      "sha256": "dfb18f22b47294f3e3c0ba8c5f5964f824b539aea7523b88a2ffadb86eb21151"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\leviathan\\attack\\frame_03.webp",
+      "bbox": [
+        50,
+        82,
+        206,
+        224
+      ],
+      "sha256": "321658fc1b5f9d2c2f469634123843d6d9d2dd31575267d5ce953b7cc6d0c3ab"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\leviathan\\hit\\frame_01.webp",
+      "bbox": [
+        43,
+        69,
+        212,
+        224
+      ],
+      "sha256": "3d024b50fed2c54c23c4a4358effbdf3f4c7ceac5d1469f3b778eb279e683c11"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\leviathan\\hit\\frame_02.webp",
+      "bbox": [
+        40,
+        84,
+        216,
+        224
+      ],
+      "sha256": "08abffa96dbd5fe953201b8d86b2de8eb45291c5c8ec3dd0c5ab921913f86224"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\leviathan\\hit\\frame_03.webp",
+      "bbox": [
+        48,
+        83,
+        207,
+        224
+      ],
+      "sha256": "0177d2223ab754392d77e0bfa60a7856bf77b0d015d064adee6f9c91571c7551"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\leviathan\\death\\frame_01.webp",
+      "bbox": [
+        45,
+        83,
+        211,
+        224
+      ],
+      "sha256": "725fbfaf332769f8af6100a41a53aadf575bb8ccf516d76520da2ffc764a6b45"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\leviathan\\death\\frame_02.webp",
+      "bbox": [
+        33,
+        114,
+        222,
+        224
+      ],
+      "sha256": "da2bb9815ffc5efc8495a9a68ac80695a5a97ade6ff9e79215e45dc3e1de11af"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\leviathan\\death\\frame_03.webp",
+      "bbox": [
+        41,
+        136,
+        214,
+        224
+      ],
+      "sha256": "59df44c788c92e61bbaabca9e2abaf68fba585f9e35565c9332661b770029c71"
+    }
+  ]
+}

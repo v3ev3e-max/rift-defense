@@ -1,0 +1,123 @@
+{
+  "owner": "cloud_gunner",
+  "source": "art-source\\monster-actions-v2\\cloud_gunner-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cloud_gunner\\attack\\frame_01.webp",
+      "bbox": [
+        52,
+        110,
+        203,
+        224
+      ],
+      "sha256": "8d1da77366bae079fe7972c78ca648be58734e7b6fed2ccf363044a050e88899"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cloud_gunner\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        110,
+        224,
+        224
+      ],
+      "sha256": "f3fa56da9b1704808893aef448634c2a80492ca1fd93f1f1ee4426e36caec347"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cloud_gunner\\attack\\frame_03.webp",
+      "bbox": [
+        55,
+        109,
+        200,
+        224
+      ],
+      "sha256": "31fae9dc82934574a9398b855f779009182bd842fe7c170ebf54246d1dbf1829"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cloud_gunner\\hit\\frame_01.webp",
+      "bbox": [
+        59,
+        111,
+        196,
+        224
+      ],
+      "sha256": "5010e957eefde74d8edb075d6653ef4f5fc7397a928874b67c0f4d3d25ab63fa"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cloud_gunner\\hit\\frame_02.webp",
+      "bbox": [
+        49,
+        110,
+        207,
+        224
+      ],
+      "sha256": "b1378b61f7bb68975f9109fdfda74a824a8f4a2ede08150d534454ab7a4065da"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cloud_gunner\\hit\\frame_03.webp",
+      "bbox": [
+        57,
+        112,
+        199,
+        224
+      ],
+      "sha256": "fbdb87cd92506d25523ca6b5774961724ed3baca1f229f12e757ddd706b2f572"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cloud_gunner\\death\\frame_01.webp",
+      "bbox": [
+        70,
+        114,
+        186,
+        224
+      ],
+      "sha256": "cd31ace900514ff8949ca5b4e95e1732ace4d265c3c014a48f10f81296ec7275"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cloud_gunner\\death\\frame_02.webp",
+      "bbox": [
+        58,
+        104,
+        197,
+        224
+      ],
+      "sha256": "f8dd9168cfcbea19b54179ebe5b54b06c1c01fee9d3550a374862c92f0b4d06a"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cloud_gunner\\death\\frame_03.webp",
+      "bbox": [
+        54,
+        125,
+        201,
+        224
+      ],
+      "sha256": "3f3ce1db8a41429247819cb0e67ff8d302df1b028fa88b7956094add651dd2a1"
+    }
+  ]
+}

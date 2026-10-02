@@ -1,0 +1,159 @@
+{
+  "owner": "aeon-sovereign",
+  "source": "art-source\\monster-actions-v2\\summon-aeon-sovereign.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "move",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\move\\frame_01.webp",
+      "bbox": [
+        68,
+        121,
+        188,
+        224
+      ],
+      "sha256": "1d6cb21fd8114436eb3db2b0ab31bc71e42d390bb8a053a499806e91c0e22d6b"
+    },
+    {
+      "state": "move",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\move\\frame_02.webp",
+      "bbox": [
+        76,
+        117,
+        179,
+        224
+      ],
+      "sha256": "524616b1a2f40a0d33a0696f28690f22d20d1a7616933490d13e4462a58de842"
+    },
+    {
+      "state": "move",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\move\\frame_03.webp",
+      "bbox": [
+        65,
+        119,
+        190,
+        224
+      ],
+      "sha256": "9e488790dd770426571cb13c84897f399a804fcc270718f2954c6d7e7f1631e5"
+    },
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\attack\\frame_01.webp",
+      "bbox": [
+        70,
+        114,
+        185,
+        224
+      ],
+      "sha256": "2dcacb9f8ab6a0eb3fd7488ac6547a5b96fdbe3fac9ca794697ef5c270861022"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        113,
+        223,
+        224
+      ],
+      "sha256": "1820d00b3097895a41e1511f7ad720525726e535d44f51ed4af3ff9961ba3ed3"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\attack\\frame_03.webp",
+      "bbox": [
+        63,
+        115,
+        192,
+        224
+      ],
+      "sha256": "1f1d3a0415e428ff2f04208bbc1e291b510cc6ea684241b8f9d82f9c8583d3e5"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\hit\\frame_01.webp",
+      "bbox": [
+        63,
+        120,
+        193,
+        224
+      ],
+      "sha256": "06112eb2a3aa5d7f076658b9a171fd2dff0a63a0f20e4df2ba622364a69c88b9"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\hit\\frame_02.webp",
+      "bbox": [
+        56,
+        127,
+        199,
+        224
+      ],
+      "sha256": "9866f6738f2d352210d6c50871cf58ec51aa0b1dceb458b4eabc91a6a57e0efd"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\hit\\frame_03.webp",
+      "bbox": [
+        73,
+        119,
+        182,
+        224
+      ],
+      "sha256": "da9b492e12c1144098132904e3743b3491b546cef9962c4edd7e92046e51b387"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\death\\frame_01.webp",
+      "bbox": [
+        66,
+        122,
+        189,
+        224
+      ],
+      "sha256": "2ffc6fc599eefd1ae2c008dc1d179d770e2d82833e04a0631b0450c5d6b0c2b9"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\death\\frame_02.webp",
+      "bbox": [
+        51,
+        120,
+        205,
+        224
+      ],
+      "sha256": "127bee3537ca380f7b56d8067d60dc775b72c9812242e1df852cb14cf5e15b92"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\aeon-sovereign\\death\\frame_03.webp",
+      "bbox": [
+        58,
+        130,
+        197,
+        224
+      ],
+      "sha256": "d3162d8916265bcfc60e45d88a29ded11094cb76db0dbb58aaf9ec793953518e"
+    }
+  ]
+}

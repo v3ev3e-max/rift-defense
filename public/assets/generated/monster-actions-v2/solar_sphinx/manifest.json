@@ -1,0 +1,123 @@
+{
+  "owner": "solar_sphinx",
+  "source": "art-source\\monster-actions-v2\\solar_sphinx-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\solar_sphinx\\attack\\frame_01.webp",
+      "bbox": [
+        44,
+        60,
+        211,
+        224
+      ],
+      "sha256": "4fdfb25a3c2a15ab8e6ed6d60997fdfa9c3400539698b0714e73d6d2be714be8"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\solar_sphinx\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        57,
+        224,
+        224
+      ],
+      "sha256": "620258c963a3a8e175d227b230c7e2fb8398615d07f13f8182e4b93fd770c90f"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\solar_sphinx\\attack\\frame_03.webp",
+      "bbox": [
+        43,
+        62,
+        213,
+        224
+      ],
+      "sha256": "c7f6629f132656dda3fbcac3a3e2c6d53ec7f800b3d4df5fc9ce7369e67b46fa"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\solar_sphinx\\hit\\frame_01.webp",
+      "bbox": [
+        43,
+        60,
+        213,
+        224
+      ],
+      "sha256": "847093266e482ee2b8b4d36e254fd02a46aec32c7da0a67c4e7d684d6fb77929"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\solar_sphinx\\hit\\frame_02.webp",
+      "bbox": [
+        41,
+        81,
+        214,
+        224
+      ],
+      "sha256": "5895390187e9c79d347291c4e88d106db1a2ee30aac57d3c89b68c2a3655b580"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\solar_sphinx\\hit\\frame_03.webp",
+      "bbox": [
+        44,
+        69,
+        212,
+        224
+      ],
+      "sha256": "0cd0de29a02f6f894d3733a7f97475d6fa813c4b033726bdd09ba49f615a42b6"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\solar_sphinx\\death\\frame_01.webp",
+      "bbox": [
+        41,
+        72,
+        215,
+        224
+      ],
+      "sha256": "1027455cac2b1367e9738dd55cc55577c3c35e62a2553a9be50e174fc292df34"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\solar_sphinx\\death\\frame_02.webp",
+      "bbox": [
+        33,
+        103,
+        223,
+        224
+      ],
+      "sha256": "1b92139b72364685700d311ec062d63d0d21cacd8f0c930290db9ee6b7219d00"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\solar_sphinx\\death\\frame_03.webp",
+      "bbox": [
+        37,
+        136,
+        218,
+        224
+      ],
+      "sha256": "10c376045c17ffadbbefc2ecd43ded4709caf48f55344e2c7dc93e01dc986e62"
+    }
+  ]
+}

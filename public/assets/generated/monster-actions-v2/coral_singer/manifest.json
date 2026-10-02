@@ -1,0 +1,123 @@
+{
+  "owner": "coral_singer",
+  "source": "art-source\\monster-actions-v2\\coral_singer-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_singer\\attack\\frame_01.webp",
+      "bbox": [
+        43,
+        57,
+        213,
+        224
+      ],
+      "sha256": "6636be7be6e721f4edbae3fd107e625b7a0807e06e92f92ae1e408a75398edd0"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_singer\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        64,
+        224,
+        224
+      ],
+      "sha256": "2eb53ad69ceba1df56b24cf3ebd664bed00f5a6bca2386477de9a9763d10137f"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_singer\\attack\\frame_03.webp",
+      "bbox": [
+        35,
+        66,
+        221,
+        224
+      ],
+      "sha256": "7f5a818034557aa48eb9950f4eb6f5ddd1b16a452e0c04f44ac40f6fb0a7b2dc"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_singer\\hit\\frame_01.webp",
+      "bbox": [
+        40,
+        62,
+        215,
+        224
+      ],
+      "sha256": "0b65a6f922a300d811119b883de08b0e254b96c7e9ffc4ff252cc73a321f4c74"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_singer\\hit\\frame_02.webp",
+      "bbox": [
+        61,
+        80,
+        195,
+        224
+      ],
+      "sha256": "7c7f44e608e3d626c53d6dc3354763b457de09500e915ac955269bdf20479f08"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_singer\\hit\\frame_03.webp",
+      "bbox": [
+        52,
+        65,
+        204,
+        224
+      ],
+      "sha256": "4e6d18267d1e97620d72963be7942b7247990624c7f5326179c4021308520dc3"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_singer\\death\\frame_01.webp",
+      "bbox": [
+        47,
+        83,
+        209,
+        224
+      ],
+      "sha256": "353a6572ffd53ae91c91898c530493fe47804a7b57aa7c63af7a4a894dbc8654"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_singer\\death\\frame_02.webp",
+      "bbox": [
+        43,
+        116,
+        212,
+        224
+      ],
+      "sha256": "bbea3cd46e80db99a88ef7009efc460e1fef638cefac7185ae3da2d1d691e846"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_singer\\death\\frame_03.webp",
+      "bbox": [
+        49,
+        143,
+        207,
+        224
+      ],
+      "sha256": "2242b8009cc2193b7103a1571fb86c7eb2a4b14bc71db8b1d6a91d7f5d167c2c"
+    }
+  ]
+}

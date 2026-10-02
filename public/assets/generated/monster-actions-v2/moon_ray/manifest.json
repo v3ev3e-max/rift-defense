@@ -1,0 +1,123 @@
+{
+  "owner": "moon_ray",
+  "source": "art-source\\monster-actions-v2\\moon_ray-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\moon_ray\\attack\\frame_01.webp",
+      "bbox": [
+        51,
+        113,
+        205,
+        224
+      ],
+      "sha256": "819e201cbc197aa8b48f085f939c3a1c08e1ca73ccad5a4163e2eb86d187c63b"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\moon_ray\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        116,
+        224,
+        224
+      ],
+      "sha256": "008a1f4d96bbc4734a6d22d55ea37a4824195dba6add9c17109bcd228d2745e9"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\moon_ray\\attack\\frame_03.webp",
+      "bbox": [
+        51,
+        114,
+        204,
+        224
+      ],
+      "sha256": "8b09dd6951a78499ed2fe7a21b5b638b91c82133e25be932cdce1c000f0ef096"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\moon_ray\\hit\\frame_01.webp",
+      "bbox": [
+        54,
+        99,
+        202,
+        224
+      ],
+      "sha256": "aa2316a2b1d3a9635ad59d33f3a90043142fa5e39a9302fbe9642828505f2d14"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\moon_ray\\hit\\frame_02.webp",
+      "bbox": [
+        50,
+        99,
+        206,
+        224
+      ],
+      "sha256": "d26837be2167fe92fd7a6de028daa65da27b233c5ee381e962df1d0902de775d"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\moon_ray\\hit\\frame_03.webp",
+      "bbox": [
+        55,
+        117,
+        200,
+        224
+      ],
+      "sha256": "fb0da22a666813aada99ebddcd417e76f7de272921548ae8f4b17235a8ac70ef"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\moon_ray\\death\\frame_01.webp",
+      "bbox": [
+        61,
+        127,
+        194,
+        224
+      ],
+      "sha256": "82cc367a28562bb0fb02a52c360934d6f3f2ec6da3e3a84a19834ac02d806455"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\moon_ray\\death\\frame_02.webp",
+      "bbox": [
+        55,
+        141,
+        200,
+        224
+      ],
+      "sha256": "61e0d0724b6f8ab8ca54234af251dfe3824cd4577307e521a048980a0ddc05fc"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\moon_ray\\death\\frame_03.webp",
+      "bbox": [
+        57,
+        159,
+        198,
+        224
+      ],
+      "sha256": "cfcc6cb84544db35a445d46f9373b4a9b5f9e865c3f64020ca740c75d33bbc9d"
+    }
+  ]
+}

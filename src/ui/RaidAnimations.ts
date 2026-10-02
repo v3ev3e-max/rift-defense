@@ -1,5 +1,8 @@
 import {assetUrl} from '../utils/assets';
 import {heroSkillEffects} from '../game/HeroSkillEffects';
+import {authoredFrameKeys} from '../game/AuthoredFrames';
+import {attackRaidSummons,despawnRaidSummons} from './RaidSummonAnimations';
+import {heroAttackSheetPath,normalizedSdHeroOwners} from '../game/HeroActionAssets';
 
 export type RaidPose = 'idle'|'prepare'|'attack'|'skill'|'pattern'|'hit'|'phase'|'death';
 const active = new WeakMap<HTMLElement, {animation: Animation; priority: number}>();
@@ -14,7 +17,11 @@ export function bossSprite(id:string, pose:RaidPose) {
 }
 function paint(el:HTMLElement,pose:RaidPose){
  const id=el.dataset.hero??el.dataset.boss!;
- const sprite=el.dataset.hero?{url:assetUrl(`/assets/generated/raid-v4/heroes/${id}/${pose==='hit'||pose==='death'?'idle':pose}.webp`),frames:pose==='skill'?6:pose==='attack'?8:1}:bossSprite(id,pose);
+ const sprite=el.dataset.hero
+  ?pose==='attack'||normalizedSdHeroOwners.has(id)&&(pose==='idle'||pose==='skill')
+   ?{url:assetUrl(heroAttackSheetPath(id)),frames:8}
+   :{url:assetUrl(`/assets/generated/raid-v4/heroes/${id}/${pose==='hit'||pose==='death'?'idle':pose}.webp`),frames:pose==='skill'?6:1}
+  :bossSprite(id,pose);
  el.style.backgroundImage=`url("${sprite.url}")`;
  el.style.backgroundSize=`${sprite.frames*100}% 100%`;
  el.style.backgroundPosition='0% 0%';el.dataset.pose=pose;
@@ -28,8 +35,7 @@ export function playRaidPose(el:HTMLElement|null,pose:RaidPose,duration=600){
  previous?.animation.cancel();
  const frames=paint(el,pose);
  if(pose==='idle'){active.delete(el);return;}
- const keyframes:Array<Keyframe>=Array.from({length:frames},(_,i)=>({backgroundPosition:`${frames===1?0:i/(frames-1)*100}% 0%`,offset:i/frames,easing:'steps(1,end)'}));
- keyframes.push({...keyframes[keyframes.length-1],offset:1});
+ const keyframes=authoredFrameKeys(frames);
  if(pose==='hit')keyframes.forEach((k,i)=>k.filter=i%2?'brightness(1)':'brightness(1.8)');
  if(pose==='death')keyframes.forEach((k,i)=>k.opacity=String(1-i/Math.max(1,keyframes.length-1)));
  const animation=el.animate(keyframes,{duration,iterations:1,fill:'forwards'});
@@ -68,7 +74,8 @@ function skillEffect(root:HTMLElement,source:HTMLElement,target:HTMLElement,effe
  arena.append(node);
  const delay=effect.target==='enemy'?480:0;
  const timers:number[]=[];
- effect.impact.forEach((path,i)=>timers.push(window.setTimeout(()=>{if(node.isConnected)node.style.backgroundImage=`url("${assetUrl(path)}")`;},delay+i*180)));
+ const frameMs=720/effect.impact.length;
+ effect.impact.forEach((path,i)=>timers.push(window.setTimeout(()=>{if(node.isConnected)node.style.backgroundImage=`url("${assetUrl(path)}")`;},delay+i*frameMs)));
  const animation=node.animate([{opacity:0,transform:'scale(.72)'},{opacity:.95,transform:'scale(1)',offset:.25},{opacity:0,transform:'scale(1.12)'}],{delay,duration:720,fill:'both'});
  const cleanup=()=>{timers.forEach(clearTimeout);node.remove();};
  animation.onfinish=cleanup;animation.oncancel=cleanup;
@@ -76,6 +83,8 @@ function skillEffect(root:HTMLElement,source:HTMLElement,target:HTMLElement,effe
 }
 export function raidBossAction(root:HTMLElement,pose:RaidPose,duration=700){
  const boss=root.querySelector<HTMLElement>('.raid-boss-main');playRaidPose(boss,pose,duration);
+ if(pose==='attack'||pose==='pattern'&&!root.querySelector('.raid-boss-stage>strong')?.textContent?.includes('소환'))attackRaidSummons(root);
+ if(pose==='death')despawnRaidSummons(root);
  if(boss&&(pose==='attack'||pose==='pattern')){
   const id=boss.dataset.boss!;
   if(['gale-colossus','void-observer','machine-god'].includes(id)){
@@ -93,10 +102,16 @@ function fly(root:HTMLElement,source:HTMLElement,target:HTMLElement,url:string,f
  arena.append(node);
  const flight=node.animate([{transform:'translate(0,0)',backgroundPosition:'0% 0%'},{transform:`translate(${b.x-a.x}px,${b.y-a.y}px)`,backgroundPosition:'100% 0%'}],{duration:480,easing:'linear',fill:'forwards'});
  // Frame changes are discrete; movement remains smooth.
- node.animate(Array.from({length:frames+1},(_,i)=>({backgroundPosition:`${Math.min(i,frames-1)/(frames-1)*100}% 0%`,offset:i/frames,easing:'steps(1,end)'})),{duration:480,fill:'forwards'});
+ const framePlayback=node.animate(authoredFrameKeys(frames),{duration:480,fill:'forwards'});
  flight.onfinish=()=>{
   if(!node.isConnected){node.remove();return;}
-  if(impact){node.style.backgroundImage=`url("${impact}")`;node.style.backgroundSize='300% 100%';}
+  // Release the old sheet's position before starting the impact sheet.
+  // Otherwise its fill:forwards keeps the impact locked to the last frame.
+  framePlayback.cancel();
+  if(impact){
+   node.style.backgroundImage=`url("${impact}")`;node.style.backgroundSize='300% 100%';node.style.backgroundPosition='0% 0%';
+   node.animate(authoredFrameKeys(3),{duration:180,iterations:1,fill:'forwards'});
+  }
   const end=node.animate([{opacity:1},{opacity:0}],{duration:180});end.onfinish=()=>node.remove();
  };
 }

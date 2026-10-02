@@ -1,0 +1,123 @@
+{
+  "owner": "causal_blade",
+  "source": "art-source\\monster-actions-v2\\causal_blade-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\causal_blade\\attack\\frame_01.webp",
+      "bbox": [
+        54,
+        94,
+        201,
+        224
+      ],
+      "sha256": "9d5736778b811b81d4c66d11ded4dceeb8a3dda1b424dbe6bb4b15fe1a88b482"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\causal_blade\\attack\\frame_02.webp",
+      "bbox": [
+        34,
+        104,
+        222,
+        224
+      ],
+      "sha256": "4ccebf56fba629b2e651808b62c634be4b0b8671f66b8a5a209f40fe0b21f435"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\causal_blade\\attack\\frame_03.webp",
+      "bbox": [
+        50,
+        118,
+        206,
+        224
+      ],
+      "sha256": "847a84c96ffd2d58c0bdf5cba8333b8fe2c69d5c54a8540eb5a4b8fc9d3ff552"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\causal_blade\\hit\\frame_01.webp",
+      "bbox": [
+        53,
+        89,
+        203,
+        224
+      ],
+      "sha256": "0fcac691fbc526429b414c133f1ab74145e71174081bab6c8e9476b81bf9527c"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\causal_blade\\hit\\frame_02.webp",
+      "bbox": [
+        56,
+        111,
+        199,
+        224
+      ],
+      "sha256": "4274e64545241cd52d9503fcedb5809a4d67655deac482cdbca9472a5acd55a2"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\causal_blade\\hit\\frame_03.webp",
+      "bbox": [
+        61,
+        111,
+        194,
+        224
+      ],
+      "sha256": "9b349e05718f3cc3cc10e2054f0cbacd47f2801f93aad321712d98834758f9c5"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\causal_blade\\death\\frame_01.webp",
+      "bbox": [
+        61,
+        110,
+        195,
+        224
+      ],
+      "sha256": "89035d2947107337daeca26294d648bd0fc765946a8c3dee0d285cfcac5844a3"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\causal_blade\\death\\frame_02.webp",
+      "bbox": [
+        32,
+        128,
+        224,
+        224
+      ],
+      "sha256": "5958df6fb54c424ae3cafaefbd220ae0905657ca48602f1b2a965600202f4af2"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\causal_blade\\death\\frame_03.webp",
+      "bbox": [
+        40,
+        151,
+        215,
+        224
+      ],
+      "sha256": "69867fb27e1b6733f5dbfe443862e6a16236516b1786057ff55db1cff8f2acf8"
+    }
+  ]
+}

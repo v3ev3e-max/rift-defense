@@ -1,0 +1,123 @@
+{
+  "owner": "coral_mauler",
+  "source": "art-source\\monster-actions-v2\\coral_mauler-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_mauler\\attack\\frame_01.webp",
+      "bbox": [
+        44,
+        97,
+        211,
+        224
+      ],
+      "sha256": "50e3ea8f3b55e63ce5f4c660286f57c5d7d6542a25973ae788a4442c9c97b8a1"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_mauler\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        96,
+        224,
+        224
+      ],
+      "sha256": "024edbcabf477edf0d42fdec1eeb7c422215510363ad8574e26a9d6c2c30eabc"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_mauler\\attack\\frame_03.webp",
+      "bbox": [
+        49,
+        104,
+        207,
+        224
+      ],
+      "sha256": "324c4646c52242619e9c3c8e8fbae7be7f91bc425f7337d6365e8a635c3a2e05"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_mauler\\hit\\frame_01.webp",
+      "bbox": [
+        43,
+        82,
+        213,
+        224
+      ],
+      "sha256": "8dd1e4282a43afd34ca6b15a6472311eb0b8141a5d9dbc7d087cdbe74702e3ea"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_mauler\\hit\\frame_02.webp",
+      "bbox": [
+        45,
+        84,
+        210,
+        224
+      ],
+      "sha256": "68585444ba1c064c01681040315d7759c940004b2de80172c83c214186c5a0a7"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_mauler\\hit\\frame_03.webp",
+      "bbox": [
+        50,
+        103,
+        205,
+        224
+      ],
+      "sha256": "7166743047f3c3c66d539d2709199158b4ed1426df51d075413e0b0f978f31f9"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_mauler\\death\\frame_01.webp",
+      "bbox": [
+        46,
+        110,
+        209,
+        224
+      ],
+      "sha256": "fd5e46ee59ed90705be9d7368f78ab899d479ab3dbd90c605e1cc146774d5132"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_mauler\\death\\frame_02.webp",
+      "bbox": [
+        36,
+        88,
+        220,
+        224
+      ],
+      "sha256": "3f05af86c4ef7ffaaa8a2b34c9942e34322fa3a1632bf6d3bc9aa215f276e30c"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\coral_mauler\\death\\frame_03.webp",
+      "bbox": [
+        46,
+        141,
+        209,
+        224
+      ],
+      "sha256": "4f7930ff723b77be8956fa38011aa6f28bf50f960dd94a69ae1e87995b9fa750"
+    }
+  ]
+}

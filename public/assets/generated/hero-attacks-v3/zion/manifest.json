@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/zion/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        36,
+        78,
+        238,
+        231
+      ],
+      "sha256": "e72b2d509482383eb5f86899e5c0c6aefd77e75922db03e86eb6198e19820274"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        29,
+        47,
+        243,
+        231
+      ],
+      "sha256": "d3265859dd17fff9a47453c17189d1be9a572aa92427966c19b5a0bd1b579858"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        13,
+        56,
+        233,
+        231
+      ],
+      "sha256": "0685af8583564da1fb60176be7d5e130e764e42c043250bb5c54732376d5377a"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        13,
+        69,
+        231,
+        231
+      ],
+      "sha256": "e392de1369d2db0df7775bdff89114d337e0c37b92284d2721250946f7364c76"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        21,
+        41,
+        243,
+        222
+      ],
+      "sha256": "3f5d17636fdf0809657d8998f232dc6ab6cb72e4e3ce0edaf923f53805ee4166"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        58,
+        243,
+        222
+      ],
+      "sha256": "e50f78a258a0488b2f9179d14363cb75276d427716cd7712e8b6f9e1c179e5b4"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        69,
+        239,
+        224
+      ],
+      "sha256": "3abbe8f2be76be447f11aa2358e7c648d33ceefc2bdc17e17db16960d37c6208"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        39,
+        69,
+        237,
+        224
+      ],
+      "sha256": "8b4a02b3293ce3bb6b0a167fcca7e8db4bc7e26422cb60ae6ed010928501bc88"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "owner": "sovereign",
+  "source": "art-source\\monster-actions-v2\\sovereign-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sovereign\\attack\\frame_01.webp",
+      "bbox": [
+        43,
+        45,
+        213,
+        224
+      ],
+      "sha256": "6a8f3fb2de72bfaefec9ba44674d34aeff5358080a6f8140dc26ca13904eaf7e"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sovereign\\attack\\frame_02.webp",
+      "bbox": [
+        48,
+        61,
+        207,
+        224
+      ],
+      "sha256": "079b8510aabe9d2837ab0fbd8568f8750621acd7e2b47e775ea141a42b2555fd"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sovereign\\attack\\frame_03.webp",
+      "bbox": [
+        32,
+        72,
+        223,
+        224
+      ],
+      "sha256": "44de65b36c9acecf6d43bf69457e6a7a9dc0a2873e7a7fbc3292fb906010d0de"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sovereign\\hit\\frame_01.webp",
+      "bbox": [
+        42,
+        47,
+        213,
+        224
+      ],
+      "sha256": "ae4b224e651de0a91db2dc253f9694d90ece7753fbc0107724bc4a7c5647270d"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sovereign\\hit\\frame_02.webp",
+      "bbox": [
+        48,
+        68,
+        208,
+        224
+      ],
+      "sha256": "fd008fecd106857654f8b6800096c82ff75e2a6ca63ee46d37bb86b08eee29c3"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sovereign\\hit\\frame_03.webp",
+      "bbox": [
+        46,
+        59,
+        209,
+        224
+      ],
+      "sha256": "04747ce8c49191b2edfc8ba4a0d51a880c1dc7e15fa4a508f47d550e43c7be86"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sovereign\\death\\frame_01.webp",
+      "bbox": [
+        49,
+        66,
+        207,
+        224
+      ],
+      "sha256": "5ff08fb4f899a94e8ba415b8f4aa3c0c1e3e61b646102fe1d0e7e1c683147e06"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sovereign\\death\\frame_02.webp",
+      "bbox": [
+        43,
+        103,
+        213,
+        224
+      ],
+      "sha256": "5f94a162bdcb32d0b301e8e00981cdecad30ffe5c7524ea35364b252dae55325"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sovereign\\death\\frame_03.webp",
+      "bbox": [
+        42,
+        106,
+        213,
+        224
+      ],
+      "sha256": "e82705859ebf8ec7b35e133abe0d041e13a0f1902a7c49294bad4c54f9df340d"
+    }
+  ]
+}

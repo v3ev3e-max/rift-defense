@@ -1,0 +1,123 @@
+{
+  "owner": "phantom",
+  "source": "art-source\\monster-actions-v2\\phantom-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phantom\\attack\\frame_01.webp",
+      "bbox": [
+        47,
+        60,
+        209,
+        224
+      ],
+      "sha256": "c09dae696efedb530c5369150f68dbd87995fc397764dd3fa508afddc3bba76e"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phantom\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        67,
+        224,
+        224
+      ],
+      "sha256": "202fec4aa36915ef9a7bc37d8851ec60fc0769c97f6ba4f4e6127a6cac061c6d"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phantom\\attack\\frame_03.webp",
+      "bbox": [
+        46,
+        64,
+        210,
+        224
+      ],
+      "sha256": "fdd6c2fe059caa448380307e06e988870157f1e3c897de788d7f0737092867d0"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phantom\\hit\\frame_01.webp",
+      "bbox": [
+        38,
+        58,
+        217,
+        224
+      ],
+      "sha256": "7ab11fd05bc838649a66033b9c16ce4bbcb087f767c8e9ba57ad664e2096fdd2"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phantom\\hit\\frame_02.webp",
+      "bbox": [
+        49,
+        80,
+        206,
+        224
+      ],
+      "sha256": "182d6ea2aa5e4b6e95c07c0bfa6a7b616446837a11c6f0564e26c2adceec8873"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phantom\\hit\\frame_03.webp",
+      "bbox": [
+        46,
+        52,
+        209,
+        224
+      ],
+      "sha256": "a3cc8d32d5d06b741f2cbbea3ddd1d7c0bbd43d4e0596dba3e869ed88f2c948e"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phantom\\death\\frame_01.webp",
+      "bbox": [
+        61,
+        66,
+        195,
+        224
+      ],
+      "sha256": "d8a45e7f0d5cfe53bc4a48ea46f29b3fa2ccfd252ca77730a078f4d511374ed8"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phantom\\death\\frame_02.webp",
+      "bbox": [
+        51,
+        65,
+        204,
+        224
+      ],
+      "sha256": "0971d87055ba13fc97724ca46e3c9185bde670aa755631fac1b67cd5630a2809"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phantom\\death\\frame_03.webp",
+      "bbox": [
+        60,
+        124,
+        196,
+        224
+      ],
+      "sha256": "73e1e828e61c8a509794d7fa57c3c13c87b1a200a567b7525fb9ec92fc18c216"
+    }
+  ]
+}

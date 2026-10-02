@@ -1,0 +1,123 @@
+{
+  "owner": "paradox_shell",
+  "source": "art-source\\monster-actions-v2\\paradox_shell-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\paradox_shell\\attack\\frame_01.webp",
+      "bbox": [
+        48,
+        60,
+        208,
+        224
+      ],
+      "sha256": "6b406377afe8d739401d5c99cadb207b24283f5a15ed4f6e8ba51f22b4b72e98"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\paradox_shell\\attack\\frame_02.webp",
+      "bbox": [
+        34,
+        57,
+        222,
+        224
+      ],
+      "sha256": "ccaca94470cc91af626d8d325c057613071f72bffa5091c9d136a666e9c76513"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\paradox_shell\\attack\\frame_03.webp",
+      "bbox": [
+        44,
+        67,
+        211,
+        224
+      ],
+      "sha256": "776cb2b5b7f7e088fc5ef442ecf4ef99ad8183ff58e5336a85a7d0330ec2cff3"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\paradox_shell\\hit\\frame_01.webp",
+      "bbox": [
+        46,
+        67,
+        209,
+        224
+      ],
+      "sha256": "0f5826f4ac87ad5961bd63c680e342a3aaa41216c7925a88a0c6dd9e172cf803"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\paradox_shell\\hit\\frame_02.webp",
+      "bbox": [
+        44,
+        77,
+        211,
+        224
+      ],
+      "sha256": "a03a704adfa46f6ab32edb28c8767a37fd1ffafeb1b541953a5b562b6275ea81"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\paradox_shell\\hit\\frame_03.webp",
+      "bbox": [
+        48,
+        53,
+        207,
+        224
+      ],
+      "sha256": "f87ed46350f7c04a84476701d23185c51556ec9dcd30fe258c148754294fc6e0"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\paradox_shell\\death\\frame_01.webp",
+      "bbox": [
+        42,
+        64,
+        213,
+        224
+      ],
+      "sha256": "bdca9b5b9e4bf626cfd2ed94fc9638dd56073c9e6bf8c2dcc29055abf8997f4d"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\paradox_shell\\death\\frame_02.webp",
+      "bbox": [
+        32,
+        108,
+        224,
+        224
+      ],
+      "sha256": "0bfc5d8f3f4aff652623e242c51a81d8f16c484ea6e0840d693dd4787d9a5533"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\paradox_shell\\death\\frame_03.webp",
+      "bbox": [
+        42,
+        120,
+        213,
+        224
+      ],
+      "sha256": "a0a295229eccdf967c1c708ff07a1679b176406d8a6bd1306c4cff4bdf825535"
+    }
+  ]
+}

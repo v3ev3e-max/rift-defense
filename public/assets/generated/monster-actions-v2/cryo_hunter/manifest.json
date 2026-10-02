@@ -1,0 +1,123 @@
+{
+  "owner": "cryo_hunter",
+  "source": "art-source\\monster-actions-v2\\cryo_hunter-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cryo_hunter\\attack\\frame_01.webp",
+      "bbox": [
+        41,
+        68,
+        214,
+        224
+      ],
+      "sha256": "9c9481bad4a2d2f8a45bd22bde16dfee52921f11722c0788a6c3c86d05004743"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cryo_hunter\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        80,
+        224,
+        224
+      ],
+      "sha256": "fac0e0551425bcf8958de3ab61c8d36946d941bfef4e59a023aaf1a7006dd77e"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cryo_hunter\\attack\\frame_03.webp",
+      "bbox": [
+        49,
+        78,
+        206,
+        224
+      ],
+      "sha256": "393191cd64a1bbac3da0eaa163abbaf4ba34181e625de5feed3a2c7ebd368b67"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cryo_hunter\\hit\\frame_01.webp",
+      "bbox": [
+        46,
+        80,
+        210,
+        224
+      ],
+      "sha256": "585536d02998c2db520386957932f646b2f6a0de706ec11075dc83f3f8e0f7ea"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cryo_hunter\\hit\\frame_02.webp",
+      "bbox": [
+        39,
+        72,
+        217,
+        224
+      ],
+      "sha256": "ce18ea1dd732b0283903c04de9cd576396f801091079f475516c3e12a3d1a703"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cryo_hunter\\hit\\frame_03.webp",
+      "bbox": [
+        50,
+        79,
+        206,
+        224
+      ],
+      "sha256": "88cc5281e6f1c92ae9a55da38da7b27f1623901227415db5bb4ee9efdda876c8"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cryo_hunter\\death\\frame_01.webp",
+      "bbox": [
+        44,
+        79,
+        212,
+        224
+      ],
+      "sha256": "3141c5ebe4a7a188513d40f7916bf85037a0f6df29d55334ce958d2af8747b51"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cryo_hunter\\death\\frame_02.webp",
+      "bbox": [
+        39,
+        93,
+        217,
+        224
+      ],
+      "sha256": "cea37186d2ea4e49845d8b5d04c3cbd835ab135c2cccc91e8d162bcfdb53c00a"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\cryo_hunter\\death\\frame_03.webp",
+      "bbox": [
+        41,
+        130,
+        214,
+        224
+      ],
+      "sha256": "7eeefd7e6b1a785de2227242fb52aca9527c9ad696531e1c626fc96736b11bb6"
+    }
+  ]
+}

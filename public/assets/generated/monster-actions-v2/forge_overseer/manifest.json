@@ -1,0 +1,123 @@
+{
+  "owner": "forge_overseer",
+  "source": "art-source\\monster-actions-v2\\forge_overseer-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_overseer\\attack\\frame_01.webp",
+      "bbox": [
+        49,
+        70,
+        207,
+        224
+      ],
+      "sha256": "8db741d0c49de7ac699ac1cf00c7bc616cc94c7f4dd2c5a4127f4a7757b83c66"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_overseer\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        73,
+        224,
+        224
+      ],
+      "sha256": "8d9863a48fb919d31bdbc18b258214e31457f9745f19d7e4ee5c15d6e75570ea"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_overseer\\attack\\frame_03.webp",
+      "bbox": [
+        42,
+        76,
+        214,
+        224
+      ],
+      "sha256": "86c3a6cd71ab4ff8e7844560f2eb513eb646953feb6e0f6632999f141be67a7c"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_overseer\\hit\\frame_01.webp",
+      "bbox": [
+        41,
+        70,
+        215,
+        224
+      ],
+      "sha256": "a30a6c6ca31a03d7e23a1291806488f940f6f4b550ecb68febbc21f827f0a981"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_overseer\\hit\\frame_02.webp",
+      "bbox": [
+        46,
+        78,
+        209,
+        224
+      ],
+      "sha256": "2e7d34eb1763caa94dab052d77b0f841e519d2cc254028a747a84b887cafb542"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_overseer\\hit\\frame_03.webp",
+      "bbox": [
+        45,
+        77,
+        210,
+        224
+      ],
+      "sha256": "65fa2e468d4dcd4aacd1d7437aec0f3a91e68eb6b093968ce603dd63bc4b3338"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_overseer\\death\\frame_01.webp",
+      "bbox": [
+        45,
+        79,
+        210,
+        224
+      ],
+      "sha256": "381eb4850e2c06af2f386143037324c44c7af429aefdfceeb996e02ca510ad40"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_overseer\\death\\frame_02.webp",
+      "bbox": [
+        36,
+        93,
+        220,
+        224
+      ],
+      "sha256": "a3b728e29b95ce243dd9025bcc3e0d5d6575ac83715cc05b7ba10fffb4f597fe"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\forge_overseer\\death\\frame_03.webp",
+      "bbox": [
+        40,
+        112,
+        215,
+        224
+      ],
+      "sha256": "c1090531b72ee14d4b9b1914e11a023253a17ac67da92b0c6502546e4f8513b7"
+    }
+  ]
+}

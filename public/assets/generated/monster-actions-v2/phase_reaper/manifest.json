@@ -1,0 +1,123 @@
+{
+  "owner": "phase_reaper",
+  "source": "art-source\\monster-actions-v2\\phase_reaper-v2.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phase_reaper\\attack\\frame_01.webp",
+      "bbox": [
+        60,
+        97,
+        196,
+        224
+      ],
+      "sha256": "dd4c6ae6c04c7d1007f813cc75ead184d81729dd63ba77009e2653a8f3f05107"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phase_reaper\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        95,
+        224,
+        224
+      ],
+      "sha256": "49e4993f2c00decd9263b79d85529244f330367242a62e025352c98fdd18c25b"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phase_reaper\\attack\\frame_03.webp",
+      "bbox": [
+        43,
+        88,
+        213,
+        224
+      ],
+      "sha256": "bbb59ccdebd05aa4789e078ce0db247b7c9363fb1956737ed848de452a80aef0"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phase_reaper\\hit\\frame_01.webp",
+      "bbox": [
+        57,
+        79,
+        198,
+        224
+      ],
+      "sha256": "c4c7f286b0b8b830d402eb4309c30d52c4db6fe49cb06cedad14b0f6cd606439"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phase_reaper\\hit\\frame_02.webp",
+      "bbox": [
+        53,
+        74,
+        203,
+        224
+      ],
+      "sha256": "39785f446bbfc165ade8e9d460e88afcdfd9ab8ec6a67cff921f620605ee497e"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phase_reaper\\hit\\frame_03.webp",
+      "bbox": [
+        52,
+        92,
+        204,
+        224
+      ],
+      "sha256": "b300201196812d303b96b86f59fa2003771555a5e71e335194aec218e06a13d9"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phase_reaper\\death\\frame_01.webp",
+      "bbox": [
+        63,
+        83,
+        193,
+        224
+      ],
+      "sha256": "592b88682f748e324f50ce4f2ed2b5cc84ab71e20678cb9ebe5e25f515145e9f"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phase_reaper\\death\\frame_02.webp",
+      "bbox": [
+        45,
+        108,
+        210,
+        224
+      ],
+      "sha256": "af3975de1a2cbafacb5be2372f18702b5bdfcaa7507011d0ddf35f7d32c8c3a3"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\phase_reaper\\death\\frame_03.webp",
+      "bbox": [
+        48,
+        125,
+        208,
+        224
+      ],
+      "sha256": "f097c8c7ae276196c1c6fe2a6dd2faacad668aa635712ea8dbcf28d84665abbd"
+    }
+  ]
+}

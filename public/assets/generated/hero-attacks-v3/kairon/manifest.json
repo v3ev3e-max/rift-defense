@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/kairon/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        43,
+        65,
+        193,
+        235
+      ],
+      "sha256": "8ee420b16ed2528381b65244baba999896df98bec5594a1e6816f7ea2e5208cf"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        41,
+        48,
+        214,
+        236
+      ],
+      "sha256": "40769cf5e53d2a4dbdb931499e1fe7bf60e83f30d5ede3b0bd4536a1e6298b53"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        14,
+        80,
+        235,
+        236
+      ],
+      "sha256": "c0734d378d8a971ed424d5dbf197394aeb4e26242e0dae800399b4b2c3f473b4"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        13,
+        50,
+        240,
+        236
+      ],
+      "sha256": "08138d58811ce9ad8d2efe0175f0a782737a6699f46e67b49153ff3f56641c5d"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        14,
+        46,
+        243,
+        215
+      ],
+      "sha256": "cc2f642e91bf2261730b7f0b31cfad93e3a9d2c0c4fa86020cd8779172097274"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        37,
+        243,
+        215
+      ],
+      "sha256": "274938a20dfc3173766113747e905bde4a7d97aa9e8d252c4b70e6c3f596fb02"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        55,
+        243,
+        215
+      ],
+      "sha256": "b0acfafd120a17d1c45e0d1cab05fd1d87b689757d47c57b02f8d2be707b391f"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        13,
+        56,
+        219,
+        215
+      ],
+      "sha256": "d9694823e65320c31273e501e99c09caf13896752e34ceb9c7148b76786e4c63"
+    }
+  ]
+}

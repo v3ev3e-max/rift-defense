@@ -1,0 +1,123 @@
+{
+  "owner": "pulse_turret",
+  "source": "art-source\\monster-actions-v2\\pulse_turret-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\pulse_turret\\attack\\frame_01.webp",
+      "bbox": [
+        47,
+        61,
+        208,
+        224
+      ],
+      "sha256": "4d4592ad5d34064fbc3797c53c0dea75116d2aa9ca468c1cc1442c0e3666495b"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\pulse_turret\\attack\\frame_02.webp",
+      "bbox": [
+        35,
+        65,
+        221,
+        224
+      ],
+      "sha256": "f0ad73145d6a663b6828e02129b222303f5d130a85e397f83287f4640ea9b6cc"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\pulse_turret\\attack\\frame_03.webp",
+      "bbox": [
+        45,
+        62,
+        211,
+        224
+      ],
+      "sha256": "79ce8654bdcf9635450e3f5290177bb3b233a0cff0a80827417531db3bb1dd01"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\pulse_turret\\hit\\frame_01.webp",
+      "bbox": [
+        49,
+        66,
+        207,
+        224
+      ],
+      "sha256": "984206465a764b9051cff026d6c7b02994373855a9b63cd0bc9a84f0bd9b9df3"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\pulse_turret\\hit\\frame_02.webp",
+      "bbox": [
+        43,
+        67,
+        212,
+        224
+      ],
+      "sha256": "002df3cfed729f195713d06e512824b068162ed4626fa8d3e3448e27d83bf451"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\pulse_turret\\hit\\frame_03.webp",
+      "bbox": [
+        50,
+        65,
+        206,
+        224
+      ],
+      "sha256": "f3b0afcaaa07a1aa24b11bd0412d5d85d80d96c9594d622c1b26790544a03c89"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\pulse_turret\\death\\frame_01.webp",
+      "bbox": [
+        44,
+        68,
+        211,
+        224
+      ],
+      "sha256": "43c4898e8e747bc06646704cca2f5744e26fecd1b76d1a3d71732a8ae325e80f"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\pulse_turret\\death\\frame_02.webp",
+      "bbox": [
+        32,
+        93,
+        224,
+        224
+      ],
+      "sha256": "e6177dffec18bd5df4bbb31c58005ac93912837d99e02224ecea847a2bad676c"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\pulse_turret\\death\\frame_03.webp",
+      "bbox": [
+        43,
+        106,
+        212,
+        224
+      ],
+      "sha256": "dc522e704a0d406fa64578cb7cdcab01d1a27921df98ec5b7ac0b9702cdfd8e0"
+    }
+  ]
+}

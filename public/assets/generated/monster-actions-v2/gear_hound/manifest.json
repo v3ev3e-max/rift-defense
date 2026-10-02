@@ -1,0 +1,123 @@
+{
+  "owner": "gear_hound",
+  "source": "art-source\\monster-actions-v2\\gear_hound-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gear_hound\\attack\\frame_01.webp",
+      "bbox": [
+        50,
+        88,
+        206,
+        224
+      ],
+      "sha256": "b4aa716b853b4f8352b1265e3f7d394b19894205660ec274c5ce6d9781fcee66"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gear_hound\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        84,
+        224,
+        224
+      ],
+      "sha256": "b0a329a3a96d99aebf93251739aa8abe5926887e63e6c9598ea0bc91102cb2dc"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gear_hound\\attack\\frame_03.webp",
+      "bbox": [
+        48,
+        99,
+        208,
+        224
+      ],
+      "sha256": "3caa6a84e90efea4d6e591c34a7d8aedab35774b72da97e9c9dd4d0a1fe667e3"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gear_hound\\hit\\frame_01.webp",
+      "bbox": [
+        54,
+        83,
+        201,
+        224
+      ],
+      "sha256": "d140076be1db8248cd13e6735aac58d5ed1b550a12225824bd5df399cbc923c5"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gear_hound\\hit\\frame_02.webp",
+      "bbox": [
+        48,
+        81,
+        208,
+        224
+      ],
+      "sha256": "7abccadeed79ab8b909edb7ccf5aeaeea19419c314a8064c837320c7a52fa2e3"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gear_hound\\hit\\frame_03.webp",
+      "bbox": [
+        52,
+        100,
+        203,
+        224
+      ],
+      "sha256": "2806faa4bad160f30337a599ab5f09e0c9d8093745b96b2bb94b53c9bd5f97a0"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gear_hound\\death\\frame_01.webp",
+      "bbox": [
+        42,
+        93,
+        213,
+        224
+      ],
+      "sha256": "c444f6738301e20b687b81f54b43f3424e806a70da96a5a1d6eb028b33422125"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gear_hound\\death\\frame_02.webp",
+      "bbox": [
+        34,
+        128,
+        221,
+        224
+      ],
+      "sha256": "1ee09c71aecb1abcccb1bd84abdb300295263229bcadad3e40554fccfadb2320"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\gear_hound\\death\\frame_03.webp",
+      "bbox": [
+        40,
+        128,
+        215,
+        224
+      ],
+      "sha256": "235aad475b60ba4be22e9096f8369adabb2a0f240699178e8449765086c786c3"
+    }
+  ]
+}

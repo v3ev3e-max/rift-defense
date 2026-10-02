@@ -1,0 +1,123 @@
+{
+  "owner": "jammer",
+  "source": "art-source\\monster-actions-v2\\jammer-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\jammer\\attack\\frame_01.webp",
+      "bbox": [
+        60,
+        33,
+        196,
+        224
+      ],
+      "sha256": "580f0c52501ed7f49cd815cc21c8cb7313f03e13a7369acc7dc9c6271516de8d"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\jammer\\attack\\frame_02.webp",
+      "bbox": [
+        48,
+        34,
+        208,
+        224
+      ],
+      "sha256": "2e6140abcf9e65fcef5a8cb4dd350456726d678dc3e0f0bf7bb0e35355538195"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\jammer\\attack\\frame_03.webp",
+      "bbox": [
+        67,
+        32,
+        189,
+        224
+      ],
+      "sha256": "506f06468a945b065035f0871151659ddeba678690625c9124d4c6078d8bd2d7"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\jammer\\hit\\frame_01.webp",
+      "bbox": [
+        53,
+        46,
+        203,
+        224
+      ],
+      "sha256": "5692ca7b57842e10d8fba1a48c6a8e3803955e1eadda88a51d2352e34cec704a"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\jammer\\hit\\frame_02.webp",
+      "bbox": [
+        54,
+        62,
+        202,
+        224
+      ],
+      "sha256": "e07b1ed0b22ac737107a5e9bafd90af84bfc493a395134a6bc2916f48644dbae"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\jammer\\hit\\frame_03.webp",
+      "bbox": [
+        68,
+        37,
+        188,
+        224
+      ],
+      "sha256": "5176b86b69b511b172ced631f54820dd0c8e42ee8bb212de0622d135415d60b9"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\jammer\\death\\frame_01.webp",
+      "bbox": [
+        59,
+        49,
+        197,
+        224
+      ],
+      "sha256": "416a2a0dfcf2ca3f667ed2b964a19f1fdac80258b8b1fc22426d01cd361ea854"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\jammer\\death\\frame_02.webp",
+      "bbox": [
+        53,
+        46,
+        203,
+        224
+      ],
+      "sha256": "87c8853a85c2f1787686889d22ec2e7d1224c677869991a634304c05e4582680"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\jammer\\death\\frame_03.webp",
+      "bbox": [
+        61,
+        75,
+        194,
+        224
+      ],
+      "sha256": "154de1f737cd397606b3d025191ea0d7fa3eb3fb546a1f1df26817843128e359"
+    }
+  ]
+}

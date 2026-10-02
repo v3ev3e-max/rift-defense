@@ -1,0 +1,123 @@
+{
+  "owner": "bloom_keeper",
+  "source": "art-source\\monster-actions-v2\\bloom_keeper-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bloom_keeper\\attack\\frame_01.webp",
+      "bbox": [
+        51,
+        83,
+        204,
+        224
+      ],
+      "sha256": "d12ae90993258b3292a2c16e22256242736cbeaf79c7d33a7f866dcccfc7f98b"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bloom_keeper\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        88,
+        224,
+        224
+      ],
+      "sha256": "e302b237df89357619781b8e19036575ea4e3fa5e65cb5589316a6f9aa357a1a"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bloom_keeper\\attack\\frame_03.webp",
+      "bbox": [
+        53,
+        84,
+        202,
+        224
+      ],
+      "sha256": "1f5e3385aad317b6953c1407d0eae96acf1a5da14f30edf325e25fbf0f903642"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bloom_keeper\\hit\\frame_01.webp",
+      "bbox": [
+        48,
+        96,
+        208,
+        224
+      ],
+      "sha256": "1f580fa2e79e1d489d811cc92667696d0531a0cc244fdc4ea78cdbc617ab0470"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bloom_keeper\\hit\\frame_02.webp",
+      "bbox": [
+        52,
+        91,
+        203,
+        224
+      ],
+      "sha256": "3b6cbbcd2561ab8d55d0d2b372e5ec3b6d1c69a01378f3596074e74618ecff66"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bloom_keeper\\hit\\frame_03.webp",
+      "bbox": [
+        49,
+        92,
+        207,
+        224
+      ],
+      "sha256": "3eabc80924ec3563b97a118b5d4da233d939ca4edd75202ed44d32dfe03261c8"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bloom_keeper\\death\\frame_01.webp",
+      "bbox": [
+        40,
+        101,
+        216,
+        224
+      ],
+      "sha256": "29f28e315c4d1292749e4eb0123f4d51028189128f298e7eeb3f080b0f20a8ad"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bloom_keeper\\death\\frame_02.webp",
+      "bbox": [
+        38,
+        126,
+        218,
+        224
+      ],
+      "sha256": "68caebc38fc75e3f4d0bfba1870ec8429e369813acbb74a4fc3e5f2007413d00"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bloom_keeper\\death\\frame_03.webp",
+      "bbox": [
+        34,
+        139,
+        222,
+        224
+      ],
+      "sha256": "eaa82ff2494c3d71337024f9f3e2ea2c25693ff52c36002d35294429cd38ad38"
+    }
+  ]
+}

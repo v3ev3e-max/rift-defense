@@ -1,0 +1,123 @@
+{
+  "owner": "tide_skimmer",
+  "source": "art-source\\monster-actions-v2\\tide_skimmer-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tide_skimmer\\attack\\frame_01.webp",
+      "bbox": [
+        41,
+        104,
+        214,
+        224
+      ],
+      "sha256": "3a4fc8c91f2f5a3499cfd13748b2f53d59892ffc5b9ce3874646297ec70b4965"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tide_skimmer\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        98,
+        224,
+        224
+      ],
+      "sha256": "7401bed1310f7daa3229518010f3b04d290a17c9485d378398de0bf609f9bc1f"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tide_skimmer\\attack\\frame_03.webp",
+      "bbox": [
+        39,
+        108,
+        216,
+        224
+      ],
+      "sha256": "0002191d5790d90f0b3bfd15a5791fd6a90d9e44427c320de9455a0ac6b69251"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tide_skimmer\\hit\\frame_01.webp",
+      "bbox": [
+        44,
+        93,
+        211,
+        224
+      ],
+      "sha256": "4b696abfa34168b1fcbfb3953e6e0ed848b39cfa35170355eb9f02a70fc71090"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tide_skimmer\\hit\\frame_02.webp",
+      "bbox": [
+        44,
+        90,
+        211,
+        224
+      ],
+      "sha256": "79bda7d03f765bf2713e38c98e3d060153ab6473532cb7a6741ad99b72443367"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tide_skimmer\\hit\\frame_03.webp",
+      "bbox": [
+        45,
+        117,
+        211,
+        224
+      ],
+      "sha256": "9acb8efab8e1c3a7db773daf1923699ece3af2b5987864edc5a389fe0a8f73d8"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tide_skimmer\\death\\frame_01.webp",
+      "bbox": [
+        47,
+        125,
+        208,
+        224
+      ],
+      "sha256": "76f18d265f5c1603494b3fb05bea664bf33d69cd7339db88e70882214aa2ff5b"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tide_skimmer\\death\\frame_02.webp",
+      "bbox": [
+        43,
+        140,
+        213,
+        224
+      ],
+      "sha256": "22e1220d4668f624facb6e3e6ac28f7f8ef697a91def1fd36f8d5516f74221c2"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\tide_skimmer\\death\\frame_03.webp",
+      "bbox": [
+        41,
+        138,
+        215,
+        224
+      ],
+      "sha256": "01314360183d4d058e1e874281584744c1d2ff97dae50b42beb14f1f4b73daa6"
+    }
+  ]
+}

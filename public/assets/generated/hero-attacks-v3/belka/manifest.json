@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/belka/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        48,
+        73,
+        205,
+        236
+      ],
+      "sha256": "ff5eb4bf46110d6d4c2705ef4aff12d5bcc4e00ab8c11aeb5a9d02713cd05cfc"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        30,
+        45,
+        224,
+        236
+      ],
+      "sha256": "3862ccd6949390f13ccc1b7eca7b39ee2ad204fc069ba6b7367d88b542368e2d"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        23,
+        80,
+        243,
+        235
+      ],
+      "sha256": "1a77ca2ca73243e70c9c9ce2cf483965d6163db13202e834c0ecf818d616f805"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        13,
+        66,
+        236,
+        235
+      ],
+      "sha256": "8bd2d21e983c6e7a785b319e03bb22bb08e15db24cadc2dae5ccde466dba6ede"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        24,
+        56,
+        243,
+        213
+      ],
+      "sha256": "db77212f7de304a053db71e6689675583e265b86581536271755ba96022f3c5b"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        36,
+        243,
+        212
+      ],
+      "sha256": "b604be0942c335355a05f5b15e3bf76dab76fb72224bc996b6ec69da4ed53809"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        42,
+        230,
+        213
+      ],
+      "sha256": "dbe2be5cbf95c4d865cabdea475abd9f53dd2d7f06ac89aba67fa9a73f1fb8ff"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        50,
+        43,
+        203,
+        212
+      ],
+      "sha256": "f6ac95ad8c5a2d7d75621344a01023e1558e6b1d32b16f855f48f25d997dcbac"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "owner": "epoch_caster",
+  "source": "art-source\\monster-actions-v2\\epoch_caster-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\epoch_caster\\attack\\frame_01.webp",
+      "bbox": [
+        62,
+        76,
+        194,
+        224
+      ],
+      "sha256": "068ac2d19b551c5a06441810f41e848923274bf0c2efe0137610910be384c6b4"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\epoch_caster\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        76,
+        224,
+        224
+      ],
+      "sha256": "8809d6a39a9c7b13dd36d77eca358c2edd927722c87c556adcbd0fa5502a989f"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\epoch_caster\\attack\\frame_03.webp",
+      "bbox": [
+        64,
+        73,
+        192,
+        224
+      ],
+      "sha256": "94ad1f79e5e41a539afa497fc23928bf6896a2d41724afa8335e29c0798f0446"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\epoch_caster\\hit\\frame_01.webp",
+      "bbox": [
+        60,
+        77,
+        196,
+        224
+      ],
+      "sha256": "79c303a129b0ef4667c5279d7a683cf7a65f77ad88a8763531c83b290242319e"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\epoch_caster\\hit\\frame_02.webp",
+      "bbox": [
+        63,
+        85,
+        193,
+        224
+      ],
+      "sha256": "3223df659bf8997e917b2319e39193aaad7d976ed176102e72a25bd9681c086e"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\epoch_caster\\hit\\frame_03.webp",
+      "bbox": [
+        69,
+        74,
+        186,
+        224
+      ],
+      "sha256": "0991d44776b7f7253995dcf4430a7e734edecb0f801af5742386ae8c7ec3558a"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\epoch_caster\\death\\frame_01.webp",
+      "bbox": [
+        73,
+        75,
+        183,
+        224
+      ],
+      "sha256": "97108aae09a93cc03e16771a4ee2d0202ba0daf43ac475fb449430363214d798"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\epoch_caster\\death\\frame_02.webp",
+      "bbox": [
+        59,
+        83,
+        196,
+        224
+      ],
+      "sha256": "748d0f252fe57b031ea3e2bafdc9804d10e34d8553980901bbb280751e477135"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\epoch_caster\\death\\frame_03.webp",
+      "bbox": [
+        69,
+        109,
+        186,
+        224
+      ],
+      "sha256": "a8e480e0585530da80e2650371023727a7b7ad6da596b12fb826185d48ecef41"
+    }
+  ]
+}

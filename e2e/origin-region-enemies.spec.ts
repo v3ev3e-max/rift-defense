@@ -32,5 +32,24 @@ for(const [stage,ids] of Object.entries(rosters))test(`${stage} loads its own co
   return bad;
  },ids);
  expect(clipped).toEqual([]);
+ const actions=await page.evaluate(ids=>{
+  const app=(window as any).rift,scene=app.game.scene.getScene('Battle'),m=app.model,results:any[]=[];
+  for(const id of ids){
+   m.spawn(id);const e=m.enemies.find((enemy:any)=>enemy.active&&enemy.kind===id);
+   e.x=400;e.y=400;e.meleeAttackedAt=undefined;e.rangedFiredAt=undefined;e.abilityCastAt=undefined;
+   const ranged=['prism_cannon','moon_ray','nova_turret','genesis_eye'].includes(id);
+   const support=['coral_singer','bloom_keeper','forge_conductor','fate_weaver'].includes(id);
+   e[ranged?'rangedFiredAt':support?'abilityCastAt':'meleeAttackedAt']=10;
+   const keys:string[]=[];
+   for(const time of [10,10.23,10.45,10.67,12]){
+    m.time=time;scene.enemyHitUntil[e.index]=0;scene.update(0,0);keys.push(scene.enemySprites[e.index].texture.key);
+   }
+   e.hp-=1;scene.visualTime+=1;scene.update(0,0);const hurt=scene.enemySprites[e.index].texture.key;
+   scene.visualTime+=.31;scene.update(0,0);const recovered=scene.enemySprites[e.index].texture.key;
+   results.push({id,keys,hurt,recovered,owned:!!scene.enemyActionOwners[id]});e.active=false;
+  }
+  return results;
+ },ids);
+ expect(actions).toEqual(ids.map((id,i)=>({id,owned:actions[i].owned,keys:[1,2,3].map(n=>`enemy-${id}-${['coral_singer','bloom_keeper','forge_conductor','fate_weaver'].includes(id)?'support':`${actions[i].owned?'owned-':''}attack`}-${n}`).concat([`enemy-${id}-move-1`,`enemy-${id}-move-1`]),hurt:`enemy-${id}-${actions[i].owned?'owned-hit-1':'hit'}`,recovered:`enemy-${id}-move-1`})));
  expect(errors).toEqual([]);
 });

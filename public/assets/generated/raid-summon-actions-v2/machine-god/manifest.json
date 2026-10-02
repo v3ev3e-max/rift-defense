@@ -1,0 +1,159 @@
+{
+  "owner": "machine-god",
+  "source": "art-source\\monster-actions-v2\\summon-machine-god.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "move",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\move\\frame_01.webp",
+      "bbox": [
+        75,
+        147,
+        181,
+        224
+      ],
+      "sha256": "2820571c2b19070e839e6026b02c1b12a227a90fd9de9c75fe71d0318962dad1"
+    },
+    {
+      "state": "move",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\move\\frame_02.webp",
+      "bbox": [
+        84,
+        136,
+        171,
+        224
+      ],
+      "sha256": "0b03a9d410775c0fbca9e19c7b7b23d7380bf3aca5d12bfd39a12079b2b9907a"
+    },
+    {
+      "state": "move",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\move\\frame_03.webp",
+      "bbox": [
+        69,
+        141,
+        187,
+        224
+      ],
+      "sha256": "602b525e3f4b4c36bd3a05520d4d98d683d6f71a43ccfb5ff12e15d36f8e72c4"
+    },
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\attack\\frame_01.webp",
+      "bbox": [
+        70,
+        138,
+        186,
+        224
+      ],
+      "sha256": "15b6e1afcec15256b6e479b85ebf064b3647cb8dd79dcbb928261592c279d002"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        141,
+        224,
+        224
+      ],
+      "sha256": "d1cba53ba4c7f0018720912c126a14967c2573b1edf4d9dca3e219e1ec1efdba"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\attack\\frame_03.webp",
+      "bbox": [
+        68,
+        143,
+        188,
+        224
+      ],
+      "sha256": "bf3a0236107c559efcd3bc833d8348cbf7a43a63f0baa5a311b4124b27680044"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\hit\\frame_01.webp",
+      "bbox": [
+        72,
+        137,
+        183,
+        224
+      ],
+      "sha256": "167bd3573f3c2972f8aab645c496c73dfc8400797087928a0222b869ba38ceaf"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\hit\\frame_02.webp",
+      "bbox": [
+        66,
+        135,
+        189,
+        224
+      ],
+      "sha256": "a634d961be6fc6931f2e248d1cd56ccbf9dc18c59e6b599628d6b45f611cc77f"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\hit\\frame_03.webp",
+      "bbox": [
+        77,
+        148,
+        178,
+        224
+      ],
+      "sha256": "cec88123ff80e1e8d7686272f2b37882d92617898413adbe18b2778e3382742d"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\death\\frame_01.webp",
+      "bbox": [
+        74,
+        144,
+        181,
+        224
+      ],
+      "sha256": "780e884ea81646cbedcad4f1c72af8928c38a4a50338a7a19db68f2c8b823e7a"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\death\\frame_02.webp",
+      "bbox": [
+        65,
+        138,
+        190,
+        224
+      ],
+      "sha256": "ac615da5da4977693973f21bf02eba93afb6f6b9a69013995a0e9842d09890f0"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\machine-god\\death\\frame_03.webp",
+      "bbox": [
+        71,
+        139,
+        185,
+        224
+      ],
+      "sha256": "32db818b2f8d63534952470b88b0905c699b8264252aa59af12f73fb3c488903"
+    }
+  ]
+}

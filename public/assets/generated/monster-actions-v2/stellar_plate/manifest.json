@@ -1,0 +1,123 @@
+{
+  "owner": "stellar_plate",
+  "source": "art-source\\monster-actions-v2\\stellar_plate-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\stellar_plate\\attack\\frame_01.webp",
+      "bbox": [
+        51,
+        64,
+        205,
+        224
+      ],
+      "sha256": "630a4e5fc44e3e5d7a1cb60cb72d8aacce8fc13cd35fb4dcaea01a169e076d2e"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\stellar_plate\\attack\\frame_02.webp",
+      "bbox": [
+        36,
+        74,
+        220,
+        224
+      ],
+      "sha256": "b301e9daa354ccdc738fe2113910d1a9e14ff9d72e7e4cb991ff828f206bb6b4"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\stellar_plate\\attack\\frame_03.webp",
+      "bbox": [
+        52,
+        74,
+        204,
+        224
+      ],
+      "sha256": "01a44758f98d0d52c2e68f34edf11c08be93412fb5415c16b0bbfab9dcd63c9a"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\stellar_plate\\hit\\frame_01.webp",
+      "bbox": [
+        48,
+        55,
+        207,
+        224
+      ],
+      "sha256": "f6a765b01f95f8ddd6f756a7ebee05a77d8620bbc37976ba1dba041415f5894f"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\stellar_plate\\hit\\frame_02.webp",
+      "bbox": [
+        56,
+        79,
+        200,
+        224
+      ],
+      "sha256": "ae56b2f33b5c0aa5b25deedc4c469cb7537085b6fa3add1d1b03fcfc068ef74b"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\stellar_plate\\hit\\frame_03.webp",
+      "bbox": [
+        52,
+        71,
+        204,
+        224
+      ],
+      "sha256": "31c8928c336eca62df264de30ac5530de667bed341f481dd1adf4b0ed14f4d2c"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\stellar_plate\\death\\frame_01.webp",
+      "bbox": [
+        50,
+        73,
+        205,
+        224
+      ],
+      "sha256": "d5ca92f706a1e1028180619b269ddf6d9411696fb9f6d4a31c0d7a3588409a3c"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\stellar_plate\\death\\frame_02.webp",
+      "bbox": [
+        32,
+        96,
+        224,
+        224
+      ],
+      "sha256": "f69c0bd94dff4229ccc33cf939916c0851e91bdb0b74390ba19dcaa5e83ef14e"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\stellar_plate\\death\\frame_03.webp",
+      "bbox": [
+        39,
+        119,
+        216,
+        224
+      ],
+      "sha256": "dbb8f672cde27202216f56925b08edc9ba49d35425064a22f4ff0b5e3aa73781"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/freya/source-sd-v2.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        48,
+        86,
+        216,
+        239
+      ],
+      "sha256": "3ec8bc92dcd26ca6b39a2f61c8dda90a4972740e1c0c7ef1fb2f7389afbb5dd6"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        38,
+        94,
+        232,
+        239
+      ],
+      "sha256": "9b6e9ee4c9c71278c7f746c921ae71a61a5b3374622e55eaa58e83c445c37aac"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        39,
+        58,
+        243,
+        239
+      ],
+      "sha256": "636acf86050e73baaf98b620d534945e6a5dc3f8ffe7e2135d4cb9d5742d6798"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        13,
+        97,
+        233,
+        239
+      ],
+      "sha256": "a5c81a841199e61c9530e6a8ad9d17b100208e96ad57578d4e84618f520091b1"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        28,
+        29,
+        243,
+        216
+      ],
+      "sha256": "19e566b58ae4ffbb20e8de4ce3ee5c0c1b96230abdfb46b5336446e852437cf6"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        34,
+        235,
+        213
+      ],
+      "sha256": "b3fbf4375800ed17f570bb1d25e4e9d8c4f6a7cb135b90e4f688722a8b699fbb"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        30,
+        60,
+        243,
+        216
+      ],
+      "sha256": "de251efa26e89e49a7aad900714ff7aca25b045dde02c73c4969003af7fda2f6"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        13,
+        63,
+        235,
+        216
+      ],
+      "sha256": "62349417a29f107abb725a9a015ab0eec1ec0479a848771082f563da257f0674"
+    }
+  ]
+}

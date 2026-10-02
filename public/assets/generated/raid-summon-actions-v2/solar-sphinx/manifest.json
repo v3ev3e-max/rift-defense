@@ -1,0 +1,159 @@
+{
+  "owner": "solar-sphinx",
+  "source": "art-source\\monster-actions-v2\\summon-solar-sphinx-v2.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "move",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\move\\frame_01.webp",
+      "bbox": [
+        47,
+        78,
+        209,
+        224
+      ],
+      "sha256": "117c8b12257541eaffdb01c566d1dfebc093e90aba4b4b20a1d26140ab40f162"
+    },
+    {
+      "state": "move",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\move\\frame_02.webp",
+      "bbox": [
+        50,
+        83,
+        205,
+        224
+      ],
+      "sha256": "f41aae59f8a91dbf23ec7594e541ecb5efdb997c574163217b860b3944862f95"
+    },
+    {
+      "state": "move",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\move\\frame_03.webp",
+      "bbox": [
+        50,
+        80,
+        206,
+        224
+      ],
+      "sha256": "8705db1a2ab1d29b9e3666936a86ed1c45038623a138cc8533fac75b39cb7cc8"
+    },
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\attack\\frame_01.webp",
+      "bbox": [
+        63,
+        94,
+        192,
+        224
+      ],
+      "sha256": "2d37284ba6e7c629cac9ff4b9282e36b1eafc6f1e6b82d3303287c807cb5832a"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        80,
+        224,
+        224
+      ],
+      "sha256": "5c69dc7834c404ff23bff7949f9b94ef9a2399f4bc1cddbdc4e93335364fddd3"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\attack\\frame_03.webp",
+      "bbox": [
+        47,
+        101,
+        209,
+        224
+      ],
+      "sha256": "06bd4941ca175607eb280d077b76bbdb533ab10b8ab71ea21815e3be440dc7a5"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\hit\\frame_01.webp",
+      "bbox": [
+        47,
+        81,
+        208,
+        224
+      ],
+      "sha256": "54564953e3795ee8eaf1718821ed02e76450d02bf6aeb8bbe805c63462b4d8ee"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\hit\\frame_02.webp",
+      "bbox": [
+        37,
+        78,
+        219,
+        224
+      ],
+      "sha256": "5da250f169ed81377fd9073888f43e3c3fbed37de41e0eae170e263593145709"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\hit\\frame_03.webp",
+      "bbox": [
+        55,
+        84,
+        201,
+        224
+      ],
+      "sha256": "791ce54278c80a4dfc93fc40911145680f8ef90655026afb605f6c6f8ad05c0e"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\death\\frame_01.webp",
+      "bbox": [
+        45,
+        85,
+        210,
+        224
+      ],
+      "sha256": "6e8c0e7de1c3c1618310a19c37854fb6ff4f08083ea7e846494a175be6309673"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\death\\frame_02.webp",
+      "bbox": [
+        45,
+        69,
+        210,
+        224
+      ],
+      "sha256": "80429b58910f0945c365e1c9536031843c45f3f110cd46d61d4f4a0e5ee8777d"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\raid-summon-actions-v2\\solar-sphinx\\death\\frame_03.webp",
+      "bbox": [
+        49,
+        95,
+        207,
+        224
+      ],
+      "sha256": "50809abd47e16ed3f2f93b4eea8b02691ec5b6d66f0b7a0c872d4b3c876bb69c"
+    }
+  ]
+}

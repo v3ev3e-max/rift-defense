@@ -1,0 +1,123 @@
+{
+  "owner": "fate_weaver",
+  "source": "art-source\\monster-actions-v2\\fate_weaver-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\fate_weaver\\attack\\frame_01.webp",
+      "bbox": [
+        55,
+        82,
+        201,
+        224
+      ],
+      "sha256": "087c2da9b89c52c2d3b40bdb3c4cfb3ee300e4a2e1c2531dfbabd5bb0388c175"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\fate_weaver\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        78,
+        224,
+        224
+      ],
+      "sha256": "131dd1c5d11696a73c6d040e5400f7dd420ac4af1024de39da65d172d5d3bb85"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\fate_weaver\\attack\\frame_03.webp",
+      "bbox": [
+        51,
+        82,
+        204,
+        224
+      ],
+      "sha256": "9fb9717f4127e378e1ce8b75b2717b4290ce05597281d36616dedb77692972ce"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\fate_weaver\\hit\\frame_01.webp",
+      "bbox": [
+        54,
+        78,
+        201,
+        224
+      ],
+      "sha256": "dff6c6d0c964ac790195a4b28556c1503f1c173d6470f6d7d76f2ece7cb2d050"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\fate_weaver\\hit\\frame_02.webp",
+      "bbox": [
+        48,
+        86,
+        207,
+        224
+      ],
+      "sha256": "3cb8e309a27b43bf1cc55e18024bcf3103c75686232ba7bf91301ed0e8e76aac"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\fate_weaver\\hit\\frame_03.webp",
+      "bbox": [
+        62,
+        89,
+        193,
+        224
+      ],
+      "sha256": "70a5b4770cc2b9293643527ccad391709f447133e3fcc0eb9db9f2b4e656268a"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\fate_weaver\\death\\frame_01.webp",
+      "bbox": [
+        48,
+        83,
+        207,
+        224
+      ],
+      "sha256": "ac602bd0f6eb1b30ec142f1f371528b120604f854385f8e27ae471f16679b624"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\fate_weaver\\death\\frame_02.webp",
+      "bbox": [
+        38,
+        111,
+        218,
+        224
+      ],
+      "sha256": "baff722007f70ad7383a6a36a83f31366ab82a24066fc727e9b4f30a76178535"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\fate_weaver\\death\\frame_03.webp",
+      "bbox": [
+        40,
+        124,
+        216,
+        224
+      ],
+      "sha256": "8363caf8058b3ca49a21c4d19f202b9c406320e33b1f535a1f37384f0391e969"
+    }
+  ]
+}

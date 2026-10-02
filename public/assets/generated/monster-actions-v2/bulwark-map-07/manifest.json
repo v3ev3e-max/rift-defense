@@ -1,0 +1,123 @@
+{
+  "owner": "bulwark-map-07",
+  "source": "art-source\\monster-actions-v2\\bulwark-map-07-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bulwark-map-07\\attack\\frame_01.webp",
+      "bbox": [
+        60,
+        100,
+        195,
+        224
+      ],
+      "sha256": "9ff11666872fa5d30c4efb98d685faf750233239572df68cc008f31cb54908da"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bulwark-map-07\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        96,
+        224,
+        224
+      ],
+      "sha256": "9f489827922330285efb5bf4c20b2c2c2206e6d46fd8f97ea90d9ab0d3b24b2f"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bulwark-map-07\\attack\\frame_03.webp",
+      "bbox": [
+        59,
+        102,
+        196,
+        224
+      ],
+      "sha256": "023e90b9b4f5b4fcfdd0e60f8bf8f74071c59913cf3137c9d7e5f05fa3e3cc2a"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bulwark-map-07\\hit\\frame_01.webp",
+      "bbox": [
+        50,
+        87,
+        205,
+        224
+      ],
+      "sha256": "fd9c14a3fbd303f96e7e57f8d51515c1234a7f9e3a7a47a2a606877b1ec82742"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bulwark-map-07\\hit\\frame_02.webp",
+      "bbox": [
+        57,
+        93,
+        198,
+        224
+      ],
+      "sha256": "bb70aa884fd96d07e9c374093313670c0f5c83f8b40b81f61833cd68eec37944"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bulwark-map-07\\hit\\frame_03.webp",
+      "bbox": [
+        61,
+        104,
+        195,
+        224
+      ],
+      "sha256": "fca4441ed02f8604df48264362edcac36018423df8af501efc1a6b374420d77c"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bulwark-map-07\\death\\frame_01.webp",
+      "bbox": [
+        54,
+        85,
+        202,
+        224
+      ],
+      "sha256": "28f74d7cc05001f628bcfb2e05c36a0b37db93f3db3f8cc49e6e88262318690d"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bulwark-map-07\\death\\frame_02.webp",
+      "bbox": [
+        38,
+        118,
+        217,
+        224
+      ],
+      "sha256": "b6a8bbfd28c8d7df53026fb7b0d288e7268841f0c0d5f4b86b3c1cd761c80e95"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\bulwark-map-07\\death\\frame_03.webp",
+      "bbox": [
+        50,
+        152,
+        205,
+        224
+      ],
+      "sha256": "e60712d986343abee8a4b8cd25ce3d7023682367cf2eedd02c4cd3372c74f51d"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/ciel/source-sd-v2.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        47,
+        83,
+        196,
+        239
+      ],
+      "sha256": "f1badeaeb4c77c6df5290789ae8bf1d46c70fe638a0a1d6a66084d693ba54767"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        54,
+        19,
+        214,
+        238
+      ],
+      "sha256": "9195c711faba5ea423f0b6fc45a422e1e054a12d3d1a3e71f56d9c8c38eb62e4"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        22,
+        94,
+        241,
+        239
+      ],
+      "sha256": "eb9d86a8aa2fbf0f382cea5193f5b11979b568fba64dcb8fa5c14e38480470ac"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        36,
+        38,
+        223,
+        239
+      ],
+      "sha256": "a04bb85699548751b417ae094bd11125ed6e1545f3ace915f3b26ae3b04f1ba2"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        32,
+        55,
+        243,
+        217
+      ],
+      "sha256": "ed92af39bbb479e8d87bf1471f76012d9a41fbaf17b78e45d2a7714581ffb8f2"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        68,
+        243,
+        217
+      ],
+      "sha256": "8a13ab93728ce8ec4434d5da10b8be5f755d8f8f5bd921138326127f8adcd7b1"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        76,
+        225,
+        229
+      ],
+      "sha256": "ef2df9415d10e97e2c5e292a375850e751e5121b810d4ae5fe6277576da381da"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        47,
+        77,
+        197,
+        231
+      ],
+      "sha256": "42e732855aaeffbffcb3b058144ec060160e9ecacebebe38d01306b037161fbf"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "owner": "ancient_treant",
+  "source": "art-source\\monster-actions-v2\\ancient_treant-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ancient_treant\\attack\\frame_01.webp",
+      "bbox": [
+        52,
+        69,
+        203,
+        224
+      ],
+      "sha256": "738c93529a00f11bcd7f991dd4d1da80cb23dc8182157b6264b7154d74e0393b"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ancient_treant\\attack\\frame_02.webp",
+      "bbox": [
+        37,
+        75,
+        219,
+        224
+      ],
+      "sha256": "d711060d25b9cbf56f2ce7f97244caebf8dd11681d486dc7e510854ac8d021b0"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ancient_treant\\attack\\frame_03.webp",
+      "bbox": [
+        50,
+        72,
+        205,
+        224
+      ],
+      "sha256": "c0f772146a3c5cc827926ea493d240054c3854ebefe02571ac66996693dec0ad"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ancient_treant\\hit\\frame_01.webp",
+      "bbox": [
+        45,
+        70,
+        210,
+        224
+      ],
+      "sha256": "128ce94d3b938f8b1db0aaba9fe5efcd256577b4895c02f083ec66ee0f8e0c55"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ancient_treant\\hit\\frame_02.webp",
+      "bbox": [
+        46,
+        80,
+        210,
+        224
+      ],
+      "sha256": "ebceb807e851b8e411dd7a8f843c6f78c455dfa76f5c8c08f7487439b42ba46f"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ancient_treant\\hit\\frame_03.webp",
+      "bbox": [
+        52,
+        72,
+        203,
+        224
+      ],
+      "sha256": "5edebbe6e1c06e6b83cbaecda70a6aac267b04a4f6f31bdf5ad01e9a4040a502"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ancient_treant\\death\\frame_01.webp",
+      "bbox": [
+        49,
+        83,
+        207,
+        224
+      ],
+      "sha256": "f682588e3b3e69518377750ab94507c2f67349ac4b8d323b834581bd038ae3de"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ancient_treant\\death\\frame_02.webp",
+      "bbox": [
+        32,
+        91,
+        224,
+        224
+      ],
+      "sha256": "a64556dd47d3246422b053f7042b9cfbfaf787ae55b7844ced3d199d2ba70617"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\ancient_treant\\death\\frame_03.webp",
+      "bbox": [
+        53,
+        108,
+        202,
+        224
+      ],
+      "sha256": "3a8dd5c7d41567f097ec3c914029356f72876bcde23bc92dda60012b348b1f11"
+    }
+  ]
+}

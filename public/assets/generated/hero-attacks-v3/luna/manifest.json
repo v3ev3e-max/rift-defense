@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/luna/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        52,
+        104,
+        209,
+        243
+      ],
+      "sha256": "88de09a9527039a7daef2a35deb6a6d2717b7e0dfb7766ad4d7dfe53392b48b0"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        43,
+        27,
+        224,
+        243
+      ],
+      "sha256": "000ea9ee1879964707296cd32466b5e6091149aaf3c54f96cb3797ea35fda954"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        27,
+        106,
+        243,
+        243
+      ],
+      "sha256": "5517fff347e5d97d52db86ca40c2235f0324f4ad2da66d49ed1c409f50af723d"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        13,
+        65,
+        235,
+        243
+      ],
+      "sha256": "db332c4db39b6c8c1e03224347431467a86679db27b404adf8f77721ecdf348d"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        29,
+        13,
+        243,
+        221
+      ],
+      "sha256": "8e08d960d6027f7ac03e6f1f16de45f16daff795b5568542e26eb960c62eaa43"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        13,
+        243,
+        225
+      ],
+      "sha256": "1acd5d2d4bca4786567588d7e5cc931fa696fd22c34b2c062c88387dbf6b2d57"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        13,
+        242,
+        226
+      ],
+      "sha256": "190b141307c25382d0d1f542b89bad2f7b55642257e7f1d0b43bec38a425d215"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        45,
+        13,
+        208,
+        227
+      ],
+      "sha256": "be1adf8f2d2f0b5ee2bbfa15e418a28377b42f991abd4d13523a940d60fc4520"
+    }
+  ]
+}

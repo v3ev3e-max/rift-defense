@@ -7,6 +7,7 @@ import {heroes} from '../data/heroes';
 import {equipItem,makeEquipment,heroWeaponGroup} from '../data/equipment';
 import type {SaveData,HeroGrade} from '../data/types';
 import {campaignCombatBudget} from '../data/campaignCombatBudget';
+import {campaignGrowthGuide} from '../data/campaignGrowthGuide';
 
 /** An estimate, not a guaranteed win: range exposure and role utility have explicit budgets. */
 export function campaignPower(save:SaveData,stage:CampaignStage=campaignStages[0]){
@@ -25,12 +26,16 @@ export function campaignPower(save:SaveData,stage:CampaignStage=campaignStages[0
 const recommendations=new Map<string,number>();
 export function recommendedCampaignPower(stage:CampaignStage){
  if(recommendations.has(stage.id))return recommendations.get(stage.id)!;
- const region=Number(stage.id.split('-')[0]),save=defaultSave();save.equipmentInventory=[];
- for(const h of Object.values(save.heroes)){h.stars=campaignRegionBalance[region-1].stars;h.equipment=[];}
- if(region>=5)for(const id of save.campaign!.squad){
-  const rarity:HeroGrade=region<=6?'A':region===7?'S':'SR';
-  for(const template of [`${heroWeaponGroup[id]}-0`,'armor-field',`necklace-${heroes.find(h=>h.id===id)!.element}`]){
-   const item=makeEquipment(template,rarity,save.equipmentInventory.length,`${id}-${template}`);item.enhance=region===5?0:region===6?2:region===7?3:5;save.equipmentInventory.push(item);equipItem(save,id,item.id);
+ const region=Number(stage.id.split('-')[0]),guide=campaignGrowthGuide(region),save=defaultSave();save.equipmentInventory=[];
+ save.campaign!.squad=guide.squad;
+ for(const h of Object.values(save.heroes)){h.stars=guide.stars;h.equipment=[];}
+ for(const id of save.campaign!.squad){
+  const hero=heroes.find(h=>h.id===id)!,role=formationRole(id);
+  for(const key of [combatRoles[id].kind,hero.element])save.campaign!.research[key]=guide.research;
+  const templates=[`${heroWeaponGroup[id]}-${!guide.fullEquipment?0:role==='support'?3:role==='sniper'?1:2}`];
+  if(guide.fullEquipment)templates.push(role==='tank'?'armor-guardian':'armor-ranged',`necklace-${hero.element}`);
+  for(const template of templates){
+   const item=makeEquipment(template,guide.rarity,save.equipmentInventory.length,`${id}-${template}`);item.enhance=guide.enhance;save.equipmentInventory.push(item);equipItem(save,id,item.id);
   }
  }
  const power=Math.round(campaignPower(save,stage)*(1+(Number(stage.id.split('-')[1])-1)*.02));recommendations.set(stage.id,power);return power;

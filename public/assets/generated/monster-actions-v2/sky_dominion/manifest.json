@@ -1,0 +1,123 @@
+{
+  "owner": "sky_dominion",
+  "source": "art-source\\monster-actions-v2\\sky_dominion-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sky_dominion\\attack\\frame_01.webp",
+      "bbox": [
+        50,
+        64,
+        206,
+        224
+      ],
+      "sha256": "0c25b01aeab6f39b2cef8fd1a3bfcd0d0aabd5b0efd9d92e2228b6fb327e2bcd"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sky_dominion\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        73,
+        224,
+        224
+      ],
+      "sha256": "6c2691449947da7dc5a19babe0cb9d8a5a89245b015def2a1145ef40f3ba344a"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sky_dominion\\attack\\frame_03.webp",
+      "bbox": [
+        55,
+        64,
+        200,
+        224
+      ],
+      "sha256": "be6618a9b2fc8c1758bb08f32d7e93327bbb6184b1c4ed452ca0f55ac0dd9ff3"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sky_dominion\\hit\\frame_01.webp",
+      "bbox": [
+        46,
+        71,
+        209,
+        224
+      ],
+      "sha256": "221d06fcef6de8c88b0e98f87b9d8615d13329ce3ec029ffd10290d1d1584956"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sky_dominion\\hit\\frame_02.webp",
+      "bbox": [
+        53,
+        63,
+        203,
+        224
+      ],
+      "sha256": "9279f4e0ad94042a05a7d7d6ca82da7f2c41cfd8d302c3052496b702eba07b67"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sky_dominion\\hit\\frame_03.webp",
+      "bbox": [
+        56,
+        63,
+        200,
+        224
+      ],
+      "sha256": "fad2c0ac0bc75648a7d34649e7d17bdb7e7b88e8faaf3d8c1f9fda92a60e86a2"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sky_dominion\\death\\frame_01.webp",
+      "bbox": [
+        54,
+        75,
+        201,
+        224
+      ],
+      "sha256": "c1eeae5ace5ecdd7f78212bceb681002ebaf8d474e1f443afca4df84c65e1cb8"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sky_dominion\\death\\frame_02.webp",
+      "bbox": [
+        46,
+        94,
+        209,
+        224
+      ],
+      "sha256": "7077810a01e983c8ff5e437dce766719e4ddbf9c0cb7fd89146f45ff00c84320"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sky_dominion\\death\\frame_03.webp",
+      "bbox": [
+        52,
+        137,
+        204,
+        224
+      ],
+      "sha256": "271871c69496e316525c37c9b551273bdde28182c53dcee0ecd9de6b743a8a17"
+    }
+  ]
+}

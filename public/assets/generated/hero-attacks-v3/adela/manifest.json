@@ -1,0 +1,90 @@
+{
+  "source": "art-source/hero-attacks-v3/adela/source.png",
+  "frames": 8,
+  "canvas": [
+    256,
+    256
+  ],
+  "outputs": [
+    {
+      "file": "frame_01.webp",
+      "bbox": [
+        50,
+        74,
+        181,
+        239
+      ],
+      "sha256": "6c0d1f6ed685dc29aab19f5e8b66e206f80c0a2bd78a89ffa27945077c4fe2a1"
+    },
+    {
+      "file": "frame_02.webp",
+      "bbox": [
+        58,
+        25,
+        243,
+        239
+      ],
+      "sha256": "b5c07346e1230476d69a9b1ab50da4e68991ffb558195bf67c61366f55cb48c0"
+    },
+    {
+      "file": "frame_03.webp",
+      "bbox": [
+        13,
+        89,
+        243,
+        239
+      ],
+      "sha256": "723699b3b3f378e00460eb30b8d09781b25e6f1df17f6d0f5c391b7b6b5bdd44"
+    },
+    {
+      "file": "frame_04.webp",
+      "bbox": [
+        39,
+        52,
+        234,
+        239
+      ],
+      "sha256": "2c1c829e22407b9726dc91a1dc89150cc9817ef3b48fcbcd7b762fa0d2755fdb"
+    },
+    {
+      "file": "frame_05.webp",
+      "bbox": [
+        20,
+        73,
+        243,
+        221
+      ],
+      "sha256": "70ab64ca1613f7a63d420e9f3a4a9342646b44f30ee6eaff0736b1325309b7c8"
+    },
+    {
+      "file": "frame_06.webp",
+      "bbox": [
+        13,
+        39,
+        243,
+        221
+      ],
+      "sha256": "3c1739af9f81ea107ccd400acc0e980cb1aebe9bd4d3bac2b74f10e6acfba17a"
+    },
+    {
+      "file": "frame_07.webp",
+      "bbox": [
+        13,
+        69,
+        243,
+        223
+      ],
+      "sha256": "41dbd82cb80259df35d59956687307ed2e04b969daa01c7576af89dd5ac40ca7"
+    },
+    {
+      "file": "frame_08.webp",
+      "bbox": [
+        13,
+        65,
+        214,
+        225
+      ],
+      "sha256": "c5ca87dd0e4dfd06a0a31ce3346e60b554b4420c4e484f761d092f4bc7ec8fc2"
+    }
+  ]
+}

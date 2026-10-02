@@ -1,0 +1,71 @@
+{
+  "source": "art-source/animation-completion/reina/impact-v1.png",
+  "frames": 6,
+  "canvas": [
+    256,
+    256
+  ],
+  "safeMargin": 24,
+  "outputs": [
+    {
+      "file": "public\\assets\\generated\\hero-skill-v2\\reina\\impact\\frame_01.webp",
+      "bbox": [
+        49,
+        69,
+        200,
+        211
+      ],
+      "sha256": "99f16b03c5c8edf79b67a35677e487616664843abe6c050754a92cbb705b23f1"
+    },
+    {
+      "file": "public\\assets\\generated\\hero-skill-v2\\reina\\impact\\frame_02.webp",
+      "bbox": [
+        44,
+        62,
+        195,
+        214
+      ],
+      "sha256": "ecd756dd11af16f7dbf4a01b0b282049e87314adcc726cfa529f63dfb4160ba2"
+    },
+    {
+      "file": "public\\assets\\generated\\hero-skill-v2\\reina\\impact\\frame_03.webp",
+      "bbox": [
+        32,
+        57,
+        215,
+        220
+      ],
+      "sha256": "4d4d6381bc359bb2572a06d62eb7edca69c74426fd6f8b3530bff9af426a4513"
+    },
+    {
+      "file": "public\\assets\\generated\\hero-skill-v2\\reina\\impact\\frame_04.webp",
+      "bbox": [
+        32,
+        35,
+        224,
+        219
+      ],
+      "sha256": "29427ea5e082c7c4555b1fc18af1c45c682c320a37046ca2cb6f5ffb3317e234"
+    },
+    {
+      "file": "public\\assets\\generated\\hero-skill-v2\\reina\\impact\\frame_05.webp",
+      "bbox": [
+        47,
+        46,
+        197,
+        212
+      ],
+      "sha256": "ca7747b7a9c633b7b671eb2e6c937685155905eaebfa71d61fa2acf42661e133"
+    },
+    {
+      "file": "public\\assets\\generated\\hero-skill-v2\\reina\\impact\\frame_06.webp",
+      "bbox": [
+        56,
+        71,
+        182,
+        192
+      ],
+      "sha256": "5a042c658fba17068d8c03056196ec18b315e69bbbe864613d858504c774f794"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "owner": "spore_leaper",
+  "source": "art-source\\monster-actions-v2\\spore_leaper-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\spore_leaper\\attack\\frame_01.webp",
+      "bbox": [
+        61,
+        115,
+        194,
+        224
+      ],
+      "sha256": "a8e088708d4615d2a510846c020dcfbc11bc7e0c6681e66ccac76def97c78e9b"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\spore_leaper\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        122,
+        224,
+        224
+      ],
+      "sha256": "46c6b5cbf8cf90a1d9c9b2da224a97a56bce6e52e38209295baba241aa6613b3"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\spore_leaper\\attack\\frame_03.webp",
+      "bbox": [
+        74,
+        114,
+        182,
+        224
+      ],
+      "sha256": "00618ca3683988ab06b89a4dd76605c1f426b3413ce9740a8c694539148b1a0a"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\spore_leaper\\hit\\frame_01.webp",
+      "bbox": [
+        70,
+        114,
+        186,
+        224
+      ],
+      "sha256": "09dd597cff3e3393d957f79f7f162cabf4b3fd1ecfd0b674a5cc2f2417ff62e2"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\spore_leaper\\hit\\frame_02.webp",
+      "bbox": [
+        64,
+        96,
+        192,
+        224
+      ],
+      "sha256": "163ca893c22f484ba7a04e3219fd3249e5612159b33e75e607935dc085870aa5"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\spore_leaper\\hit\\frame_03.webp",
+      "bbox": [
+        67,
+        117,
+        188,
+        224
+      ],
+      "sha256": "2ab997d07bc8583b9b5b5f0edc95777d7c55d3b6cd409aa649a91980de73d57b"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\spore_leaper\\death\\frame_01.webp",
+      "bbox": [
+        64,
+        123,
+        192,
+        224
+      ],
+      "sha256": "afd3d0296e3ee5107dd3ed098c42a874dde6020142b730aa84fa8470c04616e7"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\spore_leaper\\death\\frame_02.webp",
+      "bbox": [
+        51,
+        143,
+        205,
+        224
+      ],
+      "sha256": "40e87a153aac7cb69b78ec88631ea197f841fa89ddb2f9f285838d5949be7a89"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\spore_leaper\\death\\frame_03.webp",
+      "bbox": [
+        56,
+        169,
+        200,
+        224
+      ],
+      "sha256": "5974fa049e6a9b83477060a7a86ff359fc9214035c16be86e025d77f931e277b"
+    }
+  ]
+}

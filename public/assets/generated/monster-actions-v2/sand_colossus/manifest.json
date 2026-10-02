@@ -1,0 +1,123 @@
+{
+  "owner": "sand_colossus",
+  "source": "art-source\\monster-actions-v2\\sand_colossus-v1.png",
+  "canvas": [
+    256,
+    256
+  ],
+  "anchor": [
+    128,
+    224
+  ],
+  "safeMargin": 24,
+  "rows": [
+    {
+      "state": "attack",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sand_colossus\\attack\\frame_01.webp",
+      "bbox": [
+        49,
+        72,
+        207,
+        224
+      ],
+      "sha256": "66ef26793c6581868c0822130d517d4f104c40e724255b4706bafcea10f001a3"
+    },
+    {
+      "state": "attack",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sand_colossus\\attack\\frame_02.webp",
+      "bbox": [
+        32,
+        74,
+        224,
+        224
+      ],
+      "sha256": "1ebf122ea8f65e12d558f920f052823e35c80b7526f025e640f1904b449eaf5f"
+    },
+    {
+      "state": "attack",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sand_colossus\\attack\\frame_03.webp",
+      "bbox": [
+        43,
+        81,
+        213,
+        224
+      ],
+      "sha256": "e913f0bd10a0a7ff052dbf11241efb963a1c38864f666a41e442b2c6cc4c196e"
+    },
+    {
+      "state": "hit",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sand_colossus\\hit\\frame_01.webp",
+      "bbox": [
+        46,
+        78,
+        210,
+        224
+      ],
+      "sha256": "d80585563916714af7d0d7aab381d72f3b6a509dcc0c1eed1f0a2dcc0bfab9f6"
+    },
+    {
+      "state": "hit",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sand_colossus\\hit\\frame_02.webp",
+      "bbox": [
+        41,
+        75,
+        214,
+        224
+      ],
+      "sha256": "610085c382670773a830989b66e7f95119227b10a6ad62237b4c339778f888c6"
+    },
+    {
+      "state": "hit",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sand_colossus\\hit\\frame_03.webp",
+      "bbox": [
+        43,
+        76,
+        213,
+        224
+      ],
+      "sha256": "361d768fa91a40e4634b415184a5d3a3c52cb6a94a7c61951cb97e0c06868b16"
+    },
+    {
+      "state": "death",
+      "frame": 1,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sand_colossus\\death\\frame_01.webp",
+      "bbox": [
+        45,
+        76,
+        211,
+        224
+      ],
+      "sha256": "ece5d1abd9b81b32015dd09af1449ed8116f0b3750b6f7a075e6629b54d141da"
+    },
+    {
+      "state": "death",
+      "frame": 2,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sand_colossus\\death\\frame_02.webp",
+      "bbox": [
+        34,
+        102,
+        221,
+        224
+      ],
+      "sha256": "6cd983ed4a174c473439df36e2034d08f3f770f43ac45104ea80d2d779faf3cf"
+    },
+    {
+      "state": "death",
+      "frame": 3,
+      "file": "public\\assets\\generated\\monster-actions-v2\\sand_colossus\\death\\frame_03.webp",
+      "bbox": [
+        42,
+        126,
+        214,
+        224
+      ],
+      "sha256": "1b1ad15eddd4fdb6303b9c695be0d51fd2573b6f0e83ed601c5c4aed1afba654"
+    }
+  ]
+}

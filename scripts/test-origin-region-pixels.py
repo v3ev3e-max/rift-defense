@@ -8,7 +8,7 @@ failures=[]
 count=0
 for region in range(13,17):
     paths=list((ROOT/f'public/assets/generated/campaign-enemies/map-{region}').rglob('*.webp'))
-    assert len(paths)==53,(region,len(paths))
+    assert len(paths)==69,(region,len(paths))
     for path in paths:
         image=Image.open(path).convert('RGBA')
         alpha=np.array(image.getchannel('A'))
