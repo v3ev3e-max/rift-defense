@@ -22,7 +22,7 @@ for i in range(8):
 # The same transform on all eight cells preserves apparent character scale.
 boxes=[im.getchannel('A').point(lambda v:255 if v>24 else 0).getbbox() for im in raw]
 scale=min(1,min(min(232/max(1,b[2]-b[0]),232/max(1,b[3]-b[1])) for b in boxes if b))
-scale=min(scale,.90)
+scale=min(scale,.82)
 outputs=[];hashes=set()
 for i,source in enumerate(raw):
  if scale<1:

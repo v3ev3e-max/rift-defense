@@ -9,82 +9,82 @@
     {
       "file": "frame_01.webp",
       "bbox": [
-        47,
-        83,
-        196,
-        239
+        54,
+        87,
+        190,
+        229
       ],
-      "sha256": "f1badeaeb4c77c6df5290789ae8bf1d46c70fe638a0a1d6a66084d693ba54767"
+      "sha256": "08131d0ca15b8d4b893c19cacfee3eac9be78f345b65978f380d4d55aef396ad"
     },
     {
       "file": "frame_02.webp",
       "bbox": [
-        54,
-        19,
-        214,
-        238
+        60,
+        28,
+        207,
+        228
       ],
-      "sha256": "9195c711faba5ea423f0b6fc45a422e1e054a12d3d1a3e71f56d9c8c38eb62e4"
+      "sha256": "e4c5c29fc734d0bc6dfa83b65ab013b30cef318349c46d9a118121a789e38e35"
     },
     {
       "file": "frame_03.webp",
       "bbox": [
-        22,
-        94,
-        241,
-        239
+        31,
+        97,
+        231,
+        229
       ],
-      "sha256": "eb9d86a8aa2fbf0f382cea5193f5b11979b568fba64dcb8fa5c14e38480470ac"
+      "sha256": "d567c7bd884f16ad7d0268d3814cec0345d2f3fe5a7f225aa76b801274141032"
     },
     {
       "file": "frame_04.webp",
       "bbox": [
-        36,
-        38,
-        223,
-        239
+        44,
+        46,
+        214,
+        229
       ],
-      "sha256": "a04bb85699548751b417ae094bd11125ed6e1545f3ace915f3b26ae3b04f1ba2"
+      "sha256": "4e9d3a75effe35ca143ceb9e6a35b94851e7b55609d65814d474d63eb5f93221"
     },
     {
       "file": "frame_05.webp",
       "bbox": [
-        32,
-        55,
-        243,
-        217
+        41,
+        62,
+        233,
+        209
       ],
-      "sha256": "ed92af39bbb479e8d87bf1471f76012d9a41fbaf17b78e45d2a7714581ffb8f2"
+      "sha256": "5f8f5fe9c7ad7dd8156176499c88548da7a8b87a15dbcec550f7041d573201b2"
     },
     {
       "file": "frame_06.webp",
       "bbox": [
-        13,
-        68,
-        243,
-        217
+        23,
+        73,
+        233,
+        210
       ],
-      "sha256": "8a13ab93728ce8ec4434d5da10b8be5f755d8f8f5bd921138326127f8adcd7b1"
+      "sha256": "8c91e95b772cd5abf0c647fad4989ba290b32b71470549eebd3697b20accbd36"
     },
     {
       "file": "frame_07.webp",
       "bbox": [
-        13,
-        76,
-        225,
-        229
+        23,
+        81,
+        217,
+        220
       ],
-      "sha256": "ef2df9415d10e97e2c5e292a375850e751e5121b810d4ae5fe6277576da381da"
+      "sha256": "78178f76306ae128db2a5cb4ad2f66011af9e611186a70ef0f6099627da9694b"
     },
     {
       "file": "frame_08.webp",
       "bbox": [
-        47,
-        77,
-        197,
-        231
+        54,
+        81,
+        191,
+        222
       ],
-      "sha256": "42e732855aaeffbffcb3b058144ec060160e9ecacebebe38d01306b037161fbf"
+      "sha256": "4bad4791a2025025db8b88510772fae92ebaed2aa9aa79c780dfbe7d7d0999c9"
     }
   ]
 }

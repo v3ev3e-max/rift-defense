@@ -2,7 +2,7 @@ import {assetUrl} from '../utils/assets';
 import {heroSkillEffects} from '../game/HeroSkillEffects';
 import {authoredFrameKeys} from '../game/AuthoredFrames';
 import {attackRaidSummons,despawnRaidSummons} from './RaidSummonAnimations';
-import {heroAttackSheetPath,normalizedSdHeroOwners} from '../game/HeroActionAssets';
+import {heroAttackSheetPath} from '../game/HeroActionAssets';
 
 export type RaidPose = 'idle'|'prepare'|'attack'|'skill'|'pattern'|'hit'|'phase'|'death';
 const active = new WeakMap<HTMLElement, {animation: Animation; priority: number}>();
@@ -18,12 +18,10 @@ export function bossSprite(id:string, pose:RaidPose) {
 function paint(el:HTMLElement,pose:RaidPose){
  const id=el.dataset.hero??el.dataset.boss!;
  const sprite=el.dataset.hero
-  ?pose==='attack'||normalizedSdHeroOwners.has(id)&&(pose==='idle'||pose==='skill')
-   ?{url:assetUrl(heroAttackSheetPath(id)),frames:8}
-   :{url:assetUrl(`/assets/generated/raid-v4/heroes/${id}/${pose==='hit'||pose==='death'?'idle':pose}.webp`),frames:pose==='skill'?6:1}
+  ?{url:assetUrl(heroAttackSheetPath(id)),frames:pose==='attack'||pose==='skill'?8:1,columns:8}
   :bossSprite(id,pose);
  el.style.backgroundImage=`url("${sprite.url}")`;
- el.style.backgroundSize=`${sprite.frames*100}% 100%`;
+ el.style.backgroundSize=`${('columns' in sprite?sprite.columns:sprite.frames)*100}% 100%`;
  el.style.backgroundPosition='0% 0%';el.dataset.pose=pose;
  return sprite.frames;
 }

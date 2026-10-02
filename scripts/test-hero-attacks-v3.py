@@ -15,7 +15,7 @@ for owner in owners:
    image=source.convert('RGBA');image.load()
   if image.size!=(256,256):errors.append(f'{owner}/{frame}: {image.size}')
   box=image.getchannel('A').point(lambda v:255 if v>24 else 0).getbbox()
-  if not box or min(box[0],box[1],256-box[2],256-box[3])<12:errors.append(f'{owner}/{frame}: unsafe {box}')
+  if not box or min(box[0],box[1],256-box[2],256-box[3])<20:errors.append(f'{owner}/{frame}: unsafe {box}')
   digest=hashlib.sha256(image.tobytes()).hexdigest();local.append(digest)
   previous=global_hashes.get(digest)
   if previous:errors.append(f'cross-owner duplicate: {previous} = {owner}/{frame}')

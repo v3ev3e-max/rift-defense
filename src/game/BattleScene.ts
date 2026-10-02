@@ -20,7 +20,7 @@ import {heroAuras} from './SkillVisuals';
 import {ownedSkillImpactPaths} from './OwnedSkillFrames';
 import {enemyVisualContext} from './RegionalEnemyArt';
 import {classicEnemyIds} from '../data/waves';
-import {heroAttackFrameCount,heroAttackFramePath,normalizedSdHeroOwners} from './HeroActionAssets';
+import {heroAttackFrameCount,heroAttackFramePath} from './HeroActionAssets';
 export class BattleScene extends Phaser.Scene {
   model: BattleModel;
   ground!: Phaser.GameObjects.Graphics;
@@ -721,17 +721,18 @@ export class BattleScene extends Phaser.Scene {
       const heroAnimFrame = attacking
         ? visualFrame(attackElapsed)
         : 1;
-      const normalizedSd=normalizedSdHeroOwners.has(u.heroId);
-      const north = !normalizedSd && !!u.facingUp && this.textures.exists(`hero-${u.heroId}-up-1`);
+      const north = !!u.facingUp && this.textures.exists(`hero-${u.heroId}-up-1`);
       const upFrame = attacking ? [1,2,3,4,5,6,6,1][heroAnimFrame-1] : 1;
       const skillElapsed=m.time-(u.skillCastAt??-999),skillCasting=m.started&&skillElapsed>=0&&skillElapsed<.9&&u.hp>0;
       const skillFrame=Math.min(6,Math.floor(skillElapsed/.15)+1);
       const visualPose=heroVisualPose(attacking,skillCasting,north);
       // Idle means a truly still stance. frame_02/03 contain transitional limb
       // movement in several legacy sheets and read as repeated attacks.
-      const textureKey = normalizedSd
-        ? `hero-${u.heroId}-authored-attack-${visualPose==='idle'?1:visualPose==='skill'?Math.min(7,skillFrame+1):heroAnimFrame}`
-        : visualPose==='skill' ? `hero-${u.heroId}-skill-${skillFrame}` : visualPose==='idle' ? `hero-${u.heroId}-idle-1` : visualPose==='up' ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
+      const textureKey = visualPose==='idle'
+        ? `hero-${u.heroId}-authored-attack-1`
+        : visualPose==='skill'
+        ? `hero-${u.heroId}-authored-attack-${Math.min(7,skillFrame+1)}`
+        : visualPose==='up' ? `hero-${u.heroId}-up-${upFrame}` : animatedHero
         ? `hero-${u.heroId}-authored-attack-${heroAnimFrame}`
         : heroById[u.heroId].asset.key;
       sp.setVisible(true);
