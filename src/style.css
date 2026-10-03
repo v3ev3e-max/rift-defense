@@ -5090,5 +5090,21 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 @media(prefers-reduced-motion:reduce){.settled .reveal-ssr .back-prism{opacity:1}.reveal-effects{animation:none!important;opacity:.6}}
 .raid-summon{animation:none;translate:none;scale:none;background-repeat:no-repeat;background-position:0% 0%;display:block}
 .raid-summon.dying{pointer-events:none}
+/* Portraits are authored face closeups; keep their framing consistent in UI. */
+img.hero-face{object-fit:cover!important;object-position:center!important;image-rendering:auto}
+.card-portrait img.hero-face,.detail-portrait img.hero-face{transform:none!important}
+.recruit-art img.hero-face{object-fit:contain!important;object-position:center!important}
+.reveal-hero img.hero-face{object-fit:contain!important;object-position:center!important}
+@media(max-width:760px){
+ .equipment-screen .collection-layout{display:flex;flex-direction:column;flex:none;overflow:visible;gap:8px;min-width:0}
+ .equipment-screen .hero-grid{flex:none;height:auto;min-height:180px;overflow-x:auto;overflow-y:hidden;gap:6px;padding-bottom:5px}
+ .equipment-screen .hero-grid>[data-hero-card]{flex:0 0 112px;min-width:112px}
+ .equipment-screen .hero-card{width:112px;min-height:175px}
+ .equipment-screen .card-portrait{height:104px;min-height:104px}
+ .equipment-screen .hero-card img.hero-face{max-height:none;height:104px;width:100%}
+ .equipment-screen .hero-detail{height:auto;min-width:0;overflow:visible;margin:0}
+ .equipment-screen .detail-portrait{display:block;height:144px}
+ .equipment-screen .detail-portrait img.hero-face{height:144px;max-height:none;object-fit:contain!important}
+}
 .recruit-reveal.recruit-sprite-mode *{animation:none!important;transition:none!important;transform:none!important;filter:none!important}
 .recruit-sprite-mode .reveal-card{opacity:1;perspective:none}.recruit-sprite-mode .reveal-front{display:none;backface-visibility:visible}.recruit-sprite-mode .reveal-card.revealed .reveal-front{display:flex}.recruit-sprite-mode .reveal-card.revealed .reveal-back{display:none}.recruit-sprite-mode .reveal-effects{opacity:1!important}.recruit-card-sprite{display:block;width:100%;height:100%;object-fit:contain}.recruit-card-sprite[hidden]{display:none}.recruit-sprite-mode .reveal-back{display:block}.recruit-sprite-mode .reveal-hero{opacity:1}.recruit-sprite-mode .reveal-card.turning .reveal-front{display:none}

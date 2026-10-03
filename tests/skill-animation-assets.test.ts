@@ -19,8 +19,11 @@ describe('character-specific skill animation assets',()=>{
 
  it('uses one clipping-safe footprint for every hero skill sheet',()=>{
   for(const hero of heroes){
-   expect(heroVisualSize(hero.id,false,'skill'),hero.id).toBe(160);
-   expect(heroVisualSize(hero.id,true,'skill'),hero.id).toBe(160);
+   const idle=heroVisualSize(hero.id,false,'idle');
+   expect(heroVisualSize(hero.id,false,'skill'),hero.id).toBe(idle);
+   expect(heroVisualSize(hero.id,true,'skill'),hero.id).toBe(idle);
+   expect(heroVisualSize(hero.id,false,'attack'),hero.id).toBe(idle);
+   expect(idle,hero.id).toBeLessThanOrEqual(140);
   }
  });
 

@@ -1,6 +1,7 @@
 import { heroById, buildNames, elementColors, gradeNames, heroElementName } from "../data/heroes";
 import { assetUrl } from "../utils/assets";
 import type { Hero, SaveData } from "../data/types";
+import {heroPortraitPath} from './HeroPortraits';
 const paths: Record<string, string> = {
   home: "M3 10 12 3l9 7v10h-6v-6H9v6H3z",
   hero: "M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8M4 21v-4c0-6 16-6 16 0v4",
@@ -28,11 +29,10 @@ const paths: Record<string, string> = {
 };
 export const icon = (name: string) =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${paths[name] ?? paths.bolt}"/></svg>`;
-const renewedSupportPortraits=new Set(['rhea','echo','meriel','selene','ophilia']);
 export const portrait = (id: string, cls = "") =>
-  `<img class="pixel-hero ${cls}" src="${assetUrl(`/assets/illustrations/${id}${renewedSupportPortraits.has(id)?'-v2.png':'.webp'}`)}" alt="${heroById[id].name}" draggable="false" loading="lazy" decoding="async" fetchpriority="low"/>`;
+  `<img class="pixel-hero hero-face ${cls}" src="${assetUrl(heroPortraitPath(id))}" alt="${heroById[id].name} 얼굴" width="256" height="256" draggable="false" loading="lazy" decoding="async" fetchpriority="low"/>`;
 export const combatPortrait = (id: string) =>
-  `<img class="recruit-portrait" src="${assetUrl(renewedSupportPortraits.has(id)?`/assets/illustrations/${id}-v2.png`:`/assets/face-icons/${id}.${id==='hana'||id==='celestia'?'png':'webp'}`)}" alt="${heroById[id].name} 얼굴" width="256" height="256" draggable="false" loading="lazy" decoding="async" fetchpriority="low"/>`;
+  `<img class="recruit-portrait hero-face" src="${assetUrl(heroPortraitPath(id))}" alt="${heroById[id].name} 얼굴" width="256" height="256" draggable="false" loading="lazy" decoding="async" fetchpriority="low"/>`;
 export const num = (v: number) => Math.floor(v).toLocaleString("ko-KR");
 export const time = (v: number) =>
   `${Math.floor(v / 60)

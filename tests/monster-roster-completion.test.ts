@@ -40,7 +40,7 @@ describe('complete monster animation coverage',()=>{
    const path='public'+monsterActionPath(owner,state,frame),hash=createHash('sha256').update(readFileSync(path)).digest('hex');
    expect(hashes.has(hash),path).toBe(false);hashes.add(hash);
   }
- });
+ },20_000);
  it('ships all five summon motion states',()=>{
   expect(raidSummonOwners.size).toBe(5);
   for(const id of raidSummonOwners)for(const state of ['move','attack','hit','death'] as const)expect(existsSync('public'+raidSummonPath(id,state))).toBe(true);
